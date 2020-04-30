@@ -9,6 +9,13 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+
+    <script>
+    $(function(){
+      $("nav").load("nav.html");
+    });
+    </script>
+
     <script defer>
         function flip(idstub){
             if ($("#".concat(idstub).concat("-submenu")).is(":visible")) {
@@ -30,8 +37,36 @@
 </head>
 
 <body>
+    <header>
+        <div id="lambda" ><img src="img/whiteLambda.png"></div>
+        <div id="titleBar">
+            <h1 id="siteTitle"> Standard ML Help </h1>
+        </div>
+    </header>
 
-    <!--#include virtual="topmatter.shtml" -->
+    <nav>
+        <a class="navlink" href="https://smlhelp.github.io/">
+            <div class="navbox"> Home </div>
+        </a>
+        <a class="navlink">
+            <div class="navbox"> Getting Started </div>
+        </a>
+        <a class="navlink">
+            <div class="navbox"> Types &amp; Signatures </div>
+        </a>
+        <a class="navlink">
+            <div class="navbox"> Debugging </div>
+        </a>
+        <a class="navlink">
+            <div class="navbox"> Concepts </div>
+        </a>
+        <a class="navlink">
+            <div class="navbox"> Examples </div>
+        </a>
+        <a class="navlink">
+            <div class="navbox"> About </div>
+        </a>
+    </nav>
 
     <main>
 
