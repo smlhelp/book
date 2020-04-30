@@ -10,6 +10,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
  
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script type="text/javascript" src="dist/purify.min.js"></script>
+
     <script>
         $(function(){
         $("nav").load("../nav.html");
@@ -23,11 +25,12 @@
         }
         $.get("bool.md", function(response) {
             console.log(response)
-            var content = marked(response);
+            var content = DOMPurify.sanitize(marked(response));
             console.log(content)
         });
 
-        $("#content").html(content)
+            $("#content").html(content)
+                //'<h2 id="test-1">Test 1</h2><p><strong>Hello World</strong></p><ul><li>a</li><li>b</li><li>c</li></ul>')
         //var resource = $_GET['view']
         //if (typeof resource !== 'undefined'){
          //   $("#content").load("bool.md")
