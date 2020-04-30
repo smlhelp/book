@@ -31,7 +31,7 @@
                 console.log(response)
                 var content = DOMPurify.sanitize(marked(response)).toString();
                 console.log(content);
-                document.getElementById("content").innerHTML = content.concat("<br>");
+                document.getElementsByTagName("main")[0].innerHTML = content.concat("<br>");
             });
 
 
