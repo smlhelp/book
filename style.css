@@ -5,7 +5,7 @@
 
 html {
 	color:#444;
-	font-family: Helvetica, sans-serif;
+	font-family: serif;
     padding:0em;
 	line-height: 1.4;
     background-color:#fff;
@@ -20,10 +20,25 @@ header{
     top:0px;
     left:0px;
 }
-h1 {
+h1,h2,h3,h4,h5,h6{
+    color:#444;
     margin:0em;
-    font-size:3.5em;
     font-family:Helvetica, sans-serif;
+}
+h1 {
+    font-size:3.5em;
+}
+h2 {
+    font-size:2em;
+}
+h3 {
+    font-size:1.7em;
+}
+h4 {
+    font-size:1.4em;
+}
+h5,h6 {
+    font-size:1.2em;
 }
 #siteTitle{
     color:#ab4444;
@@ -49,26 +64,22 @@ h1 {
 #lambda img{
     height:4em;
 }
-h2 {
-    font-size:3em;
-    color:#fff;
-    padding:0;
-    margin:0;
-}
 #subtitle{
     display:block;
     float:left;
 }
-h4{
-    font-size:1.3em;
-    color:#fff;
-    padding:0;
-    margin:0;
-}
-a{
+a, a:visited{
     font:inherit;
     color:inherit;
     text-decoration:inherit;
+}
+main a, main a:visited{
+    font-weight:bold;
+    text-decoration:none;
+    color:#ab4444;
+}
+main a:hover{
+    text-decoration:underline;
 }
 
 nav {
@@ -128,11 +139,13 @@ main {
     margin:0.225%;
     margin-top:6em;
     margin-left:calc(20.25% + 0.5em);
+    font-size:1.2em;
 }
 
-a,
-a:visited {
-	color: inherit;
+.halfbox{
+    width:50%;
+    float:left;
+    padding:1em;
 }
 
 table {
