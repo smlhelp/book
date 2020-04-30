@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<link rel="stylesheet" href="../style.css" />
+	<title>Debugging | Standard ML Help</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script type="text/javascript" src="../purify.js"></script>
+
+    <script>
+        $(function(){
+        $("nav").load("../nav.html");
+
+        // Look at URL to see if we should load resource
+        var parts = window.location.search.substr(1).split("&");
+        var $_GET = {};
+        for (var i = 0; i < parts.length; i++) {
+            var temp = parts[i].split("=");
+            $_GET[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
+        }
+
+        var resource = $_GET['view']
+        
+        if (typeof resource !== 'undefined'){
+            document.getElementsByTagName("main")[0].innerHTML = "<strong>Error loading resource.<strong>"
+            try {
+            $.get("resources/".concat(resource).concat(".md"), function(response) {
+                    console.log(response)
+                    var content = DOMPurify.sanitize(marked(response)).toString();
+                    console.log(content);
+                    document.getElementsByTagName("main")[0].innerHTML = content.concat("<br>");
+                });
+            }
+            catch(err){
+                console.log(err.message);
+            }
+        }
+    });
+    </script>
+
+</head>
+
+<body>
+    <header>
+        <div id="lambda" ><img src="../img/whiteLambda.png"></div>
+        <div id="titleBar">
+            <h1 id="siteTitle"> Standard ML Help </h1>
+        </div>
+    </header>
+
+    <nav>
+        <!-- This gets replaced, assuming javascript works fine on client side -->
+        <a class="navbox" href="https://smlhelp.github.io/">
+             Home
+        </a>
+        <a class="navbox" href="https://smlhelp.github.io/start/">
+             Getting Started
+        </a>
+        <a class="navbox" href="https://smlhelp.github.io/types/">
+             Types &amp; Signatures
+        </a>
+        <a class="navbox" href="https://smlhelp.github.io/debugging/">
+             Debugging
+        </a>
+        <a class="navbox" href="https://smlhelp.github.io/concepts/">
+             Concepts
+        </a>
+        <a class="navbox" href="https://smlhelp.github.io/examples/">
+             Examples
+        </a>
+        <a class="navbox" href="https://smlhelp.github.io/about/">
+             About
+        </a>
+    </nav>
+
+    <main>
+
+            <h2> Debugging </h2>
+            <hr>
+            <ul>
+                <li><a href="https://smlhelp.github.io/debugging?view=errors">Common Errors</a></li>
+                <li><a href="https://smlhelp.github.io/debugging?view=hints">Debugging Hints &amp; Strategies</a></li>
+            </ul>
+    </main>
+</body>
+
+</html>
