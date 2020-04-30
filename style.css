@@ -16,7 +16,6 @@ body{
 }
 header{
     width:100%;
-    position:fixed;
     top:0px;
     left:0px;
 }
@@ -85,9 +84,8 @@ main a:hover{
 nav {
     width:20%;
     font-size:1.4em;
-    position:fixed;
-    top:6em;
-    left:0.25%;
+    float:left;
+    margin:0.25%;
 }
 .navbox{
     display:block;
@@ -136,9 +134,7 @@ main {
 	width: 58%;
 	padding: 1%;
     float:left;
-    margin:0.225%;
-    margin-top:6em;
-    margin-left:calc(20.25% + 0.5em);
+    margin:0.25%;
     font-size:1.2em;
 }
 
