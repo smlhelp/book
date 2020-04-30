@@ -79,6 +79,7 @@ nav {
     left:0.25%;
 }
 .navbox{
+    display:block;
     background-color:#ccc;
     width:100%;
     padding:0.25em 1em;
@@ -87,14 +88,7 @@ nav {
     margin-bottom:0.25em;
     position:relative;
 }
-.pluslink{
-    position:absolute;
-    right:0.25em;
-    top:0em;
-    z-index:1000;
-    font-size:1.4em;
-}
-.navlink:hover{
+.navbox:hover{
     color:#ab4444;
 }
 .pluslink:hover{
