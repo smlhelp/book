@@ -27,6 +27,7 @@
         var resource = $_GET['view']
         
         if (typeof resource !== 'undefined'){
+            document.getElementsByTagName("main")[0].innerHTML = "<strong>Error loading resource.<strong>"
             try {
             $.get(resource.concat(".md"), function(response) {
                     console.log(response)
@@ -37,7 +38,6 @@
             }
             catch(err){
                 console.log(err.message);
-                document.getElementsByTagName("main")[0].innerHTML = "<strong>Error loading resource.<strong>"
             }
         }
     });
