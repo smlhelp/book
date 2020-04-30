@@ -31,10 +31,10 @@
                 console.log(response)
                 var content = DOMPurify.sanitize(marked(response)).toString();
                 console.log(content);
+                document.getElementById("content").innerHTML = content.concat("<br>");
             });
 
 
-            document.getElementById("content").innerHTML = content.concat("<br>");
         }
     });
     </script>
