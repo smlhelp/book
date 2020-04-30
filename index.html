@@ -6,6 +6,35 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
 	<link rel="stylesheet" href="./style.css" />
 	<title>Standard ML Help</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script defer>
+        //var elements = document.getElementsByClassName('navlink');
+        //console.log(elements)
+        //for(var i = 0, len = elements.length; i < len; i++) {
+          //  console.log(elements[i].id)
+            //elements[i].onclick = function () {
+        // stuff
+            //}
+        //}
+        function flip(idstub){
+            if ($("#".concat(idstub).concat("-submenu")).is(":visible")) {
+                $("#".concat(idstub).concat("-submenu")).hide(100);
+                $("#".concat(idstub)).html("+")
+            }
+            else{
+                $("#".concat(idstub).concat("-submenu")).show(100);
+                $("#".concat(idstub)).html("-")
+            }
+        }
+        $( document ).ready(function() {
+            $(".submenu").hide();
+            console.log("Hid submenus");
+            $(".pluslink").html("+");
+            $(".pluslink").on('click',function() {flip(this.id);});
+        });
+    </script>
 </head>
 
 <body>
@@ -16,10 +45,68 @@
         </div>
     </header>
     <nav>
-        <a href="https://smlhelp.github.io/"><div class="navlink"> Home </div></a>
-        <div class="navlink"> Types &amp; Signatures </div>
-        <div class="navlink"> Concepts </div>
-        <div class="navlink"> About </div>
+
+        <a class="navlink" href="https://smlhelp.github.io/">
+            <div class="navbox"> Home </div>
+        </a>
+      
+        <!-- Getting Started -->
+        <div class="navbox" id="start-navbox"> 
+            <a class="navlink">Getting Started</a>
+            <div class="pluslink" id="start"></div>
+        </div>
+            <div class="submenu" id="start-submenu">
+                <a class="sublink"> Install &amp; Run SML </a> 
+                <a class="sublink"> Syntax Cheatsheet </a> 
+                <a class="sublink"> Common Tasks </a> 
+            </div>
+
+        <!-- Types and Signatures -->
+        <div class="navbox" id="types-navbox"> 
+            <a class="navlink">Types &amp; Signatures</a>
+            <div class="pluslink" id="types"></div>
+        </div>
+            <div class="submenu" id="types-submenu">
+                <span class="submenu-sect"> Type Specs </span>
+                <a class="sublink"> Bool </a> 
+                <a class="sublink"> Int </a> 
+                <a class="sublink"> List </a> 
+            </div>
+
+        <!-- Debugging -->
+        <div class="navbox" id="debugging-navbox"> 
+            <a class="navlink">Debugging</a>
+            <div class="pluslink" id="debugging"></div>
+        </div>
+            <div class="submenu" id="debugging-submenu">
+                <a class="sublink"> Common Errors </a> 
+                <a class="sublink"> Debugging Hints </a> 
+            </div>
+
+        <!-- Concepts -->
+        <div class="navbox" id="concepts-navbox"> 
+            <a class="navlink">Concepts</a>
+            <div class="pluslink" id="concepts"></div>
+        </div>
+            <div class="submenu" id="concepts-submenu">
+                <span class="submenu-sect"> Basics </span>
+                <a class="sublink"> Evaluation </a> 
+                <a class="sublink"> Extensional Equivalence </a> 
+            </div>
+
+        <!-- Examples -->
+        <div class="navbox" id="examples-navbox"> 
+            <a class="navlink">Examples</a> 
+            <div class="pluslink" id="examples"></div>
+        </div>
+            <div class="submenu" id="examples-submenu">
+                <a class="sublink"> Basics </a> 
+                <a class="sublink"> Induction and Recursion </a> 
+            </div>
+
+
+
+        <div class="navbox"> About </div>
     </nav>
     <main>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec massa elementum, sodales orci ac, volutpat arcu. Phasellus quis leo fringilla, molestie risus nec, lacinia felis. Sed mattis magna et lectus dictum, ac tempor turpis placerat. Praesent tincidunt nunc dui, eget suscipit dui venenatis quis. Nam ultrices dui nec sem pellentesque, porttitor suscipit lectus ullamcorper. Morbi semper sollicitudin magna, ac accumsan lectus imperdiet non. Praesent consequat hendrerit volutpat. Quisque hendrerit pharetra metus quis vestibulum. Nullam elementum nibh justo, interdum bibendum erat vulputate eu. Aliquam quis dui neque. Maecenas euismod tempor facilisis. Proin sem ligula, pulvinar vitae vestibulum pretium, maximus quis turpis. Nam sapien urna, mollis sit amet vehicula non, elementum quis libero. Vestibulum eu sapien lobortis velit sodales volutpat vel ut dolor. Cras enim est, ullamcorper sit amet nulla non, malesuada elementum metus. Ut vitae magna eget nisl dapibus blandit eu at urna.

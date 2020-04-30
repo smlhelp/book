@@ -70,35 +70,66 @@ a{
 
 nav {
     width:20%;
-    font-size:1.7em;
+    font-size:1.4em;
     position:fixed;
-    top:4em;
+    top:6em;
     left:0.25%;
 }
-.navlink{
+.navbox{
     background-color:#ccc;
     width:100%;
     padding:0.25em 1em;
-    text-align:center;
+    padding-right:2em;
+    text-align:left;
     margin-bottom:0.25em;
+    position:relative;
+}
+.pluslink{
+    position:absolute;
+    right:0.25em;
+    top:0em;
+    z-index:1000;
+    font-size:1.4em;
 }
 .navlink:hover{
-    background-color:#ab4444;
+    color:#ab4444;
 }
-#banner {
-    color:#fff;
-    width:63em;
-    padding:3em 0.5em;
-    min-height:4em;
-    margin:0 auto;
+.pluslink:hover{
+    color:#ccc;
+    cursor:pointer;
+    color:#ab4444;
 }
-
+.submenu{
+    background-color:#999;
+    width:100%;
+    position:relative;
+    left:0em;
+    top:-0.5em;
+    font-size:1rem;
+}
+.submenu-sect{
+    display:block;
+    width:100%;
+    padding:0.25em 1em;
+    padding-left:2em;
+    font-weight:bold;
+}
+.sublink{
+    display:block;
+    width:100%;
+    padding:0.25em 1em;
+    padding-left:4em;
+}
+.sublink:hover{
+    background-color:#777;
+    color:#ccc;
+}
 main {
 	width: 58%;
 	padding: 1%;
     float:left;
     margin:0.225%;
-    margin-top:5.75%;
+    margin-top:6em;
     margin-left:calc(20.25% + 0.5em);
 }
 
