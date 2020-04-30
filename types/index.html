@@ -21,13 +21,17 @@
             var temp = parts[i].split("=");
             $_GET[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
         }
+        $.get("bool.md", function(response) {
+            var content = marked(response);
+        });
 
-        var resource = $_GET['view']
-        if (typeof resource !== 'undefined'){
-            $("#content").load("bool.md")
-            document.getElementById('content').innerHTML =
-            marked(document.getElementById('content').innerHTML);
-        }
+        $("#content").html(content)
+        //var resource = $_GET['view']
+        //if (typeof resource !== 'undefined'){
+         //   $("#content").load("bool.md")
+          //  document.getElementById('content').innerHTML =
+           // marked(document.getElementById('content').innerHTML);
+        //}
 
     });
     </script>
