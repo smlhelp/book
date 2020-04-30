@@ -22,7 +22,9 @@
             $_GET[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
         }
         $.get("bool.md", function(response) {
+            console.log(response)
             var content = marked(response);
+            console.log(content)
         });
 
         $("#content").html(content)
