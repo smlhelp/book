@@ -8,6 +8,8 @@
 	<title>Type &amp; Signatures | Standard ML Help</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
         $(function(){
         $("nav").load("../nav.html");
@@ -22,7 +24,9 @@
 
         var resource = $_GET['view']
         if (typeof resource !== 'undefined'){
-            $("#content").html(resource);
+            $("#content").load("bool.md")
+            document.getElementById('content').innerHTML =
+            marked(document.getElementById('content').innerHTML);
         }
 
     });
@@ -67,7 +71,7 @@
 
         <h1> Types &amp; Signatures </h1>
 
-        <p id="content"> Coming soon
+        <p id="content"> **Coming soon**
         </p>
     </main>
 </body>
