@@ -21,11 +21,14 @@ header{
     left:0px;
 }
 h1 {
-    padding:0.5em;
     margin:0em;
-    font-size:2.5em;
+    font-size:3.5em;
     font-family:Helvetica, sans-serif;
+}
+#siteTitle{
     color:#ab4444;
+    padding:0.5em;
+    font-size:2.5em;
 }
 #titleBar{
     background-color:#aaa;
