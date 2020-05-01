@@ -103,7 +103,7 @@ This is useful (for instance) for print-debugging the value of a `bool`-valued v
     (if b then e1 else e2)
 
     (fn (x,y) => if b then x else y) (e1,e2)
-``
+```
 
 
 #### Footnotes
