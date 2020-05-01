@@ -104,7 +104,12 @@ This is useful (for instance) for print-debugging the value of a `bool`-valued v
 
     (fn (x,y) => if b then x else y) (e1,e2)
 ```
+2. Why are the following expressions _not_ equivalent?
+```
+    b1 andalso b2
 
+    (fn (v1,v2) => v1 andalso v2) (b1,b2)
+```
 
 #### Footnotes
 [1]: This is why `andalso` and `orelse` are designated as _keywords_ above: they are _not_ infixed functions of type `bool*bool->bool`. Functions cannot exhibit this kind of "shortcircuiting" (evaluating one of their arguments and then deciding whether to evaluate the other): the integer addition `(op +) : int*int -> int` must have both of its arguments fully evaluated before proceeding to add them. The keywords `andalso` and `orelse` must be built-in to the SML evaluator to achieve shortcircuiting.
