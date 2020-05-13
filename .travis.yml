@@ -15,6 +15,11 @@ before_script:
 script:
   - mdbook build .
 
+branches:
+  only:
+    - master
+    - gh-pages
+
 deploy:
   provider: pages
   skip-cleanup: true
