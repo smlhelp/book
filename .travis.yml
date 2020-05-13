@@ -13,13 +13,13 @@ before_script:
   - cargo install-update -a
 
 script:
-  - mdbook build . && mdbook test .
+  - mdbook build .
 
 deploy:
   provider: pages
   skip-cleanup: true
   github-token: $GITHUB_TOKEN
-  local-dir: .
+  local-dir: ./docs
   keep-history: false
   on:
     branch: gh-pages
