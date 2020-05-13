@@ -15,16 +15,12 @@ before_script:
 script:
   - mdbook build .
 
-branches:
-  only:
-    - master
-    - gh-pages
-
 deploy:
   provider: pages
   skip-cleanup: true
   github-token: $GITHUB_TOKEN
   local-dir: ./docs
   keep-history: false
+  target_branch: gh-pages
   on:
-    branch: gh-pages
+    branch: master
