@@ -24,9 +24,10 @@ I'm hoping to automate or streamline some of these processes (so check back here
 Also, if you have feedback on the design of the website (technical or aesthetic), I'm happy to hear; 
 also let me know if you can think of any possible changes.
 
-### Gotchas
+### Gotchas and tips
 
 - Math mode dollar signs are not currently supported. Use `\(`+`\)` or `\[`+`\]` instead.
+- You can preview your book by installing mdbook, then running `mdbook serve` and going to the specified localhost in your browser.
 
 ## Technical stuff
 
