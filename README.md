@@ -24,6 +24,10 @@ I'm hoping to automate or streamline some of these processes (so check back here
 Also, if you have feedback on the design of the website (technical or aesthetic), I'm happy to hear; 
 also let me know if you can think of any possible changes.
 
+### Gotchas
+
+- Math mode dollar signs are not currently supported. Use `\(`+`\)` or `\[`+`\]` instead.
+
 ## Technical stuff
 
 The website is built using the [mdbook](https://rust-lang.github.io/mdBook/) static site builder, which is written in Rust. Talk to Cam if you are interested in contributing to the backend.
