@@ -36,10 +36,10 @@ val x = fn n => ("1" ^ "5") ^ (Int.toString n)
 ```
 Type: `int -> string`
 
-Value: fn (n : int) => ("1" ^ "5") ^ (Int.toString n)
+Value: `fn (n : int) => ("1" ^ "5") ^ (Int.toString n)`
 
 ## Scope
-Example 0
+### Example 0
 ```sml
 let
   val y : int = 2
@@ -51,7 +51,7 @@ What is the value of the let-in-end expression?
 
 Value: No value, because z is not in scope (will cause an error).
 
-Example 1
+### Example 1
 ```sml
 val y = 0
 val z = 
@@ -81,8 +81,7 @@ What is the value of z?
 
 z = 2
 
-
-Example 2
+### Example 2
 ```sml
 val x : int = 1 
 fun f (x : int) = x + 1
@@ -101,7 +100,7 @@ z = 3
 
 a = 1
 
-Example 3
+### Example 3
 ```sml
 val x = 1
 val y = 2
