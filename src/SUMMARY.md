@@ -6,7 +6,7 @@
     - [Install & run SML](start/install.md)
     - [Syntax Cheatsheet](start/syntax.md)
     - [Common Tasks](start/common.md)
-- [Types & Singatures](types/README.md)
+- [Types & Signatures](types/README.md)
     - [Types](types/type.md)
         - [bool](types/bool.md)
         - [int](types/int.md)
