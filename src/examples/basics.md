@@ -1,7 +1,7 @@
 # SML Basics Examples
 
 ## Types
-For each of the following expressions, state its type and value.
+For each of the following declarations, state the type and value of `x`.
 
 ```sml
 val x = 1 > 5
@@ -49,7 +49,7 @@ end
 ```
 What is the value of the let-in-end expression?
 
-Value: No value, because z is not in scope (will cause an error).
+Value: No value, because `z` is not in scope (will cause an error).
 
 ### Example 1
 ```sml
@@ -65,19 +65,19 @@ val z =
 val a = y
 ```
 
-What is the value of y before the let-in-end expression?
+What is the value of `y` before the let-in-end expression?
 
 y = 0
 
-What is the value of y within the let-in-end expression?
+What is the value of `y` within the let-in-end expression?
 
 y = 2
 
-What is the value of a?
+What is the value of `a`?
 
 a = 0
 
-What is the value of z?
+What is the value of `z`?
 
 z = 2
 
@@ -90,7 +90,7 @@ val z : int = f y
 val a : int = x
 ```
 
-What are the values of x, y, z, and a?
+What are the values of `x`, `y`, `z`, and `a`?
 
 x = 1
 
@@ -113,7 +113,7 @@ val a = f (y, x)
 val b = f (x, y)
 ```
 
-What are the values of a and b?
+What are the values of `a` and `b`?
 
 a = 2
 
