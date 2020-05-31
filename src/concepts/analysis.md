@@ -9,7 +9,7 @@ Additionally, we are usually not just interested in a program's runtime based on
 ## The Solution
 We will generally turn to _asymptotic analysis_ to solve these issues. It provides a nice mathematical definition that conveniently takes care of many of the points previously mentioned.
 
-> **[Big-O]** We say that a function \(f : \mathbb{R}^+ \rightarrow \mathbb{R}^+\) is in big-O of another function \(g : \mathbb{R}^+ \rightarrow \mathbb{R}^+\) (write \(f(n) = O(g(n)\) or \(f(n) \in O(g(n))\)) if there exists constants \(c, n_0 > 0\) such that for all \(n \geq n_0\), \(f(n) \leq cg(n)\). In words, \(f(n) = O(g(n))\) if there exists a point beyond which \(f(n)\) can be upper bounded by \(g(n)\), amplified by some constant factor.
+> **[Big-O]** We say that a function \(f : \mathbb{R}^+ \rightarrow \mathbb{R}^+\) is in big-O of another function \(g : \mathbb{R}^+ \rightarrow \mathbb{R}^+\) (write \(f(n) = O(g(n)\) or \(f(n) \in O(g(n))\)) if there exist constants \(c, n_0 > 0\) such that for all \(n \geq n_0\), \(f(n) \leq cg(n)\). In words, \(f(n) = O(g(n))\) if there exists a point beyond which \(f(n)\) can be upper bounded by \(g(n)\), amplified by some constant factor.
 
 In intuitive terms, we can think of a function \(f\) as being in big-O of another function \(g\) if it is "less than or equal to" that function, in terms of the complexity class that it belongs to. For instance, \(2x\) is \(O(x^2)\), and also \(O(x)\), the former being because a quadratic function grows faster than a linear function by a factor of \(x\), and the latter being because we effectively do not care about constant factors. Note that for that example, we can choose \(c = 2\), which makes \(f(n) = cg(n) = 2x\), which clearly makes \(f(n) \leq cg(n)\) true.
 
@@ -37,4 +37,3 @@ fun bar (0 : int) : int = 0
 Now, instead of adding `n`, each computation in the recursive step instead adds `foo(i)`, invoking the previous function. 
 
 This becomes slightly harder to eyeball. We can eyeball this as upper boundable by \(O(n^2\), though we would desire some more justification than just what it "seems to be". We will need to turn to more sophisticated methods to analyze this more formally, which we will cover in the next chapter. The general idea of estimating complexity, however, is simply to look at programs in terms of their components - how many times instructions run, and what the cost of each instruction's individual cost is. This becomes a very powerful method of reasoning that we will explore more later when we discuss sequences, though we will introduce a way to do so in a slightly more rigorous manner.
-
