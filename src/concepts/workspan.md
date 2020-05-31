@@ -259,7 +259,7 @@ Now we will analyze the complexity of finding the size of a tree. Consider the
 following implementation for doing so:
 ```sml
 fun size (Empty : tree) : int = 0
-  | size (Node(L, x, R) : tree) : int = size L + 1 + size R
+  | size (Node (L,x,R) : tree) : int = size L + 1 + size R
 ```
 
 First convince yourself that it actually works. It simply recursively finds the
