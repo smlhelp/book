@@ -292,7 +292,7 @@ asymptotic complexity of this function. For work, however, there is no
 worst-case - no matter how the tree is structured, we must visit every node
 once, doing a constant amount of work each time. So we should obtain, in the
 end, \(W_{size}(n) = nc_0 + c_1\), which we know is \(O(n)\). So in this case,
-we didn't have to think about the structure of the tree. In the next section. it
+we didn't have to think about the structure of the tree. In the next section, it
 will matter.
 
 ## Work/Span Analysis: Balanced vs Unbalanced Trees
