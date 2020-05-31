@@ -34,6 +34,6 @@ But now let us consider how long it might take to run the following code fragmen
 fun bar (0 : int) : int = 0
   | bar (n : int) : int = (foo n) + bar (n - 1)
 ```
-Now, instead of adding `n`, each computation in the recursive step instead adds `foo(i)`, invoking the previous function. 
+Now, instead of adding `n`, each computation in the recursive step instead adds `foo i`, invoking the previous function. 
 
 This becomes slightly harder to eyeball. We can eyeball this as upper boundable by \(O(n^2\), though we would desire some more justification than just what it "seems to be". We will need to turn to more sophisticated methods to analyze this more formally, which we will cover in the next chapter. The general idea of estimating complexity, however, is simply to look at programs in terms of their components - how many times instructions run, and what the cost of each instruction's individual cost is. This becomes a very powerful method of reasoning that we will explore more later when we discuss sequences, though we will introduce a way to do so in a slightly more rigorous manner.
