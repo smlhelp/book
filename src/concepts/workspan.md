@@ -25,7 +25,7 @@ way. It seems to be in our nature to impose some kind of order on a list of
 actions.
 
 Despite that, however, sequential evaluation is not always the most _efficient_.
-Sequential evaluation induces _dependencies_ where other subtasks cannot be
+Sequential evaluation introduces _dependencies_ where other subtasks cannot be
 started until we have finished the current subtask, which has the effect of
 potentially inducing wait times where none exist. For instance, if your plan is
 to do the laundry and your homework, it might not be the most time-efficient to
