@@ -158,7 +158,7 @@ This directly corresponds to our code, which has two clauses for a list of
 length \(0\) (that being `[]`), and for the general case. This is an important
 observation to make, that the recurrence follows directly from the code.
 
-The recursive case says that, for an input of size \(n\), the work done is \(c_0+ W_{length}(n-1)\). Here, \(c_0\) denotes _some_ constant. This is supposed to
+The recursive case says that, for an input of size \(n\), the work done is \(c_0 + W_{length}(n-1)\). Here, \(c_0\) denotes _some_ constant. This is supposed to
 correspond to the recursive case of the function, and if we look at it, we have
 a recursive call `length xs`, as well as some other work of adding one. Adding
 one, being an arithmetic operation, is a constant-time process, meaning that it
