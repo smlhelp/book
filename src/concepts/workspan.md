@@ -285,7 +285,7 @@ previous part, where `c_0` is just some constant amount of work that we
 necessarily have to do, and the two \(W_{size}\) calls are from the two
 recursive calls we make to `L` and `R`. 
 
-Now, we don't know precisely how big \(n_1\) and \(n_r\) are, with respect to
+Now, we don't know precisely how big \(n_l\) and \(n_r\) are, with respect to
 \(n\). This makes our analysis a little more tricky, but essentially all we need
 to do is think of the _worst case_, as we are interested in the worst-case
 asymptotic complexity of this function. For work, however, there is no
