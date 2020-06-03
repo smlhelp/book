@@ -68,9 +68,7 @@ fun length ([] : 'a list) : int = 0
 determine what the proper type of the `length` function should be, in any given
 context. Note that `'a` is a _variable_, and as always, in proofs, we must
 quantify our variables. `'a` and other type variables thus implicitly correspond
-to having a "for-all" quantifier in front of it - so we say that a function of
-type `'a` has type `'a`, for all types `'a`. We further note that this is really
-syntactic sugar for the notation:
+to having a "for-all" quantifier in front of it - so we say that an expression of type `'a` has type `t`, for all types `t`. We further note that this is really syntactic sugar for the notation:
 ```sml
 fun 'a length ([] : 'a list) : int = 0
   | length (x::xs : 'a list) : int = 1 + length xs
@@ -130,17 +128,7 @@ function.
 
 ## Other Forms of Polymorphism 
 
-Note that the polymorphism demonstrated by `length` is of a different flavor
-than that of `+`, `*`, or other overloaded functions. The overloading of basic
-arithmetic functions to work on ints and reals is more in line with what might
-be referred to as "ad hoc" polymorphism, which is merely the compatibility of a
-single operator with several possibly heterogeneous implementation, with the
-precise implementation being chosen by context (such as type, in this case). Ad
-hoc polymorphism is noticeably more inelegant than parametric polymorphism, but
-it is useful in the cases that you only have a small subset of types to extend
-an operator to.
-
-A similar idea of extending functions to only subsets of types is exhibited by
+A similar idea of extending functions to working on many types is exhibited by
 _equality types_, which are a behind-the-scenes process that you have already
 been exposed to. Consider the type of the function `=` - the equality operator.
 Clearly, it cannot have type `'a * 'a -> bool`, since some types don't make
@@ -158,16 +146,28 @@ equality types. This includes `int`, `bool`, `string`, and any datatype built up
 from non-equality types, among others. Thus, the `=` operator actually has type
 `''a * ''a -> bool`, so as to only work on compatible types. 
 
+**NOTE:** Note that the polymorphism demonstrated by `length` is of a different
+flavor than that of `+`, `*`, or other overloaded functions. The overloading of
+basic arithmetic functions to work on ints and reals is more in line with what
+might be referred to as "ad hoc" polymorphism, which is merely the compatibility
+of a single operator with several possibly heterogeneous implementations, with
+the precise implementation being chosen by context (such as type, in this case).
+It is thus important to note that while parametric polymorphism identifies a
+single, _general_ implementation with many types, ad hoc polymorphism identifies
+several different implementations with different use cases. Ad hoc polymorphism
+is noticeably more inelegant than parametric polymorphism, but it is useful in
+the cases that you only have a small subset of types to extend an operator to.
+
 ## Type Inference
-When we omit explicit type annotations, SML needs to do a little more work to
-determine the type of the expressions that we are using. This is not so
-different of a problem than type-checking, however. On a high level, SML simply
-assigns everything a very general type, and then begins looking at clues from
-the context so as to narrow down what the "most general type" is. By "most
-general type", we usually mean the most general type an expression can have,
-meaning that we do not use specific instances of polymorphic expressions, but
-just the polymorphic type itself. It is valid to say that the `length` function
-has type `int list -> int`, but its most general type is `'a list -> int`.
+Duiring compilation, SML will often need to determine exactly what the type of
+the expression that we are looking at. This is not so different of a problem
+than type-checking, however. On a high level, SML simply assigns everything a
+very general type, and then begins looking at clues from the context so as to
+narrow down what the "most general type" is. By "most general type", we usually
+mean the most general type an expression can have, meaning that we do not use
+specific instances of polymorphic expressions, but just the polymorphic type
+itself. It is valid to say that the `length` function has type `int list ->
+int`, but its most general type is `'a list -> int`.
 
 > **[Type Inference]** A procedure employed by type systems to _infer_ the type
 > of expressions and functions, even when not explicitly given those types.
@@ -179,12 +179,7 @@ but we know that it wouldn't make sense for `x` to be any other type than `int`
   cannot have an input type of `real * int`.
 
 We might also think of it like this - consider the expression `fn x => x + 1`.
-Most generally, we know that it should have type `'a`. Moreover, we see that it
-is a lambda expression, so it must have type `'a -> 'b`. The input is `x`, so we
-assign `x` type `'a`. We then attempt to apply the `+` operator to `x`, so for
-this to typecheck, `x` must have type `int`. The outcome of an `int` and an
-`int` with `+` should be an `int`, and that's the entire function body, so the
-whole expression has type `int -> int`.
+Most generally, we know that its type should an instance of type `'a`. Moreover, we see that it is a lambda expression, so it must now be an instance of `'a -> 'b`. The input is `x`, so we assign `x` to be an instance of type `'a`. We then attempt to apply the `+` operator to `x`, so for this to typecheck, `x` must have type `int`. The outcome of an `int` and an `int` with `+` should be an `int`, and that's the entire function body, so the whole expression has type `int -> int`.
 
 ## Conclusions
 Parametric polymorphism offers us a clean and elegant way to extend _general
