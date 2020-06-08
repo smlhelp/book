@@ -30,7 +30,7 @@
     - [Asymptotic Analysis](concepts/analysis.md)
         - [Work and Span](concepts/workspan.md)
     - [Datatypes](concepts/datatypes.md)
-        - [Parametrized Polymorphism](concepts/poly.md)
+        - [Parametric Polymorphism](concepts/poly.md)
     - [Higher Order Functions](concepts/hofs.md)
         - [Currying and Staging](concepts/curry.md)
         - [Common HOFs and Partial Evaluation](concepts/common.md)
