@@ -1,3 +1,14 @@
+<style>
+.center{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+figure figcaption {
+    text-align: center;
+}
+</style>
+
 # Continuation Passing Style
 We have seen how we can write functions that are _tail recursive_, in that they
 only make recursive calls as _tail calls_, where the recursive calls is the last
@@ -266,10 +277,69 @@ function to see if it succeeds, then taking some action based on that premise is
 illegal. You may not fully understand what that means at the present, but we
 will explore this idea more in the future.
 
-## Continuation Passing Style: A Case Study v2.0
-
-We will now explore an example of a 
-
 ### Footnotes
 
 <a id="footnote3"> [3]: Otherwise, you should be quite concerned about the competency of the author, and you would probably be better off reading a different help site.
+
+## Continuation Passing Style: A Case Study v2.0
+
+We will now explore an example of a CPS function that makes use of some concept
+of limited _backtracking_, or _checkpointing_. Somewhat key to this example is
+that it writes down not just _one_ instruction at each recursive call, but
+_multiple_.
+
+```sml
+fun treeSumCPS Empty k = k 0
+  | treeSumCPS (Node (L, x, R)) k = 
+  treeSumCPS L (fn leftSum => treeSumCPS R (fn rightSum => k (leftSum + x + rightSum))
+```
+
+This function computes the sum of the elements in an int tree. The recursive
+case has a slightly more intimidating-looking continuation, however we can view
+it as simply a case of the continuation being wrapped _twice_.
+
+Consider how we would normally want to approach this problem. In a typical
+`treeSum`, we might compute both the left and right sums, and then simply add
+the results to `x`. This suffices, and follows rather intuitively, but in CPS we
+must make our control flow _explicit_. In this manner, we must be very specific
+about _what_ we should do and in which _order_. To that end, we fix a direction
+to visit first (in this case, left, though it does not matter), and then compute
+the sum of that direction, with the promise that we will eventually use the
+result of the left side to compute the final result.
+
+To visualize what is happening, consider the following tree.
+
+<figure class="aligncenter">
+    <img src="../assets/cpsTree.png" alt="Tree to be summed"
+    width="200" class="center"/>
+    <figcaption><b>Fig 5.</b> A tree of ints to be summed, whose node contents are conveniently enumerated according to visit order. </figcaption>
+</figure>
+
+We will run through a mock simulation of the evaluation of `treeSumCPS T k`,
+where `T` is the tree pictured, and `k` is some arbitrary continuation. First,
+note that we will take the convention that "Tn" for some number n will denote
+the subtree rooted at the vertex n, and "Sn" will denote the sum of that
+subtree.
+
+Firstly, we know that from `treeSumCPS T k` we should obtain `treeSumCPS T2 (fn
+S2 => treeSumCPS T4 (fn S4 => k (S2 + 1 + S4))`.
+
+<figure class="aligncenter">
+    <img src="../assets/phase1.png" alt="Phase 2"
+    width="3000" class="center">
+    <figcaption class="center"><b>Fig 6.</b> Phase 1 of evaluation of the tree T. </figcaption>
+</figure>
+
+We can think of the individual calls to `treeSumCPS` on `T2` and `T4` as leaving
+"flags" on each arm of the edges coming from vertex 1 - denoting which node that
+we should visit next. Clearly, we visit `T2` first, so the red brick
+corresponding to `T2` is on top.
+
+Our next move is to pop it off first, which will cause our expression to now
+have three bricks - two corresponding to the children of `T2`, and one
+corresponding to `T4`. Since the left child of `T2` is `Empty`, we know that its
+evaluation will only call the continuation, so we can skip to `T3`. 
+
+More specifically, we would obtain the expression ```treeSumCPS Empty (fn SE => treeSumCPS T3 (fn S3 => (fn S2 => treeSumCPS T4 (fn S4 => k (S2 + x + S4)) (SE + 2 + S3)))```. This is at the upper limit of the amount of analysis that we are willing to do before throwing our hands up in frustration, but recognize that as an Empty case, this quickly reduces to `treeSumCPS T3 (fn S3 => (fn S2 => treeSumCPS T4 (fn S4 => k (S2 + 1 + S4)) (0 + 2 + S3)))`.
+
+
