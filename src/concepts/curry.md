@@ -63,6 +63,12 @@ They do, however, in a sense _correspond_, in that they seem to do the _same
 thing_ - that is, add numbers together. The manner in which they do so is
 entirely disparate, however. 
 
+It is important to note that currying our functions gives us a notion of
+_partial application_, where we can give a curried function only _some_ of its
+"arguments". This lends us to further specialization and modularity based on the
+use case and amount of information available. This is discussed more in the
+coming section. 
+
 ## Revisiting Extensional Equivalence 
 In previous chapters, we have explored the idea of extensional equivalence, and 
 constructed a definition for extensional equivalence that covered two cases - 
@@ -70,13 +76,13 @@ the function case and the non-function case.
 
 We seemed to agree on a meaning that said that, for non-function values, two
 values are extensionally equivalent if they are the _same value_, which is an
-ill-founded definition that may leave a bad taste in one's mouth, but ultimately
-boils down to our intuitive notion that, yes, some values are just the _same_
-and we can't really do much more than question that. For instance, we can see
-that `(1, 2, "hi")` and `(1, 2, "hi")` are the "same", and neither are the same
-as `(2, 1, "hello")`. For functions, however, we decided on a slightly more
-appeasing definition that defined a function by its _input-output_ behavior. We
-restate the definition below:
+perhaps an ill-justified definition that may leave a bad taste in one's mouth, 
+but ultimately boils down to our intuitive notion that, yes, some values are 
+just the _same_ and we can't really do much more than question that. For 
+instance, we can see that `(1, 2, "hi")` and `(1, 2, "hi")` are the "same", 
+and neither are the same as `(2, 1, "hello")`. For functions, however, we 
+decided on a slightly more appeasing definition that defined a function by 
+its _input-output_ behavior. We restate the definition below:
 
 > **[Extensional Equivalence (Functions)]** We say two expressions `e : t1 ->
 > t2` and `e' : t1 -> t2` for some types `t1` and `t2` are extensionally
@@ -147,7 +153,7 @@ years! This is far too long, and we want to do better.
 
 One thing that we note is that almost all of the work that we expended in
 computing `contrived 4 2` and `contrived 4 5` was in evaluating
-`horribl_computation 4`. This computation took us 3 years, but we repeated it
+`horrible_computation 4`. This computation took us 3 years, but we repeated it
 twice! In both of queries we made, we had to compute the exact same thing, which
 led to major inefficiencies. The rest of the work of `contrived` was negligible
 compared to the overhead of `horrible_computation`. It seems that we should be
@@ -186,8 +192,7 @@ We can do this because `contrivedStaged 4` computes the result of
 function that it returns. This means that, in the scope of `intermediate`, it
 contains the answer that was common to both of the expressions we wrote earlier.
 Now, we can execute the step of `y + z` (which is nearly instantaneous), cutting
-our runtime in half. Now, we can obtain `contrived 4 2` and `contrived 4 5` in
-only 3 years.
+our runtime in half. Now, we can obtain the result of `contrived 4 2` and `contrived 4 5` in only 3 years (though to evaluate both of those expressions themselves would still take 6 years!).
 
 It is important to note that currying is _not_ the same thing as staging.
 `contrived` was curried, but not staged optimally - we made a change that, even
