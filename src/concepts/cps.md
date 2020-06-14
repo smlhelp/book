@@ -259,6 +259,10 @@ We are now ready to attempt a definition of continuation passing style.
 > 2. It calls functions with continuations (including itself) as tail calls.
 >
 > 3. It can only call its continuations in tail calls.
+>
+> The key characteristic of CPS functions is that they are generally written
+> with the goal of _passing their results to their continuations_. These
+> continuations specify what computations should occur next.
 
 First, take a moment to assure yourself that the implementation of `factCPS`
 that we have so deeply studied _is_, in fact, in continuation passing style<a href="#footnote3">
@@ -276,6 +280,15 @@ a recursive call to itself_. So, for instance, making a recursive call to a CPS
 function to see if it succeeds, then taking some action based on that premise is
 illegal. You may not fully understand what that means at the present, but we
 will explore this idea more in the future.
+
+A somewhat interesting note is that every direct-style (which is how we will
+term the kinds of functions that we have written until now) function admits a
+continuation passing style implementation. This means that continuation passing
+style is nothing arcane, but it is merely a _different way of viewing
+computation_. Functions written in continuation passing style can have
+significant performance benefits when compared to their direct style
+counterparts, so there are reasons to use continuation passing style other than
+just for the sake of it. 
 
 ### Footnotes
 
@@ -325,7 +338,7 @@ Firstly, we know that from `treeSumCPS T k` we should obtain `treeSumCPS T2 (fn
 S2 => treeSumCPS T4 (fn S4 => k (S2 + 1 + S4))`.
 
 <figure class="aligncenter">
-    <img src="../assets/phase1.png" alt="Phase 2"
+    <img src="../assets/phase1.png" alt="Phase 1"
     width="3000" class="center">
     <figcaption class="center"><b>Fig 6.</b> Phase 1 of evaluation of the tree T. </figcaption>
 </figure>
@@ -336,10 +349,272 @@ we should visit next. Clearly, we visit `T2` first, so the red brick
 corresponding to `T2` is on top.
 
 Our next move is to pop it off first, which will cause our expression to now
-have three bricks - two corresponding to the children of `T2`, and one
-corresponding to `T4`. Since the left child of `T2` is `Empty`, we know that its
-evaluation will only call the continuation, so we can skip to `T3`. 
+have three bricks - two corresponding to the children of `T3`, and one
+corresponding to `T4`. We can visualize the next phase as the following:
 
-More specifically, we would obtain the expression ```treeSumCPS Empty (fn SE => treeSumCPS T3 (fn S3 => (fn S2 => treeSumCPS T4 (fn S4 => k (S2 + x + S4)) (SE + 2 + S3)))```. This is at the upper limit of the amount of analysis that we are willing to do before throwing our hands up in frustration, but recognize that as an Empty case, this quickly reduces to `treeSumCPS T3 (fn S3 => (fn S2 => treeSumCPS T4 (fn S4 => k (S2 + 1 + S4)) (0 + 2 + S3)))`.
+<figure class="aligncenter">
+    <img src="../assets/phase2.png" alt="Phase 2"
+    width="3000" class="center">
+    <figcaption class="center"><b>Fig 7.</b> Phase 2 of evaluation of the tree T. Note that two extra "bricks" have been added due to evaluation of treeSumCPS T2. </figcaption>
+</figure>
 
+where the brick labelled `treeSumCPS E` corrresponds to the empty child of
+`T2`. Note that we have retained the blue flag at `T4` and left its brick alone,
+since for all intents and purposes we have not yet "touched" it - we have not
+evaluated our stack to that point. Note that due to corresponding to the `Empty`
+case, the purple brick will not add any new bricks, but merely defer to the next
+brick on the stack - the orange brick. Thus, the next step looks like the
+following:
 
+<figure class="aligncenter">
+    <img src="../assets/phase3.png" alt="Phase 3"
+    width="3000" class="center">
+    <figcaption class="center"><b>Fig 8.</b> Phase 3 of evaluation of the tree T. Note that this follows from evaluating both of the top bricks from the previous step. </figcaption>
+</figure>
+
+In this step, the green and light blue bricks again correspond to empty trees,
+so they simply dissolve without generating more instructions. As such, we reduce
+to the following diagram:
+
+<figure class="aligncenter">
+    <img src="../assets/phase4.png" alt="Phase 4"
+    width="3000" class="center">
+    <figcaption class="center"><b>Fig 9.</b> Phase 4 of evaluation of the tree T. Note that, after finishing our evaluation of all of the bricks of the left side, we return to our long-neglected "checkpoint" on the right side of the tree.. </figcaption>
+</figure>
+
+We see in this step that, as the figure caption says, we have returned to the
+right hand side after finishing all evaluation on the left hand side of the
+tree. Thus, our construction was correct - we placed the blue brick onto the
+stack at the very beginning, then proceeded to forget about it until now. This
+works in our favor, however, as we only return to it once we have finished with
+everything on the left. One more step of evaluation yields:
+
+<figure class="aligncenter">
+    <img src="../assets/phase5.png" alt="Phase 5"
+    width="3000" class="center">
+    <figcaption class="center"><b>Fig 10.</b> Phase 5 of evaluation of the tree T. </figcaption>
+</figure>
+
+Thus, all we have left are empty bricks, so we are very close to termination.
+
+This demonstration was far from a rigorous treatment, and also omitted any
+mention of the actual value being passed into each continuation - this can be
+inductively assumed to be the proper sum at any given brick. We invite the
+reader to conduct any detailed analysis on their own, similarly to the treatment
+of `factCPS`, in order to truly grasp how the different subtree sums are
+computed and passed around.
+
+The main point in this example, however, was to demonstrate how even a slightly
+more complicated function can result in elegant, powerful control-flow behavior.
+By simply wrapping our continuation twice, we ensured that we could set up a
+"checkpointing" system, where we could set "flags" to jump back to once
+finishing a certain computation. This is an important idea to cognize with
+continuation passing style. 
+
+In the next example, we will explore how we can set up more complicated
+arrangements of control flow through usage of two continuations.
+
+## Continuation Passing Style: A Case Study in Success and Failure
+
+Duality seems to permeate computational problems. When trying to write programs,
+we often come to cases where we need to make a choice between two extremes - on
+or off, keep or don't, left or right, 1 or 0. With the capacity to make choices,
+however, comes the possibility of making the _wrong_ choice. In such a case, we
+might want the ability to remember the choice we made, and take the other one,
+or _backtrack_. 
+
+> **[Backtracking]** Backtracking is a strategy employed by algorithms when
+> trying to find all the possible "options" or "possibilities", so as to locate
+> the "best" solution, or alternatively just one feasible solution. Problems
+> that admit backtracking solutions include the N-queens puzzle, constraint
+> satisfaction problems, and Sudoku.
+
+At first, backtracking might seem like it is akin to what was done in the
+previous example, with our idea of "checkpointing", except that we never really
+"reset" our state. When we set checkpoints to go back to in the `treeSumCPS`
+example, we always did so while retaining the sum of the left side, so we never
+lost information. In a backtracking problem, we may need to throw away
+everything that we've done in the meantime and go to a different solution
+entirely.
+
+In this example, we will analyze a classic optimization problem, and how it
+admits a CPS solution.
+
+> **[Knapsack Problem - Decision Version]** The _knapsack problem_ is a resource
+> allocation problem which traditionally concerns a person with a knapsack that
+> can only contain a certain total weight of items. The person has to choose between a
+> collection of items (all of differing weight and value) so as to maximize the
+> amount of value collected, while being below the maximum weight limit of the knapsack.
+> Note that items can be taken more than once.
+>
+> In this chapter, we will be concerned specifically with the _decision problem_
+> version of the knapsack problem, which, instead of asking for a maximizing
+> assignment, instead asks if there _exists_ an assignment that can achieve a
+> certain threshold of value.
+>
+
+We will now write a continuation passing style function that solves the
+knapsack problem.
+
+```sml
+type weight = int
+type value = int
+
+(* knapsackCPS : 
+ *            (value * weight) list -> 
+ *            value -> 
+ *            weight -> 
+ *            ((value * weight) list -> 'a) -> 
+ *            (unit -> 'a) -> 
+ *            'a 
+ * REQUIRES: The weights and values of the elements in L are strictly positive.
+ * ENSURES: knapsack L minVal maxWeight sc fc ~= sc L' for some L' that only
+ * contains elements of L, such that the total value of L' >= minVal and the 
+ * total weight of L' <= maxWeight, if such an L' exists. If no such L' exists, 
+ * then it should be equivalent to fc ().
+ *)
+
+fun knapsackCPS 
+  (L : (value * weight) list) 
+  (minVal : value) 
+  (maxWeight : weight) 
+  (sc : (value * weight) list -> 'a) 
+  (fc : unit -> 'a)
+  : 'a =
+  case L of
+    [] => if minVal <= 0 andalso maxWeight >= 0 then sc [] 
+                                                else k ()
+  | (v, w)::xs => if maxWeight < 0 then k ()
+                                   else
+    knapsackCPS ((v, w)::xs) (minVal - v) (maxWeight - w) 
+    (fn L' => sc ((v, w)::L')) (fn () => knapsackCPS xs minVal maxWeight sc fc)
+```
+
+We see that `knapsackCPS` takes in a list of items, each represented as 
+a `value * weight` tuple, where `value` and `weight` are both really just 
+aliases for `int`. It also takes in a minimum threshold for the knapsack's 
+value, `minVal`, and a maximum weight of items to be taken `maxWeight`. Of 
+particular interest, however, are the parameters `sc` and `fc` - denoting 
+what we call the _success_ and _failure_ continuations. The goal of our 
+function is to ultimately find a list `L'` that contains elements that are also 
+in `L` (with duplicates allowed). This corresponds to choosing how many of each 
+item in the allowed collection to pick.
+
+If such a list exists, then we should return `sc L'`. Otherwise, if there is no
+such list, we should return `fc ()`. 
+
+Rather immediately, this should seem as a kind of different problem. There isn't
+really a better algorithm than brute forcing possibilities, but if we try a
+possibility and it turns out to be wrong, we want to have the option to be able
+to _backtrack_ and try something else entirely. We will demonstrate how this is
+realized in the algorithm in the next part.
+
+```sml
+case L of
+    [] => if minVal <= 0 andalso maxWeight >= 0 then sc [] 
+                                                else k ()
+```
+
+For the base case, however, we know that if we are given no items whatsoever,
+then we cannot place anything in our knapsack. Thus, we have no choice but to
+have a value and weight of 0. As such, if we know that our minimum value is at
+most 0 and our maximum weight is at least 0, then a valid list value for `L'` is
+just the empty list, so we can call our success continuation in `sc []`. Otherwise, 
+we must call the failure continuation, as the problem is not solvable.
+
+Note that, since we plan to write this function recursively, if we were given an
+initial list that was non-empty, we may eventually recurse down to the empty
+case. It may then seem like a concern that we are calling `sc []`, as we might
+actually call `sc` on a list that contains elements. Note that this is not a
+concern - by the structure of CPS functions, if we were to recurse down to the
+base case, our "promise" is that the success continuation `sc` that we enter the
+base case with is not the "original" `sc` that we were passed - by this point,
+it should have accumulated a great deal of "information" and thus become more
+advanced than simply returning `sc []`, for the original `sc`. For the base
+case, it is sufficient to simply solve it from the perspective of having been
+originally given `[]`.
+
+In the recursive case, we now have to think about how we might solve the
+knapsack problem given that we have a non-empty collection of items to take.
+Right off the bat, we can say that if our `maxWeight < 0`, then this problem is
+unsolvable, since we cannot possibly have a negative total weight (our weights
+in this problem are strictly positive), so in that case we would simply call our
+failure continuation.
+
+Otherwise, however, we now need to actually think about what to do. Oftentimes,
+it is very helpful reduce the problem to making a _binary choice_, and then
+simply explore the consequences of doing so from there. In this case, we can
+imagine our choice to be whether to put the first element of the list into the
+knapsack, or to not. 
+
+```sml
+| (v, w)::xs => if maxWeight < 0 then k ()
+                                   else
+    knapsackCPS ((v, w)::xs) (minVal - v) (maxWeight - w) 
+    (fn L' => sc ((v, w)::L')) (fn () => knapsackCPS xs minVal maxWeight sc fc)
+```
+What does our recursive call for putting the first element `(v, w)` into the
+knapsack look like? It takes the form of `knapsackCPS ((v, w)::xs) (minVal - v) 
+(maxWeight -  w) sc' fc'`, for some `sc'` and `fc'` that we will determine later. We 
+keep the list the same, to account for the fact that we can have duplicates - in the 
+next step, we want to reconsider whether we want to put `(v, w)` on again. If we
+commit to putting `(v, w)` in the knapsack, however, we need to somehow encode
+the fact that our value has gone up by `v`, and our knapsack's weight has gone
+up by `w`. This is achieved by setting the new minimum value to be `minVal - v`,
+and the new max weight to be `maxWeight - w` - we simply lower our thresholds,
+which is functionally the same.
+
+What should our continuations be? Remember that by the recursive leap of faith,
+we can assume a kind of "promise" of this recursive call - that is, we can
+assume that `knapsackCPS ((v, w)::xs) (minVal - v) (maxWeight - w) sc' fc'`
+obeys the same ENSURES clause as was written above, for its own `sc'` and `fc'`.
+We now should define what to do in the case that either is called.
+
+We are, at this point, not actually at the stage where we know if `sc'` or `fc'`
+is going to be called, or on what, if at all. The power in CPS comes from the
+fact that this _does not matter_, and we can write our algorithm despite
+that. Earlier, we discussed the concept of continuations as _contingency plans_.
+In this function, we are going to be using that strategy to full effect.
+
+Think of `sc'` and `fc'` as contingency plans for the success and failure case,
+respectively. _If_ we were to succeed on this recursive call, what should we do?
+If we were to fail, what should we do? Even though we have no idea what the
+input to the continuation is, the fact that it is a function allows us (inside
+the scope of the body of `sc'`) to _assume we have access to it_. 
+
+As such, the first thing we may write for `sc'` is `fn L' => ...`. Now, we must 
+fill in the ellipses. If `sc'` is called, we know that it must be called with an 
+appropriate `L'` that satisfies the ENSURES conditions. Recall that this recursive call
+emerged in the first place from our _choice_ - to place `(v, w)` inside of the
+knapsack. Thus, if the call to `knapsackCPS` succeeds, we know that placing `(v,
+w)` inside the knapsack must be feasible, by extension. So then we know it makes
+sense to write `fn L' => sc ((v, w)::L')` for `sc'`, which intuitively means
+"take the answer (knapsack) to the recursive call and then put `(v, w)` in it,
+then call success on it". Thus, we have written down a _contingency plan_ for
+what we should do _if_, at some point in the future, our success continuation is
+called.
+
+What about `fc'`? What should we do if we fail? Well, if our recursive call to
+`knapsackCPS` does not succeed, that must mean that our choice to place `(v, w)`
+inside of the knapsack was wrong. In that case, we want to make the other choice - 
+to not put `(v, w)` inside the knapsack. Thus, we write `fn () => knapsackCPS xs
+minVal maxWeight sc fc`, which has the exact same parameters as what we were
+initially passed, except we have gotten rid of `(v, w)` (since we know to put it
+in the knapsack is a mistake). Our `sc` and `fc` remain the same, since on a
+sucess or fail to this call, we just do whatever we would normally do on a
+success or fail.
+
+This, in only a few lines (and generous whitespace), we have written an
+algorithm for a backtracking knapsack problem solver. While it looks
+intimidating at first, the overall algorithm reduces down to only a few simple
+steps, which is written in an elegant and explicit manner due to continuation
+passing style.
+
+## Conclusions
+
+In this section, we explored the idea of continuation passing style, which lets
+us phrase the control flow of our functions in a more explicit manner, granting
+us more versatility in our implementation. We saw how CPS functions can be
+viewed as simply a more advanced form of accumulation, as well as how having
+multiple continuations (corresponding to success and failure cases) allows us to
+explore expansive trees of binary choices to find solutions.
