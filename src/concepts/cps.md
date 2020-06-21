@@ -468,7 +468,7 @@ type value = int
  *            (unit -> 'a) -> 
  *            'a 
  * REQUIRES: The weights and values of the elements in L are strictly positive.
- * ENSURES: knapsack L minVal maxWeight sc fc ~= sc L' for some L' that only
+ * ENSURES: knapsackCPS L minVal maxWeight sc fc ~= sc L' for some L' that only
  * contains elements of L, such that the total value of L' >= minVal and the 
  * total weight of L' <= maxWeight, if such an L' exists. If no such L' exists, 
  * then it should be equivalent to fc ().
