@@ -300,6 +300,10 @@ continuations_ with a raised exception, an `exception Success of (int * int)
 list`. We will not cover such an implementation in this chapter, but we invite
 the reader to try it out.
 
+### Footnotes
+<a id="footnote1"> [1]: We're funny.
+<a id="footnote2"> [2]: Say that five times fast.
+
 ## Conclusions
 In this chapter, we explored _exceptions_, which allow us to have quick
 transfers of control flow, albeit in a less "controlled" fashion than ways that
@@ -310,7 +314,3 @@ way of passing information back _through_ the raised exception, which allows us
 to have a more powerful manner of communication than just an indicator of
 failure. Exceptions ultimately allow us a robust and type-safe way to deal with 
 run-time errors in our programs.
-
-### Footnotes
-<a id="footnote1"> [1]: We're funny.
-<a id="footnote2"> [2]: Say that five times fast.
