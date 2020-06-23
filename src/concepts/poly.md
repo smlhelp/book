@@ -1,4 +1,4 @@
-# Parameterized Polymorphism
+# Parametric Polymorphism
 Type safety is a very powerful concept, one that lets us pin down the space of
 allowable inputs to only a narrow space of values. In this way, we can ensure
 that the function is only allowed to be applied to those arguments that we are

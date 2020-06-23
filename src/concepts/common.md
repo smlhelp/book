@@ -140,7 +140,7 @@ an _associative_ function, meaning that it does not matter which order you
 evaluate it in (or in proper terms, \(f(x, f(y, z)) \cong f(f(x, y), z)\), for
 all \(x, y, z\)). 
 
-For many purposes, it will be the case that your `z` will be some "default"
+For many purposes, it will be the case that your `z` will be some _identity_
 value, such as `0` for summing a list, or the empty string for concatenating all
 the strings in a list. This does not always have to be the case. One of the
 strengths of the implementation is that we can _specify_ what our `z` is, and
@@ -150,7 +150,7 @@ deal of flexibility with choosing how we want to reduce a list.
 
 It is somewhat important to note the type of the function `g` here. It has type
 `'a * 'b -> 'b`, where `'a` is the type of the elements in the list that we are
-folding, and `'b` is the type of the "base case" and output. It is useful to
+folding, and `'b` is the type of the initial accumulator and output. It is useful to
 think of this `'b` type as the type of the `fold` function's "accumulator", or
 the information that it stores as it proceeds along its computation. In the case
 of `foldl`, this accumulator at a given point along the list is simply the
@@ -187,7 +187,7 @@ then call back to another common mathematical operator, that being of _function
 composition_, or `o`. 
 ```sml
 infix o
-(* o : ('b -> 'c) -> ('a -> 'b) -> ('a -> 'c)
+(* o : ('b -> 'c) -> ('a -> 'b) -> ('a -> 'c) *)
 fun f o g = fn x => f (g x)
 ```
 Note that the types are constrained to permit the "compatibility" of the
