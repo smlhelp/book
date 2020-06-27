@@ -88,7 +88,7 @@ _fully_ parallel algorithm.
 We illustrate these concepts with the following graph.
 
 <figure class="aligncenter">
-    <img src="assets/graphTransCropped.png" alt="Process Graph" width="1000"/>
+    <img src="../assets/graphTransCropped.png" alt="Process Graph" width="1000"/>
     <figcaption><b>Fig 1.</b> Task dependency graph illustrating dependencies between tasks and task durations</figcaption>
 </figure>
 
@@ -230,7 +230,7 @@ datatype tree = Empty
 This denotes that a tree is either the constant constructor `Empty` denoting the empty tree, or a `Node` that contains an integer value, as well as two `tree` children, that can themselves be `Node`s or `Empty`.
 
 <figure class="aligncenter">
-    <img src="assets/treeTrans.png" alt="Tree" width="500"/>
+    <img src="../assets/treeTrans.png" alt="Tree" width="500"/>
     <figcaption><b>Fig 2.</b> Sample binary tree</figcaption>
 </figure>
 
@@ -393,8 +393,8 @@ in different kinds of recurrences. First, however, we will digress briefly to mo
 >this book) are below.
 
 <figure class="aligncenter">
-    <img src="assets/traversals.png" alt="traversal" width="650"/>
-    <figcaption><b>Fig 2.</b> An example of a preorder traversal (left) and inorder traversal (right) of a binary tree, with visited nodes labeled in ascending order </figcaption>
+    <img src="../assets/traversals.png" alt="traversal" width="650"/>
+    <figcaption><b>Fig 3.</b> An example of a preorder traversal (left) and inorder traversal (right) of a binary tree, with visited nodes labeled in ascending order </figcaption>
 </figure>
 
 > Tree traversals can also come in handy when generating different notations for
@@ -405,8 +405,8 @@ in different kinds of recurrences. First, however, we will digress briefly to mo
 > expression \((4-1) * 2\) is shown below.
 
 <figure class="aligncenter">
-    <img src="assets/optree.png" alt="optree" width="500"/>
-    <figcaption><b>Fig 3.</b> A binary expression tree for the expression \((4-1) * 2\)</figcaption>
+    <img src="../assets/optree.png" alt="optree" width="500"/>
+    <figcaption><b>Fig 4.</b> A binary expression tree for the expression \((4-1) * 2\)</figcaption>
 </figure>
 
 > With inorder traversal of this expression tree, we can generate the constants
@@ -447,8 +447,8 @@ We will make use of a new method to solve this recurrence - the Tree Method.
 The below diagram illustrates the Tree Method.
 
 <figure class="aligncenter">
-    <img src="assets/treemethodTrans.png" alt="Tree method" width="1200"/>
-    <figcaption><b>Fig 4.</b> An illustration of the Tree Method for the recurrence of preord.</figcaption>
+    <img src="../assets/treemethodTrans.png" alt="Tree method" width="1200"/>
+    <figcaption><b>Fig 5.</b> An illustration of the Tree Method for the recurrence of preord.</figcaption>
 </figure>
 
 We will now explore exactly how we arrived at this conclusion.
