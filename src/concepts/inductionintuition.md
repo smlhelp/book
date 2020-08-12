@@ -6,9 +6,9 @@ There is a strong association between mathematical induction and recursion, espe
 
 Approaching induction proofs can fall along the following line of logic:
 
-1. Solve for your **base cases**.
-2. Define your **inductive hypothesis**.
-3. Assume the correctness of your **inductive hypothesis** to show the correctness of your **inductive step**.
+1. Solve the **base cases**.
+2. Define the **inductive hypothesis**.
+3. Assume the correctness of the **inductive hypothesis** to show the correctness of the **inductive step**.
 
 We can similarly apply this line of logic to solving problems with SML functions! Let's take a look at a common recursive problem. `treeSum` takes an int tree and returns the sum of all the integers in that tree. By the end of this, we'll be able to implement recursive functions with the following inductive logic:
 
@@ -29,13 +29,13 @@ datatype int tree = Empty | Node of int tree * int * int
 fun treeSum (T : int tree) : int = ...
 ```
 
-Note that in SML, the `tree` datatype is recursively defined. This is a good hint that we should be using recursive/inductive strategies to approach this problem. Suppose you're asked to prove the following theorem:
+Note that in SML, the `tree` datatype is recursively defined. This is a good hint that we should be using recursive/inductive strategies to approach this problem. Consider the proof of the following theorem:
 
 > **Theorem:** For all `T : int tree`, `fun treeSum(T)` is correct.
 
 Let's not worry about formalizing this proof too much so that we can focus on the **inductive intuition** of it. If we were to prove this using induction, we'll need a **(1) base case, (2) induction hypothesis, and (3) induction step.**
 
-### 1. Solving for your base cases
+### 1. Solving for the Base Cases
 
 Let's first think about proving the base case: `T = Empty`. What does it mean for `treeSum(Empty)` to be correct? Well, an `Empty` tree does not have any nodes, and if there are no nodes, there are no `int` values. The sum of nothing is 0. Let's write that in a proof-like manner:
 
@@ -51,7 +51,7 @@ fun treeSum(Empty : int tree): int = 0
 
 Nice job! We've leveraged inductive reasoning to help us define the base case for our recursive problem. Let's move on to something a little harder and may be less obvious than what we've done here.
 
-### 2. Define your inductive hypothesis
+### 2. Define the Inductive Hypothesis
 
 The next step in our proof is to define the inductive hypothesis. Here, we'll assume the correctness of a smaller part, then use that to prove the correctness of a bigger part. More specifically, we'll be using some ideas of [structural induction](https://smlhelp.github.io/#todolinktostructuralinductionsection) for this problem. Let's elaborate more on that:
 
@@ -59,11 +59,11 @@ The next step in our proof is to define the inductive hypothesis. Here, we'll as
 
 Because we've shown our base case to be true, let's assume tha for the recursive structures (the left subtree `L` and the right subtree `R`), `treeSum` is correct. Just like how in induction we can use these nuggets of information to help us prove our **inductive step**, we can do the same to help us solve the SML function.
 
-### 3. Assume the inductive hypothesis to show the inductive step.
+### 3. Assume the Inductive Hypothesis to Show the Inductive Step.
 
 What nuggets of information do we know from the previous step, and how can we use that to help us with inductive step? We assume that both `treeSum(L)` and `treeSum(R)` are correct by the **inductive hypothesis (IH)**. Since they are correct, their outputs represent the sum of all the integers in them. For `treeSum(L)` is the sum of all integers in the int tree `L` and for `treeSum(R)` is the sum of all integers in the int tree `R`.
 
-We also know that since `L` and `R` are the left and right subtrees of `T`, by definition, they represent all nodes of `T` (except the root node). Then, to get sum of `T`, we just need the sum of `L`, `R`, and the value of the root node! Let's formalize this line of logic a bit more:
+We also know that since `L` and `R` are the left and right subtrees of `T`, by definition, they represent all nodes of `T` (except the root node). Then, to get sum of `T`, we just need the sum of `L`, `R`, and the value of the root node! Let's proof-ify this line of thought a bit more:
 
 > **Inductive Step:** `T = Node(L,x,R)`
 >
@@ -84,8 +84,8 @@ fun treeSum(Empty : int tree) : int = 0
 
 ## QED
 
-And like that, we're able to leverage mathematical induction to help us find the solution to part of an SML function. You may be thinking that this may be obvious. For some people, it is! But for others, it may not be as clear to approach problems like this at first. You don't need to go into a deep spiral of pure path, trying to prove every single aspect of your code. **BUT**, it will definitely be helpful to adopt this style of thinking when approaching more difficult and advanced recursion problems. Whenever you're trying to implement a recursive function in SML, remember to think inductively!
+And like that, we're able to leverage mathematical induction to help us find the solution to part of an SML function. For some, this intuition is obvious. But for others, it isn't! A deep spiral of pure math and proving every single aspect of your code isn't usually needed. **BUT**, it will definitely be helpful to adopt this style of thinking when approaching more difficult and advanced recursion problems. Whenever you're trying to implement a recursive function in SML, remember to think inductively!
 
-1. Solve for your **base cases**.
-2. Define your **inductive hypothesis**.
-3. Assume the correctness of your **inductive hypothesis** to show the correctness of your **inductive step**.
+1. Solve the **base cases**.
+2. Define the **inductive hypothesis**.
+3. Assume the correctness of the **inductive hypothesis** to show the correctness of the **inductive step**.
