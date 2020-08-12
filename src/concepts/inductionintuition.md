@@ -1,6 +1,6 @@
 # Thinking About Recursion Inductively
 
-There is a strong association between mathematical induction and recursion, especially in SML. Often times, we'll be able to use similar vocabularies when describing SML problems and mathematical induction. In particular, we're going to be use the words **base case, induction hypothesis, and induction step** to describe both types of problems.
+There's a strong association between mathematical induction and recursion, especially in SML. Often times, we'll be able to use similar vocabularies when describing SML problems and mathematical induction. In particular, we're going to be use the words **base case, induction hypothesis, and induction step** to describe both types of problems.
 
 ## Inductive Intuition
 
