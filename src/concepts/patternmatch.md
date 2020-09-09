@@ -10,7 +10,9 @@ Patterns take on many appearances, such as:
     - Other datatypes: `Node(L,x,R)`
 
 Patterns can be matched against values to form bindings. In the following example, `1` gets bound to `x`, and `2` gets bound to `y`.
+
 ```val (x,y) = (1,2)```
+
 Pattern matching may fail. For example, the following raises exception `Bind`.
 
 ```val 10 = 9```
