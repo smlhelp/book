@@ -80,7 +80,7 @@ restate the definition below:
 
 > **[Extensional Equivalence (Functions)]** We say two expressions `e : t1 ->
 > t2` and `e' : t1 -> t2` for some types `t1` and `t2` are extensionally
-> equivalent if for all values `x : t1`, `e x`\(\cong\)`e' x`.
+> equivalent if for all values `x : t1`, `e x` \\( \cong \\)`e' x`.
 
 It is our hope that we are now in a place to properly appreciate this
 definition. For functions that have type `int -> int`, this is a fairly

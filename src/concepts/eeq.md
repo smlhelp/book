@@ -94,7 +94,7 @@ extensionally equivalent. However, extensional equivalence does not imply
 reduction. For instance, `4` does not reduce to `2 + 2`, since clearly `4` is
 already in its most simplified form. This corresponds to our intuition about
 traditional mathematical expressions, as we would expect that we could say that
-\(-1\) and \(\cos(\pi)\) are equal, since they have the same value.
+\\( -1 \\) and \\( \cos(\pi) \\) are equal, since they have the same value.
 
 With the second point, however, we depart from our normal mathematical
 reasoning. It is generally the case that, given a mathematical expression, we
@@ -148,7 +148,7 @@ have to take a different approach.
 
 > **[Extensional Equivalence (Functions)]** We say two expressions `e : t1 ->
 > t2` and `e' : t1 -> t2` for some types `t1` and `t2` are extensionally
-> equivalent if for all values `x : t1`, `e x`\(\cong\)`e' x`.
+> equivalent if for all values `x : t1`, `e x`\\( \cong \\)`e' x`.
 
 We see that this definition simply takes our previous definition and moves it
 one step up. There is an interesting aspect of this rule that depends on a
@@ -180,9 +180,9 @@ transparency_, which follows as a direct consequence of our definition of
 extensional equivalence.
 
 > **[Referential Transparency]** Consider an expression `e` that contains the
-> expression `e1` as a sub-expression. For any expression `e2`\(\cong\)`e1`, we
+> expression `e1` as a sub-expression. For any expression `e2`\\( \cong \\)`e1`, we
 > can produce the expression `e'` as the same expression as `e`, but with each
-> sub-expression `e1` replaced with `e2`, and we will have `e`\(\cong\)`e'`. In
+> sub-expression `e1` replaced with `e2`, and we will have `e`\\( \cong \\)`e'`. In
 > words, for an expression `e` that contains `e1`, we can swap out `e1` for an
 > extensionally equivalent `e2` to obtain an expression extensionally equivalent
 > to `e`.
@@ -194,8 +194,8 @@ expression". Gaining an intuition through examples will suffice.
 To illustrate this, we might say that the expression `4 * (2 + 2)` has the
 sub-expression `2 + 2`, and that `let val x = f (1 div 0) in x end` has `(1 div
 0)` as a sub-expression. In the former case, we can use referential transparency
-to say that `4 * (2 + 2)`\(\cong\)`4 * 4` and `let val x = f (1 div 0) in x
-end`\(\cong\)`let val x = f (2 div 0) in x end`, by replacing the aforementioned
+to say that `4 * (2 + 2)`\\( \cong \\)`4 * 4` and `let val x = f (1 div 0) in x
+end`\\( \cong \\)`let val x = f (2 div 0) in x end`, by replacing the aforementioned
 sub-expressions with `4` and `2 div 0`, respectively.
 
 Referential transparency will let us abstract away from the specific makeup of a
@@ -230,7 +230,7 @@ fun [] @ L = L
 
 Now, suppose we want to show the following theorem:
 
-`(x::xs) @ (rev A)` \( \cong \) `x::(xs @ (rev A))`
+`(x::xs) @ (rev A)` \\( \cong \\) `x::(xs @ (rev A))`
 
 where `x : int`, `xs : int list`, and `A : int list` are all values. First, make
 sure this "feels right" -- the left side of our theorem matches the second
@@ -239,19 +239,19 @@ clause of `@` with `rev A` bound to `L`.
 However, notice that `rev A` is not a value. Since SML is eager, we cannot step
 into the function `@` until we evaluate the expression `rev A`. In other words,
 
-\[ `(x::xs) @ (rev A)` \not\Longrightarrow `x::(xs @ (rev A))` \]
+\\[ `(x::xs) @ (rev A)` \not\Longrightarrow `x::(xs @ (rev A))` \\]
 
 So, we're stuck! D:
 
 ... or are we?
 
 Let's assume that `rev A` is valuable, i.e. it evaluates to a value, and let's
-give that value a name-- say, `v : int list`: \[ `rev A` \Longrightarrow `v` \]
+give that value a name-- say, `v : int list`: \\[ `rev A` \Longrightarrow `v` \\]
 With this value in hand, we can do what we wanted to do!
 
-\[ `(x::xs) @ (rev A)` \Longrightarrow `(x::xs) @ v` \Longrightarrow `x::(xs @
+\\[ `(x::xs) @ (rev A)` \Longrightarrow `(x::xs) @ v` \Longrightarrow `x::(xs @
     v)`
-\]
+\\]
 
 Notice that this complies with SML's eager evaluation, since we are fully
 evaluating the parameters of `@` before stepping into the function.
@@ -259,13 +259,13 @@ evaluating the parameters of `@` before stepping into the function.
 And here's the kicker: we can also use `v` to evaluate the right hand side of
 our theorem!
 
-\[ `x::(xs @ (rev A))` \Longrightarrow `x::(xs @ v)`
-\]
+\\[ `x::(xs @ (rev A))` \Longrightarrow `x::(xs @ v)`
+\\]
 
 Again, this complies with SML's eager evaluation-- in this case, we never even
 step into the definition of `@`. But, we've actually proven our theorem! We
 showed that the LHS and the RHS both evaluate to the same expression, so by rule
-1 of the definition of \( \cong \), the LHS and RHS must be extensionally
+1 of the definition of \\( \cong \\), the LHS and RHS must be extensionally
 equivalent. We are done!
 
 In this example, we got around SML's eager evaluation by assuming that our
@@ -276,9 +276,9 @@ principle, which we will call (for lack of a better term) "stepping with
 valuable expressions," is one reason why valuable expressions are so important.
 
 > **[Caution!]** When stepping with *values*, we can use the reduction relation
-\( \Longrightarrow \). When stepping with *valuable expressions*, this is not
+\\( \Longrightarrow \\). When stepping with *valuable expressions*, this is not
 always true (it certainly is not true in the example above). Stepping with
-valuable expressions only preserves extensional equivalence \( \cong \).
+valuable expressions only preserves extensional equivalence \\( \cong \\).
 
 ## Totality
 As stated previously, frequently we will write proofs demonstrating the
