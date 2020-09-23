@@ -179,9 +179,9 @@ recursive call perfectly with no other time expense. As such, we would see
 exactly the same recurrence even if the recursive case was `length (x::xs : int
 list) : int = length xs` (which would also be a very bad length function).
 
-For the base case, we have that \(W_{length}(0) = c_1\), since in the base case
+For the base case, we have that \\(W_{length}(0) = c_1\\), since in the base case
 we just return 0. This has a constant amount of work associated with it, as
-argued previously, so we use the constant \(c_1\) to denote that, since the
+argued previously, so we use the constant \\(c_1\\) to denote that, since the
 amount of work is likely not the same constant as that in the recursive case,
 when adding 1. 
 
@@ -195,30 +195,31 @@ Note that the span recurrence is exactly the same as the work recurrence. This
 should make sense, because there is no opportunity for parallelism in the
 `length` function - we can only pop off elements one by one from the list. In
 the recursive case, we must wait for the result of the recursive call on `xs`,
-which means we unavoidably must expend the span of \(S_{length}(n-1)\) -
+which means we unavoidably must expend the span of \\(S_{length}(n-1)\\) -
 additionally, we have a data dependency. We cannot execute the addition in `1 +
 length xs` until we obtain the result for `length xs`, which means that we must
-sum the time it takes to compute `length xs` (that being \(S_{length}(n-1)\))
-and the time it takes to carry out the addition operation (that being \(c_1\)).
+sum the time it takes to compute `length xs` (that being \\(S_{length}(n-1)\\))
+and the time it takes to carry out the addition operation (that being \\(c_1\\)).
 
 Now we will begin the task of actually solving the recurrence. They are the same recurrence, so without loss of generality we will solve just the work recurrence.
 
-We know that it has the form of \(W_{length}(n) = c_0 + W_{length}(n-1)\), and
-eventually reaches a base case at \(W_{length}(0) = c_1\). We can "unroll" the
+We know that it has the form of \\(W_{length}(n) = c_0 + W_{length}(n-1)\\), and
+eventually reaches a base case at \\(W_{length}(0) = c_1\\). We can "unroll" the
 recurrence a few times to see if we can see a pattern, and then arrive at our
 answer.
 
-So we start out with \(W_{length}(n) = c_0 + W_{length}(n-1)\), but if we invoke
-the definition of \(W_{length}(n-1)\), we can produce \(c_0 + c_0 +
-W_{length}(n-2)\), since \(W_{length}(n-1) = c_0 + W_{length}(n-2)\). By doing
-the same for \(W_{length}(n-2)\), we get \(c_0 + c_0 + c_0 + W_{length}(n-3)\).
+So we start out with \\(W_{length}(n) = c_0 + W_{length}(n-1)\\), but if we invoke
+the definition of \\(W_{length}(n-1)\), we can produce \\(c_0 + c_0 +
+W_{length}(n-2)\\), since \\(W_{length}(n-1) = c_0 + W_{length}(n-2)\\). By doing
+the same for \\(W_{length}(n-2)\\), we get \\(c_0 + c_0 + c_0 + W_{length}(n-3)\\).
 It seems we've hit upon a pattern - each time we "unroll" the definition of
-\(W_{length}(n)\), for progressively lower \(n\), we get another \(c_0\) term
+\\(W_{length}(n)\\), for progressively lower \\(n\\), we get another \\(c_0\\) term
 back out. Then, we know that the recurrence should eventually solve to:
 
 <center> \(W_{length}(n) = (\sum_{i=1}^n c_0) + c_1\) </center>
 
-We will usually omit the \(c_1\), since it does not matter asymptotically. Then, clearly this is equivalent to \(nc_0 + c_1\). We see that this closed-form solution is linear in \(n\) - so then we have that the work and span of this function is in \(O(n)\), which is consistent with what we would expect if we had "eyeballed" it.
+We will usually omit the \\(c_1\\), since it does not matter asymptotically. Then, clearly this is equivalent to \\(nc_0 + c_1\\). We see that this closed-form solution is linear in \\(n\\) - so 
+then we have that the work and span of this function is in \\(O(n)\\), which is consistent with what we would expect if we had "eyeballed" it.
 
 ## Work/Span Analysis: Trees
 First, we will discuss the definition of a binary tree in SML:
@@ -270,7 +271,7 @@ The major difference between this function and the previous `length` function
 was that `length` had one recursive call - `size` has two. We will need to
 reflect this change when we write our recurrences. Additionally, we need a new
 variable for our recurrence - we no longer have a list whose length we can
-induct on. A similar analogue will be \(n\), the number of nodes in the tree, so
+induct on. A similar analogue will be \\(n\\), the number of nodes in the tree, so
 we will take that as our recurrence variable. We will focus first on work.
 
 We will obtain the following work recurrence:
@@ -278,20 +279,20 @@ We will obtain the following work recurrence:
 <center> \(W_{size}(n) = c_0 + W_{size}(n_l) + W_{size}(n_r)\) </center>
 <center> \(W_{size}(0) = c_1\) </center>
 
-where we define the number of nodes in the tree \(n = 1 + n_l + n_r\), and
-\(n_l\) and \(n_r\) denote the number of nodes in the left and right subtree,
+where we define the number of nodes in the tree \\(n = 1 + n_l + n_r\\), and
+\\(n_l\\) and \\(n_r\\) denote the number of nodes in the left and right subtree,
 respectively. This follows similarly to our recurrence for `length` in the
 previous part, where `c_0` is just some constant amount of work that we
-necessarily have to do, and the two \(W_{size}\) calls are from the two
+necessarily have to do, and the two \\(W_{size}\\) calls are from the two
 recursive calls we make to `L` and `R`. 
 
-Now, we don't know precisely how big \(n_l\) and \(n_r\) are, with respect to
-\(n\). This makes our analysis a little more tricky, but essentially all we need
+Now, we don't know precisely how big \\(n_l\\) and \\(n_r\\) are, with respect to
+\\(n\\). This makes our analysis a little more tricky, but essentially all we need
 to do is think of the _worst case_, as we are interested in the worst-case
 asymptotic complexity of this function. For work, however, there is no
 worst-case - no matter how the tree is structured, we must visit every node
 once, doing a constant amount of work each time. So we should obtain, in the
-end, \(W_{size}(n) = nc_0 + c_1\), which we know is \(O(n)\). So in this case,
+end, \\(W_{size}(n) = nc_0 + c_1\\), which we know is \\(O(n)\\). So in this case,
 we didn't have to think about the structure of the tree. In the next section, it
 will matter.
 
@@ -320,9 +321,9 @@ parallel.
 
 We will consider the first case - if we have an unbalanced tree. Suppose that
 the tree is heavily unbalanced - akin to a (diagonal) linked list. Without loss
-of generality, let it be "pointing" to the left. Then, \(n_l = n - 1\), and
-\(n_r = 0\). Then, the max over both recursive calls should clearly be that of
-\(S_{size}(n-1)\), since it has to compute the size of a larger tree.
+of generality, let it be "pointing" to the left. Then, \\(n_l = n - 1\\), and
+\\(n_r = 0\\). Then, the max over both recursive calls should clearly be that of
+\\(S_{size}(n-1)\\), since it has to compute the size of a larger tree.
 
 So we can update our recurrence and obtain:
 
@@ -330,14 +331,14 @@ So we can update our recurrence and obtain:
 <center> \(S_{size}(0) = c_1\) </center>
 
 This recurrence is exactly the same as that of `length`, so we know that we will
-get that \(S(n) \in O(n)\). This should make sense intuitively, since the depth
-of the tree is \(n\), and there are dependencies between each level - we cannot
+get that \\(S(n) \in O(n)\\). This should make sense intuitively, since the depth
+of the tree is \\(n\\), and there are dependencies between each level - we cannot
 go to the next level until we are done with the current one. So we cannot avoid
-having to visit every level sequentially, which results in \(O(n)\) span.
+having to visit every level sequentially, which results in \\(O(n)\\) span.
 
 Now, what if we consider a balanced tree? Well, the balanced case would be if
 the number of nodes in the left and right subtrees are roughly equal - that is,
-\(n_l = n_r = \frac{n}{2}\). We will consider them exactly equal to simplify our
+\\(n_l = n_r = \frac{n}{2}\\). We will consider them exactly equal to simplify our
 analysis, but we will obtain the same asymptotic answer. Then, we know that the
 maximum is just any one of them, since they will have the same span.
 
@@ -349,17 +350,18 @@ So we can update our recurrence and obtain:
 This is slightly different than our `length` recurrence. We will try unrolling
 to make sense of this recurrence.
 
-We have that \(S_{size}(n) = c_0 + S_{size}(\frac{n}{2})\). Plugging in the
-recursive definition of \{S_{size}(\frac{n}{2})\), we get that this expands to
-\(c_0 + c_0 + S_{size}(\frac{n}{4})\), which by the same trick expands to \(c_0+ c_0 + c_0 + S_{size}(\frac{n}{8})\), and so on and so forth. We note that we
+We have that \\(S_{size}(n) = c_0 + S_{size}(\frac{n}{2})\\). Plugging in the
+recursive definition of \\{S_{size}(\frac{n}{2})\\), we get that this expands to
+\\(c_0 + c_0 + S_{size}(\frac{n}{4})\\), which by the same trick expands to \\(c_0+ c_0 + c_0 + S_{size}(\frac{n}{8})\\), 
+and so on and so forth. We note that we
 are dividing the number of nodes by 2 each time - and we know that we can divide
-\(n\) by two roughly \(\log_2(n)\) times. So in total, we can solve the
-summation of \(S_{size}(n)\) as \(S_{size} = (\sum_{i=1}^{\log_2(n)} c_0) +
-c_1\).
+\\(n\\) by two roughly \\(\log_2(n)\\) times. So in total, we can solve the
+summation of \\(S_{size}(n)\\) as \\(S_{size} = (\sum_{i=1}^{\log_2(n)} c_0) +
+c_1\\).
 
-So then this simplifies to \(S_{size}(n) = \log_2(n)c_0 + c_1\). This is a
-logarithmic function of \(n\), so we get that the span of `size` is in \(O(\log
-n)\). Thus, we obtain a different span for balanced trees versus unbalanced
+So then this simplifies to \\(S_{size}(n) = \log_2(n)c_0 + c_1\\). This is a
+logarithmic function of \\(n\\), so we get that the span of `size` is in \\(O(\log
+n)\\). Thus, we obtain a different span for balanced trees versus unbalanced
 trees - balanced trees are more efficient and parallelism-friendly.
 
 ## Work/Span Analysis: Size-dependent Operations
