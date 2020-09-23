@@ -188,6 +188,8 @@ fun factException 0 = raise Return 1
   (n - 1)
 ```
 
+**NOTE:** It is not clear why anyone would want to define `fact` this way.
+
 This example makes use of an exception, `Return : int -> exn`, which wraps the
 return value of `fact`. `fact`, at each step, simply raises an exception
 containing its return value, which (in a future recursive call) is handled, the
