@@ -6,7 +6,12 @@
 
 # Work and Span
 
+
+Change please.
+
 This is a test. \\( W_{insert}(0) = \Sigma_{i=0}^n i \\)
+
+Test!
 
 We will now turn towards a more robust notion of _work_ and _span_ that let us
 analyze our conception of asymptotic runtime more effectively. It is still
