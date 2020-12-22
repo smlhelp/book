@@ -25,6 +25,7 @@
   - [Basics](concepts/basic.md)
     - [Evaluation](concepts/eval.md)
     - [Extensional Equivalence](concepts/eeq.md)
+    - [Pattern Matching](concepts/patternmatch.md)
   - [Recursion and Induction](concepts/recind.md)
     - [Intuition](concepts/inductionintuition.md)
     - [Tail Recursion](concepts/tail.md)

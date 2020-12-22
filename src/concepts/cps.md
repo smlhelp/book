@@ -151,9 +151,9 @@ definition of `factCPS`:
 </figure>
 
 The middle of this image is supposed to denote the "instructions" that you might
-write if you were to codify the algorithm to determine the factorial of \(n\).
+write if you were to codify the algorithm to determine the factorial of \\( n \\).
 Note that these instructions are actually read from bottom to top - thus, we
-start with 1 and then work out way up multiplying until we reach \(n\), which
+start with 1 and then work out way up multiplying until we reach \\( n \\), which
 presumably should give us the actual factorial. 
 
 Now consider if we were at some arbitrary point of execution of the expression
@@ -163,7 +163,7 @@ is the result of modifying the continuation throughout the recursive calls of
 `factCPS` until now. Then, we should see that the form of `k` should look something 
 like `(fn res => (fn res2 => ... (fn resn => initK (n * resn)) ... ((i + 2) * res))
 ((i + 1) * res))`. That is, it exactly captures the idea of the instructions in
-orange - it covers the multiplication of all of the terms from \(i+1\) to \(n\). 
+orange - it covers the multiplication of all of the terms from \\( i+1 \\) to \\( n \\). 
 
 What is the action of the recursive call _at_ `factCPS i k`? Well, clearly it
 should reduce to `factCPS (i-1) (fn res => k (i * res))` - that is, it wraps `k`
@@ -187,10 +187,10 @@ we have defined, `factCPS n k` should be extensionally equivalent to `k (fact
 n)`, or in other words, `factCPS n k` will be the same as passing the actual
 factorial of `n` to `k`. This means that when we are writing our function, we
 can make that assumption - `factCPS (n-1) (fn res => k (n * res))` should pass
-the result of \((n-1)!\) to `(fn res => k (n * res))`. This is equivalent to, in
+the result of \\( (n-1)! \\) to `(fn res => k (n * res))`. This is equivalent to, in
 our "instructions" analogy, saying that `factCPS i k` should faithfully execute
 all the instructions of multiplying from `1` to `i` - that is, `factCPS i k`
-should pass the result of \(i!\) to `k`.
+should pass the result of \\( i! \\) to `k`.
 
 So now, we can sort of inductively see how `factCPS` writes down the entire page of
 instructions, which should mean that it is correct when we execute it. This is
