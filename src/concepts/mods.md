@@ -262,14 +262,6 @@ internalize every last detail of a codebase, and it is a waste of time to try
 and do so every time that one wants to make a patch. As such, we rely on
 abstraction in order to keep the amount of relevant information low.
 
-Consider the computer that you are likely reading this on. It is unlikely that
-you know _everything_ about what happens within its case - precisely how it
-interfaces with its hard drive in order to retrieve data, how the CPU
-coordinates together machine instructions to simulate the thousands of processes
-that are simultaneously running, or how its screen manages to turn electrical
-signals into a crisp, legible picture.
-
-
 Consider the computer. It is a complicated, convoluted work of machinery and
 circuitry - at its most fundamental level being comprised of logic gates and
 incredible networks of interacting parts. Although an action as simple as
