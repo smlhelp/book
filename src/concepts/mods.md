@@ -63,9 +63,8 @@ href="#footnote1">_<sup>[1]</sup>_</a>, so SML will only deal with
 specifications at the _type-level_. That is, within SML itself, a specification
 for a function is simply a type for that function.
 
-The term for a specification in SML is called a _signature_. Our running example
-throughout this section will be of the specification and implementation of a
-package for modular arithmetic. Note that the comments are optional.
+The term for a specification in SML is called a _signature_. Consider the following specification and 
+implementation of a package for modular arithmetic. Note that the comments are optional.
 
 ```sml
 signature MOD_ARITH =
