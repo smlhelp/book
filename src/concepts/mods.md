@@ -69,13 +69,13 @@ implementation of a package for modular arithmetic. Note that the comments are o
 ```sml
 signature MOD_ARITH =
 sig
-    (* mod_add should be such that mod_add n x y = (x + y) mod n *)
+    (* ENSURES: mod_add n x y = (x + y) mod n *)
     val mod_add : int -> int -> int -> int
 
-    (* mod_sub should be such that mod_sub n x y = (x - y) mod n *)
+    (* ENSURES: mod_sub n x y = (x - y) mod n *)
     val mod_sub : int -> int -> int -> int
 
-    (* mod_times should be such that mod_times n x y = (x * y) mod n *)
+    (* ENSURES: mod_times n x y = (x * y) mod n *)
     val mod_times : int -> int -> int -> int
 end
 ```
