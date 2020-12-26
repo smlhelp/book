@@ -326,7 +326,7 @@ We have used the term "ascription" several times so far in this chapter,
 referring to how a structure "implements" a signature, similarly to how a value
 has a certain type. In reality, there are two kinds of ascription: transparent
 and opaque. To demonstrate the difference, we will consider the following
-implementation of arrays.
+implementation of 2D arrays.
 
 ```
 signature ARRAY =
