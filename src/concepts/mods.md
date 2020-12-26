@@ -137,8 +137,8 @@ later in the chapter when we discuss information hiding.
 
 Using structures should be something that you are already familiar with - you do
 it every time that you invoke `Int.compare`. To use the fields of a structure,
-you access them using the dot operator, following the name of the structure in
-question. Thus, calling `Int.compare` means to access the function named
+you access them using the name of the module, followed by a dot, followed by the name of whatever
+you are trying to access. Thus, calling `Int.compare` means to access the function named
 `compare` implemented within the structure named `Int`, which is provided as
 part of the Standard ML Basis Library. To use the structure that we have just
 implemented, we would similarly call `ModArith.mod_add`, for instance.
