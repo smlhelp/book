@@ -27,7 +27,7 @@ functions implementing a given specification have _extensionally equivalent_
 behavior to what we should expect them to do.
 
 **NOTE**: Sometimes, there are constraints beyond simply being the same
-"mathematical function" - that is, defining the same outputs on the same inputs.
+"mathematical function" - that is, defining the same outputs on the same inputs.and
 Sometimes we are asked for the implementation of a function, running in only less
 than \( O(n^2) \) asymptotic time. Even in cases like these, however, there are
 always still _superficial_ differences that our implementation allows for - for
@@ -131,7 +131,7 @@ the signature, or it will fail to ascribe, and result in a compile-time error
 It is not, however, the case that a structure cannot provide _more_ information
 than is strictly necessitated by the signature. Additional helper functions and
 value bindings can be freely instantiated within a structure without affecting
-ascription. Thus, honoring a contract only entails satisfyng the terms agreed to
+ascription. Thus, honoring a contract only entails satisfying the terms agreed to
 in the signature, without comment on going over. We will explore this idea more
 later in the chapter when we discuss information hiding.
 
