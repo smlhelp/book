@@ -1,4 +1,4 @@
-# Parameterized Polymorphism
+# Parametric Polymorphism
 Type safety is a very powerful concept, one that lets us pin down the space of
 allowable inputs to only a narrow space of values. In this way, we can ensure
 that the function is only allowed to be applied to those arguments that we are
@@ -159,7 +159,7 @@ is noticeably more inelegant than parametric polymorphism, but it is useful in
 the cases that you only have a small subset of types to extend an operator to.
 
 ## Type Inference
-Duiring compilation, SML will often need to determine exactly what the type of
+During compilation, SML will often need to determine exactly what the type of
 the expression that we are looking at. This is not so different of a problem
 than type-checking, however. On a high level, SML simply assigns everything a
 very general type, and then begins looking at clues from the context so as to
