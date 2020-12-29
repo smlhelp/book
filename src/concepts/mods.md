@@ -27,7 +27,7 @@ functions implementing a given specification have _extensionally equivalent_
 behavior to what we should expect them to do.
 
 **NOTE**: Sometimes, there are constraints beyond simply being the same
-"mathematical function" - that is, defining the same outputs on the same inputs.and
+"mathematical function" - that is, defining the same outputs on the same inputs.
 Sometimes we are asked for the implementation of a function, running in only less
 than \( O(n^2) \) asymptotic time. Even in cases like these, however, there are
 always still _superficial_ differences that our implementation allows for - for
