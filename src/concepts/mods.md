@@ -5,7 +5,7 @@ understandable by the original author. It is thus in our best interest to
 develop good coding practices - consisting of clean, commented code that
 communicates its cause clearly, as well as a _modular_ structure that allows
 understanding what each part of the codebase should do. For instance, we would
-not want to simply dump all of our code into a single file, having it number
+not want to simply dump all of our code into a single file with
 thousands of lines - instead, what we oftentimes may do is decompose it into
 constituent parts, each part of which has a certain purpose, such as parsing,
 maintaining certain data structures, or other purposes, depending on the use
