@@ -273,8 +273,7 @@ the user of a computer does not _really_ know how it functions.
 
 Yet again, it is also unlikely that it is important for you to know. A user of a
 computer does not need to know precisely how it works to know that they can type
-a query into Google
-. The only details that are _relevant to the user_ are the devices that
+a query into Google. The only details that are _relevant to the user_ are the devices that
 allow interfacing with the inner hardware (the mouse and keyboard, among other
 things), and less so the precise configuration of the microchips inside of the
 machine.
