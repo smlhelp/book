@@ -4,7 +4,7 @@ In programs, functions often make calls to either themselves (recursive calls) o
 If every recursive call made by a function is a **tail call**, that function is called **tail recursive**. Put another way, a function is **tail recursive** if the last operation performed by the function is the recursive call.
 
 Suppose we have the following function to sum the elements of a list:
-```
+```sml
 fun sum [] = 0
   | sum (x::xs) = x + (sum xs)
 ```
