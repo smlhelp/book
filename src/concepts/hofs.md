@@ -6,4 +6,5 @@ while maintaining type safety in SML's type system, and how we can construct
 arbitrary datatypes to be passed around as _first class citizens_, that is being
 able to be manipulated the same as any other value. We will now discuss what is
 considered one of the most powerful tools available in functional programming
-languages - that is, the exploitation of _functions themselves_ as values.
+languages - that is, the exploitation of _functions themselves_ as values, with
+which we can further parameterize our functions and results.

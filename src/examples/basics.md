@@ -108,7 +108,6 @@ fun f (x, y) =
     case x of 
       0 => 0
     | y => y
-    | _ => x
 val a = f (y, x)
 val b = f (x, y)
 ```

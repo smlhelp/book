@@ -5,7 +5,7 @@ understandable by the original author. It is thus in our best interest to
 develop good coding practices - consisting of clean, commented code that
 communicates its cause clearly, as well as a _modular_ structure that allows
 understanding what each part of the codebase should do. For instance, we would
-not want to simply dump all of our code into a single file, having it number
+not want to simply dump all of our code into a single file with
 thousands of lines - instead, what we oftentimes may do is decompose it into
 constituent parts, each part of which has a certain purpose, such as parsing,
 maintaining certain data structures, or other purposes, depending on the use
@@ -63,20 +63,19 @@ href="#footnote1">_<sup>[1]</sup>_</a>, so SML will only deal with
 specifications at the _type-level_. That is, within SML itself, a specification
 for a function is simply a type for that function.
 
-The term for a specification in SML is called a _signature_. Our running example
-throughout this section will be of the specification and implementation of a
-package for modular arithmetic. Note that the comments are optional.
+The term for a specification in SML is called a _signature_. Consider the following specification and 
+implementation of a package for modular arithmetic. Note that the comments are optional.
 
 ```sml
 signature MOD_ARITH =
 sig
-    (* mod_add should be such that mod_add n x y = (x + y) mod n *)
+    (* ENSURES: mod_add n x y = (x + y) mod n *)
     val mod_add : int -> int -> int -> int
 
-    (* mod_sub should be such that mod_sub n x y = (x - y) mod n *)
+    (* ENSURES: mod_sub n x y = (x - y) mod n *)
     val mod_sub : int -> int -> int -> int
 
-    (* mod_times should be such that mod_times n x y = (x * y) mod n *)
+    (* ENSURES: mod_times n x y = (x * y) mod n *)
     val mod_times : int -> int -> int -> int
 end
 ```
@@ -132,14 +131,14 @@ the signature, or it will fail to ascribe, and result in a compile-time error
 It is not, however, the case that a structure cannot provide _more_ information
 than is strictly necessitated by the signature. Additional helper functions and
 value bindings can be freely instantiated within a structure without affecting
-ascription. Thus, honoring a contract only entails satisfyng the terms agreed to
+ascription. Thus, honoring a contract only entails satisfying the terms agreed to
 in the signature, without comment on going over. We will explore this idea more
 later in the chapter when we discuss information hiding.
 
 Using structures should be something that you are already familiar with - you do
 it every time that you invoke `Int.compare`. To use the fields of a structure,
-you access them using the dot operator, following the name of the structure in
-question. Thus, calling `Int.compare` means to access the function named
+you access them using the name of the module, followed by a dot, followed by the name of whatever
+you are trying to access. Thus, calling `Int.compare` means to access the function named
 `compare` implemented within the structure named `Int`, which is provided as
 part of the Standard ML Basis Library. To use the structure that we have just
 implemented, we would similarly call `ModArith.mod_add`, for instance.
@@ -263,14 +262,6 @@ internalize every last detail of a codebase, and it is a waste of time to try
 and do so every time that one wants to make a patch. As such, we rely on
 abstraction in order to keep the amount of relevant information low.
 
-Consider the computer that you are likely reading this on. It is unlikely that
-you know _everything_ about what happens within its case - precisely how it
-interfaces with its hard drive in order to retrieve data, how the CPU
-coordinates together machine instructions to simulate the thousands of processes
-that are simultaneously running, or how its screen manages to turn electrical
-signals into a crisp, legible picture.
-
-
 Consider the computer. It is a complicated, convoluted work of machinery and
 circuitry - at its most fundamental level being comprised of logic gates and
 incredible networks of interacting parts. Although an action as simple as
@@ -282,8 +273,7 @@ the user of a computer does not _really_ know how it functions.
 
 Yet again, it is also unlikely that it is important for you to know. A user of a
 computer does not need to know precisely how it works to know that they can type
-a query into Google to gain information about something that they would like to
-know. The only details that are _relevant to the user_ are the devices that
+a query into Google. The only details that are _relevant to the user_ are the devices that
 allow interfacing with the inner hardware (the mouse and keyboard, among other
 things), and less so the precise configuration of the microchips inside of the
 machine.
@@ -335,7 +325,7 @@ We have used the term "ascription" several times so far in this chapter,
 referring to how a structure "implements" a signature, similarly to how a value
 has a certain type. In reality, there are two kinds of ascription: transparent
 and opaque. To demonstrate the difference, we will consider the following
-implementation of arrays.
+implementation of 2D arrays.
 
 ```sml
 signature ARRAY =
