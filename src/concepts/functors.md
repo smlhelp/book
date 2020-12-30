@@ -504,11 +504,6 @@ and do a simple recoloring. We will illustrate only the first case, and the rest
 follow similarly. You may verify for yourself that this continues to preserve
 the ordering and black-height invariants.
 
-However, this rotation may itself cause another site of red-children invariant
-violation, slightly farther up. As such, we must _propagate_ this balancing
-operation as far up as necessary, in order to produce a proper binary tree at
-the very end.
-
 <figure class="aligncenter">
     <img src="../assets/balance.png" alt="Balance" width="1000"\>
     <figcaption><b>Fig 2.</b> Illustration of the "balancing" necessary in order
@@ -531,3 +526,124 @@ fun balance (Node(Node(Node(a,(Red,x),b), (Red,y), c), (Black, z), d)) =
 
 Note that if we are not in any of the four described cases, `balance` simply
 acts as the identity function, as there is no invariant being broken.
+
+However, this rotation may itself cause another site of red-children invariant
+violation, slightly farther up. As such, we must _propagate_ this balancing
+operation as far up as necessary, in order to produce a proper binary tree at
+the very end. To this end, we can write the following code for the inductive
+case of `insert`:
+
+```sml
+fun insert Leaf (k, v) = Node(Leaf, (Red, (k, v)), Leaf)
+  | insert (Node (L, (c', (k', v')), R)) (k, v) =
+    case Key.compare (k, k') of
+        LESS => balance(Node(insert L (k, v), (c', (k', v')), R))
+      | EQUAL => Node(L, (c', (k, v)), R)
+      | GREATER => balance(Node(L, (c', (k', v')), insert R (k ,v)))
+```
+
+This code ensures that, after descending into a subtree in order to insert the
+given key and value, a balancing operation is immediately performed once the
+insertion is complete. This ensures that we have a _bottom-up_ propagation of
+balancings, immediately after completing the insertions. Note that because
+`balance` acts as the identity function on anything that does not pattern-match
+to either of the four cases, we perform only a negligible amount of extra checks
+at each recursive call, and ultimately are only concerned with those four cases.
+
+However, this code is not complete. There is a minor edge case that remains -
+what if we are too close to the root for any of the four cases to apply? Our
+previous analysis relied on the fact that we could assume that the parent of our
+inserted node was red, and thus had a black parent - what of the case where the
+parent of the inserted node _has no_ parent?
+
+Consider the case illustrated below:
+
+some illustration of the red-red insertion case goes here
+
+As we can see here, our previous reasoning does not catch this red-children
+violation because it does not conform to our previous cases, by virtue of the
+inserted node not having a grandfather. This case can _only_ happen at the root,
+however, since that is the only location where that can occur. As a result, the
+simple solution is to simply make the root of any red-black tree black - it will
+preserve the black height invariant, but also result in this red-red violation
+being impossible. We can amend our code as follows:
+
+```sml
+fun insert' Leaf (k, v) = Node(Leaf, (Red, (k, v)), Leaf)
+  | insert' (Node (L, (c', (k', v')), R)) (k, v) =
+    case Key.compare (k, k') of
+        LESS => balance(Node(insert' L (k, v), (c', (k', v')), R))
+      | EQUAL => Node(L, (c', (k, v)), R)
+      | GREATER => balance(Node(L, (c', (k', v')), insert' R (k ,v)))
+
+fun insert T (k, v) =
+    case insert' T (k, v) of
+        Leaf => Leaf
+      | Node (L, (_, (k', v')), R) => Node(L, (Black, (k', v')), R)
+```
+
+Finally, this results in our completed code for the `insert` function. Note that
+because of the signature that we are ascribing to, helper functions such as
+`balance` and `insert` will not be visible to the client of the module, so there
+is no harm in declaring them within the namespace of the functor.
+
+Our completed code for a red-black tree implementation of dictionaries is thus
+as follows. Note that the implementation of `find` is very straightforward, and
+will not be discussed.
+
+```sml
+functor RedBlackDict (Key : ORDERED) :> DICT =
+struct
+    type key = Key.t
+    datatype color = Red | Black
+    datatype 'a dict = Leaf | Node of 'a dict * (color * (key * 'a)) * 'a dict
+
+    val empty = Leaf
+
+    fun balance (Node(Node(Node(a,(Red,x),b), (Red,y), c), (Black, z), d)) =
+                Node(Node(a,(Black,x),b),  (Red,y), Node(c,(Black,z),d))
+      | balance (Node(a,(Black,x), Node(Node(b,(Red,y),c), (Red, z), d))) =
+                Node(Node(a,(Black,x),b), (Red,y), Node(c,(Black,z), d))
+      | balance (Node(Node(a, (Red,x), Node(b,(Red,y),c)), (Black,z), d)) =
+                Node(Node(a,(Black,x),b), (Red, y), Node(c,(Black,z),d))
+      | balance (Node(a, (Black,x), Node(b, (Red,y), Node(c,(Red,z), d)))) =
+                Node(Node(a,(Black,x),b), (Red,y), Node(c,(Black,z), d))
+      | balance T = T
+
+    fun insert' Leaf (k, v) = Node(Leaf, (Red, (k, v)), Leaf)
+      | insert' (Node (L, (c', (k', v')), R)) (k, v) =
+        case Key.compare (k, k') of
+            LESS => balance(Node(insert' L (k, v), (c', (k', v')), R))
+          | EQUAL => Node(L, (c', (k, v)), R)
+          | GREATER => balance(Node(L, (c', (k', v')), insert' R (k ,v)))
+
+    fun insert T (k, v) =
+        case insert' T (k, v) of
+            Leaf => Leaf
+          | Node (L, (_, (k', v')), R) => Node(L, (Black, (k', v')), R)
+
+    fun lookup Leaf k = NONE
+      | lookup (Node (L, (_, (k', v)), R)) k =
+        case Key.compare (k, k') of
+            LESS => lookup L k
+          | EQUAL => SOME v
+          | GREATER => lookup R k
+end
+```
+
+In the end, usage of modules allows us to write a powerful, parameterized
+implementation of a dictionary interface, in such a way that we ensure that our
+_representation invariants_ are respected throughout each operation. By making
+a structure ascribing to the `ORDERED` typeclass a parameter of the functor
+`RedBlackDict`, we allow powerful generality in the type of the key to the
+dictionary, without having to introduce additional overhead in the functions of
+the module itself.
+
+## Conclusions
+
+In this chapter, we have seen how functors are a potent tool when structuring
+our code, that allows us to enforce modularity and implement code reuse _within
+the language itself_. Functors also form the basis for a kind of _higher-order
+module_, where we can parameterize the structures we are capable of creating by
+other structures themselves, resulting in a greater degree of expression and
+versatility not unlike those of higher-order functions themselves.
