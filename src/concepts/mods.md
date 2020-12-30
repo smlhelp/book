@@ -337,7 +337,7 @@ has a certain type. In reality, there are two kinds of ascription: transparent
 and opaque. To demonstrate the difference, we will consider the following
 implementation of arrays.
 
-```
+```sml
 signature ARRAY =
 sig
     type 'a array
