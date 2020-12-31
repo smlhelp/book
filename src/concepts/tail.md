@@ -56,7 +56,7 @@ sum ([3, 2, 1], 0)
 ```
 Notice that the stack trace does not get any wider: we do not need any memory space to store "what is left to do," so this takes constant space.
 
-# Example
+## Example
 Let's try to turn the function to calculate the nth Fibonacci number into a tail-recursive function.
 ```sml
 fun fib 0 = 1
