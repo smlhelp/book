@@ -12,22 +12,26 @@ This function is not tail-recursive, because after the recursive call is evaluat
 
 In order to write the `sum` function in a tail-recursive manner, we know that the last computation that we can do is the recursive call to `sum`. But, we also need some way to keep track of the sum of the list elements and add to it, since we no longer can add things after the recursive call. We will make an accumulator variable, `acc`, that will keep track of the sum of list elements we have exposed so far, and pass that down through the recursive calls. In our base case, we know we have seen every element in the list and there are no more elements to add, so our base case looks like this:
 ```sml
-fun sum' ([], acc) = acc
+fun tsum ([], acc) = acc
 ```
 In our recursive case, we want to use our accumulator to account for the top element of our list, then pass down that accumulator to the recursive calls. We can do that as follows:
 ```sml
-fun sum' (x::xs, acc) = sum' (xs, x + acc)
+fun tsum (x::xs, acc) = tsum (xs, x + acc)
 ```
 Because SML evaluates the function arguments before evaluating the function call, `x + acc` is performed before `sum` is called, and then this updated accumulator value is passed down to the recursive `sum` call on `xs`. Thus, the last operation performed is the recursive call, making this a tail-recursive function.
 
-Putting these two parts together, we have:
+Because we now have the accumulator variable, we must pass in `0` as the accumulator for `tsum` to behave as expected. In addition, because we have changed the type of `sum`, we can rewrite the original `sum` function by using the tail-recursive version as a helper.
+
+Putting these parts together, we have:
 
 ```sml
-fun sum' ([], acc) = acc
-  | sum' (x::xs, acc) = sum' (xs, x + acc)
+fun tsum ([], acc) = acc
+  | tsum (x::xs, acc) = tsum (xs, x + acc)
+
+fun sum L = tsum (L, 0)
 ```
 
-Why do we care about tail recursion? One reason is that the tail-recursive version of functions uses less space on the call stack.
+Why do we care about tail recursion? One reason is that the tail-recursive version of functions uses less space on the call stack. (The call stack is what keeps track of function calls- in this case, the call stack keeps track of the recursive calls and the work left to do after the recursive calls.)
 
 Consider the following stack trace of the `sum` function, which is not tail-recursive:
 ```sml
@@ -86,8 +90,10 @@ fun rev [] = []
   | rev (x::xs) = (rev xs) @ [x]
 ```
 ## Answers
-If we want to do this tail-recursively, we add an accumulator variable and proceed as usual.
+If we want to do this tail-recursively, we add an accumulator variable and proceed as usual. If we want to use the same types as the original `rev` function, we can call our tail-recursive version, as we did in our `sum` example.
 ```sml
 fun trev ([], acc) = acc
   | trev (x::xs, acc) = trev (xs, x::acc)
+
+val rev = fn L => trev (L, [])
 ```
