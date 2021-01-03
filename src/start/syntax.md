@@ -296,7 +296,7 @@ The clausal *patterns* must be able to match to the type of the expression being
 The clausal *expressions* must all have the same type (which may be different from that of the expression cased on).
 
 |                                  Expression                                  |   Example Clause  | Clause Pattern   | Clause Expression |
-|:----------------------------------------------------------------------------:|:-----------------:|:-----------------:|:-----------------:|
+|:----------------------------------------------------------------------------:|:-----------------:|:----------------:|:-----------------:|
 | `case () of _ => ()`                                                         | `_ => ()`         | `_`              | `()`              |
 | `case #"A" < #"a" of true => ":)" | false => ":("`                           | `true => ":)"`    | `true`           | `":)"`            |
 | `case Int.compare (1,0) of LESS => false | EQUAL => false | GREATER => true` | `GREATER => true` | `GREATER`        | `true`            |
