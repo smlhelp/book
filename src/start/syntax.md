@@ -28,13 +28,6 @@ Make tuples and lists using built-in types and themselves.
 
 Note: 1-tuples don't exist in Standard ML.
 
-| Expression | Evaluates To |  Type  |
-|:----------:|:------------:|:------:|
-| `5`        | `5`          | `int`  |
-| `(5)`      | `5`          | `int`  |
-| `(((5)))`  | `5`          | `int`  |
-| `((()))`   | `()`         | `unit` |
-
 #### Operators
 
 Operators have different priority levels. Higher priority operations are performed before lower priority operations.
@@ -65,6 +58,7 @@ Right-associative operations of equal priority implicitly evaluate from right to
 #### Boolean Operation
 
 There are three main ones: `andalso`, `orelse` and `not`.
+Short-circuiting behavior discussed [here](../types/bool.md).
 
 |      Expression      | Evaluates To |                             Notes                             |
 |:--------------------:|:------------:|:-------------------------------------------------------------:|
@@ -73,7 +67,7 @@ There are three main ones: `andalso`, `orelse` and `not`.
 |      `not true`      |    `false`   |                                                               |
 |      `not false`     |    `true`    |                                                               |
 
-There are built-in equality operators: `=` and `<>`. These two operate on *equality types*, which include the built-in types mentioned before — and the structured types that can be made from them — __excluding__ `real`.
+There are built-in equality operators: `=` and `<>`. These two operate on *equality types*, which include the built-in types mentioned before — and the structured types that can be made from them — __excluding__ `real` and function types.
 
 | Operator |     Meaning    | Priority | Example Expression | Evaluates To |
 |:--------:|:--------------:|:--------:|:------------------:|:------------:|
@@ -404,35 +398,35 @@ If convenient, we can use the `as` keyword between a variable and a structured p
 val tuple as (a,b) : int * int = (1,2)
 ```
 
-| Expression | Evaluates To |
-|:----------:|:------------:|
-| `a`        | `1`          |
-| `b`        | `2`          |
-| `tuple`    | `(1,2)`      |
+| Variable Name | Bound To |
+|:-------------:|:--------:|
+| `a`           | `1`      |
+| `b`           | `2`      |
+| `tuple`       | `(1,2)`  |
 
 ```sml
 val outer as (inner as (a,b),c) : (int * int) * int = ((1,2),3)
 ```
 
-| Expression | Evaluates To |
-|:----------:|:------------:|
-| `outer`    | `((1,2),3)`  |
-| `inner`    | `(1,2)`      |
-| `a`        | `1`          |
-| `b`        | `2`          |
-| `c`        | `3`          |
+| Variable Name |  Bound To   |
+|:-------------:|:-----------:|
+| `outer`       | `((1,2),3)` |
+| `inner`       | `(1,2)`     |
+| `a`           | `1`         |
+| `b`           | `2`         |
+| `c`           | `3`         |
 
 ```sml
 val L1 as x1::(L2 as x2::(L3 as x3::L4)) : int list = [1,2,3]
 ```
 
-| Expression | Evaluates To |
-|:----------:|:------------:|
-| `L1`       | `[1,2,3]`    |
-| `x1`       | `1`          |
-| `L2`       | `[2,3]`      |
-| `x2`       | `2`          |
-| `L3`       | `[3]`        |
-| `x3`       | `3`          |
-| `L4`       | `[]`         |
+| Variable Name | Bound To  |
+|:-------------:|:------- -:|
+| `L1`          | `[1,2,3]` |
+| `x1`          | `1`       |
+| `L2`          | `[2,3]`   |
+| `x2`          | `2`       |
+| `L3`          | `[3]`     |
+| `x3`          | `3`       |
+| `L4`          | `[]`      |
 
