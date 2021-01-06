@@ -302,33 +302,35 @@ The wildcard pattern `_` will match to any type, but create no bindings (ignore 
 
 |                   Candidate                   | Valid Pattern? |
 | ---------------------------------------------:|:-------------- |
-| `0`                                           | Yes            |
-| `3 + 4`                                       | No             |
-| `true`                                        | Yes            |
-| `3 < 4`                                       | No             |
 | `()`                                          | Yes            |
+| `0`                                           | Yes            |
+| `":)"`                                        | Yes            |
+| `true`                                        | Yes            |
+| `EQUAL`                                       | Yes            |
+| `3 + 4`                                       | No             |
+| `":" ^ ")"`                                   | No             |
+| `3 < 4`                                       | No             |
+| `Int.compare (0,0)`                           | No             |
+| `Int.compare`                                 | No             |
+| `0.0`                                         | No             |
+| `(fn x => x)`                                 | No             |
 | `x`                                           | Yes            |
 | any variable name that is not a reserved word | Yes            |
 | `_`                                           | Yes            |
 | `(0,1)`                                       | Yes            |
 | `(x,y)`                                       | Yes            |
-| `(x,x)`                                       | No             |
 | `(_,_)`                                       | Yes            |
+| `(x,x)`                                       | No             |
 | `[]`                                          | Yes            |
+| `[x]`                                         | Yes            |
 | `[[[]]]`                                      | Yes            |
 | `([],[])`                                     | Yes            |
 | `[] @ []`                                     | No             |
-| `[x]`                                         | Yes            |
-| `x::xs`                                       | Yes            |
 | `[x] @ xs`                                    | No             |
-| `x::y::xs`                                    | Yes            |
 | `L @ R`                                       | No             |
+| `x::xs`                                       | Yes            |
+| `x::y::xs`                                    | Yes            |
 | `_::_`                                        | Yes            |
-| `Int.compare`                                 | No             |
-| `Int.compare (0,0)`                           | No             |
-| `EQUAL`                                       | Yes            |
-| `(fn x => x)`                                 | No             |
-| `":)"`                                        | Yes            |
 
 A pattern that accounts for every possible value of the type it matches to is said to perform an exhaustive match. The match is nonexhaustive if and only if a possible value of that pattern's type is missed.
 
