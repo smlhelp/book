@@ -492,7 +492,7 @@ invariant, and thus the the parent of the inserted node must itself have a black
 parent. Thus, there can only be four cases for the "site" of the insertion:
 
 <figure class="aligncenter">
-    <img src="../assets/redblack.png" alt="Cases" width="1000"\>
+    <img src="../assets/redblack.svg" alt="Cases" width="1000"\>
     <figcaption><b>Fig 1.</b> Illustration of the four cases of the red-children
     invariant being broken following insertion. The inserted nodes are marked
     with a "plus". </figcaption>
@@ -505,7 +505,7 @@ follow similarly. You may verify for yourself that this continues to preserve
 the ordering and black-height invariants.
 
 <figure class="aligncenter">
-    <img src="../assets/balance.png" alt="Balance" width="1000"\>
+    <img src="../assets/balance.svg" alt="Balance" width="1000"\>
     <figcaption><b>Fig 2.</b> Illustration of the "balancing" necessary in order
     to preserve the red-children invariant in Case 1 of Fig. 1. </figcaption>
 </figure>
