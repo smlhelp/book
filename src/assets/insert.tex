@@ -1,6 +1,7 @@
 \documentclass[margin=0.5cm]{standalone} 
 
 \usepackage{array}
+\usepackage{amsmath}
 
 %
 % Cooper Pierce <cppierce@andrew.cmu.edu>
@@ -8,9 +9,9 @@
 % For use in the book, 
 %   1. compile with latexmk, 
 %   2. use dvisvgm
-% E.g., latexmk balance 
-%   && dvisvgm --no-fonts --clipjoin --bbox=papersize balance
-%   && mv balance-1.svg balance.svg
+% E.g., latexmk insert 
+%   && dvisvgm --no-fonts --clipjoin --bbox=papersize insert
+%   && mv insert-1.svg insert.svg
 % (for whatever reason my version of pdflatex makes a two page dvi)
 %
 %
@@ -33,7 +34,7 @@
         },
         arn r/.append style={%
             text=white,
-            font=\sffamily\bfseries,
+            font=\sffamily\bfseries\tiny,
             draw=red,
             fill=red,
             text width=1.5em,
@@ -55,36 +56,22 @@
             }
         }
     }
-    \begin{tabular}{m{3cm} m{1em} m{3cm} }
-    \begin{forest}
-        [3, arn n
-            [2, arn r
-                [1, arn r, 
-                    [a]
-                    [b]
-                ]
-                [c]
-            ]
-            [d]
-        ]
-        \node at (current bounding box.north west)
-            [draw,aspect=6]
-            {\emph{Case 1}};
-    \end{forest}
+    \begin{tabular}{m{0.8cm} m{2em} m{0.5cm} m{2em} m{1.5cm}}
+        Empty
     &
-    \( \longmapsto \)
+        \( \xrightarrow[a\,\mapsto\,2]{\text{ins.}} \)
     &
-    \begin{forest}
-        [2, arn r
-            [1, arn n,
-                [a]
-                [b]
+        \begin{forest}
+            [a\,:\,2, arn r]
+        \end{forest}
+    &
+        \( \xrightarrow[b\,\mapsto\,3]{\text{ins.}} \)
+    &
+        \begin{forest}
+            [a\,:\,2, arn r,
+                [,phantom]
+                [b\,:\,3, arn r]
             ]
-            [3, arn n,
-                [c]
-                [d]
-            ]
-        ]
-    \end{forest}
+        \end{forest}
     \end{tabular}
 \end{document}
