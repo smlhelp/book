@@ -58,7 +58,6 @@ Right-associative operations of equal priority implicitly evaluate from right to
 #### Boolean Operation
 
 There are three main ones: `andalso`, `orelse` and `not`.
-Short-circuiting behavior discussed [here](../types/bool.md).
 
 |      Expression      | Evaluates To |                             Notes                             |
 |:--------------------:|:------------:|:-------------------------------------------------------------:|
@@ -66,6 +65,8 @@ Short-circuiting behavior discussed [here](../types/bool.md).
 | `true orelse false`  |    `true`    | `orelse` short-circuits if left operand evaluates to `true`   |
 |      `not true`      |    `false`   |                                                               |
 |      `not false`     |    `true`    |                                                               |
+
+Note: See the page about the `bool` type [here](../types/bool.md) for more information on short-circuiting behavior.
 
 There are built-in equality operators: `=` and `<>`. These two operate on *equality types*, which include the built-in types mentioned before — and the structured types that can be made from them — __excluding__ `real` and function types.
 
@@ -83,6 +84,8 @@ There are built-in equality operators: `=` and `<>`. These two operate on *equal
 | `(1,2,"a","b") = (1,2,"a","b")`                               | `true`              |
 | `([1,2,3,4],(["a","b"],[()])) = ([1,2,3,4],(["a","b"],[()]))` | `true`              |
 | `0.0 = 0.0`                                                   | N/A: Not Well Typed |
+
+Note: See the page about the `real` type [here](../types/real.md) for more information on why `0.0 = 0.0` is not allowed.
 
 There are built-in comparison operators `>`, `<`, `>=`, and `<=`. These have limited use; they operate on `int`, `string`, `char`, `real`.
 
