@@ -591,7 +591,7 @@ because of the signature that we are ascribing to, helper functions such as
 is no harm in declaring them within the namespace of the functor.
 
 Our completed code for a red-black tree implementation of dictionaries is thus
-as follows. Note that the implementation of `find` is very straightforward, and
+as follows. Note that the implementation of `lookup` is very straightforward, and
 will not be discussed.
 
 ```sml
