@@ -558,7 +558,10 @@ parent of the inserted node _has no_ parent?
 
 Consider the case illustrated below:
 
-some illustration of the red-red insertion case goes here
+<figure class="aligncenter">
+    <img src="../assets/insert.svg" alt="Example of inserting two nodes into an empty tree" width="1000"\>
+    <figcaption><b>Fig 3.</b> Demonstration of potential issues in inserting nodes at the root when lacking a black parent. </figcaption>
+</figure>
 
 As we can see here, our previous reasoning does not catch this red-children
 violation because it does not conform to our previous cases, by virtue of the
