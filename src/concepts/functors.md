@@ -105,8 +105,8 @@ ten elements.
 
 ## Functors: Syntactic Sugar
 
-The New Jersey implementation of Standard ML (SML/NJ, the one you are likely
-using) offers some "syntactic sugar" with respect to functors. It is a little
+SML offers some "syntactic sugar" for functor arguments, allowing us to
+(seemingly) parameterize them by terms other than structures. It is a little
 unsavory to have to hard code the limit of the `BoundedStack` within the functor
 itself, rather than having it be parameterized by the limit itself, so we can
 actually also write the following:
