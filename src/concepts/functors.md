@@ -384,7 +384,7 @@ sig
     type 'a dict
     val empty : 'a dict
     val insert : 'a dict -> key * 'a -> 'a dict
-    val find : 'a dict -> key -> 'a option
+    val lookup : 'a dict -> key -> 'a option
 end
 ```
 
