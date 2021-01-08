@@ -1,6 +1,11 @@
-﻿# Thinking About Recursion Inductively
+﻿<!-- Idk why but my title is not rendering right -->
+<!-- unless i put this here -->
+
+# Thinking About Recursion Inductively
 
 There's a strong association between mathematical induction and recursion, especially in SML. Often times, we'll be able to use similar vocabularies when describing SML problems and mathematical induction. In particular, we're going to be use the words **base case, induction hypothesis, and induction step** to describe both types of problems.
+
+In essence, we'll be able to approach writing SML functions the same way we approach writing induction proofs.
 
 ## Inductive Intuition
 
@@ -10,14 +15,22 @@ Approaching induction proofs can fall along the following line of logic:
 2. Define the **inductive hypothesis**.
 3. Assume the correctness of the **inductive hypothesis** to show the correctness of the **inductive step**.
 
-We can similarly apply this line of logic to solving problems with SML functions! Let's take a look at a common recursive problem. `treeSum` takes an int tree and returns the sum of all the integers in that tree. By the end of this, we'll be able to implement recursive functions with the following inductive logic:
+We can similarly apply this line of logic to solving problems with SML functions! We'll look at two problems that can be solved with recursion: `fact` and `len`.
+
+## Factorial
+
+The following function implements the factorial operator in SML.
 
 ```sml
-fun treeSum (Empty : int tree) : int = 0
-  | treeSum (Node(L,x,R)) = treeSum(L) + treeSum(R) + x
+(* REQUIRES: n >= 0
+ * ENSURES:  fact n ==>* (n)(n-1)...(1), or n! *)
+ fun fact (0 : int) : int = 1
+   | fact (n : int) : int = n * fact (n - 1)
 ```
 
-> The **base case** for `treeSum` is that an `Empty` tree has a sum of 0. Let's define the **inductive hypothesis** to be that for some tree `T`, that `treeSum` is correct for its left subtree and right subtree. Define my **inductive step** to be for a tree `T = Node(L,x,R)`. By the definition of trees, I know that all integers in `T` are represented by the integers in `L`, `R`, and the integer `x`. If I sum all of these, I will get `treeSum(T)`. By assuming the **IH**, I can say that `treeSum L` and `treeSum R` are correct. Therefore, by math, I will say that `treeSum T = (treeSum L) + (treeSum R) + x` is correct by the above reasoning. As such, I've shown my **IS** to be correct, and thus the theorem that `treeSum T` is correct for all `T : int tree`.
+Let's think of this as a proof of extensional equivalence. I want to show that `fact` is equivalent to the mathematical definition of [factorial](https://en.wikipedia.org/wiki/Factorial).
+
+#### Factorial -- (1) Solve the Base Cases
 
 ## An Exploration of Tree Sums
 
@@ -89,3 +102,14 @@ And like that, we're able to leverage mathematical induction to help us find the
 1. Solve the **base cases**.
 2. Define the **inductive hypothesis**.
 3. Assume the correctness of the **inductive hypothesis** to show the correctness of the **inductive step**.
+
+### More Examples
+
+1. Tree Sum
+
+```sml
+fun treeSum (Empty : int tree) : int = 0
+  | treeSum (Node(L,x,R)) = treeSum(L) + treeSum(R) + x
+```
+
+> The **base case** for `treeSum` is that an `Empty` tree has a sum of 0. Let's define the **inductive hypothesis** to be that for some tree `T`, that `treeSum` is correct for its left subtree and right subtree. Define my **inductive step** to be for a tree `T = Node(L,x,R)`. By the definition of trees, I know that all integers in `T` are represented by the integers in `L`, `R`, and the integer `x`. If I sum all of these, I will get `treeSum(T)`. By assuming the **IH**, I can say that `treeSum L` and `treeSum R` are correct. Therefore, by math, I will say that `treeSum T = (treeSum L) + (treeSum R) + x` is correct by the above reasoning. As such, I've shown my **IS** to be correct, and thus the theorem that `treeSum T` is correct for all `T : int tree`.
