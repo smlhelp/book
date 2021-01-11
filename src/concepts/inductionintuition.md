@@ -28,6 +28,12 @@ We can similarly apply this line of logic to solving problems with SML
 functions! We'll look at a problems that can be solved with recursion: `fact`.
 We'll look at how thinking of it's proof relates to implementing the problem.
 
+# Todo Elaborate on This Metaphor
+
+- Base Case == Base Case
+- Induction Hypothesis == Recursive Call
+- Induction Step == Recursive Case
+
 ## Factorial
 
 Let's say your asked to implement the following function with these specs.
@@ -113,8 +119,8 @@ The correctness proof is as follows:
 > - `n! == n * (n-1)!` by math
 > - `n! == n * fact (n-1)` by IH
 > - `n! == fact n` by clause 2 of `fact`
-
-And so we have shown for all `n` such that `n >= 0`, `fact n == n!`.
+>
+> And so we have shown for all `n` such that `n >= 0`, `fact n == n!`.
 
 ## QED
 
@@ -133,6 +139,43 @@ to implement a recursive function in SML, remember to think inductively!
 
 Here are some more examples, with their code, thought processes, and proof outlines.
 
+### Factorial (Compiled)
+
+#### Factorial -- Code
+
+```sml
+(* REQUIRES: n >= 0
+ * ENSURES:  fact n ==>* (n)(n-1)...(1), or n! *)
+fun fact(0 : int) : int = 1
+  | fact(n : int) : int = n * fact (n-1)
+```
+
+#### Factorial -- Thought Process
+
+- The base case is `0`, and `0! == 1`, so we define it like that.
+- Define IH to be that `fact (n-1) == (n-1)!`
+- What can I say if I assume IH?
+- `n * (n-1)! == n * fact(n-1)`
+- So we define our recursive case like that.
+
+#### Factorial -- Proof
+
+> **Base Case: `n = 0`**
+>
+> - `0! = 1` by math
+> - `fact 0 ==>* 1` by clause 1 of `fact`.
+> - `1 = 1` as desired
+>
+> **Induction Hypothesis:** For all `k` such that `0 <= k < n`, `fact k == k!`.
+>
+> **Induction Step: `n`**
+>
+> - `n! == n * (n-1)!` by math
+> - `n! == n * fact (n-1)` by IH
+> - `n! == fact n` by clause 2 of `fact`
+>
+> And so we have shown for all `n` such that `n >= 0`, `fact n == n!`.
+
 ### List Length
 
 ```sml
@@ -143,11 +186,20 @@ fun len ([] : int list) : int = 0
 ### Tree Sum
 
 ```sml
+(* REQUIRES: true
+ * ENSURES:  treeSum T ==>* the sum of all the elements of T *)
 fun treeSum (Empty : int tree) : int = 0
   | treeSum (Node(L,x,R)) = treeSum(L) + treeSum(R) + x
 ```
 
-> The **base case** for `treeSum` is that an `Empty` tree has a sum of 0. Let's define the **inductive hypothesis** to be that for some tree `T`, that `treeSum` is correct for its left subtree and right subtree. Define my **inductive step** to be for a tree `T = Node(L,x,R)`. By the definition of trees, I know that all integers in `T` are represented by the integers in `L`, `R`, and the integer `x`. If I sum all of these, I will get `treeSum(T)`. By assuming the **IH**, I can say that `treeSum L` and `treeSum R` are correct. Therefore, by math, I will say that `treeSum T = (treeSum L) + (treeSum R) + x` is correct by the above reasoning. As such, I've shown my **IS** to be correct, and thus the theorem that `treeSum T` is correct for all `T : int tree`.
+- The **base case** for `treeSum` is that an `Empty` tree has a sum of 0.
+- Let's define the **inductive hypothesis** to be that for some tree `T`, that `treeSum` is correct for its left subtree and right subtree.
+- Define my **inductive step** to be for a tree `T = Node(L,x,R)`.
+  - By the definition of trees, I know that all integers in `T` are represented by the integers in `L`, `R`, and the integer `x`.
+  - If I sum all of these, I will get `treeSum(T)`.
+  - By assuming the **IH**, I can say that `treeSum L` and `treeSum R` are correct.
+  - Therefore, by math, I will say that `treeSum T = (treeSum L) + (treeSum R) + x` is correct by the above reasoning.
+- As such, I've shown my **IS** to be correct, and thus the theorem that `treeSum T` is correct for all `T : int tree`.
 
 > **Base Case:** `T = Empty`
 >
