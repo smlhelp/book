@@ -61,7 +61,7 @@ and use that to help implement the function.
 
 We want to prove the following theorem:
 
-> For all `n` such that `n >= 0`, `fact n == n!`.
+> For all `n` such that `n >= 0`, `fact n = n!`.
 
 _In other words, the `fact` function is equivalent to the mathematical_
 _factorial operator._
@@ -86,31 +86,32 @@ The correctness proof is as follows;
 >
 > - `0! = 1` by math
 > - `fact 0 ==>* 1` by clause 1 of `fact`.
-> - `1 = 1` as desired
+> - `1` _(the integer)_ is equivalent to `1` _(the SML `int`)_ as desired.
+>   In other words, `1 = 1`.
 
 ### 2. Define the Induction Hypothesis
 
 The next step of our proof is the inductive hypothesis. We want to assume
 that our theorem holds for all "smaller" scenarios. In other words,
 
-> **Induction Hypothesis:** For all `k` such that `0 <= k < n`, `fact k == k!`.
+> **Induction Hypothesis:** For all `k` such that `0 <= k < n`, `fact k = k!`.
 
 ### 3. Show the Inductive Step
 
 In most induction proofs, you would make a few logical deductions, apply the
 IH (induction hypothesis) and prove the theorem. When we think about how to
 implement `fact`, we will do something similar! Ask yourself,
-**"what can I say if I assume `fact (n-1) == (n-1)!`?** (this assumption is
+**"what can I say if I assume `fact (n-1) = (n-1)!`?** (this assumption is
 given by our **IH**).
 
 > **💡 Key Insight 💡**
 >
-> _When solving the recursive case of an SML function, try to ask yourself: "How would I solve this if I assume the recursive call is correct?"_
+> _When solving the recursive case of an SML function, try to ask yourself: "How would I solve this if I assume the recursive call is correct?" We do this because earlier, we said that we can use the Induction Hypothesis to reason about the Recursive Calls we can make in our function._
 
 Well, we know that the mathematical definition of factorial is the product of
-all nonnegative integers up to `n`. Note, by definition, that `n! == n * (n-1)!`.
-But also note, that by our **IH**, `(n-1)! == fact (n-1)`. From here, we gain
-the insight that `n! == n * fact (n-1)`. Just like in the base case, because
+all nonnegative integers up to `n`. Note, by definition, that `n! = n * (n-1)!`.
+But also note, that by our **IH**, `(n-1)! = fact (n-1)`. From here, we gain
+the insight that `n! = n * fact (n-1)`. Just like in the base case, because
 we want our `fact` function to be equivalent, we will define it in this way.
 
 ```sml
@@ -124,11 +125,11 @@ The correctness proof is as follows:
 
 > **Induction Step: `n`**
 >
-> - `n! == n * (n-1)!` by math
-> - `n! == n * fact (n-1)` by IH
-> - `n! == fact n` by clause 2 of `fact`
+> - `n! = n * (n-1)!` by math
+> - `n! = n * fact (n-1)` by IH
+> - `n! = fact n` by clause 2 of `fact`
 >
-> And so we have shown for all `n` such that `n >= 0`, `fact n == n!`.
+> And so we have shown for all `n` such that `n >= 0`, `fact n = n!`.
 
 ## QED
 
@@ -160,10 +161,10 @@ fun fact(0 : int) : int = 1
 
 #### Factorial -- Thought Process
 
-- The base case is `0`, and `0! == 1`, so we define it like that.
-- Define IH to be that `fact (n-1) == (n-1)!`
+- The base case is `0`, and `0! = 1`, so we define it like that.
+- Define IH to be that `fact (n-1) = (n-1)!`
 - What can I say if I assume IH?
-- `n * (n-1)! == n * fact(n-1)`
+- `n * (n-1)! = n * fact(n-1)`
 - So we define our recursive case like that.
 
 #### Factorial -- Proof
@@ -174,15 +175,15 @@ fun fact(0 : int) : int = 1
 > - `fact 0 ==>* 1` by clause 1 of `fact`.
 > - `1 = 1` as desired
 >
-> **Induction Hypothesis:** For all `k` such that `0 <= k < n`, `fact k == k!`.
+> **Induction Hypothesis:** For all `k` such that `0 <= k < n`, `fact k = k!`.
 >
 > **Induction Step: `n`**
 >
-> - `n! == n * (n-1)!` by math
-> - `n! == n * fact (n-1)` by IH
-> - `n! == fact n` by clause 2 of `fact`
+> - `n! = n * (n-1)!` by math
+> - `n! = n * fact (n-1)` by IH
+> - `n! = fact n` by clause 2 of `fact`
 >
-> And so we have shown for all `n` such that `n >= 0`, `fact n == n!`.
+> And so we have shown for all `n` such that `n >= 0`, `fact n = n!`.
 
 ### List Length
 
