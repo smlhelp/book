@@ -3,12 +3,12 @@
 
 # Thinking About Recursion Inductively
 
-There's a strong association between mathematical induction and recursion,
-especially in SML. Often times, we'll be able to use similar vocabularies
-when describing SML problems and mathematical induction. In particular, we're
-going to be use the words **base case, induction hypothesis and induction step**
-to describe both types of problems. In essence, we'll be able to approach
-writing SML functions the same way we approach writing induction proofs.
+There's a strong association between mathematical induction and recursion.
+Often times, we'll be able to use similar vocabularies when describing SML
+problems and mathematical induction. In particular, we're going to be use the
+words **base case, induction hypothesis, and induction step** to describe both
+types of problems. In essence, we'll be able to approach writing SML functions
+the same way we approach writing induction proofs.
 
 <!-- TODO: Put a reference to induction workshop / general induction review -->
 
@@ -28,11 +28,19 @@ We can similarly apply this line of logic to solving problems with SML
 functions! We'll look at a problems that can be solved with recursion: `fact`.
 We'll look at how thinking of it's proof relates to implementing the problem.
 
-# Todo Elaborate on This Metaphor
+## Terminology
 
-- Base Case == Base Case
-- Induction Hypothesis == Recursive Call
-- Induction Step == Recursive Case
+When writing an induction proof, we may use the terms **base case, induction**
+**hypothesis, and induction step** to describe its general outline. When
+writing a recursive SML function, we may use the terms **base case, recursive**
+**call, and recursive case** to describe its general outline. Throughout this
+article you'll see a very strong correspondence between these terms.
+
+- The **base cases** are easy to hard code to be the same as one another
+- The **induction step** of a proof discusses the **recursive case**
+- The **induction hypothesis** lets us reason about the **recursive call**
+
+We'll explore this relationship between induction and recursion with an example.
 
 ## Factorial
 
@@ -49,7 +57,7 @@ We can think of this as a proof of extensional equivalence. I want to show that
 [factorial](https://en.wikipedia.org/wiki/Factorial). Let's set up this proof
 and use that to help implement the function.
 
-### Factorial -- Want To Show
+### 0. Want To Show
 
 We want to prove the following theorem:
 
@@ -58,7 +66,7 @@ We want to prove the following theorem:
 _In other words, the `fact` function is equivalent to the mathematical_
 _factorial operator._
 
-### Factorial -- (1) Solve the Base Cases
+### 1. Solve the Base Cases
 
 We want our base case of `fact` to be equivalent to the base case of
 mathematical factorial. Since factorial is undefined for negative numbers,
@@ -80,14 +88,14 @@ The correctness proof is as follows;
 > - `fact 0 ==>* 1` by clause 1 of `fact`.
 > - `1 = 1` as desired
 
-### Factorial -- (2) Define the Induction Hypothesis
+### 2. Define the Induction Hypothesis
 
 The next step of our proof is the inductive hypothesis. We want to assume
 that our theorem holds for all "smaller" scenarios. In other words,
 
 > **Induction Hypothesis:** For all `k` such that `0 <= k < n`, `fact k == k!`.
 
-### Factorial -- (3) Show the Inductive Step
+### 3. Show the Inductive Step
 
 In most induction proofs, you would make a few logical deductions, apply the
 IH (induction hypothesis) and prove the theorem. When we think about how to
