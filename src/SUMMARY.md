@@ -42,6 +42,8 @@
     - [Ascription](concepts/ascription.md)
   - [Applications](concepts/apps.md)
     - [Cost graphs](concepts/costgraphs.md)
+    - [Lazy Evaluation](concepts/lazy.md)
+    - [Imperative](concepts/imperative.md)
 - [Examples](examples/README.md)
   - [Basics](examples/basics.md)
   - [Recursion & Induction](examples/recursion.md)
