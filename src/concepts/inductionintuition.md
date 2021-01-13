@@ -1,6 +1,20 @@
-﻿# Thinking About Recursion Inductively
+﻿<!-- Idk why but my title is not rendering right -->
+<!-- unless i put this here -->
 
-There's a strong association between mathematical induction and recursion, especially in SML. Often times, we'll be able to use similar vocabularies when describing SML problems and mathematical induction. In particular, we're going to be use the words **base case, induction hypothesis, and induction step** to describe both types of problems.
+# Thinking About Recursion Inductively
+
+There's a strong association between mathematical induction and recursion.
+Often times, we'll be able to use similar vocabularies when describing SML
+problems and mathematical induction. In particular, we're going to be use the
+words **base case, induction hypothesis, and induction step** to describe both
+types of problems. In essence, we'll be able to approach writing SML functions
+the same way we approach writing induction proofs.
+
+<!-- TODO: Put a reference to induction workshop / general induction review -->
+
+> This page assumes an understanding of mathematical induction proofs. If you
+> need a refresher on this subject, check out this
+> [Wikipedia Page](https://en.wikipedia.org/wiki/Mathematical_induction).
 
 ## Inductive Intuition
 
@@ -8,63 +22,205 @@ Approaching induction proofs can fall along the following line of logic:
 
 1. Solve the **base cases**.
 2. Define the **inductive hypothesis**.
-3. Assume the correctness of the **inductive hypothesis** to show the correctness of the **inductive step**.
+3. Prove the **inductive step** by assuming the IH.
 
-We can similarly apply this line of logic to solving problems with SML functions! Let's take a look at a common recursive problem. `treeSum` takes an int tree and returns the sum of all the integers in that tree. By the end of this, we'll be able to implement recursive functions with the following inductive logic:
+We can similarly apply this line of logic to solving problems with SML
+functions! We'll look at a problems that can be solved with recursion: `fact`.
+We'll look at how thinking of it's proof relates to implementing the problem.
+
+## Terminology
+
+When writing an induction proof, we may use the terms **base case, induction**
+**hypothesis, and induction step** to describe its general outline. When
+writing a recursive SML function, we may use the terms **base case, recursive**
+**call, and recursive case** to describe its general outline. Throughout this
+article you'll see a very strong correspondence between these terms.
+
+- The **base cases** are easy to hard code to be the same as one another
+- The **induction step** of a proof discusses the **recursive case**
+- The **induction hypothesis** lets us reason about the **recursive call**
+
+We'll explore this relationship between induction and recursion with an example.
+
+## Factorial
+
+Let's say your asked to implement the following function with these specs.
 
 ```sml
+(* REQUIRES: n >= 0
+ * ENSURES:  fact n ==>* (n)(n-1)...(1), or n! *)
+ fun fact (n : int) = ...
+```
+
+We can think of this as a proof of extensional equivalence. I want to show that
+`fact` is equivalent to the mathematical definition of
+[factorial](https://en.wikipedia.org/wiki/Factorial). Let's set up this proof
+and use that to help implement the function.
+
+### 0. Want To Show
+
+We want to prove the following theorem:
+
+> For all `n` such that `n >= 0`, `fact n = n!`.
+
+_In other words, the `fact` function is equivalent to the mathematical_
+_factorial operator._
+
+### 1. Solve the Base Cases
+
+We want our base case of `fact` to be equivalent to the base case of
+mathematical factorial. Since factorial is undefined for negative numbers,
+our first valid "input" to the factorial number is `0`. In other words,
+`0! = 1`. Because we want our `fact` function to be equivalent, we will
+define it in this way.
+
+```sml
+(* REQUIRES: n >= 0
+ * ENSURES:  fact n ==>* (n)(n-1)...(1), or n! *)
+fun fact(0 : int) : int = 1
+```
+
+The correctness proof is as follows;
+
+> **Base Case: `n = 0`**
+>
+> - `0! = 1` by math
+> - `fact 0 ==>* 1` by clause 1 of `fact`.
+> - `1` _(the integer)_ is equivalent to `1` _(the SML `int`)_ as desired.
+>   In other words, `1 = 1`.
+
+### 2. Define the Induction Hypothesis
+
+The next step of our proof is the inductive hypothesis. We want to assume
+that our theorem holds for all "smaller" scenarios. In other words,
+
+> **Induction Hypothesis:** For all `k` such that `0 <= k < n`, `fact k = k!`.
+
+### 3. Show the Inductive Step
+
+In most induction proofs, you would make a few logical deductions, apply the
+IH (induction hypothesis) and prove the theorem. When we think about how to
+implement `fact`, we will do something similar! Ask yourself,
+**"what can I say if I assume `fact (n-1) = (n-1)!`?** (this assumption is
+given by our **IH**).
+
+> **💡 Key Insight 💡**
+>
+> _When solving the recursive case of an SML function, try to ask yourself: "How would I solve this if I assume the recursive call is correct?" We do this because earlier, we said that we can use the Induction Hypothesis to reason about the Recursive Calls we can make in our function._
+
+Well, we know that the mathematical definition of factorial is the product of
+all nonnegative integers up to `n`. Note, by definition, that `n! = n * (n-1)!`.
+But also note, that by our **IH**, `(n-1)! = fact (n-1)`. From here, we gain
+the insight that `n! = n * fact (n-1)`. Just like in the base case, because
+we want our `fact` function to be equivalent, we will define it in this way.
+
+```sml
+(* REQUIRES: n >= 0
+ * ENSURES:  fact n ==>* (n)(n-1)...(1), or n! *)
+fun fact(0 : int) : int = 1
+  | fact(n : int) : int = n * fact (n-1)
+```
+
+The correctness proof is as follows:
+
+> **Induction Step: `n`**
+>
+> - `n! = n * (n-1)!` by math
+> - `n! = n * fact (n-1)` by IH
+> - `n! = fact n` by clause 2 of `fact`
+>
+> And so we have shown for all `n` such that `n >= 0`, `fact n = n!`.
+
+## QED
+
+And like that, we're able to leverage mathematical induction to help us implement
+an SML function. For some, this intuition is obvious. But for others, it isn't! A
+deep spiral of pure math and proving every single aspect of your code isn't usually
+needed. **BUT**, it will definitely be helpful to adopt this style of thinking when
+approaching more difficult and advanced recursion problems. Whenever you're trying
+to implement a recursive function in SML, remember to think inductively!
+
+1. Solve the **base cases**.
+2. Define the **inductive hypothesis**.
+3. Prove the **inductive step** by assuming the IH.
+
+## More Examples
+
+Here are some more examples, with their code, thought processes, and proof outlines.
+
+### Factorial (Compiled)
+
+#### Factorial -- Code
+
+```sml
+(* REQUIRES: n >= 0
+ * ENSURES:  fact n ==>* (n)(n-1)...(1), or n! *)
+fun fact(0 : int) : int = 1
+  | fact(n : int) : int = n * fact (n-1)
+```
+
+#### Factorial -- Thought Process
+
+- The base case is `0`, and `0! = 1`, so we define it like that.
+- Define IH to be that `fact (n-1) = (n-1)!`
+- What can I say if I assume IH?
+- `n * (n-1)! = n * fact(n-1)`
+- So we define our recursive case like that.
+
+#### Factorial -- Proof
+
+> **Base Case: `n = 0`**
+>
+> - `0! = 1` by math
+> - `fact 0 ==>* 1` by clause 1 of `fact`.
+> - `1 = 1` as desired
+>
+> **Induction Hypothesis:** For all `k` such that `0 <= k < n`, `fact k = k!`.
+>
+> **Induction Step: `n`**
+>
+> - `n! = n * (n-1)!` by math
+> - `n! = n * fact (n-1)` by IH
+> - `n! = fact n` by clause 2 of `fact`
+>
+> And so we have shown for all `n` such that `n >= 0`, `fact n = n!`.
+
+### Increasing
+
+```sml
+(* REQUIRES: true
+ * ENSURES:  increase L ==>* true if all elements in L are
+ *                           strictly increasing. Otherwise
+ *                           it evaluates to false. *)
+fun increase ([] : int list) : bool = true
+  | increase (x::[]) = true
+  | increase (x::y::L) = x < y andalso increase(L)
+```
+
+### Tree Sum
+
+```sml
+(* REQUIRES: true
+ * ENSURES:  treeSum T ==>* the sum of all the elements of T *)
 fun treeSum (Empty : int tree) : int = 0
   | treeSum (Node(L,x,R)) = treeSum(L) + treeSum(R) + x
 ```
 
-> The **base case** for `treeSum` is that an `Empty` tree has a sum of 0. Let's define the **inductive hypothesis** to be that for some tree `T`, that `treeSum` is correct for its left subtree and right subtree. Define my **inductive step** to be for a tree `T = Node(L,x,R)`. By the definition of trees, I know that all integers in `T` are represented by the integers in `L`, `R`, and the integer `x`. If I sum all of these, I will get `treeSum(T)`. By assuming the **IH**, I can say that `treeSum L` and `treeSum R` are correct. Therefore, by math, I will say that `treeSum T = (treeSum L) + (treeSum R) + x` is correct by the above reasoning. As such, I've shown my **IS** to be correct, and thus the theorem that `treeSum T` is correct for all `T : int tree`.
-
-## An Exploration of Tree Sums
-
-Let's define `treeSum`. This function should take in an `int tree` and return the sum of all the integers in that tree.
-
-```sml
-datatype int tree = Empty | Node of int tree * int * int
-
-fun treeSum (T : int tree) : int = ...
-```
-
-Note that in SML, the `tree` datatype is recursively defined. This is a good hint that we should be using recursive/inductive strategies to approach this problem. Consider the proof of the following theorem:
-
-> **Theorem:** For all `T : int tree`, `treeSum T` is correct.
-
-Let's not worry about formalizing this proof too much so that we can focus on the **inductive intuition** of it. If we were to prove this using induction, we'll need a **(1) base case, (2) induction hypothesis, and (3) induction step.**
-
-### 1. Solving for the Base Cases
-
-Let's first think about proving the base case: `T = Empty`. What does it mean for `treeSum Empty` to be correct? Well, an `Empty` tree does not have any nodes, and if there are no nodes, there are no `int` values. The sum of nothing is 0. Let's write that in a proof-like manner:
+- The **base case** for `treeSum` is that an `Empty` tree has a sum of 0.
+- Let's define the **inductive hypothesis** to be that for some tree `T`, that `treeSum` is correct for its left subtree and right subtree.
+- Define my **inductive step** to be for a tree `T = Node(L,x,R)`.
+  - By the definition of trees, I know that all integers in `T` are represented by the integers in `L`, `R`, and the integer `x`.
+  - If I sum all of these, I will get `treeSum(T)`.
+  - By assuming the **IH**, I can say that `treeSum L` and `treeSum R` are correct.
+  - Therefore, by math, I will say that `treeSum T = (treeSum L) + (treeSum R) + x` is correct by the above reasoning.
+- As such, I've shown my **IS** to be correct, and thus the theorem that `treeSum T` is correct for all `T : int tree`.
 
 > **Base Case:** `T = Empty`
 >
 > - `treeSum(Empty) ==> 0` because an `Empty` int tree does not have an int value.
-
-That wasn't so bad! If we have an empty node, we can't have a value there, and so the sum is 0. Before we move on to solving the recursive step, let's tie in this idea of how recursion and induction are related. In our proof, we say that `treeSum Empty` is correct when it evaluates to 0. Let's use this as an answer to how to define the base case of our function:
-
-```sml
-fun treeSum (Empty : int tree): int = 0
-```
-
-Nice job! We've leveraged inductive reasoning to help us define the base case for our recursive problem. Let's move on to something a little harder and may be less obvious than what we've done here.
-
-### 2. Define the Inductive Hypothesis
-
-The next step in our proof is to define the inductive hypothesis. Here, we'll assume the correctness of a smaller part, then use that to prove the correctness of a bigger part. More specifically, we'll be using some ideas of [structural induction](https://smlhelp.github.io/#todolinktostructuralinductionsection) for this problem. Let's elaborate more on that:
-
-> **Induction Hypothesis:** Assume for all `L : int tree` and `R : int tree` that `treeSum L` is correct and `treeSum R` is correct.
-
-Because we've shown our base case to be true, let's assume tha for the recursive structures (the left subtree `L` and the right subtree `R`), `treeSum` is correct. Just like how in induction we can use these nuggets of information to help us prove our **inductive step**, we can do the same to help us solve the SML function.
-
-### 3. Assume the Inductive Hypothesis to Show the Inductive Step.
-
-What nuggets of information do we know from the previous step, and how can we use that to help us with inductive step? We assume that both `treeSum L` and `treeSum R` are correct by the **inductive hypothesis (IH)**. Since they are correct, their outputs represent the sum of all the integers in them. For `treeSum L` is the sum of all integers in the int tree `L` and for `treeSum R` is the sum of all integers in the int tree `R`.
-
-We also know that since `L` and `R` are the left and right subtrees of `T`, by definition, they represent all nodes of `T` (except the root node). Then, to get sum of `T`, we just need the sum of `L`, `R`, and the value of the root node! Let's proof-ify this line of thought a bit more:
-
+>
+> **Induction Hypothesis:** For subtrees `L, R`, `treeSum(L)` and `treeSum(R)` are correct.
+>
 > **Inductive Step:** `T = Node(L,x,R)`
 >
 > - `treeSum L` is correct by **IH**
@@ -74,18 +230,3 @@ We also know that since `L` and `R` are the left and right subtrees of `T`, by d
 > - `treeSum T = (treeSum L) + (treeSum R) + x` by definition of `treeSum`.
 > - `(treeSum L) + (treeSum R) + x` is correct by math and above logic.
 > - `treeSum T` is correct by substitution.
-
-Using the logic needed to complete the proof, we were able to arrive at how to implement our function! Let's translate the above logic into SML:
-
-```sml
-fun treeSum (Empty : int tree) : int = 0
-  | treeSum (Node(L,x,R)) = (treeSum L) + (treeSum R) + x
-```
-
-## QED
-
-And like that, we're able to leverage mathematical induction to help us find the solution to part of an SML function. For some, this intuition is obvious. But for others, it isn't! A deep spiral of pure math and proving every single aspect of your code isn't usually needed. **BUT**, it will definitely be helpful to adopt this style of thinking when approaching more difficult and advanced recursion problems. Whenever you're trying to implement a recursive function in SML, remember to think inductively!
-
-1. Solve the **base cases**.
-2. Define the **inductive hypothesis**.
-3. Assume the correctness of the **inductive hypothesis** to show the correctness of the **inductive step**.

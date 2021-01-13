@@ -1,0 +1,4 @@
+# Default folder for mdbook build
+docs
+# For mac file browser
+.DS_Store
