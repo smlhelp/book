@@ -26,6 +26,7 @@
         - [Evaluation](concepts/eval.md)
         - [Extensional Equivalence](concepts/eeq.md)
     - [Recursion and Induction](concepts/recind.md)
+        - [Tree Induction](concepts/treeinduct.md)
         - [Tail Recursion](concepts/tail.md)
     - [Asymptotic Analysis](concepts/analysis.md)
         - [Work and Span](concepts/workspan.md)
