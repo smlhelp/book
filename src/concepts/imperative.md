@@ -64,7 +64,14 @@ val y : int = !pointer
 ```
 
 Here, the value `7 : int` would be bound to `x`. However, the value `21 : int`
-would be bound to `y`.
+would be bound to `y`. When we dereference our ref-cell the first time, the
+value is whatever we initialized it to (`7`). However, after we change what's
+inside the ref-cell, we dereference the updated value (`21`). Even though
+`x` and `y` are both bound to `!pointer`, they have different values!
+
+Introducing imperative logic causes difficulties like these. It takes away the
+confidence we have in our values instilled in us by referential transparency.
+It often makes doing formal proofs about imperative code a bit more difficult.
 
 ### Sequential Evaluation `;`
 
