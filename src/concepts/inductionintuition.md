@@ -185,11 +185,16 @@ fun fact(0 : int) : int = 1
 >
 > And so we have shown for all `n` such that `n >= 0`, `fact n = n!`.
 
-### List Length
+### Increasing
 
 ```sml
-fun len ([] : int list) : int = 0
-  | len (x::xs) = len(xs) + 1
+(* REQUIRES: true
+ * ENSURES:  increase L ==>* true if all elements in L are
+ *                           strictly increasing. Otherwise
+ *                           it evaluates to false. *)
+fun increase ([] : int list) : bool = true
+  | increase (x::[]) = true
+  | increase (x::y::L) = x < y andalso increase(L)
 ```
 
 ### Tree Sum
