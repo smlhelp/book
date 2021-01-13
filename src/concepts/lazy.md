@@ -39,6 +39,8 @@ However, SML isn't innately **_lazy_**. The way we can emulate this idea of
 
 ## Thunks
 
+`unit -> 'a` is just because unit is convenient. Theoretically I could us a different type to represent thunks.
+
 ## Lazy Lists
 
 ## Streams
