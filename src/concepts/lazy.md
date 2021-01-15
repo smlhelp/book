@@ -90,15 +90,36 @@ _is a way to wrap an expression in a function to delay its computation._
 
 Now that we have established this notion of **_laziness_** in SML, we can do
 even fancier things, like create infinite data structures! Let's first look at
-a lazy list. I will compare it a normal list in SML so we can see how they vary.
+a lazy list and compare it to a normal list.
 
 ```sml
-datatype 'a lazylist = Cons of 'a * (unit -> 'a lazylist)
-datatype 'a list     = Cons of 'a * 'a list               | Nil
-
+datatype 'a list     = Nil | Cons of 'a * 'a list
+datatype 'a lazylist =       Cons of 'a * (unit -> 'a lazylist)
 ```
 
+You'll see that a `lazylist` is very similar to normal `list`s. The only difference
+is that the computation of the list's tail has been delayed with a thunk.
+Just like before where we had arguments for functions, we are now delaying the
+computation of arguments for constructors. You can sort of think of it like
+instead of having `x::xs`, we now have `x::(fn () => xs)`. This can help us create
+infinite lists since the true computation of the list tail is always delayed.
+
+For example, if I wanted to represent a list of fibonacci numbers, I could do:
+
+```sml
+val fibs : int lazylist =
+    let
+        fun fib' x y = Cons(x, fn () => fib' y (x + y))
+    in
+        fib' 0 1
+    end
+```
+
+explain fibs here
+
 ## Streams
+
+Should this be its own section?
 
 ## Definitions
 
