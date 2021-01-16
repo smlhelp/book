@@ -163,10 +163,9 @@ infinite loop and eventually overflow.
 >
 > _a few steps later..._
 >
-> Why it's `fib ((y + (x + y)) + ((x + y + (y + (x + y))))) (((x + y + (y + (x ` \
-> `y)))) + ((y + (x + y)) + ((x + y + (y + (x + y))))))`! dang this is one thicc
-> expression. It's time to surrender and `raise exception Overflow [overflow]`.
-> We'll get em next time 😞
+> Why it's `fib ((y + (x + y)) + ((x + y + (y + (x + y))))) (((x + y + (y + (x + y)))) + ((y + (x + y)) + ((x + y + (y + (x + y))))))`!
+> dang this is one thicc expression. It's time to surrender and
+> `raise exception Overflow [overflow]`. We'll get em next time 😞
 >
 > _- The inner dialogue of the SML Compiler_
 

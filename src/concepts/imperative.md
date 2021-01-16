@@ -69,6 +69,21 @@ value is whatever we initialized it to (`7`). However, after we change what's
 inside the ref-cell, we dereference the updated value (`21`). Even though
 `x` and `y` are both bound to `!pointer`, they have different values!
 
+> 💡 Comparison to the `void`!
+>
+> Remember that SML is a functional programming language. This means that
+> anything that's not an exception or infinite loop must be a value! As
+> such, when we do things with side effects (like assignment), we can't
+> really have _no value_ being returned. As such, SML implements this by
+> having these side effect functions and operations return `() : unit`.
+> Theoretically, `:=` could return something crazy, like an `'a tree list option`
+> if we really wanted to. It's just that `() : unit` is convenient.
+> So when you see `:= : 'a * 'a ref -> unit`, you can think of it as a
+> `void` method or function in Java, C, and C++.
+>
+> In other words, returning `() : unit` for the assignment operator is
+> SML's way of implementing `void` methods.
+
 Introducing imperative logic causes difficulties like these. It takes away the
 confidence we have in our values instilled in us by referential transparency.
 It often makes doing formal proofs about imperative code a bit more difficult.
@@ -88,28 +103,35 @@ val y = 8 - 4;
 Where we execute one "program" with the side effect of binding `2 + 2`
 to `x`, and then execute the next "program" with the side effect of
 binding `8 - 4` to `y`, and continue to wait for the next "program".
-If you're familiar with languages like Java and C, you see something
-similar:
-
-```java
-int x = 2 + 2;
-int y = 8 - 4;
-```
+If you're familiar with languages like Java and C, this can also be
+used to explain why semicolons are required at the end of each line.
 
 Where the semicolon `;` is used to mark the end of one program and set up
 the next program to sequentially follow. In SML, this is also valid syntax.
 
+> For some expressions `exp1 : t1`, `exp2 : t2`, we have that `exp1;exp2 : t2`
+> where `exp1` is evaluated first, and then `exp2` evaluated thereafter.
+
+One thing to note is that in SML, only the value of the second expression
+is returned, and the type of the whole expression is the type of the last
+expression.
+
 ```sml
-val x = ref 0
-val y = ref 0
-val () = x := 2 + 2; y := 8 - 4
+val pointer : int ref = ref 0
+val x : int = pointer := 7; !pointer
+val y : int = pointer := 21; !pointer
 ```
 
-Here, we first initialize the references to `x` and `y`, and then run the
-two assignment "programs". One thing to note is that in SML, only the value
-of the second expression is returned, and the type of the whole expression
-is the type of the last expression. A slightly more practical usage of the
-semicolon `;` could be in implementing `fact` imperatively:
+Here, we first initialize `pointer` to a dummy value. After that, we run
+the program `pointer := 7`, and then right after, return `!pointer`. This
+would mean that the value `7 : int` is bound to `x`, just like in the above
+examples. Similarly, we run The program `pointer := 21`, and then right
+after, return `!pointer`. This would mean that the value `21 : int` is
+bound to `y`, just like in the above examples.
+
+## Putting it All Together
+
+Here's an example that uses all of the above operations in a meaningful way.
 
 ```sml
 local
@@ -127,16 +149,18 @@ we **assign** `a` to be `n * !a`. In other words, `n * current value of a`
 program (`a := n * !a`), the **semicolon** then brings us to the next program:
 `fact (n - 1)`. Since only value of the second expression is returned, we
 essentially are saying that `fact n = fact (n - 1)` with the side effect of
-`a := n * !a` being run.
+`a := n * !a` being run. Finally, once we reach the base case, we use the
+**shebang** `!` to dereference our ref cell which has accumulated all of
+the side effects up until now.
 
-## A Different Notion of "Equality"
+Another example of how you might be able to use semicolons is with exceptions.
+In can help serve as a null check
 
-No longer guaranteed by values / types
+# Operations
 
-## Staging
-
-Something about staging?
-
-```
-
-```
+- `ref : 'a -> 'a ref` initializes a new reference cell.
+- `! : 'a ref -> 'a` dereferences a reference cell.
+- `:= : 'a ref * 'a -> unit` assigns a reference cell a new value.
+  "`void`" method.
+- `exp1;exp2` first runs `exp1` and then returns `exp2`, which is
+  useful for side effects.
