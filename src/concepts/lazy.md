@@ -6,7 +6,7 @@ evaluation. SML is an **_eager_** language. In other words, we evaluate the
 arguments first. We'll be discussing how to "implement" the exact
 opposite form of evaluation: **_lazy_** evaluation. In **_lazy_** evaluation,
 arguments are evaluated as needed. To implement this, we'll make use of an idea
-called **thunks**, as well as modules called **streams**.
+called **thunks**.
 
 ## Eager vs Lazy
 
@@ -113,15 +113,66 @@ val fibs : int lazylist =
     in
         fib' 0 1
     end
+
+(* Iterate through lazy list *)
+val Cons(a, f) = fibs
+val Cons(b, g) = f ()
+val Cons(c, h) = g ()
+val Cons(d, i) = h ()
+val Cons(e, j) = i ()
+
+(* Test cases *)
+val 0 = a
+val 1 = b
+val 1 = c
+val 2 = d
+val 3 = e
 ```
 
-explain fibs here
+Here, we have a value `fibs : int lazylist` that represents the entire list of
+fibonacci numbers. Instead of immediately evaluating the tail of the list, the
+lazy list allows us to delay the computation. We can exploit this by delaying
+the circular evaluation of `fib' y (x + y)`.
 
-## Streams
+Note that if you tried to do this with normal lists, we would get some circular
+reasoning since the computation is not being delayed. For example:
 
-Should this be its own section?
+```sml
+(* Example REPL Output *)
 
-## Definitions
+- fun fib x y = x::(fib' y (x + y));
 
-- Productive
-- Maximally Lazy
+val fib = fn : int -> int -> int list
+
+- fib 0 1;
+
+uncaught exception Overflow [overflow]
+  raised at: <file stdIn>
+```
+
+We get an `exception Overflow` since SML is trying to eagerly evaluate the
+arguments passed into the constructor `::`. This causes it to go into an
+infinite loop and eventually overflow.
+
+> "What's the tail of the list? I'm eager and I evaluate the arguments of the
+> constructor first! Why it's `fib y (x + y)`! How exciting. Let's evaluate
+> this. Well `fib y (x + y) ==> y::(fib (x + y) (y + (x + y)))`. What's the
+> tail of the list? I'm eager and I evaluate the arguments of the constructor
+> first! Why it's `fib (x + y) (y + (x + y))`! How exciting. Let's evaluate
+> this...
+>
+> _a few steps later..._
+>
+> Why it's `fib ((y + (x + y)) + ((x + y + (y + (x + y))))) (((x + y + (y + (x ` \
+> `y)))) + ((y + (x + y)) + ((x + y + (y + (x + y))))))`! dang this is one thicc
+> expression. It's time to surrender and `raise exception Overflow [overflow]`.
+> We'll get em next time 😞
+>
+> _- The inner dialogue of the SML Compiler_
+
+# Conclusion
+
+Even though SML is an eager language, we can utilize **thunks** to delay the
+computation of arguments. This allows us to simulate and represent a more
+**lazy** style of evaluation, where we evaluate arguments _as needed_. Using
+this idea, we can even represent things like infinite lists in SML!

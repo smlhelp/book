@@ -78,3 +78,9 @@ It often makes doing formal proofs about imperative code a bit more difficult.
 - mention it's the way we represent a void method kinda
 
 ## A Different Notion of "Equality"
+
+No longer guaranteed by values / types
+
+## Staging
+
+Something about staging?
