@@ -51,9 +51,10 @@ Here, the value `7 : int` would be bound to `x`.
 
 ### Assignment `:=`
 
-After that, we need a way to update the data in our mutable cells. `:=` (called the assignment operator) can be used to update the values of reference types.
-Technically, it's an infix function that takes in the `'a ref` to update and the
-`'a` value to update it to.
+After that, we need a way to update the data in our mutable cells. `:=`
+(called the assignment operator) can be used to update the values of reference
+types. Technically, it's an infix function that takes in the `'a ref` to
+update and the `'a` value to update it to.
 
 ```sml
 (* := : 'a ref * 'a -> unit *)
