@@ -38,8 +38,8 @@ val pointer : int ref = ref 7
 ### Shebang `!`
 
 Next, we need a way to get our values from these references. In other words, we
-need a way to dereference our pointers. `!` (called shebang, pronounced "shuh-
-bang") can be used on an `'a ref` to retrieve the value being referenced.
+need a way to dereference our pointers. `!` (called bang) can be used 
+on an `'a ref` to retrieve the value being referenced.
 
 ```sml
 (* ! : 'a ref -> 'a *)
