@@ -37,8 +37,9 @@ The notion of _need_ will be subjective relative to what's being implemented.
 SML is an eager language. But what if we wanted to simulate lazy evaluation?
 First we need a way to wait until we _need_ an argument to evaluate it. This
 is where **thunks** come into play. A **thunk** is a function of type
-`unit -> 'a`. They help us represent this notion of "evaluation by need" by
-wrapping an expression in a function, which delays the computation of that expression.
+`unit -> t` for some type `t`. They help us represent this notion of 
+"evaluation by need" by wrapping an expression in a function, which delays 
+the computation of that expression.
 
 Let's say we have some function `f` and argument `x`. When we run `f x`, `x`
 will get evaluated immediately. However, by wrapping `x` inside a function,
