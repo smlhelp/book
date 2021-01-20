@@ -26,8 +26,8 @@ interface with these **_reference types_**.
 ### Ref Cells `ref`
 
 First, we need to make something of this reference type. In other words, we
-need a way to initialize our pointers. `ref` is also a function that helps us
-initializes references (not to be confused with the `'a ref` type.) Below is
+need a way to initialize our pointers. `ref` is also a constructor that helps 
+us initializes references (not to be confused with the `'a ref` type.) Below is
 how we would make a reference to an `int value`, or, an `int ref`.
 
 ```sml
