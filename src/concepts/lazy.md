@@ -94,8 +94,8 @@ even fancier things, like create infinite data structures! Let's first look at
 a lazy list and compare it to a normal list.
 
 ```sml
-datatype 'a list     = Nil | Cons of 'a * 'a list
-datatype 'a lazylist =       Cons of 'a * (unit -> 'a lazylist)
+datatype 'a list     = [ ] |  ::  of 'a * 'a list
+datatype 'a lazylist = Nil | Cons of 'a * (unit -> 'a lazylist)
 ```
 
 You'll see that a `lazylist` is very similar to normal `list`s. The only difference
