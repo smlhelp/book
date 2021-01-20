@@ -151,7 +151,7 @@ program (`a := n * !a`), the **semicolon** then brings us to the next program:
 `fact (n - 1)`. Since only value of the second expression is returned, we
 essentially are saying that `fact n = fact (n - 1)` with the side effect of
 `a := n * !a` being run. Finally, once we reach the base case, we use the
-**shebang** `!` to dereference our ref cell which has accumulated all of
+**bang** `!` to dereference our ref cell which has accumulated all of
 the side effects up until now.
 
 Another example of how you might be able to use semicolons is with exceptions.
