@@ -146,7 +146,7 @@ end
 The way this `fact` function works is by continuously updating a reference
 `a` we **initialize** with `ref a`. In the recursive case, for some number `n`,
 we **assign** `a` to be `n * !a`. In other words, `n * current value of a`
-(because we use the **shebang** `!` to dereference `a`). After we run that
+(because we use the **bang** `!` to dereference `a`). After we run that
 program (`a := n * !a`), the **semicolon** then brings us to the next program:
 `fact (n - 1)`. Since only value of the second expression is returned, we
 essentially are saying that `fact n = fact (n - 1)` with the side effect of
