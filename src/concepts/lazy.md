@@ -14,7 +14,7 @@ called **thunks**.
 
 Let's say I have the function `double : int -> int` which doubles a number, and
 `square : int -> int`, which squares a number. In both **_lazy_** and
-**_eager_** evaluation, `double square double 2 ==>* 32`. However, they differ
+**_eager_** evaluation, `double (square (double 2)) ==>* 32`. However, they differ
 in the way which they "arrive" at `32`.
 
 ```sml
