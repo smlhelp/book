@@ -119,8 +119,8 @@ expression.
 
 ```sml
 val pointer : int ref = ref 0
-val x : int = pointer := 7; !pointer
-val y : int = pointer := 21; !pointer
+val x : int = (pointer := 7; !pointer)
+val y : int = (pointer := 21; !pointer)
 ```
 
 Here, we first initialize `pointer` to a dummy value. After that, we run
