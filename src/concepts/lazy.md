@@ -19,7 +19,7 @@ in the way which they "arrive" at `32`.
 
 ```sml
 val double : int -> int = fn n => 2 * n
-val squareE : int -> int = fn n => n * n
+val square : int -> int = fn n => n * n
 
 (* Eager *)
     double square double 2
