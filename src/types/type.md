@@ -3,13 +3,13 @@
 Types are a very fundamental concept to Standard ML, and indeed, to functional programming in general. Most programming languages have some notion of type, with `int`, `float`, and data structures such as `array` being common examples, however they tend to be weakly enforced, only being verified at runtime. In SML, we employ a system of _strong typing_ consisting of stricter typing rules, which allows us to catch errors earlier in program execution, at compile time.
 
 ## Type Safety
-Oftentimes, data is separated into types so that we can differentiate different kinds of data from each other. For instance, it makes no sense to add a `string` and an `int` - though certain programming languages will try to make sense of it. It is often the case that, when different data types are haphazardly combined, it is the result of an error - the philosophy behind SML's type system is disallow such intermingling. In SML, every expression and every function has a specified type, which governs what interactions are possible with other expressions. 
+Oftentimes, data is separated into types so that we can differentiate different kinds of data from each other. For instance, it makes no sense to add a `string` and an `int` - though certain programming languages will try to make sense of it. It is often the case that, when different data types are haphazardly combined, it is the result of an error - the philosophy behind SML's type system is to disallow such intermingling. In SML, every expression and every function has a specified type, which governs what interactions are possible with other expressions.
 
 Consider the following code fragment in Python:
 ```python
 def foo(x):
     if x == 2:
-        return 1  
+        return 1
     elif x == "bar":
         return True
     return None
