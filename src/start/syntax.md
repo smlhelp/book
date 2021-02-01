@@ -238,7 +238,7 @@ end
 
 Write lambda expressions using the `fn` keyword — often verbalized as **"lambda"**.
 A lambda expression is of the form: `fn`, pattern, `=>`, expression.
-The lambda expression itself is a value — a value of function type[.](../../img/cheerio.jpg)
+The lambda expression itself is a value [—](../assets/easteregg.jpg) a value of function type.
 The `=>` in lambda expressions correspond to the `->` in their types.
 The `->` arrows are right-associative infix type constructors denoting function types.
 Apply lambda expressions via prefix application — before the immediate operand.
