@@ -122,8 +122,8 @@ ten elements.
 
 ## Functors: Syntactic Sugar
 
-The New Jersey implementation of Standard ML (SML/NJ, the one you are likely
-using) offers some "syntactic sugar" with respect to functors. It is a little
+SML offers some "syntactic sugar" for functor arguments, allowing us to
+(seemingly) parameterize them by terms other than structures. It is a little
 unsavory to have to hard code the limit of the `BoundedStack` within the functor
 itself, rather than having it be parameterized by the limit itself, so we can
 actually also write the following:
@@ -412,13 +412,13 @@ sig
     type 'a dict
     val empty : 'a dict
     val insert : 'a dict -> key * 'a -> 'a dict
-    val find : 'a dict -> key -> 'a option
+    val lookup : 'a dict -> key -> 'a option
 end
 ```
 
 It is a well-known fact that, utilizing a kind of _balanced binary tree_ data
 structure, dictionaries can be implemented with an \\( O(\log n) \\) `insert` and
-`find` operation, as opposed to \\( O(n) \\) for other data structures such as
+`lookup` operation, as opposed to \\( O(n) \\) for other data structures such as
 lists. While there are many different implementations of balanced binary trees,
 we will consider a particular variant known as _red-black trees_.
 
@@ -586,7 +586,10 @@ parent of the inserted node _has no_ parent?
 
 Consider the case illustrated below:
 
-some illustration of the red-red insertion case goes here
+<figure class="aligncenter">
+    <img src="../assets/insert.svg" alt="Example of inserting two nodes into an empty tree" width="1000"\>
+    <figcaption><b>Fig 3.</b> Demonstration of potential issues in inserting nodes at the root when lacking a black parent. </figcaption>
+</figure>
 
 As we can see here, our previous reasoning does not catch this red-children
 violation because it does not conform to our previous cases, by virtue of the
@@ -616,7 +619,7 @@ because of the signature that we are ascribing to, helper functions such as
 is no harm in declaring them within the namespace of the functor.
 
 Our completed code for a red-black tree implementation of dictionaries is thus
-as follows. Note that the implementation of `find` is very straightforward, and
+as follows. Note that the implementation of `lookup` is very straightforward, and
 will not be discussed.
 
 ```sml
