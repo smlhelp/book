@@ -28,7 +28,7 @@ sig
     type 'a t
 
     val push : 'a t -> 'a -> 'a t
-    val pop : 'a t -> 'a * 'a t
+    val pop : 'a t -> 'a option * 'a t
     val size : 'a t -> int
     val empty : 'a t
 end
@@ -41,11 +41,28 @@ know which implementation of a stack to use - there could be several such
 existing implementations, so we would like to instead make our `BoundedStack`
 structure a _parameter of_ an existing structure ascribing to `STACK`.
 
+We will then use a very similar signature to `STACK` called `BOUNDED_STACK`,
+which is the exact same except for having an `exception Full` for use if a stack
+is given too many elements.
+
+```sml
+signature BOUNDED_STACK =
+sig
+    type 'a t
+    exception Full
+
+    val push : 'a t -> 'a -> 'a t
+    val pop : 'a t -> 'a option * 'a t
+    val size : 'a t -> int
+    val empty : 'a t
+end
+```
+
 We first consider the case where we have a hard limit of 10 items in a given
 stack.
 
 ```sml
-functor BoundedStack (S : STACK) :> STACK =
+functor BoundedStack (S : STACK) :> BOUNDED_STACK =
 struct
     type 'a t = 'a S.t
 
@@ -93,14 +110,14 @@ structure BoundedStack1 = BoundedStack(Stack1)
 structure BoundedStack2 = BoundedStack(Stack2)
 ```
 
-Note that `BoundedStack1` and `BoundedStack2` are themselves structures
-ascribing to `STACK`, so they could be passed in as inputs to the `BoundedStack`
-functor. It is not clear why you would want to do this, however.
+**NOTE**: SML functors are _generative_, meaning that applying the same functor
+to the same structure twice yields two unique structures. As such,
+`'a BoundedStack1.t` and `'a BoundedStack2.t` are recognized as being two
+distinct types, despite the fact that they are "constructed" in the same manner.
 
-`BoundedStack1` and `BoundedStack2` are valid stacks in their own right, so they
-all can access the fields of the `STACK` signature, same as any other structure
-implementing `STACK`. Presumably, the only change they display from `Stack1` and
-`Stack2` are in raising the exception `Full` when the stack is given more than
+`BoundedStack1` and `BoundedStack2` implement `BOUNDED_STACK`, so they all can access
+the fields of the `BOUNDED_STACK` signature. Presumably, the only change they display
+from `Stack1` and `Stack2` are in raising the exception `Full` when the stack is given more than
 ten elements.
 
 ## Functors: Syntactic Sugar
@@ -113,7 +130,7 @@ actually also write the following:
 
 ```sml
 functor BoundedStack (structure S : STACK
-                      val limit : int) :> STACK =
+                      val limit : int) :> BOUNDED_STACK =
 struct
     type 'a t = 'a S.t
 
@@ -146,7 +163,7 @@ functor BoundedStack (UnnamedStructure :
                       sig
                         structure S : STACK
                         val limit : int
-                      end) :> STACK =
+                      end) :> BOUNDED_STACK =
 struct
     open UnnamedStructure
     (* same code as before *)
@@ -183,7 +200,7 @@ What issues can occur if we forget about the existence of this syntactic sugar?
 Consider the following code:
 
 ```sml
-functor BoundedStack (structure S: : STACK) :> STACK =
+functor BoundedStack (structure S: : STACK) :> BOUNDED_STACK =
 struct
     type 'a t = 'a S.t
 
@@ -217,7 +234,7 @@ the inputs. Even though we have only specified one field, not including the
 functor BoundedStack (UnnamedStructure :
                       sig
                         structure S: : STACK
-                      end) :> STACK =
+                      end) :> BOUNDED_STACK =
 struct
     type 'a t = 'a S.t
 
@@ -292,6 +309,17 @@ end
 Note that it is useful, in this case, for our instances of the `ORDERED`
 typeclass to be _transparently ascribed_, since it is the whole point that we
 are aware of the type that the typeclass is associated with.
+
+**NOTE**: In actuality, we use transparent ascription as somewhat of a
+sledgehammer to avoid having to talk about a different language construct,
+namely `where` clauses. A `where` clause modifies a signature containing an
+abstract type, and concretely specifies what that type should be. For instance,
+we could discuss the signature `signature ORDERED type t end where type t =
+int`. A structure ascribing to this signature would "publish" the details of the
+type `t` (which is really an `int`), the same way that transparent ascription
+would. With `where` clauses, however, if there are multiple abstract types, we
+can be selective about which ones that are made "transparent". For the purposes
+of this chapter, however, we will largely avoid `where` clauses.
 
 These definitions come very naturally from the fact that the `String` and `Int`
 libraries included with the Standard ML basis library already implement
