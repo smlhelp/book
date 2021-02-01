@@ -56,9 +56,51 @@ fun reverse S =
   end
 ```
 
+It's also possible to write functions that deal with nested sequences. Let's write a function `multtable : int -> int seq seq` that, when given a positive integer `n`, makes an `n` by `n` multiplication table. For example,
+
+```
+multtable 5 ==>
+<<0,0,0,0,0>,
+ <0,1,2,3,4>,
+ <0,2,4,6,8>,
+ <0,3,6,9,12>,
+ <0,4,8,12,16>>
+```
+
+This time, the function that we're tabulating with needs to output a sequence, like `<0,2,4,6,8>`.
+
+Here is the implementation:
+```
+fun multtable n =
+  Seq.tabulate (fn i =>
+    Seq.tabulate (fn j => i*j) n) n
+```
+
+Let's analyze the work of this function. The function `(fn i => Seq.tabulate (fn j => i*j) n)` has `O(n)` work. This is since the function evaluates `i*j` (for different values of `j`) `n` times. The function is called `n` times (from the outer tabulate). Therefore, the total work of this function is `O(n^2)`.
+
+For the span analysis, note that the function `(fn i => Seq.tabulate (fn j => i*j) n)` has `O(1)` span, because `i*j` is evaluated in parallel for all the different values of `j`. Then, the entire function has `O(1)` span because the function `(fn i => Seq.tabulate (fn j => i*j) n)` is called all in parallel.
+
 ### `Seq.map`
 
+`Seq.map` is similar to `List.map`. The type of `Seq.map` is `('a -> 'b) -> 'a seq -> 'b seq`. Given a function `f : 'a -> 'b` and a sequence `<x_1, x_2, x_3, ..., x_n> : 'a seq`, we have:
+
+```
+Seq.map f <x_1, x_2, x_3, ..., x_n> = <f x_1, f x_2, f x_3, ..., f x_n>
+```
+
+Something about O(n) work and O(1) span for constant f
+Exercise about finding work and span for a non-constant f
+Cost graph
+```
+fun double S = Seq.map (fn x => 2*x) S
+```
+
 ### `Seq.reduce`
+
+Cost graph
+`Seq.reduce : ('a * 'a -> 'a) -> 'a -> 'a seq -> 'a`
+
+
 
 ### `Seq.filter`
 
