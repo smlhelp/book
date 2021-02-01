@@ -22,8 +22,8 @@ val double : int -> int = fn n => 2 * n
 val square : int -> int = fn n => n * n
 
 (* Eager *)
-    double square double 2
-==> double square 4
+    double (square (double 2))
+==> double (square 4)
 ==> double 16
 ==> 32
 ```
@@ -37,8 +37,8 @@ The notion of _need_ will be subjective relative to what's being implemented.
 SML is an eager language. But what if we wanted to simulate lazy evaluation?
 First we need a way to wait until we _need_ an argument to evaluate it. This
 is where **thunks** come into play. A **thunk** is a function of type
-`unit -> t` for some type `t`. They help us represent this notion of 
-"evaluation by need" by wrapping an expression in a function, which delays 
+`unit -> t` for some type `t`. They help us represent this notion of
+"evaluation by need" by wrapping an expression in a function, which delays
 the computation of that expression.
 
 Let's say we have some function `f` and argument `x`. When we run `f x`, `x`
@@ -46,7 +46,9 @@ will get evaluated immediately. However, by wrapping `x` inside a function,
 we can delay its computation _(assume `f`'s type is correct)_: `f (fn () => x)`.
 Since **_functions are values_**, this lambda function is already fully evaluated.
 However, `x` has yet to be evaluated! Now we can wait to evaluate `x` by passing
-in `() : unit` to the lambda function at some point.
+in `() : unit` to the lambda function at some point. A lambda expression is like
+a lawn mower on a cord - it has the potential to start doing some kind of work,
+but not until its cord is pulled.
 
 Let's see how that changes things in our earlier example. Here, we change `square`
 into a lazy version that accepts a **thunk** instead of an `int`.
@@ -56,7 +58,7 @@ val double : int -> int = fn n => 2 * n
 fun square (f : unit -> int) : int = f () * f ()
 
 (* Lazy *)
-    double square (fn () => double 2)
+    double (square (fn () => double 2))
 ==> double ((fn () => double 2) () * (fn () => double 2) ())
 ==> double (double 2 * double 2)
 ==> double (4 * 4)
@@ -69,6 +71,13 @@ until we "needed it". That "need" is subjective, but the key idea is that we
 delayed the computation of `double 2` by wrapping it a **thunk**. Lets see
 what this looks like in normal algebra.
 
+**NOTE**: You can see that the computation was "put off" since we had to
+recompute the value of `double 2` twice. This seems rather inefficient, since we
+don't want to have to recompute every time we use the value of some expression
+multiple times. In other _lazy languages_ that use a primarily lazy evaluation
+strategy, there tends to be a sophisticated system of _memoization_ (or,
+remembering values) so that values do not have to be recomputed.
+
 ```sml
 (* Eager *)                  (* Lazy *)
     2 * (2 * 2)^2                2 * (2 * 2)^2
@@ -78,19 +87,28 @@ what this looks like in normal algebra.
 ==> 32                       ==> 32
 ```
 
+**NOTE**: In another sense, in a lazy setting, the final computed value of `2 *
+(2 * 2)^2` is just the computation of `2 * (2 * 2)^2` itself. Lazy evaluation is lazy because it
+does not move until it is forced to - thus, in this example, we have shown how
+algebraically we can obtain the final value of `2 * (2 * 2)^2` _when forced_,
+where we use the term "forcing" to refer to forcing a lazy expression to
+evaluate to a traditional "value".
+
 Since `square` is now the lazy function, we are delaying the evaluation of
 `square`'s arguments. That's why in eager evaluation, we just do `2 * 2 ==> 4`
 before we square that value, whereas in lazy evaluation, we square the
 unevaluated arguments by doing `(2 * 2) * (2 * 2)`.
 
 _Note, we let the type of a **thunk** be `unit -> 'a` just because it's convenient._
-_Theoretically I could use a different type to represent thunks since all we need_
+_Theoretically we could use a different type to represent thunks since all we need_
 _is a way to wrap an expression in a function to delay its computation._
 
 ## Lazy Lists
 
 Now that we have established this notion of **_laziness_** in SML, we can do
-even fancier things, like create infinite data structures! Let's first look at
+even fancier things, like create _infinite data structures_! Unlike regular data
+structures, infinite data structures have the potential to encode an _unbounded_
+amount of data. Let's first look at
 a lazy list and compare it to a normal list.
 
 ```sml
@@ -100,7 +118,7 @@ datatype 'a lazylist = Nil | Cons of 'a * (unit -> 'a lazylist)
 
 You'll see that a `lazylist` is very similar to normal `list`s. The only difference
 is that the computation of the list's tail has been delayed with a thunk.
-Just like before where we had arguments for functions, we are now delaying the
+Just like before where we delayed computation of arguments for functions, we are now delaying the
 computation of arguments for constructors. You can sort of think of it like
 instead of having `x::xs`, we now have `x::(fn () => xs)`. This can help us create
 infinite lists since the true computation of the list tail is always delayed.
@@ -132,11 +150,11 @@ val 3 = e
 
 Here, we have a value `fibs : int lazylist` that represents the entire list of
 fibonacci numbers. Instead of immediately evaluating the tail of the list, the
-lazy list allows us to delay the computation. We can exploit this by delaying
-the circular evaluation of `fib' y (x + y)`.
+lazy list allows us to wait until a later time to continue iterating the list.
+We can exploit this by later triggering the evaluation of `fib' y (x + y)`.
 
 Note that if you tried to do this with normal lists, we would get some circular
-reasoning since the computation is not being delayed. For example:
+evaluation since the computation is not being delayed. For example:
 
 ```sml
 (* Example REPL Output *)
