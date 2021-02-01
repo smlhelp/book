@@ -68,12 +68,14 @@ There are three main ones: `andalso`, `orelse` and `not`.
 
 Note: See the page about the `bool` type [here](../types/bool.md) for more information on short-circuiting behavior.
 
-There are built-in equality operators: `=` and `<>`. These two operate on *equality types*, which include the built-in types mentioned before — and the structured types that can be made from them — __excluding__ `real` and function types.
+There are built-in equality operators: `=` and `<>`.
 
 | Operator |     Meaning    | Priority | Example Expression | Evaluates To |
 |:--------:|:--------------:|:--------:|:------------------:|:------------:|
 | `=`      | "equal to"     |     4    |     `1+2 = 4-1`    |    `true`    |
 | `<>`     | "not equal to" |     4    |     `"a" <> "b"`   |    `true`    |
+
+These two operate on *equality types*, which include the built-in types mentioned before — and the structured types that can be made from them — __excluding__ `real` and function types.
 
 |                          Expression                           |    Evaluates To     |
 |:-------------------------------------------------------------:|:-------------------:|
@@ -87,7 +89,7 @@ There are built-in equality operators: `=` and `<>`. These two operate on *equal
 
 Note: See the page about the `real` type [here](../types/real.md) for more information on why `0.0 = 0.0` is not allowed.
 
-There are built-in comparison operators `>`, `<`, `>=`, and `<=`. These have limited use; they operate on `int`, `string`, `char`, `real`.
+There are built-in comparison operators `>`, `<`, `>=`, and `<=`.
 
 | Operator |          Meaning           | Priority | Example Expression | Evaluates To |
 |:--------:|:--------------------------:|:--------:|:------------------:|:------------:|
@@ -95,6 +97,8 @@ There are built-in comparison operators `>`, `<`, `>=`, and `<=`. These have lim
 |    `<`   | "less than"                |     4    | `"ab" < "abc"`     |    `true`    |
 |   `>=`   | "greater than or equal to" |     4    | `#"a" >= #"A"`     |    `true`    |
 |   `<=`   | "less than or equal to"    |     4    | `"cab" <= "cba"`   |    `true`    |
+
+These have limited use; they operate on `int`, `string`, `char`, `real`.
 
 To build good habits, please practice using the built-in comparison functions `Int.compare`, `String.compare`, `Char.compare`, and `Real.compare` to compare their corresponding types instead of exclusively using these equality and comparison operators.
 
@@ -110,6 +114,8 @@ There is an `order` type with three values: `LESS`, `EQUAL`, and `GREATER`.
 | `Int.compare`    | `int * int -> order`       |
 | `String.compare` | `string * string -> order` |
 | `Real.compare`   | `real * real -> order`     |
+
+Example use:
 
 |          Expression            | Evaluates To |
 |:------------------------------:|:------------:|
