@@ -14,7 +14,7 @@ fun incList [] = []
   | incList (x::xs) = (x + 1) :: incList xs
 ```
 This is not too bad to do - we simply need to increment each individual element, and then
-simply cons it back on recursively. Suppose further that, as the arithmetically-minded 
+simply cons it back on recursively. Suppose further that, as the arithmetically-minded
 scholars that we are, we are also interested in negating the sign of each
 element in a list.
 ```sml
@@ -93,7 +93,7 @@ or alternatively _indicator function_, which simply returns `true` on those
 "yes"-cases and `no` on "no"-cases. Seen in this way, `filter` does something
 very similar to `map`, where it takes in the function it needs to apply to the
 elements of the list. In the case where the predicate holds, the element is
-kept, otherwise the element is discarded. 
+kept, otherwise the element is discarded.
 
 We could, for instance, obtain all the even integers in a list `L : int list` by
 writing the expression `filter (fn x => x mod 2 = 0) L`.
@@ -137,8 +137,8 @@ single string, which you could accomplish with `foldr (op^) ""`, or if you wante
 to sum the elements of a list, which could be done with `foldl (op+) 0`. Note that
 in the case of summing a list, `foldr` would work too - this is because `+` is
 an _associative_ function, meaning that it does not matter which order you
-evaluate it in (or in proper terms, \(f(x, f(y, z)) \cong f(f(x, y), z)\), for
-all \(x, y, z\)). 
+evaluate it in (or in proper terms, \\( f(x, f(y, z)) \cong f(f(x, y), z) \\), for
+all \\( x, y, z \\)).
 
 For many purposes, it will be the case that your `z` will be some _identity_
 value, such as `0` for summing a list, or the empty string for concatenating all
@@ -168,8 +168,8 @@ I hope makes apparent why `foldr` is the right fold for the task, as opposed to
 
 ## Compose
 One of the major examples that we used to motivate totality was that of
-_function composition_, the classic example being \(f(g(x))\), for some
-functions \(f\) and \(g\). This is a very common idea, where we have some form
+_function composition_, the classic example being \\( f(g(x)) \\), for some
+functions \\( f \\) and \\( g \\). This is a very common idea, where we have some form
 of data that we would like to put through a series of transformations. If our
 transformations are inherently disparate (such as being bound to identifiers of
 different functions), we may have to write code that looks like `f1 (f2 (f3 (f4
@@ -184,7 +184,7 @@ the deliberate identification of the arguments to functions, instead making use
 of _combinators_. In a similar flavor, we would like to eliminate the explicit
 need to construct the lambda expression that takes in the input `x`. We might
 then call back to another common mathematical operator, that being of _function
-composition_, or `o`. 
+composition_, or `o`.
 ```sml
 infix o
 (* o : ('b -> 'c) -> ('a -> 'b) -> ('a -> 'c) *)
@@ -205,7 +205,7 @@ complicated sequences of transformations.
 At this point, we have seen several examples of common higher-order functions,
 as well as potential use cases. These use cases often look nothing alike, but
 they all share a fundamental similarity in their _structure_, which is specified
-by the given higher-order function. 
+by the given higher-order function.
 
 A key strength of higher-order functions lies in _partial evaluation_, where we
 can use higher-order functions to further derive other functions (and possibly
@@ -214,7 +214,7 @@ sum of a single list `L`, to simply evaluate `map (op+) L`, but in the general
 case it is a strength that we can bind the function `map (op+)` to the name
 `sum`. This comes in handy especially if we want to sum over _many_ lists, so
 that we don't continuously have to compute the result of `map (op+)` (though it
-has negligible computational cost, admittedly). 
+has negligible computational cost, admittedly).
 
 Seen in this way, it is as if higher-order functions are at the root of a large
 _tree_ of potential functions, where each node in the tree is an
