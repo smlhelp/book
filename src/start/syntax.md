@@ -175,9 +175,12 @@ table {
   width: 100%;
 }
 
-td, th {
+th {
+  background-color: #cccccc;
+}
+
+td {
   border: 1px solid #dddddd;
-  padding: 8px;
 }
 
 </style>
@@ -288,21 +291,179 @@ Patterns are present in every lambda expression, `case` expression, `val`, and `
 Every `fn` clause, `case` clause, and `fun` clause contains a pattern with a corresponding expression.
 A clause is of the form: pattern, `=>`, expression. Clauses are delimited by pipes `|`.
 
-|                     Expression                      | Example Clause   |  Clause Pattern  | Clause Expression |
-|:---------------------------------------------------:|:----------------:|:----------------:|:-----------------:|
-| `(fn (x,y) => x + y)`                               | `(x,y) => x + y` | `(x,y)`          | `x + y`           |
-| `(fn true => 1 \| false => 0)`                      | `true => 1`      | `true`           | `1`               |
-| `(fn 0 => true \| _ => false)`                      | `_ => false`     | `_`              | `false`           |
+<table>
+<tr>
+<th> Expression </th>
+<th> Example Clause </th>
+<th> Clause Pattern </th>
+<th> Clause Expression </th>
+</tr>
+<tr>
+<td>
+
+```sml
+(fn (x,y) => x + y)
+```
+
+</td>
+<td>
+
+`(x,y) => x + y`
+
+</td>
+<td>
+
+`(x,y)`
+
+</td>
+<td>
+
+`x + y`
+
+</td>
+</tr>
+<tr>
+<td>
+
+```sml
+(fn true  => 1 
+  | false => 0)
+```
+
+</td>
+<td>
+
+`true => 1`
+
+</td>
+<td>
+
+`true`
+
+</td>
+<td>
+
+`1`
+
+</td>
+</tr>
+<tr>
+<td>
+
+```sml
+(fn 0 => true 
+  | _ => false)
+```
+
+</td>
+<td>
+
+`_ => false`
+
+</td>
+<td>
+
+`_`
+
+</td>
+<td>
+
+`false`
+
+</td>
+</tr>
+</table>
 
 Lambda expressions and `case` expressions have the same clause syntax.
 The clausal *patterns* must be able to match to the type of the expression being cased on.
 The clausal *expressions* must all have the same type (which may be different from that of the expression cased on).
 
-|                                   Expression                                   |   Example Clause  | Clause Pattern   | Clause Expression |
-|:------------------------------------------------------------------------------:|:-----------------:|:----------------:|:-----------------:|
-| `case () of _ => ()`                                                           | `_ => ()`         | `_`              | `()`              |
-| `case #"A" < #"a" of true => ":)" \| false => ":("`                            | `true => ":)"`    | `true`           | `":)"`            |
-| `case Int.compare (1,0) of LESS => false \| EQUAL => false \| GREATER => true` | `GREATER => true` | `GREATER`        | `true`            |
+<table>
+<tr>
+<th> Expression </th>
+<th> Example Clause </th>
+<th> Clause Pattern </th>
+<th> Clause Expression </th>
+</tr>
+<tr>
+<td>
+
+```sml
+(case () of 
+      _ => ())
+```
+
+</td>
+<td>
+
+`_ => ()`
+
+</td>
+<td>
+
+`_`
+
+</td>
+<td>
+
+`()`
+
+</td>
+</tr>
+<tr>
+<td>
+
+```sml
+(case #"A" < #"a" of 
+      true  => ":)" 
+    | false => ":(")
+```
+
+</td>
+<td>
+
+`true => ":)"`
+
+</td>
+<td>
+
+`true`
+
+</td>
+<td>
+
+`":)"`
+
+</td>
+</tr>
+<tr>
+<td>
+
+```sml
+(case Int.compare (1,0) of 
+      LESS    => false 
+    | EQUAL   => false 
+    | GREATER => true)
+```
+
+</td>
+<td>
+
+`GREATER => true`
+
+</td>
+<td>
+
+`GREATER`
+
+</td>
+<td>
+
+`true`
+
+</td>
+</tr>
+</table>
 
 The wildcard pattern `_` will match to any type, but create no bindings (ignore it).
 
@@ -340,20 +501,248 @@ The wildcard pattern `_` will match to any type, but create no bindings (ignore 
 
 A pattern that accounts for every possible value of the type it matches to is said to perform an exhaustive match. The match is nonexhaustive if and only if a possible value of that pattern's type is missed.
 
-|                   Expression                     |    Pattern Type    | Exhaustive Match? |
-|:------------------------------------------------:|:------------------:|:-----------------:|
-| `(fn () => ())`                                  | `unit`             | Yes               |
-| `(fn true => 1)`                                 | `bool`             | No                |
-| `(fn true => 1 \| false => 0)`                   | `bool`             | Yes               |
-| `(fn LESS => ~1)`                                | `order`            | No                |
-| `(fn LESS => ~1 \| EQUAL => 0)`                  | `order`            | No                |
-| `(fn LESS => ~1 \| EQUAL => 0 \| GREATER => 1)`  | `order`            | Yes               |
-| `(fn 0 => true)`                                 | `int`              | No                |
-| `(fn 0 => true \| _ => false)`                   | `int`              | Yes               |
-| `(fn x::_ => x + 1)`                             | `int list`         | No                |
-| `(fn [] => 0 \| x::_ => x + 1)`                  | `int list`         | Yes               |
-| `(fn (0,b) => true andalso b)`                   | `int * bool`       | No                |
-| `(fn (0,b) => true andalso b \| (n,_) => false)` | `int * bool`       | Yes               |
+<table>
+<tr>
+<th> Expression </th>
+<th> Pattern Type </th>
+<th> Exhaustive Match? </th>
+</tr>
+<tr>
+<td>
+
+```sml
+(fn () => ())
+```
+
+</td>
+<td>
+
+`unit`
+
+</td>
+<td>
+
+Yes
+
+</td>
+</tr>
+<tr>
+<td>
+
+```sml
+(fn true => 1)
+```
+
+</td>
+<td>
+
+`bool`
+
+</td>
+<td>
+
+No
+
+</td>
+</tr>
+<tr>
+<td>
+
+```sml
+(fn true  => 1 
+  | false => 0)
+```
+
+</td>
+<td>
+
+`bool`
+
+</td>
+<td>
+
+Yes
+
+</td>
+</tr>
+<tr>
+<td>
+
+```sml
+(fn LESS => ~1)
+```
+
+</td>
+<td>
+
+`order`
+
+</td>
+<td>
+
+No
+
+</td>
+</tr>
+<tr>
+<td>
+
+```sml
+(fn LESS  => ~1 
+  | EQUAL => 0)
+```
+
+</td>
+<td>
+
+`order`
+
+</td>
+<td>
+
+No
+
+</td>
+</tr>
+<tr>
+<td>
+
+```sml
+(fn LESS    => ~1 
+  | EQUAL   => 0 
+  | GREATER => 1)
+```
+
+</td>
+<td>
+
+`order`
+
+</td>
+<td>
+
+Yes
+
+</td>
+</tr>
+<tr>
+<td>
+
+```sml
+(fn 0 => true)
+```
+
+</td>
+<td>
+
+`int`
+
+</td>
+<td>
+
+No
+
+</td>
+</tr>
+<tr>
+<td>
+
+```sml
+(fn 0 => true 
+  | _ => false)
+```
+
+</td>
+<td>
+
+`int`
+
+</td>
+<td>
+
+Yes
+
+</td>
+</tr>
+<tr>
+<td>
+
+```sml
+(fn x::_ => x + 1)
+```
+
+</td>
+<td>
+
+`int list`
+
+</td>
+<td>
+
+No
+
+</td>
+</tr>
+<tr>
+<td>
+
+```sml
+(fn [] => 0 
+  | x::_ => x + 1)
+```
+
+</td>
+<td>
+
+`int list`
+
+</td>
+<td>
+
+Yes
+
+</td>
+</tr>
+<tr>
+<td>
+
+```sml
+(fn (0,b) => true andalso b)
+```
+
+</td>
+<td>
+
+`int * bool`
+
+</td>
+<td>
+
+No
+
+</td>
+</tr>
+<tr>
+<td>
+
+```sml
+(fn (0,b) => true andalso b 
+  | (n,_) => false)
+```
+
+</td>
+<td>
+
+`int * bool`
+
+</td>
+<td>
+
+Yes
+
+</td>
+</tr>
+</table>
 
 Using a wildcard for the first clause's *entire* pattern produces an exhaustive match.
 
@@ -371,11 +760,66 @@ fun length ([]    : int list) : int = 0
 
 As before, *both* `length` bindings have the same value. Don't forget about the lambda!
 
-|     Expression     |                 Value                  |       Type        |
-|:------------------:|:--------------------------------------:|:-----------------:|
-| `length`           | `fn [] => 0 \| _::xs => 1 + length xs` | `int list -> int` |
-| `length []`        | `0`                                    | `int`             |
-| `length [1,2,3,4]` | `4`                                    | `int`             |
+<table>
+<tr>
+<th> Expression </th>
+<th> Value </th>
+<th> Type </th>
+</tr>
+<tr>
+<td>
+
+`length`
+
+</td>
+<td>
+
+```sml
+(fn [] => 0 | _::xs => 1 + length xs)
+```
+
+</td>
+<td>
+
+`int list -> int`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`length []`
+
+</td>
+<td>
+
+`0`
+
+</td>
+<td>
+
+`int`
+
+</td>
+</tr>
+<tr>
+<td>
+
+`length [1,2,3,4]`
+
+</td>
+<td>
+
+`4`
+
+</td>
+<td>
+
+`int`
+
+</td>
+</tr>
+</table>
 
 #### Conditional Expressions
 
