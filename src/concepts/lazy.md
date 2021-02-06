@@ -87,8 +87,7 @@ remembering values) so that values do not have to be recomputed.
 ==> 32                       ==> 32
 ```
 
-**NOTE**: In another sense, in a lazy setting, the final computed value of `2 *
-(2 * 2)^2` is just the computation of `2 * (2 * 2)^2` itself. Lazy evaluation is lazy because it
+**NOTE**: In another sense, in a lazy setting, the final computed value of `2 * (2 * 2)^2` is just the computation of `2 * (2 * 2)^2` itself. Lazy evaluation is lazy because it
 does not move until it is forced to - thus, in this example, we have shown how
 algebraically we can obtain the final value of `2 * (2 * 2)^2` _when forced_,
 where we use the term "forcing" to refer to forcing a lazy expression to
@@ -134,18 +133,18 @@ val fibs : int lazylist =
     end
 
 (* Iterate through lazy list *)
-val Cons(a, f) = fibs
-val Cons(b, g) = f ()
-val Cons(c, h) = g ()
-val Cons(d, i) = h ()
-val Cons(e, j) = i ()
+val Cons(a1, f1) = fibs
+val Cons(a2, f2) = f1 ()
+val Cons(a3, f3) = f2 ()
+val Cons(a4, f3) = f3 ()
+val Cons(a5, f5) = f4 ()
 
 (* Test cases *)
-val 0 = a
-val 1 = b
-val 1 = c
-val 2 = d
-val 3 = e
+val 0 = a1
+val 1 = a2
+val 1 = a3
+val 2 = a4
+val 3 = a5
 ```
 
 Here, we have a value `fibs : int lazylist` that represents the entire list of
