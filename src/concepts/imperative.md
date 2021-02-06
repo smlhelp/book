@@ -112,7 +112,7 @@ the next program to sequentially follow. In SML (not just the REPL),
 this is also valid syntax.
 
 > For some expressions `exp1 : t1`, `exp2 : t2`, we have that `exp1;exp2 : t2`
-> where `exp1` is evaluated first, and then `exp2` evaluated thereafter.
+> where `exp1` is evaluated first, and then `exp2` is evaluated thereafter.
 
 One thing to note is that in SML, only the value of the second expression
 is returned, and the type of the whole expression is the type of the last
