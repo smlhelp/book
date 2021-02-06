@@ -107,8 +107,9 @@ binding `8 - 4` to `y`, and continue to wait for the next "program".
 If you're familiar with languages like Java and C, this can also be
 used to explain why semicolons are required at the end of each line.
 
-Where the semicolon `;` is used to mark the end of one program and set up
-the next program to sequentially follow. In SML, this is also valid syntax.
+The semicolon `;` is used to mark the end of one program and set up
+the next program to sequentially follow. In SML (not just the REPL),
+this is also valid syntax.
 
 > For some expressions `exp1 : t1`, `exp2 : t2`, we have that `exp1;exp2 : t2`
 > where `exp1` is evaluated first, and then `exp2` evaluated thereafter.
