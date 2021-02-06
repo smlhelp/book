@@ -26,7 +26,7 @@ interface with these **_reference types_**.
 ### Ref Cells `ref`
 
 First, we need to make something of this reference type. In other words, we
-need a way to initialize our pointers. `ref` is also a constructor that helps 
+need a way to initialize our pointers. `ref` is also a constructor that helps
 us initializes references (not to be confused with the `'a ref` type.) Below is
 how we would make a reference to an `int value`, or, an `int ref`.
 
@@ -38,7 +38,7 @@ val pointer : int ref = ref 7
 ### Bang `!`
 
 Next, we need a way to get our values from these references. In other words, we
-need a way to dereference our pointers. `!` (called bang) can be used 
+need a way to dereference our pointers. `!` (called bang) can be used
 on an `'a ref` to retrieve the value being referenced.
 
 ```sml
@@ -70,7 +70,7 @@ value is whatever we initialized it to (`7`). However, after we change what's
 inside the ref-cell, we dereference the updated value (`21`). Even though
 `x` and `y` are both bound to `!pointer`, they have different values!
 
-> 💡 Comparison to the `void`!
+> 💡 Comparison to `void` methods!
 >
 > Remember that SML is a functional programming language. This means that
 > anything that's not an exception or infinite loop must be a value! As
