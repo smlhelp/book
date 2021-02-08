@@ -18,7 +18,7 @@ case 0 of
      0 => case "x" of _ => 3
    | _ => 5
 ```
-Obviously, this example is very contrived, but parens may be a source of error if you have nested case expressions.
+Obviously, this example is very contrived, but adding parens may help in nested case expressions.
 
 ## Associativity Issues
 Since function application is left associative, making sure you have correct parenthesization is very important. It is almost always a good idea to double check your parenthesization in your code, since it can cause very confusing bugs, but can be fixed with a simple check.
@@ -55,4 +55,4 @@ fun contains (cmp, x, []) = false
 ```
 The type of the function will now be `('a * 'a -> order) * 'a list * 'a -> bool`.
 
-In general, using `case` expressions instead of `if-then-else` statements with `=` signs is preferable because of this issue.
+In general, it's preferable to use `case` expressions instead of `if-then-else` statements with `=` in the condition.

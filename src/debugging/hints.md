@@ -47,7 +47,7 @@ Then, once the code is compiled and run, the result of `f 1` will be printed out
 
 If you decide to use print statements while stepping through code, you may have to add an extra `let` statement so that you can add the `val` declaration for printing.
 
-In general, print statements in SML can be unwieldy and difficult to use, so print statements are generally not suggested as a way to debug. However, stepping through each line and clause of code is generally very helpful, and highly encouraged.
+In general, print statements in SML can be unwieldy and difficult to use, so print statements are generally not suggested as a way to debug. However, stepping through each line and clause of code is generally very helpful and highly encouraged.
 
 ## Debugging Strategies
 ### Rubber Duck Method
