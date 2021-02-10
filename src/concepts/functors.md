@@ -620,7 +620,6 @@ is no harm in declaring them within the namespace of the functor.
 
 Our completed code for a red-black tree implementation of dictionaries is thus
 as follows. Note that the implementation of `lookup` is very straightforward, and
-will not be discussed.
 
 ```sml
 functor RedBlackDict (Key : ORDERED) :> DICT =
