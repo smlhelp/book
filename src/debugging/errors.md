@@ -169,7 +169,15 @@ syntax issue!
 Consider the following code snippet:
 
 ```sml
-
+fun foo x =
+  let
+    val y =
+      let
+        val z = 3
+      in
+  in
+    4
+  end
 ```
 
 Compiling this will result in the error:
