@@ -1,0 +1,90 @@
+\documentclass[margin=0.5cm]{standalone} 
+
+\usepackage{array}
+
+%
+% Cooper Pierce <cppierce@andrew.cmu.edu>
+%
+% For use in the book, 
+%   1. compile with latexmk, 
+%   2. use dvisvgm
+% E.g., latexmk balance 
+%   && dvisvgm --no-fonts --clipjoin --bbox=papersize balance
+%   && mv balance-1.svg balance.svg
+% (for whatever reason my version of pdflatex makes a two page dvi)
+%
+%
+
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{forest}
+
+\begin{document}
+    \pagecolor{white}
+    \tikzset{%
+        /forest,
+        forest node/.style={circle, inner sep=0pt, text centered},
+        arn n/.append style={
+            text=white, 
+            font=\sffamily\bfseries,
+            draw=black,
+            fill=black,
+            text width=1.5em,
+        },
+        arn r/.append style={%
+            text=white,
+            font=\sffamily\bfseries,
+            draw=red,
+            fill=red,
+            text width=1.5em,
+        },
+    }
+
+    \forestset{%
+        default preamble={
+            for tree={
+                font=\sffamily,
+                forest node,
+                edge path={
+                    \noexpand\path[color=black, -stealth', \forestoption{edge}]
+                    (!u.parent anchor) -- (.child anchor)\forestoption{edge label};
+                },
+                l sep+=.25cm,
+                s sep+=.25cm,
+                fit=band,
+            }
+        }
+    }
+    \begin{tabular}{m{3cm} m{1em} m{3cm} }
+    \begin{forest}
+        [3, arn n
+            [2, arn r
+                [1, arn r, 
+                    [a]
+                    [b]
+                ]
+                [c]
+            ]
+            [d]
+        ]
+        \node at (current bounding box.north west)
+            [draw,aspect=6]
+            {\emph{Case 1}};
+    \end{forest}
+    &
+    \( \longmapsto \)
+    &
+    \begin{forest}
+        [3, arn r
+            [1, arn n,
+                [a]
+                [b]
+            ]
+            [2, arn n,
+                [c]
+                [d]
+            ]
+        ]
+    \end{forest}
+    \end{tabular}
+\end{document}

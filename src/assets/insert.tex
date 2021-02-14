@@ -1,0 +1,77 @@
+\documentclass[margin=0.5cm]{standalone} 
+
+\usepackage{array}
+\usepackage{amsmath}
+
+%
+% Cooper Pierce <cppierce@andrew.cmu.edu>
+%
+% For use in the book, 
+%   1. compile with latexmk, 
+%   2. use dvisvgm
+% E.g., latexmk insert 
+%   && dvisvgm --no-fonts --clipjoin --bbox=papersize insert
+%   && mv insert-1.svg insert.svg
+% (for whatever reason my version of pdflatex makes a two page dvi)
+%
+%
+
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{forest}
+
+\begin{document}
+    \pagecolor{white}
+    \tikzset{%
+        /forest,
+        forest node/.style={circle, inner sep=0pt, text centered},
+        arn n/.append style={
+            text=white, 
+            font=\sffamily\bfseries,
+            draw=black,
+            fill=black,
+            text width=1.5em,
+        },
+        arn r/.append style={%
+            text=white,
+            font=\sffamily\bfseries\tiny,
+            draw=red,
+            fill=red,
+            text width=1.5em,
+        },
+    }
+
+    \forestset{%
+        default preamble={
+            for tree={
+                font=\sffamily,
+                forest node,
+                edge path={
+                    \noexpand\path[color=black, -stealth', \forestoption{edge}]
+                    (!u.parent anchor) -- (.child anchor)\forestoption{edge label};
+                },
+                l sep+=.25cm,
+                s sep+=.25cm,
+                fit=band,
+            }
+        }
+    }
+    \begin{tabular}{m{0.8cm} m{2em} m{0.5cm} m{2em} m{1.5cm}}
+        Empty
+    &
+        \( \xrightarrow[a\,\mapsto\,2]{\text{ins.}} \)
+    &
+        \begin{forest}
+            [a\,:\,2, arn r]
+        \end{forest}
+    &
+        \( \xrightarrow[b\,\mapsto\,3]{\text{ins.}} \)
+    &
+        \begin{forest}
+            [a\,:\,2, arn r,
+                [,phantom]
+                [b\,:\,3, arn r]
+            ]
+        \end{forest}
+    \end{tabular}
+\end{document}
