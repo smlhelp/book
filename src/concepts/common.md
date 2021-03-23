@@ -108,21 +108,21 @@ result from a collection of data - not another collection of data itself. This
 describes a very common pattern known as _folding_.
 
 ```sml
-(* foldl : ('a * 'b -> 'b) -> 'a list -> 'b -> 'b *)
-fun foldl g [] z = z
-  | foldl g (x::xs) z = foldl g xs (g(x, z))
+(* foldl : ('a * 'b -> 'b) -> 'b -> 'a list -> 'b *)
+fun foldl g z [] = z
+  | foldl g z (x::xs) = foldl g (g(x, z)) xs
 
-(* foldr : ('a * 'b -> 'b) -> 'a list -> 'b -> 'b *)
-fun foldr g [] z = z
-  | foldr g (x::xs) z = g(x, foldr g xs z)
+(* foldr : ('a * 'b -> 'b) -> 'b -> 'a list -> 'b *)
+fun foldr g z [] = z
+  | foldr g z (x::xs) = g(x, foldr g z xs)
 ```
 
 More specifically, `foldl` and `foldr` both describe two ways of combining the
 elements in a list, given a function `g`. The role of `z` is that of a "base
 case" in our accumulated value, so that we have an initial point to start from
-when using the function `g`. The result of `foldl g [x_1, ..., x_n] z` is to
-evaluate to `f(x_n, ..., f(x_2, f(x_1, z))...)`, and the result of `foldr g [x_1,
-..., x_n] z` is to evaluate to `f(x_1, ..., f(x_n-1, f(x_n, z))...)`. We are
+when using the function `g`. The result of `foldl g z [x_1, ..., x_n]` is to
+evaluate to `f(x_n, ..., f(x_2, f(x_1, z))...)`, and the result of `foldr g z [x_1,
+..., x_n]` is to evaluate to `f(x_1, ..., f(x_n-1, f(x_n, z))...)`. We are
 thus choosing whether we want to fold from the _left_ of the list or the
 _right_.
 
