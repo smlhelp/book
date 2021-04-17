@@ -208,7 +208,7 @@ struct
     fun rotate (x, y) r = (x * Math.cos r) + (y * Math.sin r)
 
     fun get_x (x, y) = x
-    fun get_x (x, y) = y
+    fun get_y (x, y) = y
     fun get_dist (x, y) = Math.sqrt (Math.pow (x, 2.0) + Math.pow (y, 2.0))
 end
 
