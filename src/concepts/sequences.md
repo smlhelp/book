@@ -76,7 +76,7 @@ fun multtable n =
     Seq.tabulate (fn j => i*j) n) n
 ```
 
-Let's analyze the work of this function. The function `(fn i => Seq.tabulate (fn j => i*j) n)` has `O(n)` work. This is since the function evaluates `i*j` (for different values of `j`) `n` times. The function is called `n` times (from the outer tabulate). Therefore, the total work of this function is `O(n^2)`.
+Let's analyze the work of `multtable`. The function `(fn i => Seq.tabulate (fn j => i*j) n)` has `O(n)` work. This is since the function evaluates `i*j` (for different values of `j`) `n` times. The function is called `n` times (from the outer tabulate). Therefore, the total work of this function is `O(n^2)`.
 
 For the span analysis, note that the function `(fn i => Seq.tabulate (fn j => i*j) n)` has `O(1)` span, because `i*j` is evaluated in parallel for all the different values of `j`. Then, the entire function has `O(1)` span because the function `(fn i => Seq.tabulate (fn j => i*j) n)` is called all in parallel.
 
@@ -88,21 +88,30 @@ For the span analysis, note that the function `(fn i => Seq.tabulate (fn j => i*
 Seq.map f <x_1, x_2, x_3, ..., x_n> = <f x_1, f x_2, f x_3, ..., f x_n>
 ```
 
-Something about O(n) work and O(1) span for constant f
-Exercise about finding work and span for a non-constant f
-Cost graph
-```
-fun double S = Seq.map (fn x => 2*x) S
-```
+The work of evaluating the above expression is (work of doing `f x_1`) + (work of doing `f x_2`) + ... + (work of doing `f x_n`).
+The calls `f x_1, f x_2, f x_3, ..., f x_n` are all done in parallel. So, the span is the max of (span of doing `f x_1`, span of doing `f x_2`, ..., span of doing `f x_n`).
 
 ### `Seq.reduce`
 
-Cost graph
-`Seq.reduce : ('a * 'a -> 'a) -> 'a -> 'a seq -> 'a`
+`Seq.reduce` is like `List.foldr`, but with sequences. The type is `Seq.reduce : ('a * 'a -> 'a) -> 'a -> 'a seq -> 'a`. In English, `Seq.reduce` takes in a combining function, a base value, and a sequence to "reduce". For example, `Seq.reduce g z <x_0, x_1, x_2, ..., x_n>` is extensionally equivalent to `g(x_0, g(x_1, g(x_2, ..., g(x_n, z)))... )`. Notice that the combining function is `'a * 'a -> 'a` instead of `'a * 'b -> 'b`, as in `List.foldr`.
 
+The neat part is, `Seq.reduce` also supports parallelism. In particular, when a combining function `g` has constant span, then `Seq.reduce g z S` has O(log |S|) span. We pay a slight cost: the function `g` must be associative, which means that `g(g(a,b),c) = g(a,g(b,c))` for all `a,b,c`. Furthermore, `z` must be the identity for `g`, which means `g(a,z) = g(z,a) = a` for all `a`.
 
+To analyze the work and span, let's consider how SML actually evaluates `Seq.reduce g z S`. It first calls the combining function `g` on each pair of elements: `x_0` and `x_1`, `x_2` and `x_3`, and so on. All of these calls can be made in parallel. Then, we combine the intermediate results together. At the very end, all of the elements of `S` will be combined together.
+
+<figure class="aligncenter">
+    <img src="../assets/reducecost.png"
+    width="600" class="center"/>
+    <figcaption>The cost graph for `Seq.reduce`. Each branch at the top represents a different independent task for the processor(s) to perform.  </figcaption>
+</figure>
+
+The work is the sum of doing all the work shown in the cost graph, while the span is the longest path through the cost graph. Therefore, for constant `g`, the work of `Seq.reduce g z S` is O(|S|), and the span is O(log |S|).
+
+An example of using this function is finding the sum of a sequence. So, `Seq.reduce (op +) 0 <1, 2, 3, 4>` evaluates to `10`.
 
 ### `Seq.filter`
+
+
 
 ## Examples of functions involving sequences
 
