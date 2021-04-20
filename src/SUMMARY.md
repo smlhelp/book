@@ -43,7 +43,7 @@
         - [Basics and Ascription](concepts/mods.md)
         - [Functors](concepts/functors.md)
     - [Applications](concepts/apps.md)
-        - [Sequences](concepts/seq.md)
+        - [Sequences](concepts/sequences.md)
 - [Examples](examples/README.md)
   - [Basics](examples/basics.md)
   - [Recursion & Induction](examples/recursion.md)
