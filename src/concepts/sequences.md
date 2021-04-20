@@ -80,6 +80,16 @@ Let's analyze the work of `multtable`. The function `(fn i => Seq.tabulate (fn j
 
 For the span analysis, note that the function `(fn i => Seq.tabulate (fn j => i*j) n)` has `O(1)` span, because `i*j` is evaluated in parallel for all the different values of `j`. Then, the entire function has `O(1)` span because the function `(fn i => Seq.tabulate (fn j => i*j) n)` is called all in parallel.
 
+In general, the cost graph for `Seq.tabulate` looks like this.
+
+<figure class="aligncenter">
+    <img src="../assets/tabulatecost.png"
+    width="600" class="center"/>
+    <figcaption>The cost graph for Seq.tabulate. Each branch at the top represents a different independent task for the processor(s) to perform.  </figcaption>
+</figure>
+
+The work of `Seq.tabulate f S` is the sum of all costs in the graph above. The span is the maximum cost of any one of the branches, because the function is called on 0, 1, ..., n-1 in parallel.
+
 ### `Seq.map`
 
 `Seq.map` is similar to `List.map`. The type of `Seq.map` is `('a -> 'b) -> 'a seq -> 'b seq`. Given a function `f : 'a -> 'b` and a sequence `<x_1, x_2, x_3, ..., x_n> : 'a seq`, we have:
@@ -102,7 +112,7 @@ To analyze the work and span, let's consider how SML actually evaluates `Seq.red
 <figure class="aligncenter">
     <img src="../assets/reducecost.png"
     width="600" class="center"/>
-    <figcaption>The cost graph for `Seq.reduce`. Each branch at the top represents a different independent task for the processor(s) to perform.  </figcaption>
+    <figcaption>The cost graph for Seq.reduce. Each branch at the top represents a different independent task for the processor(s) to perform.  </figcaption>
 </figure>
 
 The work is the sum of doing all the work shown in the cost graph, while the span is the longest path through the cost graph. Therefore, for constant `g`, the work of `Seq.reduce g z S` is O(|S|), and the span is O(log |S|).
@@ -110,11 +120,12 @@ The work is the sum of doing all the work shown in the cost graph, while the spa
 An example of using this function is finding the sum of a sequence. So, `Seq.reduce (op +) 0 <1, 2, 3, 4>` evaluates to `10`.
 
 ### `Seq.filter`
+Again, a sequence function is analogous to a list function. `Seq.filter` is like `List.filter`. It takes in a predicate function of type `'a -> bool` and a sequence of type `'a seq`, and keeps elements `x` such that `p x` evaluates to true. However, `Seq.filter` is optimized for parallel performance. The work is O(|S|). The span is O(log |S|), which may seem surprising as the predicate function may be applied to all elements in parallel. However, it is difficult to find out the number of elements that satisfy the predicate, and thus it's not possible to find the length of the filtered sequence in O(1). The implementation details are tricky, but use a divide-and-conquer approach just like `Seq.reduce`.
 
-
+### `Seq.append`
+Just like `@`, the function `Seq.append : 'a seq * 'a seq -> 'a seq` puts two sequences together. The work to create the appended sequence, such as in the call `Seq.append (S1,S2)`, is O(|S1| + |S2|). To justify this, think about how `Seq.append` may be implemented using `Seq.tabulate`. The tabulating function maps indices between 0 and |S1|-1 to elements from S1, and maps indices between |S1| and |S1 + S2| - 1 to elements from S2. Additionally, the span of `Seq.append` is O(1) regardless of the input sequences. This makes intuitive sense because `Seq.tabulate` also has O(1) span, when given a constant tabulating function.
 
 ## Examples of functions involving sequences
-
 
 ## Exercise: Pascal's triangle
 
@@ -128,6 +139,9 @@ pascal 5 =
  <1,4,6,4,1>,
  <1,5,10,10,5,1>>
 ```
+Let's try to do this task without using the formula for entries of Pascal's triangle. The 0th row of Pascal's triangle is our base case. Then, we can add elements from the (n-1)th row to calculate elements in the nth row (in parallel!). This is an incremental approach: we add one row of the answer at a time.
+
+This problem has a bit of a dynamic programming flavor, in that we should remember the previous row to help calculate new rows. One issue is that using `Seq.append` or `Seq.cons` to add a row to a sequence is expensive. However, remember the pros and cons of sequences vs. lists! Adding on a row to a list requires just O(1) work. Therefore, our approach for this problem will use both sequences and lists. The solution is below. Note that it uses the function `reverse` from the `Seq.tabulate` section of this article.
 
 
 ```
@@ -144,5 +158,5 @@ fun pascalH 0 = [Seq.singleton 1]
       new::prev::rest
     end
 
-fun pascal n = Seq.reverse (Seq.fromList (pascalH n))
+fun pascal n = reverse (Seq.fromList (pascalH n))
 ```
