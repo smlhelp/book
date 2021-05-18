@@ -13,4 +13,4 @@ Neumann and Cam Wong for their instrumental work in getting the website working.
 
 Contributors to SML Help include:
 
-Brandon Wu, Cooper Pierce, David Sun, Eunice Chen, Harrison Grodin, James Gallicchio, Len Huang and Kaz Zhou
+Brandon Wu, Cooper Pierce, David Sun, Eunice Chen, Harrison Grodin, James Gallicchio, Kaz Zhou and Len Huang
