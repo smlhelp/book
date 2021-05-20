@@ -1,0 +1,287 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>function types - SML Help</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="A resource for learning SML">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Welcome!</a></li><li class="chapter-item expanded "><a href="../start/index.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../start/install.html"><strong aria-hidden="true">1.1.</strong> Install &amp; run SML</a></li><li class="chapter-item expanded "><a href="../start/syntax.html"><strong aria-hidden="true">1.2.</strong> Syntax Cheatsheet</a></li><li class="chapter-item expanded "><a href="../start/common.html"><strong aria-hidden="true">1.3.</strong> Common Tasks</a></li></ol></li><li class="chapter-item expanded "><a href="../types/index.html"><strong aria-hidden="true">2.</strong> Types &amp; Signatures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/type.html"><strong aria-hidden="true">2.1.</strong> Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/bool.html"><strong aria-hidden="true">2.1.1.</strong> bool</a></li><li class="chapter-item expanded "><a href="../types/int.html"><strong aria-hidden="true">2.1.2.</strong> int</a></li><li class="chapter-item expanded "><a href="../types/real.html"><strong aria-hidden="true">2.1.3.</strong> real</a></li><li class="chapter-item expanded "><a href="../types/string.html"><strong aria-hidden="true">2.1.4.</strong> string</a></li><li class="chapter-item expanded "><a href="../types/function.html" class="active"><strong aria-hidden="true">2.1.5.</strong> function types</a></li></ol></li><li class="chapter-item expanded "><a href="../types/sig.html"><strong aria-hidden="true">2.2.</strong> Signatures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/list.html"><strong aria-hidden="true">2.2.1.</strong> list</a></li><li class="chapter-item expanded "><a href="../types/dict.html"><strong aria-hidden="true">2.2.2.</strong> dictionaries</a></li><li class="chapter-item expanded "><a href="../types/regex.html"><strong aria-hidden="true">2.2.3.</strong> regular expressions</a></li><li class="chapter-item expanded "><a href="../seq/seq.html"><strong aria-hidden="true">2.2.4.</strong> sequences</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../debugging/index.html"><strong aria-hidden="true">3.</strong> Debugging</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../debugging/errors.html"><strong aria-hidden="true">3.1.</strong> Common Errors</a></li><li class="chapter-item expanded "><a href="../debugging/hints.html"><strong aria-hidden="true">3.2.</strong> Debugging Hints</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/index.html"><strong aria-hidden="true">4.</strong> Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/basic.html"><strong aria-hidden="true">4.1.</strong> Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/eval.html"><strong aria-hidden="true">4.1.1.</strong> Evaluation</a></li><li class="chapter-item expanded "><a href="../concepts/eeq.html"><strong aria-hidden="true">4.1.2.</strong> Extensional Equivalence</a></li><li class="chapter-item expanded "><a href="../concepts/patternmatch.html"><strong aria-hidden="true">4.1.3.</strong> Pattern Matching</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/recind.html"><strong aria-hidden="true">4.2.</strong> Recursion and Induction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/induct.html"><strong aria-hidden="true">4.2.1.</strong> Inductive Proofs</a></li><li class="chapter-item expanded "><a href="../concepts/rec.html"><strong aria-hidden="true">4.2.2.</strong> Recursion</a></li><li class="chapter-item expanded "><a href="../concepts/tail.html"><strong aria-hidden="true">4.2.3.</strong> Tail Recursion</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/analysis.html"><strong aria-hidden="true">4.3.</strong> Asymptotic Analysis</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/workspan.html"><strong aria-hidden="true">4.3.1.</strong> Work and Span</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/datatypes.html"><strong aria-hidden="true">4.4.</strong> Datatypes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/poly.html"><strong aria-hidden="true">4.4.1.</strong> Parametric Polymorphism</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/hofs.html"><strong aria-hidden="true">4.5.</strong> Higher Order Functions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/curry.html"><strong aria-hidden="true">4.5.1.</strong> Currying and Staging</a></li><li class="chapter-item expanded "><a href="../concepts/common.html"><strong aria-hidden="true">4.5.2.</strong> Common HOFs and Partial Evaluation</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/control.html"><strong aria-hidden="true">4.6.</strong> Control Flow</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/cps.html"><strong aria-hidden="true">4.6.1.</strong> Continuation Passing Style</a></li><li class="chapter-item expanded "><a href="../concepts/exn.html"><strong aria-hidden="true">4.6.2.</strong> Exceptions</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/mods.html"><strong aria-hidden="true">4.7.</strong> Modules</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/mods.html"><strong aria-hidden="true">4.7.1.</strong> Basics and Ascription</a></li><li class="chapter-item expanded "><a href="../concepts/functors.html"><strong aria-hidden="true">4.7.2.</strong> Functors</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/apps.html"><strong aria-hidden="true">4.8.</strong> Applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/sequences.html"><strong aria-hidden="true">4.8.1.</strong> Sequences</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../examples/index.html"><strong aria-hidden="true">5.</strong> Examples</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../examples/basics.html"><strong aria-hidden="true">5.1.</strong> Basics</a></li><li class="chapter-item expanded "><a href="../examples/recursion.html"><strong aria-hidden="true">5.2.</strong> Recursion &amp; Induction</a></li></ol></li><li class="chapter-item expanded "><a href="../about.html">About</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">SML Help</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="functions"><a class="header" href="#functions">Functions</a></h1>
+<p>Functions are a familiar concept in programming. In most languages, functions seem to capture a notion of a list of instructions to be carried out, with each invocation of the function resulting in another round of executing its instructions. In this class, however, we will take another perspective on functions - one that identifies the function more with the values that it outputs than the instructions that it executes.</p>
+<h2 id="what-is-a-function"><a class="header" href="#what-is-a-function">What is a Function?</a></h2>
+<p>What is a function? To most seasoned programmers, the definition given in the above section seems to be the most obvious. A function (or subroutine) is simply identified with the instructions that it executes, which have some <em>effect</em> on the state of the program as a whole, such as incrementing some variable, or setting some flag. </p>
+<p>Before most programmers were programmers, however, they had a different notion of a function. To a mathematician, a function is something else entirely. Instead of being an algorithmic sequence of instructions, a function is simply an entity that maps inputs to outputs - for example, (f(x) = x + 1). Something rather notable is that mathematical functions are <em>pure</em> - given the same input, they always return the same output. So while it is a valid question in programming to ask how a function's behavior changes over time, this is a nonsensical question in terms of mathematical functions.</p>
+<p>To be more concrete, let us consider a Python program.</p>
+<pre><code class="language-python">x = 0
+def f(y):
+    x += 1
+    return x + y
+</code></pre>
+<p>This program instantiates a variable <code>x</code> outside the scope of the function <code>f</code> (which takes a single argument <code>y</code>), and the behavior of <code>f</code> is to increment the value of <code>x</code>, then return the sum of <code>x</code> and <code>y</code>. What we would find is that the first time that we run <code>f(0)</code>, for instance, we obtain <code>1</code>. The second time that we run <code>f(0)</code>, it will return <code>2</code>, and so on and so forth. We cannot even say that <code>f(0) = f(0)</code>! The output behavior of this function changes every time that it is run. This makes it difficult to reason about the function - in order to do so, we must know the number of times that it has been called before, at a given step in the program. While this is a fairly tame example, this problem only compounds with more complicated functions.</p>
+<p>Clearly, this function is <em>impure</em>. Can we do better?</p>
+<h2 id="function-types-and-function-application"><a class="header" href="#function-types-and-function-application">Function Types and Function Application</a></h2>
+<p>So far we have seen basic types such as <code>int</code> and <code>string</code>, among others. Functions allow us to compose types in new ways.</p>
+<p>In SML, we denote the type of a function that has input type <code>t1</code> and output type <code>t2</code> (for some arbitrary, fixed <code>t1</code> and <code>t2</code>) to be <code>t1 -&gt; t2</code>. By SML's strict typing rules, functions of type <code>t1 -&gt; t2</code> can <em>only</em> take in inputs of type <code>t1</code> and return outputs of type <code>t2</code>, for any types <code>t1</code> and <code>t2</code>. Additionally, we write <code>e1 e2</code> for the expression consisting of the function <code>e1</code> being given as input the expression <code>e2</code> (so we may write the mathematical function (f(x)) instead as <code>f x</code>).</p>
+<blockquote>
+<p><strong>[APP]</strong> An expression <code>e1 e2</code> has type <code>t2</code> if and only if <code>e1 : t1 -&gt; t2</code> and <code>e2 : t1</code>.</p>
+</blockquote>
+<p>We call the above rule [APP] since it concerns the types of expressions during <em>function application</em>, or the process of applying a function to an argument. </p>
+<p>Note that a function must always have type <code>t1 -&gt; t2</code> (for some types <code>t1</code> and <code>t2</code>, though <code>t1</code> and <code>t2</code> may be complicated types in their own right). As such, all functions in SML can only take in <em>one</em> input - though the input type <code>t1</code> may be one that &quot;contains&quot; multiple values. For instance, a function may have type <code>int * int -&gt; bool</code>. For such a function, it takes in only <em>one</em> argument (a tuple containing two integers).</p>
+<h2 id="functions-in-sml"><a class="header" href="#functions-in-sml">Functions in SML</a></h2>
+<p>We can declare a function with the <code>fun</code> keyword.</p>
+<pre><code class="language-sml">fun fact (0 : int) : int = 1
+  | fact (n : int) : int = n * fact (n - 1)
+</code></pre>
+<p>The above example serves to initialize a function that computes the factorial function, and then bind it to the identifier <code>fact</code>. Function declarations create a <em>closure</em> which includes all bound variables in the scope of the function when it was declared, so the behavior of <code>fact</code> will always be as if it was in the same environment as when it was first declared. As such, we can also declare functions such as:</p>
+<pre><code class="language-sml">val x = 1
+fun addX (n : int) : int = n + x
+val x = 2
+</code></pre>
+<p>When <code>addX</code> is bound, it is bound in a closure that includes the binding of the value <code>1</code> to the identifier <code>x</code> (we may denote this as <code>[1/x]</code>). As such, even though the body of <code>addX</code> refers to the identifier <code>x</code>, it is not affected by the later re-binding of the value of <code>x</code>, since it only matters what the value of <code>x</code> was when <code>addX</code> was first bound. Seen in this way, then, reasoning about functions which use bound variables is very intuitive - you simply have to look up for the most recent time that that variable was bound.</p>
+<p>We also can use <em>anonymous lambda expressions</em> to bind functions. These are denoted by the <code>fn</code> keyword, and are called lambda expressions for historical reasons having to do with a model of computation called the <em>lambda calculus</em>. For instance, we can declare:</p>
+<pre><code class="language-sml">val addOne : int -&gt; int = fn x =&gt; x + 1
+</code></pre>
+<p>Lambda expressions can also be <em>multi-clausal</em>, by pattern matching to multiple different clauses. For instance, we can define the following function, which simply returns true when given 0 and 1, and false otherwise.</p>
+<pre><code class="language-sml">val isBinary : int -&gt; bool = fn 0 =&gt; true | 1 =&gt; true | _ =&gt; false
+</code></pre>
+<p>Note that the right hand side of this declaration is an expression in its own right, and can be used independently of just being bound. The above binding simply binds the anonymous lambda expression (which simply increments an integer) to the identifier <code>addOne</code>. We could also do the following binding:</p>
+<pre><code class="language-sml">val two : int = (fn x =&gt; x + 1) 1
+</code></pre>
+<p>where we bind the result of evaluating the expression <code>(fn x =&gt; x + 1) 1</code> to the identifier <code>two</code>. Clearly, this expression evaluates to <code>2</code>, as <code>1</code> is substituted in for the local variable <code>x</code>, and then simply summed with <code>1</code>. </p>
+<p><strong>NOTE:</strong> <code>fun</code> and <code>fn</code> differ in that functions declared with <code>fun</code> can be recursive, whereas val bindings using <code>fn</code> <em>cannot</em>. As such, while we can define the function <code>fact</code> as we did above, using <code>fun</code>, the following code <em>does not</em> work:</p>
+<pre><code class="language-sml">(* DOES NOT WORK *)
+val fact : int -&gt; int = fn 0 =&gt; 1 | n =&gt; n * fact (n - 1)
+</code></pre>
+<p>We will explore later on in the course what lambda expressions are useful for. In the meantime, usage of <code>fun</code> is sufficient to declare any functions that you may need.</p>
+<p>It is also important to note that SML is an <em>eager</em> language, or <em>call-by-value</em>. This means that functions evaluate their arguments before stepping into their function bodies. This is explored more in the article on evaluation.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../types/string.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../types/sig.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../types/string.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../types/sig.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

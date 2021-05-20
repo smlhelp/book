@@ -1,0 +1,807 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Functors - SML Help</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="A resource for learning SML">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Welcome!</a></li><li class="chapter-item expanded "><a href="../start/index.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../start/install.html"><strong aria-hidden="true">1.1.</strong> Install &amp; run SML</a></li><li class="chapter-item expanded "><a href="../start/syntax.html"><strong aria-hidden="true">1.2.</strong> Syntax Cheatsheet</a></li><li class="chapter-item expanded "><a href="../start/common.html"><strong aria-hidden="true">1.3.</strong> Common Tasks</a></li></ol></li><li class="chapter-item expanded "><a href="../types/index.html"><strong aria-hidden="true">2.</strong> Types &amp; Signatures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/type.html"><strong aria-hidden="true">2.1.</strong> Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/bool.html"><strong aria-hidden="true">2.1.1.</strong> bool</a></li><li class="chapter-item expanded "><a href="../types/int.html"><strong aria-hidden="true">2.1.2.</strong> int</a></li><li class="chapter-item expanded "><a href="../types/real.html"><strong aria-hidden="true">2.1.3.</strong> real</a></li><li class="chapter-item expanded "><a href="../types/string.html"><strong aria-hidden="true">2.1.4.</strong> string</a></li><li class="chapter-item expanded "><a href="../types/function.html"><strong aria-hidden="true">2.1.5.</strong> function types</a></li></ol></li><li class="chapter-item expanded "><a href="../types/sig.html"><strong aria-hidden="true">2.2.</strong> Signatures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/list.html"><strong aria-hidden="true">2.2.1.</strong> list</a></li><li class="chapter-item expanded "><a href="../types/dict.html"><strong aria-hidden="true">2.2.2.</strong> dictionaries</a></li><li class="chapter-item expanded "><a href="../types/regex.html"><strong aria-hidden="true">2.2.3.</strong> regular expressions</a></li><li class="chapter-item expanded "><a href="../seq/seq.html"><strong aria-hidden="true">2.2.4.</strong> sequences</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../debugging/index.html"><strong aria-hidden="true">3.</strong> Debugging</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../debugging/errors.html"><strong aria-hidden="true">3.1.</strong> Common Errors</a></li><li class="chapter-item expanded "><a href="../debugging/hints.html"><strong aria-hidden="true">3.2.</strong> Debugging Hints</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/index.html"><strong aria-hidden="true">4.</strong> Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/basic.html"><strong aria-hidden="true">4.1.</strong> Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/eval.html"><strong aria-hidden="true">4.1.1.</strong> Evaluation</a></li><li class="chapter-item expanded "><a href="../concepts/eeq.html"><strong aria-hidden="true">4.1.2.</strong> Extensional Equivalence</a></li><li class="chapter-item expanded "><a href="../concepts/patternmatch.html"><strong aria-hidden="true">4.1.3.</strong> Pattern Matching</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/recind.html"><strong aria-hidden="true">4.2.</strong> Recursion and Induction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/induct.html"><strong aria-hidden="true">4.2.1.</strong> Inductive Proofs</a></li><li class="chapter-item expanded "><a href="../concepts/rec.html"><strong aria-hidden="true">4.2.2.</strong> Recursion</a></li><li class="chapter-item expanded "><a href="../concepts/tail.html"><strong aria-hidden="true">4.2.3.</strong> Tail Recursion</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/analysis.html"><strong aria-hidden="true">4.3.</strong> Asymptotic Analysis</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/workspan.html"><strong aria-hidden="true">4.3.1.</strong> Work and Span</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/datatypes.html"><strong aria-hidden="true">4.4.</strong> Datatypes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/poly.html"><strong aria-hidden="true">4.4.1.</strong> Parametric Polymorphism</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/hofs.html"><strong aria-hidden="true">4.5.</strong> Higher Order Functions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/curry.html"><strong aria-hidden="true">4.5.1.</strong> Currying and Staging</a></li><li class="chapter-item expanded "><a href="../concepts/common.html"><strong aria-hidden="true">4.5.2.</strong> Common HOFs and Partial Evaluation</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/control.html"><strong aria-hidden="true">4.6.</strong> Control Flow</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/cps.html"><strong aria-hidden="true">4.6.1.</strong> Continuation Passing Style</a></li><li class="chapter-item expanded "><a href="../concepts/exn.html"><strong aria-hidden="true">4.6.2.</strong> Exceptions</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/mods.html"><strong aria-hidden="true">4.7.</strong> Modules</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/mods.html"><strong aria-hidden="true">4.7.1.</strong> Basics and Ascription</a></li><li class="chapter-item expanded "><a href="../concepts/functors.html" class="active"><strong aria-hidden="true">4.7.2.</strong> Functors</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/apps.html"><strong aria-hidden="true">4.8.</strong> Applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/sequences.html"><strong aria-hidden="true">4.8.1.</strong> Sequences</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../examples/index.html"><strong aria-hidden="true">5.</strong> Examples</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../examples/basics.html"><strong aria-hidden="true">5.1.</strong> Basics</a></li><li class="chapter-item expanded "><a href="../examples/recursion.html"><strong aria-hidden="true">5.2.</strong> Recursion &amp; Induction</a></li></ol></li><li class="chapter-item expanded "><a href="../about.html">About</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">SML Help</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="functors"><a class="header" href="#functors">Functors</a></h1>
+<p>We have so far discussed the usage of modules for explicitly structuring our
+code, in that we are afforded a degree of <em>modularity</em> in how the different
+components of some software can fit together. We have used language like
+&quot;swapping out&quot; modules or &quot;substituting&quot; modules for one another, but this is
+very imprecise. What exactly do we mean when we say to swap one module for
+another? Certainly, it would be messy to have to go through our code and change
+every mention of <code>StructureA</code> for <code>StructureB</code>, and we would like to avoid some
+kind of global change that requires an extenuous amount of effort on the
+client's part.</p>
+<p>Going through and changing every mention of a particular structure in order to
+achieve &quot;modularization&quot; is akin to saying that using a particular higher-order
+function by replacing specifically what each function parameter is in each
+invocation is how we can achieve &quot;parameterization&quot; in the function argument. In
+reality, this does not offer any more versatility. In this chapter, we will
+discuss <em>functors</em>, which are akin to <em>higher-order modules</em>, which are allowed
+to take other modules in as arguments.</p>
+<h2 id="functors-the-basics"><a class="header" href="#functors-the-basics">Functors: The Basics</a></h2>
+<p>Firstly, consider the signature of a stack.</p>
+<pre><code class="language-sml">signature STACK =
+sig
+    type 'a t
+
+    val push : 'a t -&gt; 'a -&gt; 'a t
+    val pop : 'a t -&gt; 'a option * 'a t
+    val size : 'a t -&gt; int
+    val empty : 'a t
+end
+
+</code></pre>
+<p>Suppose that we would like to <em>extend</em> the definition of a stack such that it
+has a limit on how many elements that it contains. However, we don't necessarily
+know which implementation of a stack to use - there could be several such
+existing implementations, so we would like to instead make our <code>BoundedStack</code>
+structure a <em>parameter of</em> an existing structure ascribing to <code>STACK</code>.</p>
+<p>We will then use a very similar signature to <code>STACK</code> called <code>BOUNDED_STACK</code>,
+which is the exact same except for having an <code>exception Full</code> for use if a stack
+is given too many elements.</p>
+<pre><code class="language-sml">signature BOUNDED_STACK =
+sig
+    type 'a t
+    exception Full
+
+    val push : 'a t -&gt; 'a -&gt; 'a t
+    val pop : 'a t -&gt; 'a option * 'a t
+    val size : 'a t -&gt; int
+    val empty : 'a t
+end
+</code></pre>
+<p>We first consider the case where we have a hard limit of 10 items in a given
+stack.</p>
+<pre><code class="language-sml">functor BoundedStack (S : STACK) :&gt; BOUNDED_STACK =
+struct
+    type 'a t = 'a S.t
+
+    val limit = 10
+    exception Full
+
+    fun push S x =
+        if S.size S &gt;= limit
+          then raise Full
+          else S.push S x
+
+    fun pop S = S.pop S
+
+    fun size S = S.size S
+
+    fun empty S = S.empty
+end
+</code></pre>
+<p>We see that most of this code is duplicated - we have based the majority of the
+design of this <code>BoundedStack</code> in terms of <code>S</code>, which is the given implementation
+of a stack. The correctness of a <code>BoundedStack</code> is thus totally dependent on
+whether or not the given <code>S</code> is correct, but we achieve <em>modularity</em> in that we
+can freely swap out a structure ascribing to <code>STACK</code> for another when
+instantiating a given <code>BoundedStack</code>.</p>
+<p>To put it concretely, suppose that we have two structures:</p>
+<pre><code class="language-sml">structure Stack1 :&gt; STACK =
+struct
+    (* some code here *)
+end
+
+structure Stack2 :&gt; STACK =
+struct
+    (* some code here *)
+end
+</code></pre>
+<p>Then we can create instances of the <code>BoundedStack</code> functor as follows:</p>
+<pre><code class="language-sml">structure BoundedStack1 = BoundedStack(Stack1)
+structure BoundedStack2 = BoundedStack(Stack2)
+</code></pre>
+<p><strong>NOTE</strong>: SML functors are <em>generative</em>, meaning that applying the same functor
+to the same structure twice yields two unique structures. As such,
+<code>'a BoundedStack1.t</code> and <code>'a BoundedStack2.t</code> are recognized as being two
+distinct types, despite the fact that they are &quot;constructed&quot; in the same manner.</p>
+<p><code>BoundedStack1</code> and <code>BoundedStack2</code> implement <code>BOUNDED_STACK</code>, so they all can access
+the fields of the <code>BOUNDED_STACK</code> signature. Presumably, the only change they display
+from <code>Stack1</code> and <code>Stack2</code> are in raising the exception <code>Full</code> when the stack is given more than
+ten elements.</p>
+<h2 id="functors-syntactic-sugar"><a class="header" href="#functors-syntactic-sugar">Functors: Syntactic Sugar</a></h2>
+<p>SML offers some &quot;syntactic sugar&quot; for functor arguments, allowing us to
+(seemingly) parameterize them by terms other than structures. It is a little
+unsavory to have to hard code the limit of the <code>BoundedStack</code> within the functor
+itself, rather than having it be parameterized by the limit itself, so we can
+actually also write the following:</p>
+<pre><code class="language-sml">functor BoundedStack (structure S : STACK
+                      val limit : int) :&gt; BOUNDED_STACK =
+struct
+    type 'a t = 'a S.t
+
+    exception Full
+
+    fun push S x =
+        if S.size S &gt;= limit
+          then raise Full
+          else S.push S x
+
+    fun pop S = S.pop S
+
+    fun size S = S.size S
+
+    fun empty S = S.empty
+end
+</code></pre>
+<p>The only difference is that instead of taking in a single <code>S : STACK</code>, we
+specify &quot;<code>structure S : STACK val limit : int</code>&quot; within the parentheses of the
+functor's input. Note that there are no commas or delimiters other than spaces.</p>
+<p>In reality, this is something of a lie. While this seems to give the impression
+that <code>BoundedStack</code> is taking in <em>two</em> things, a structure named <code>S</code> ascribing
+to <code>STACK</code> and a value of type int named <code>limit</code>, in reality functors can only
+take in other structures. This is thus <em>syntactic sugar</em> for the following code:</p>
+<pre><code class="language-sml">functor BoundedStack (UnnamedStructure :
+                      sig
+                        structure S : STACK
+                        val limit : int
+                      end) :&gt; BOUNDED_STACK =
+struct
+    open UnnamedStructure
+    (* same code as before *)
+end
+</code></pre>
+<p>The <code>open</code> keyword specifies to <em>open</em> the namespace within a given module,
+effectively promoting all contents of it to the top level. Thus, if we were to
+<code>open Stack1</code>, as per our previous example, we could write <code>push</code> instead of
+<code>Stack1.push</code>, <code>pop</code> instead of <code>Stack1.pop</code>, and so on and so forth. Thus, what
+this syntactic sugar does is specify to take in a <em>single structure</em> ascribing
+to a signature that <em>contains</em> a structure ascribing to <code>STACK</code> and an int-typed
+value, named <code>S</code> and <code>limit</code> respectively.</p>
+<p><strong>CAUTION</strong>: This is a very important point to cognize! This can be the source
+of many frustrated hours of debugging due to a simple syntax error.</p>
+<p>The reason why we must <code>open UnnamedStructure</code> in order to be able to use the
+same code is because we cannot say <code>S.push</code>, for instance, as we did in the
+original implementation of <code>BoundedStack</code>. We would instead have to specify
+<code>UnnamedStructure.S.push</code>, which is not what our previous code says. However, if
+we <code>open UnnamedStructure</code> first, the <code>S</code> structure is promoted to the top
+level, and we can now access it without first having to go through
+<code>UnnamedStructure</code>.</p>
+<p>The reason for naming the input structure <code>UnnamedStructure</code> should hopefully
+now be clear. Indeed, it is a <em>phantom structure</em> of a sort, since in the
+syntactic sugar case, we never give it a name, and indeed we never really
+acknowledge its existence at all. Yet it is important to realize what is really
+happening, that there really <em>is</em> a structure being taken in as input, and then
+immediately opened for its contents.</p>
+<p>What issues can occur if we forget about the existence of this syntactic sugar?
+Consider the following code:</p>
+<pre><code class="language-sml">functor BoundedStack (structure S: : STACK) :&gt; BOUNDED_STACK =
+struct
+    type 'a t = 'a S.t
+
+    val limit = 10
+    exception Full
+
+    fun push S x =
+        if S.size S &gt;= limit
+          then raise Full
+          else S.push S x
+
+    fun pop S = S.pop S
+
+    fun size S = S.size S
+
+    fun empty S = S.empty
+
+end
+
+structure BoundedStack1 = BoundedStack(Stack1)
+structure BoundedStack2 = BoundedStack(Stack2)
+</code></pre>
+<p>This code <em>will not compile!</em> Can you see why?</p>
+<p>The issue is that we have added a prefix of <code>structure</code> to <code>S : STACK</code> within
+the inputs. Even though we have only specified one field, not including the
+<code>limit</code> as a parameter, this will be interpreted as the following:</p>
+<pre><code class="language-sml">functor BoundedStack (UnnamedStructure :
+                      sig
+                        structure S: : STACK
+                      end) :&gt; BOUNDED_STACK =
+struct
+    type 'a t = 'a S.t
+
+    val limit = 10
+    exception Full
+
+    fun push S x =
+        if S.size S &gt;= limit
+          then raise Full
+          else S.push S x
+
+    fun pop S = S.pop S
+
+    fun size S = S.size S
+
+    fun empty S = S.empty
+
+end
+
+structure BoundedStack1 = BoundedStack(Stack1)
+structure BoundedStack2 = BoundedStack(Stack2)
+</code></pre>
+<p>Thus, <code>BoundedStack</code> is no longer a functor taking in a structure ascribing to
+<code>STACK</code>, but a functor taking in a structure ascribing to <code>sig structure S: STACK end</code>. In other words, taking in a structure <em>containing</em> a structure
+ascrbing to <code>STACK</code>! Thus, the line <code>structure BoundedStack1 = BoundedStack(Stack1)</code> will not type-check, as <code>Stack1</code> does not ascribe to the
+same signature that <code>BoundedStack</code> is expecting. This one simple syntax error
+can be the source of much pain and frustration, so we caution the reader to be
+particular with their syntax, and mindful of what is really happening under the
+hood.</p>
+<h2 id="case-study-typeclasses"><a class="header" href="#case-study-typeclasses">Case study: Typeclasses</a></h2>
+<p>Certain types have some functionality or operation in common. Depending on the
+operation in question, we can say that these types fall into the same
+<em>typeclass</em>, which is a common interface consisting of a type and the desired
+operations. Note that typeclass membership is not a formally defined
+relationship, but instead a useful categorization that we use in order to
+classify types that we intend to parameterize some implementation over.</p>
+<p>For a concrete example of a typeclass, consider the <code>ORDERED</code> typeclass.</p>
+<pre><code class="language-sml">signature ORDERED =
+sig
+    type t
+    val compare : t * t -&gt; order
+end
+</code></pre>
+<p>The <code>ORDERED</code> typeclass consists of those types that admit a <em>sensible
+ordering</em>, which we will not (and perhaps cannot) define. Thus, we can witness
+<code>int</code> and <code>string</code> as valid instances of the <code>ORDERED</code> typeclass with the
+following structures:</p>
+<pre><code class="language-sml">structure IntOrder : ORDERED =
+struct
+    type t = int
+    val compare = Int.compare
+end
+
+structure StringOrder : ORDERED =
+struct
+    type t = string
+    val compare = String.compare
+end
+</code></pre>
+<p>Note that it is useful, in this case, for our instances of the <code>ORDERED</code>
+typeclass to be <em>transparently ascribed</em>, since it is the whole point that we
+are aware of the type that the typeclass is associated with.</p>
+<p><strong>NOTE</strong>: In actuality, we use transparent ascription as somewhat of a
+sledgehammer to avoid having to talk about a different language construct,
+namely <code>where</code> clauses. A <code>where</code> clause modifies a signature containing an
+abstract type, and concretely specifies what that type should be. For instance,
+we could discuss the signature <code>signature ORDERED type t end where type t = int</code>. A structure ascribing to this signature would &quot;publish&quot; the details of the
+type <code>t</code> (which is really an <code>int</code>), the same way that transparent ascription
+would. With <code>where</code> clauses, however, if there are multiple abstract types, we
+can be selective about which ones that are made &quot;transparent&quot;. For the purposes
+of this chapter, however, we will largely avoid <code>where</code> clauses.</p>
+<p>These definitions come very naturally from the fact that the <code>String</code> and <code>Int</code>
+libraries included with the Standard ML basis library already implement
+<code>compare</code> fields, however we can also define types such as <code>int list</code> to be
+instances of <code>ORDERED</code>:</p>
+<pre><code class="language-sml">structure IntListOrder : ORDERED =
+struct
+    type t = int list
+    fun compare [] [] = EQUAL
+      | compare [] ys = LESS
+      | compare xs [] = GREATER
+      | compare (x::xs) (y::ys) =
+        case Int.compare (x, y) of
+            EQUAL =&gt; compare xs ys
+          | LESS =&gt; LESS
+          | GREATER =&gt; GREATER
+end
+</code></pre>
+<p>This structure defines a <em>lexicographic ordering</em> on int lists, using the fact
+that values of type <code>int</code> are already ordered. It prioritizes the relative
+comparison of the corresponding elements of both lists first, and then the
+length (akin to how a dictionary is ordered).</p>
+<p>Indeed, we can take this one step further and see that lexicographic orderings
+form a <em>functor</em>, in that we can parameterize the ordering of some type of list,
+given that we can order the elements of the list. Like a higher-order function,
+this saves us from having to repeat the same code over and over to declare
+<code>StringListOrder</code> and <code>CharListOrder</code> structures, instead encapsulating the
+common pattern. We can implement the <code>LexicListOrder</code> functor as follows:</p>
+<pre><code class="language-sml">functor LexicListOrder (O : ORDERED) : ORDERED =
+struct
+    type t = O.t list
+    fun compare [] [] = EQUAL
+      | compare [] ys = LESS
+      | compare xs [] = GREATER
+      | compare (x::xs) (y::ys) =
+        case O.compare (x, y) of
+            EQUAL =&gt; compare xs ys
+          | LESS =&gt; LESS
+          | GREATER =&gt; GREATER
+end
+</code></pre>
+<p>Note that since an instantiation of the <code>LexicListOrder</code> functor is itself a
+structure ascribing to <code>ORDERED</code>, it can be &quot;passed in&quot; as input to <em>itself</em>,
+resulting in <em>any</em> type of nested list being an instance of <code>ORDERED</code>, so long
+as the base type is also an instance of <code>ORDERED</code>.</p>
+<p>It is also useful to note that <em>equality types</em> in Standard ML are essentially a
+language-supported typeclass, akin to inbuilt support for the following
+signature:</p>
+<pre><code class="language-sml">signature EQ =
+sig
+    type t
+    val equal : t * t -&gt; bool
+end
+</code></pre>
+<p>The operations for <code>equal</code> for each &quot;instance&quot; of the typeclass are instead
+defined by Standard ML itself, and not user-defined. Thus, we can think of the
+equality operator <code>=</code> as simply invoking the <code>T.equal</code> method for the proper
+typeclass <code>T</code>, defined by the type that is being compared for equality.</p>
+<p>In this next section, we will explore a concrete use for typeclasses when
+designing functors.</p>
+<h2 id="case-study-red-black-trees"><a class="header" href="#case-study-red-black-trees">Case study: Red-black trees</a></h2>
+<p>Typeclasses can be important when we are attempting to place some greater
+constraint on the types that may instantiate some universal type. In certain
+cases, we do not want the types that we are considering to truly be <em>any</em> type,
+but any of a limited subset of types that share some common characteristic or
+implement some operation. We will study the use of <em>red-black trees</em> as the
+underlying data structure for dictionaries.</p>
+<p>A dictionary is a simple data structure that maps keys to values. Consider its
+signature given below.</p>
+<pre><code class="language-sml">signature DICT =
+sig
+    type key
+    type 'a dict
+    val empty : 'a dict
+    val insert : 'a dict -&gt; key * 'a -&gt; 'a dict
+    val lookup : 'a dict -&gt; key -&gt; 'a option
+end
+</code></pre>
+<p>It is a well-known fact that, utilizing a kind of <em>balanced binary tree</em> data
+structure, dictionaries can be implemented with an \( O(\log n) \) <code>insert</code> and
+<code>lookup</code> operation, as opposed to \( O(n) \) for other data structures such as
+lists. While there are many different implementations of balanced binary trees,
+we will consider a particular variant known as <em>red-black trees</em>.</p>
+<blockquote>
+<p><strong>[Red-black tree]</strong>: A variant of self-balancing binary tree that ensures
+logarithmic search and insert time. It is named because of its nodes, which
+are marked as either <em>red</em> or <em>black</em>. Furthermore, it obeys the following
+properties:</p>
+<ol>
+<li>All leaves are black.</li>
+<li>The children of a red node must be black.</li>
+<li>Any path from a given node to a leaf node must go through the same number
+of black nodes.</li>
+</ol>
+<p>Note that as a variant of binary search tree, a red-black tree must also
+satisfy the invariant that the key stored at a node must be greater than or
+equal to every key in the left subtree, and less than or equal to every key in
+the right subtree.</p>
+</blockquote>
+<p>It is easy to reason about why this schema ensures that we have the proper
+asymptotic bound for search - the third property in particular ensures that, for
+any path from the root, the length of the longest path from the root to a leaf
+is at most twice that of the shortest path. This is because the longest such
+path you can construct from the root to a leaf (minimizing black nodes) is by
+alternating black and red nodes.</p>
+<p>This means that a given red-black tree is not as strictly balanced as some other
+variants (for instance, AVL trees), however it is always <em>approximately</em>
+balanced.</p>
+<p>We would like to create a structure for red-black tree dictionaries. There are
+some options that we have - we could simply hard-code a <code>TypeRedBlackDict :&gt; DICT</code> for any type <code>Type</code>, except that this would
+entail quite a bit of repeated code (and exertion on our part). Another solution
+would be to make the type of <code>'a dict</code> doubly-polymorphic instead - something
+like an <code>('a, 'b) dict</code>, where <code>'a</code> is the type of the dict's keys and <code>'b</code> the
+type of its contents. However, then we lose the guarantee that <code>'a</code> is a type
+that supports comparison, which means that we cannot satisfy the tree's
+invariants.</p>
+<p>The solution we will turn to is exactly similar to that as discussed in the
+previous section - we will instead design a <code>RedBlackDict</code> functor that takes in
+a typeclass implementing <code>ORDERED</code>, and exports a structure whose keys are the
+type of the given typeclass. We thus will define our functor with the following
+preliminaries:</p>
+<pre><code class="language-sml">functor RedBlackDict (Key : ORDERED) :&gt; DICT =
+struct
+    type key = Key.t
+    datatype color = Red | Black
+    datatype 'a dict = Leaf | Node of 'a dict * (color * (key * 'a)) * 'a dict
+
+    val empty = Leaf
+    (* ... *)
+end
+</code></pre>
+<p>Because we take as input a <code>Key</code> structure ascribing to <code>ORDERED</code>, we have
+access to the <code>Key.compare</code> function, which we will use when inserting into our
+dictionary. We define a <code>color</code> type (which only consists of the constant
+constructors <code>Red</code> and <code>Black</code>) for tagging the nodes of the red-black tree
+(leaves are considered to be black).</p>
+<p>The question becomes: how should we implement insert? We cannot be so naive as
+to simply insert as we would in an ordinary binary search tree, as this would
+quickly cause problems with our invariants. In particular, we must be mindful of
+the <em>black height</em> invariant, saying that all paths to leaves must have the same
+number of black nodes on them.</p>
+<p>The easiest case to tackle for insert is the <code>Leaf</code> case. How should we finish
+the definition of <code>fun insert Leaf (k, v) = </code>? Well, clearly we must insert a
+<code>Node(Leaf, (c, (k, v)), Leaf)</code> for some color <code>c</code>. Note that since a <code>Leaf</code> is
+considered to be colored black, if we choose <code>c</code> to be <code>Black</code>, we will run into
+issues with our black height invariant - we have replaced a <code>Leaf</code> (a subtree of
+black height 1) with a subtree of black height 2! This will disproportionately
+affect the black height of paths ending in this subtree, thus causing the
+invariant to be violated.</p>
+<p>Thus, the only sensible choice we can commit is to insert as a <code>Red</code> node. The
+astute reader may see that this will quickly cause issues - we will address this
+shortly. Thus, we can write</p>
+<pre><code class="language-sml">fun insert Leaf (k, v) = Node(Leaf, (Red, (k, v)), Leaf)
+  | insert (Node (L, (c', (k', v')), R)) (k, v) = ...
+</code></pre>
+<p>How should we handle the <code>Node</code> case? Well, insertion really only happens at the
+leaves - the only thing that we can do at a <code>Node</code> is to propagate the change
+throughout the tree until it gets to where it needs to be. We have seen that
+this schema of an &quot;always-red&quot; insertion maintains the black-height invariant,
+however there is the <em>red-children</em> invariant as well - the children of a red
+node must themselves be red. This invariant is the one that we are not
+respecting, with our current schema.</p>
+<p>So we only run into an issue when we insert into the tree such that the new node
+is the child of a red node. Furthermore, we know that, if the tree that we are
+inserting into is truly a red-black tree, it must respect the red-children
+invariant, and thus the the parent of the inserted node must itself have a black
+parent. Thus, there can only be four cases for the &quot;site&quot; of the insertion:</p>
+<figure class="aligncenter">
+    <img src="../assets/redblack.svg" alt="Cases" width="1000"\>
+    <figcaption><b>Fig 1.</b> Illustration of the four cases of the red-children
+    invariant being broken following insertion. The inserted nodes are marked
+    with a "plus". </figcaption>
+</figure>
+<p>Such an invariant violation is only a local concern, however. All that is needed
+in order to restore the invariant is to simple <em>rotate</em> the site of violation,
+and do a simple recoloring. We will illustrate only the first case, and the rest
+follow similarly. You may verify for yourself that this continues to preserve
+the ordering and black-height invariants.</p>
+<figure class="aligncenter">
+    <img src="../assets/balance.svg" alt="Balance" width="1000"\>
+    <figcaption><b>Fig 2.</b> Illustration of the "balancing" necessary in order
+    to preserve the red-children invariant in Case 1 of Fig. 1. </figcaption>
+</figure>
+<p>We thus write the following function which takes care of all four cases.</p>
+<pre><code class="language-sml">fun balance (Node(Node(Node(a,(Red,x),b), (Red,y), c), (Black, z), d)) =
+            Node(Node(a,(Black,x),b),  (Red,y), Node(c,(Black,z),d))
+  | balance (Node(a,(Black,x), Node(Node(b,(Red,y),c), (Red, z), d))) =
+            Node(Node(a,(Black,x),b), (Red,y), Node(c,(Black,z), d))
+  | balance (Node(Node(a, (Red,x), Node(b,(Red,y),c)), (Black,z), d)) =
+            Node(Node(a,(Black,x),b), (Red, y), Node(c,(Black,z),d))
+  | balance (Node(a, (Black,x), Node(b, (Red,y), Node(c,(Red,z), d)))) =
+            Node(Node(a,(Black,x),b), (Red,y), Node(c,(Black,z), d))
+  | balance T = T
+</code></pre>
+<p>Note that if we are not in any of the four described cases, <code>balance</code> simply
+acts as the identity function, as there is no invariant being broken.</p>
+<p>However, this rotation may itself cause another site of red-children invariant
+violation, slightly farther up. As such, we must <em>propagate</em> this balancing
+operation as far up as necessary, in order to produce a proper binary tree at
+the very end. To this end, we can write the following code for the inductive
+case of <code>insert</code>:</p>
+<pre><code class="language-sml">fun insert Leaf (k, v) = Node(Leaf, (Red, (k, v)), Leaf)
+  | insert (Node (L, (c', (k', v')), R)) (k, v) =
+    case Key.compare (k, k') of
+        LESS =&gt; balance(Node(insert L (k, v), (c', (k', v')), R))
+      | EQUAL =&gt; Node(L, (c', (k, v)), R)
+      | GREATER =&gt; balance(Node(L, (c', (k', v')), insert R (k ,v)))
+</code></pre>
+<p>This code ensures that, after descending into a subtree in order to insert the
+given key and value, a balancing operation is immediately performed once the
+insertion is complete. This ensures that we have a <em>bottom-up</em> propagation of
+balancings, immediately after completing the insertions. Note that because
+<code>balance</code> acts as the identity function on anything that does not pattern-match
+to either of the four cases, we perform only a negligible amount of extra checks
+at each recursive call, and ultimately are only concerned with those four cases.</p>
+<p>However, this code is not complete. There is a minor edge case that remains -
+what if we are too close to the root for any of the four cases to apply? Our
+previous analysis relied on the fact that we could assume that the parent of our
+inserted node was red, and thus had a black parent - what of the case where the
+parent of the inserted node <em>has no</em> parent?</p>
+<p>Consider the case illustrated below:</p>
+<figure class="aligncenter">
+    <img src="../assets/insert.svg" alt="Example of inserting two nodes into an empty tree" width="1000"\>
+    <figcaption><b>Fig 3.</b> Demonstration of potential issues in inserting nodes at the root when lacking a black parent. </figcaption>
+</figure>
+<p>As we can see here, our previous reasoning does not catch this red-children
+violation because it does not conform to our previous cases, by virtue of the
+inserted node not having a grandfather. This case can <em>only</em> happen at the root,
+however, since that is the only location where that can occur. As a result, the
+simple solution is to simply make the root of any red-black tree black - it will
+preserve the black height invariant, but also result in this red-red violation
+being impossible. We can amend our code as follows:</p>
+<pre><code class="language-sml">fun insert' Leaf (k, v) = Node(Leaf, (Red, (k, v)), Leaf)
+  | insert' (Node (L, (c', (k', v')), R)) (k, v) =
+    case Key.compare (k, k') of
+        LESS =&gt; balance(Node(insert' L (k, v), (c', (k', v')), R))
+      | EQUAL =&gt; Node(L, (c', (k, v)), R)
+      | GREATER =&gt; balance(Node(L, (c', (k', v')), insert' R (k ,v)))
+
+fun insert T (k, v) =
+    case insert' T (k, v) of
+        Leaf =&gt; Leaf
+      | Node (L, (_, (k', v')), R) =&gt; Node(L, (Black, (k', v')), R)
+</code></pre>
+<p>Finally, this results in our completed code for the <code>insert</code> function. Note that
+because of the signature that we are ascribing to, helper functions such as
+<code>balance</code> and <code>insert</code> will not be visible to the client of the module, so there
+is no harm in declaring them within the namespace of the functor.</p>
+<p>Our completed code for a red-black tree implementation of dictionaries is thus
+as follows. Note that the implementation of <code>lookup</code> is very straightforward, and</p>
+<pre><code class="language-sml">functor RedBlackDict (Key : ORDERED) :&gt; DICT =
+struct
+    type key = Key.t
+    datatype color = Red | Black
+    datatype 'a dict = Leaf | Node of 'a dict * (color * (key * 'a)) * 'a dict
+
+    val empty = Leaf
+
+    fun balance (Node(Node(Node(a,(Red,x),b), (Red,y), c), (Black, z), d)) =
+                Node(Node(a,(Black,x),b),  (Red,y), Node(c,(Black,z),d))
+      | balance (Node(a,(Black,x), Node(Node(b,(Red,y),c), (Red, z), d))) =
+                Node(Node(a,(Black,x),b), (Red,y), Node(c,(Black,z), d))
+      | balance (Node(Node(a, (Red,x), Node(b,(Red,y),c)), (Black,z), d)) =
+                Node(Node(a,(Black,x),b), (Red, y), Node(c,(Black,z),d))
+      | balance (Node(a, (Black,x), Node(b, (Red,y), Node(c,(Red,z), d)))) =
+                Node(Node(a,(Black,x),b), (Red,y), Node(c,(Black,z), d))
+      | balance T = T
+
+    fun insert' Leaf (k, v) = Node(Leaf, (Red, (k, v)), Leaf)
+      | insert' (Node (L, (c', (k', v')), R)) (k, v) =
+        case Key.compare (k, k') of
+            LESS =&gt; balance(Node(insert' L (k, v), (c', (k', v')), R))
+          | EQUAL =&gt; Node(L, (c', (k, v)), R)
+          | GREATER =&gt; balance(Node(L, (c', (k', v')), insert' R (k ,v)))
+
+    fun insert T (k, v) =
+        case insert' T (k, v) of
+            Leaf =&gt; Leaf
+          | Node (L, (_, (k', v')), R) =&gt; Node(L, (Black, (k', v')), R)
+
+    fun lookup Leaf k = NONE
+      | lookup (Node (L, (_, (k', v)), R)) k =
+        case Key.compare (k, k') of
+            LESS =&gt; lookup L k
+          | EQUAL =&gt; SOME v
+          | GREATER =&gt; lookup R k
+end
+</code></pre>
+<p>In the end, usage of modules allows us to write a powerful, parameterized
+implementation of a dictionary interface, in such a way that we ensure that our
+<em>representation invariants</em> are respected throughout each operation. By making
+a structure ascribing to the <code>ORDERED</code> typeclass a parameter of the functor
+<code>RedBlackDict</code>, we allow powerful generality in the type of the key to the
+dictionary, without having to introduce additional overhead in the functions of
+the module itself.</p>
+<h2 id="conclusions"><a class="header" href="#conclusions">Conclusions</a></h2>
+<p>In this chapter, we have seen how functors are a potent tool when structuring
+our code, that allows us to enforce modularity and implement code reuse <em>within
+the language itself</em>. Functors also form the basis for a kind of <em>higher-order
+module</em>, where we can parameterize the structures we are capable of creating by
+other structures themselves, resulting in a greater degree of expression and
+versatility not unlike those of higher-order functions themselves.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../concepts/mods.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../concepts/apps.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../concepts/mods.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../concepts/apps.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
