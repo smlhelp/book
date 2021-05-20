@@ -43,7 +43,7 @@ A more subtle bug is when patterns are redundant. The following example has the 
 fun factloop n = n * factloop(n-1)
   | factloop 0 = 1
 ```
-The second clause of `factloop` never gets executed! This is because SML tries matching an input to each pattern, *in order*. Therefore, `factloop 0` steps to `0 * factloop(-1)`, because `0` can match to `n`. Convince yourself that `factloop 0` will loop forever!
+The second clause of `factloop` never gets executed! When evaluating `factloop 0`, SML will try to match `0` to each pattern, *in order*. Therefore, `factloop 0` steps to `0 * factloop(-1)`, because `0` can match to `n`. Convince yourself that `factloop k` will loop forever for any `k` of type `int`!
 
 ## Lambda expressions:
 ```(fn [] => false | x::xs => true) [1,2,3]```
@@ -63,6 +63,6 @@ fun fact' x =
 ```
 First, note that `fact'` does the same thing as `fact`. However, it uses an extra `case` expression.
     
-Let's consider what happens when we evaluate `fact' 5`. First, `5` gets bound to `x`. Then, the `case` expression tries to match `5` to a pattern. In this scenario, `5` successfully pattern matches with `n`, so `5` gets bound to `n`. Therefore, `fact 5` evaluates to `5 * fact' 4`. 
+Let's consider what happens when we evaluate `fact' 5`. First, `5` gets bound to `x`. Then, the `case` expression tries to match `5` to a pattern. In this scenario, `5` successfully pattern matches with `n`, so `5` gets bound to `n`. Therefore, `fact' 5` evaluates to `5 * fact' 4`. 
     
 As usual, the patterns in `case` expressions should be exhaustive.
