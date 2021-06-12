@@ -1,4 +1,6 @@
 # Option
+_By Jacob Neumann, June 2021_
+
 `option` is a SML datatype for handling potential undefined values. Formally, the option type is parametrized by a single polymorphic type variable, so for every SML type `t`, there is a type `t option`. 
 
 The type `t option` represents the construction of "either a value of `t`, or nothing". For instance, a value of type `bool option` is either true, false, or neither. A value of type `int option` is either some integer, or none. A function will return `t option` to represent the possibility that no acceptable value of type `t` can be identified to return, and have a value to return to signal this circumstance. See the "Options-as-partiality" HOFs section below for some functions elaborating on this understanding of options. 
