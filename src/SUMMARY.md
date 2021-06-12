@@ -13,6 +13,7 @@
     - [real](types/real.md)
     - [string](types/string.md)
     - [function types](types/function.md)
+    - [options](types/option.md)
   - [Signatures](types/sig.md)
     - [list](types/list.md)
     - [dictionaries](types/dict.md)
