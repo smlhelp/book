@@ -1,4 +1,5 @@
 # Extensional Equivalence
+_By Brandon Wu, June 2020_
 
 Up to this point, we have been using terms such as "equal" and "equivalent"
 rather casually. Such a notion of equality seems to be rather intuitive, at

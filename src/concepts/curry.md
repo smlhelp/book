@@ -1,4 +1,6 @@
 # Currying and Staging
+_By Brandon Wu, June 2020_
+
 Suppose that we are interested in writing a function
 that adds two numbers. This is fairly simple - this is not a new concept to us.
 ```sml

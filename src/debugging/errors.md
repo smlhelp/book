@@ -1,4 +1,5 @@
 # Common Errors
+_By Eunice Chen, January 2021_. _Revised February 2021_
 
 In this section, we will explore some common mistakes and errors that may occur
 when programming in Standard ML.

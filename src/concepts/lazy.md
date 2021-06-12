@@ -1,4 +1,5 @@
 # Lazy Evaluation
+_By Len Huang, Cooper Pierce, and Brandon Wu, January 2021_
 
 In programming languages, there's a few different strategies by which arguments
 of a function call are evaluated. One you should be familiar with is **_eager_**

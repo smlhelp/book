@@ -1,4 +1,5 @@
 # SML Syntax Cheatsheet
+_By David Sun, February 2021_
 
 #### Built-in Types
 

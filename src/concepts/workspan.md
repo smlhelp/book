@@ -5,6 +5,7 @@
 </style>
 
 # Work and Span
+_By Aditi Gupta and Brandon Wu, May 2020_. _Revised September 2020_
 
 We will now turn towards a more robust notion of _work_ and _span_ that let us
 analyze our conception of asymptotic runtime more effectively. It is still

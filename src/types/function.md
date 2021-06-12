@@ -1,4 +1,5 @@
 # Functions
+_By Brandon Wu, May 2020_
 
 Functions are a familiar concept in programming. In most languages, functions seem to capture a notion of a list of instructions to be carried out, with each invocation of the function resulting in another round of executing its instructions. In this class, however, we will take another perspective on functions - one that identifies the function more with the values that it outputs than the instructions that it executes.
 

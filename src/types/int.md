@@ -1,4 +1,6 @@
 # Int
+_By Brandon Wu, May 2020_
+
 `int` is the SML type of integers.
 
 ## Values

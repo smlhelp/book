@@ -1,5 +1,8 @@
 # Installing SML/NJ
 
+_By Brandon Wu, May 2020_
+
+
 ## Installing SML/NJ on AFS
 
 To set up your SML/NJ environment on the Andrew File System (AFS), first you will need to log in to AFS.
