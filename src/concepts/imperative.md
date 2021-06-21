@@ -1,4 +1,5 @@
 # Imperative Programming
+_By Len Huang and Cooper Pierce, February 2021_
 
 A fun thing we can do with functional programming in SML is imperative
 programming! Does it seem counterintuitive? Perhaps. Is it cool? OF COURSE!

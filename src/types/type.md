@@ -1,4 +1,5 @@
 # Types
+_By Brandon Wu, May 2020_
 
 Types are a very fundamental concept to Standard ML (SML), and indeed, to functional programming in general. Most programming languages have some notion of type, with `int`, `float`, and data structures such as `array` being common examples, however they tend to be weakly enforced, only being verified at runtime. In SML, we employ a system of _strong typing_ consisting of stricter typing rules — which allows us to catch errors earlier in program execution — at compile time.
 

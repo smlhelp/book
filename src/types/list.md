@@ -1,4 +1,5 @@
 # List
+_By Brandon Wu, May 2020_
 
 Lists are the SML type of ordered collections of objects. Notably, you can create lists of any kind of object, so `int list`, `string list`, and `bool list` are all valid types. `list` on its own is a type constructor (meaning that it makes new types out of old types), so it is not a valid type by itself, however. Lists are not, however, the same as arrays - they do not have constant-time access to any given index of the list. Indeed, they are best thought of as not analogous to arrays in other languages at all. Instead, you only have access to the elements located at the very beginning of the list, the _head_. Additionally, lists are more _restricted_ than data structures in some other languages - a given list has a fixed type for its elements. All of the elements in a list must be of the same type. For the purposes of this document, we will discuss only int lists.
 

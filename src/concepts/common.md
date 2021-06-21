@@ -1,4 +1,6 @@
 # Common HOFs and Partial Evaluation
+_By Brandon Wu, June 2020_
+
 In this section, we will explore a number of common higher-order functions that
 we will make use of. These higher-order functions embody _design patterns_ that
 are common in programming, and represent a _generalized notion_ of a large space

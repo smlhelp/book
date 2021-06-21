@@ -1,4 +1,5 @@
 # Functors
+_By Cooper Pierce and Brandon Wu, February 2021_
 
 We have so far discussed the usage of modules for explicitly structuring our
 code, in that we are afforded a degree of _modularity_ in how the different

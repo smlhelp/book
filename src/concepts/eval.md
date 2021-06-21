@@ -1,4 +1,5 @@
 # Evaluation
+_By Brandon Wu, May 2020_
 
 Evaluation is a commonplace idea. No matter what programming language you are in, it is a customary concept to invoke subroutines in order to obtain some kind of _final result_, which can be further used in order to achieve some later goal. To obtain such a result, however, programs must perform certain computations and carry out certain steps - in other words, they must _evaluate_. Ultimately, programs are complicated constructs whose main goal is to compute some value or achieve some effect - we will focus mainly on the first case here. 
 

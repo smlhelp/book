@@ -1,4 +1,5 @@
 # Recursion & Induction
+_By Eunice Chen, June 2020_
 
 ## Types
 For each of the following expressions, state its type and value.

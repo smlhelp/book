@@ -10,6 +10,8 @@ figure figcaption {
 </style>
 
 # Continuation Passing Style
+_By Brandon Wu, June 2020_
+
 We have seen how we can write functions that are _tail recursive_, in that they
 only make recursive calls as _tail calls_, where the recursive calls is the last
 thing that the function does (i.e. there is no deferred work). This commonly was

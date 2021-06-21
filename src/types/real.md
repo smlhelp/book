@@ -1,4 +1,5 @@
 # Real
+_By Brandon Wu, May 2020_
 
 `real` is the SML type of real or floating-point numbers. As in other programming languages, reals in SML are restricted to finite machine representations, which means that they cannot represent every real number with perfect precision. For this reason, generally in this course we will prefer the use of `int`s when performing numeric operations.
 

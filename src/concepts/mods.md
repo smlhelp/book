@@ -1,4 +1,6 @@
 # Modules
+_By Eunice Chen and Brandon Wu, December 2020_
+
 Sometimes, we are interested in developing large projects. Large codebases are
 oftentimes convoluted and impenetrable to outside scrutiny, being solely
 understandable by the original author. It is thus in our best interest to

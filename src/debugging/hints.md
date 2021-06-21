@@ -1,4 +1,6 @@
 # Debugging Hints and Strategies
+_By Eunice Chen, January 2021_
+
 Debugging is often one of the hardest and most time-consuming parts of coding. Don't be frustrated if it takes longer than the actual coding at times; that is all part of the process! Luckily, SML is a type-safe language, so most errors are compilation errors (code does not typecheck) or errors in the logic of the code itself.
 
 ## Debugging Compilation Errors

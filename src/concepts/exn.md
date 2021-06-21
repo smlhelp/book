@@ -1,4 +1,6 @@
 # Exceptions
+_By Brandon Wu, June 2020_
+
 So far, we have seen how we can manipulate the constructs of SML to create
 unique control flow behavior in the form of continuation passing style. In this
 section, we will discuss _exceptions_, which are themselves a builtin feature of

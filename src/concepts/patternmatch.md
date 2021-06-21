@@ -1,4 +1,6 @@
 # Pattern Matching
+_By Kaz Zhou, September 2020_. _Revised May 2021_
+
 Patterns take on many appearances, such as:
 
 - Constants: `150`

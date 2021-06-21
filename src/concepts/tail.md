@@ -1,4 +1,6 @@
 # Tail Recursion
+_By Eunice Chen and Brandon Wu, December 2020_
+
 In programs, functions often make calls to either themselves (recursive calls) or other functions. There are two types of function calls: non-tail calls, and **tail calls**. A function call is called a **tail call** if the caller does not modify or examine the result of the function call.
 
 If every recursive call made by a function is a **tail call**, that function is called **tail recursive**. Put another way, a function is **tail recursive** if the last operation performed by the function is the recursive call.

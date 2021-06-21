@@ -1,4 +1,6 @@
 # Bool
+_By Jacob Neumann, May 2020_
+
 `bool` is the SML type of booleans. The `bool` type supports the usual constructs of boolean logic and "conditionals" (`if` expressions). `bool` is also the type produced when evaluating (in)equality between values of (suitable) types. 
 
 

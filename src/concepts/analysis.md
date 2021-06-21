@@ -1,4 +1,6 @@
 # Asymptotic Analysis
+_By Brandon Wu, May 2020_
+
 We have now dedicated a significant amount of discussion towards how to reason about the correctness of programs. Correctness, however, is not the end-all-be-all. In many cases, we would like to be able to think about the _complexity_ of our programs - that is, the amount of resources that it takes to run it on certain inputs. Such resource concerns may include time, space, and energy usage. For the purposes of this book, our principal resource of interest will be _time_.
 
 ## The Reality
