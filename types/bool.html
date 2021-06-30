@@ -151,7 +151,7 @@
 <p>There are exactly two values of type <code>bool</code>, <code>true</code> and <code>false</code>.</p>
 <pre><code class="language-sml">datatype bool = true | false
 </code></pre>
-<p>In addition to the constructs generally available in pattern matching (e.g. wildcards and identifier binding), booleans can be pattern-matched against using the constructors <code>true</code> and <code>false</code>.</p>
+<p>Inn addition to the constructs generally available in pattern matching (e.g. wildcards and identifier binding), booleans can be pattern-matched against using the constructors <code>true</code> and <code>false</code>.</p>
 <pre><code class="language-sml">fun firstOrSecond ((x : int,y : int), true):int = x
   | firstOrSecond ((x,y), false) = y
 
