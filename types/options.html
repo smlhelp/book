@@ -1,0 +1,282 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>options - SML Help</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="A resource for learning SML">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../favicon.svg">
+                        <link rel="shortcut icon" href="../favicon.png">
+                <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+                <link rel="stylesheet" href="../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+                <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Welcome!</a></li><li class="chapter-item expanded "><a href="../start/index.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../start/install.html"><strong aria-hidden="true">1.1.</strong> Install &amp; run SML</a></li><li class="chapter-item expanded "><a href="../start/syntax.html"><strong aria-hidden="true">1.2.</strong> Syntax Cheatsheet</a></li><li class="chapter-item expanded "><a href="../start/common.html"><strong aria-hidden="true">1.3.</strong> Common Tasks</a></li></ol></li><li class="chapter-item expanded "><a href="../types/index.html"><strong aria-hidden="true">2.</strong> Types &amp; Signatures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/type.html"><strong aria-hidden="true">2.1.</strong> Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/bool.html"><strong aria-hidden="true">2.1.1.</strong> bool</a></li><li class="chapter-item expanded "><a href="../types/int.html"><strong aria-hidden="true">2.1.2.</strong> int</a></li><li class="chapter-item expanded "><a href="../types/real.html"><strong aria-hidden="true">2.1.3.</strong> real</a></li><li class="chapter-item expanded "><a href="../types/string.html"><strong aria-hidden="true">2.1.4.</strong> string</a></li><li class="chapter-item expanded "><a href="../types/function.html"><strong aria-hidden="true">2.1.5.</strong> function types</a></li><li class="chapter-item expanded "><a href="../types/list.html"><strong aria-hidden="true">2.1.6.</strong> list</a></li><li class="chapter-item expanded "><a href="../types/options.html" class="active"><strong aria-hidden="true">2.1.7.</strong> options</a></li></ol></li><li class="chapter-item expanded "><a href="../types/sig.html"><strong aria-hidden="true">2.2.</strong> Signatures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/dict.html"><strong aria-hidden="true">2.2.1.</strong> dictionaries</a></li><li class="chapter-item expanded "><a href="../types/regex.html"><strong aria-hidden="true">2.2.2.</strong> regular expressions</a></li><li class="chapter-item expanded "><a href="../seq/seq.html"><strong aria-hidden="true">2.2.3.</strong> sequences</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../debugging/index.html"><strong aria-hidden="true">3.</strong> Debugging</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../debugging/errors.html"><strong aria-hidden="true">3.1.</strong> Common Errors</a></li><li class="chapter-item expanded "><a href="../debugging/hints.html"><strong aria-hidden="true">3.2.</strong> Debugging Hints</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/index.html"><strong aria-hidden="true">4.</strong> Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/basic.html"><strong aria-hidden="true">4.1.</strong> Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/eval.html"><strong aria-hidden="true">4.1.1.</strong> Evaluation</a></li><li class="chapter-item expanded "><a href="../concepts/eeq.html"><strong aria-hidden="true">4.1.2.</strong> Extensional Equivalence</a></li><li class="chapter-item expanded "><a href="../concepts/patternmatch.html"><strong aria-hidden="true">4.1.3.</strong> Pattern Matching</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/recind.html"><strong aria-hidden="true">4.2.</strong> Recursion and Induction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/induct.html"><strong aria-hidden="true">4.2.1.</strong> Inductive Proofs</a></li><li class="chapter-item expanded "><a href="../concepts/rec.html"><strong aria-hidden="true">4.2.2.</strong> Recursion</a></li><li class="chapter-item expanded "><a href="../concepts/tail.html"><strong aria-hidden="true">4.2.3.</strong> Tail Recursion</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/analysis.html"><strong aria-hidden="true">4.3.</strong> Asymptotic Analysis</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/workspan.html"><strong aria-hidden="true">4.3.1.</strong> Work and Span</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/datatypes.html"><strong aria-hidden="true">4.4.</strong> Datatypes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/poly.html"><strong aria-hidden="true">4.4.1.</strong> Parametric Polymorphism</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/hofs.html"><strong aria-hidden="true">4.5.</strong> Higher Order Functions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/curry.html"><strong aria-hidden="true">4.5.1.</strong> Currying and Staging</a></li><li class="chapter-item expanded "><a href="../concepts/common.html"><strong aria-hidden="true">4.5.2.</strong> Common HOFs and Partial Evaluation</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/control.html"><strong aria-hidden="true">4.6.</strong> Control Flow</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/cps.html"><strong aria-hidden="true">4.6.1.</strong> Continuation Passing Style</a></li><li class="chapter-item expanded "><a href="../concepts/exn.html"><strong aria-hidden="true">4.6.2.</strong> Exceptions</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/mods.html"><strong aria-hidden="true">4.7.</strong> Modules</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/mods.html"><strong aria-hidden="true">4.7.1.</strong> Basics and Ascription</a></li><li class="chapter-item expanded "><a href="../concepts/functors.html"><strong aria-hidden="true">4.7.2.</strong> Functors</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/apps.html"><strong aria-hidden="true">4.8.</strong> Applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/sequences.html"><strong aria-hidden="true">4.8.1.</strong> Sequences</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../examples/index.html"><strong aria-hidden="true">5.</strong> Examples</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../examples/basics.html"><strong aria-hidden="true">5.1.</strong> Basics</a></li><li class="chapter-item expanded "><a href="../examples/recursion.html"><strong aria-hidden="true">5.2.</strong> Recursion &amp; Induction</a></li></ol></li><li class="chapter-item expanded "><a href="../about.html">About</a></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">SML Help</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="option"><a class="header" href="#option">Option</a></h1>
+<p><em>By Jacob Neumann, June 2021</em></p>
+<p><code>option</code> is a SML datatype for handling potential undefined values. Formally, the option type is parametrized by a single polymorphic type variable, so for every SML type <code>t</code>, there is a type <code>t option</code>. </p>
+<p>The type <code>t option</code> represents the construction of &quot;either a value of <code>t</code>, or nothing&quot;. For instance, a value of type <code>bool option</code> is either true, false, or neither. A value of type <code>int option</code> is either some integer, or none. A function will return <code>t option</code> to represent the possibility that no acceptable value of type <code>t</code> can be identified to return, and have a value to return to signal this circumstance. See the &quot;Options-as-partiality&quot; HOFs section below for some functions elaborating on this understanding of options. </p>
+<p>Options also function as a kind of &quot;container&quot;: a value <code>x : t option</code> either &quot;contains&quot; a value of type <code>t</code> (<code>x = SOME(z)</code>) or is an &quot;empty container&quot; with no values (<code>x = NONE</code>). We can therefore view <code>t option</code> as a degenerate version of <code>t list</code>, where the &quot;list&quot; is constrained to be length at most one. The notion of a &quot;container&quot; is made precise in functional programming with the idea of a &quot;monad&quot;. In Haskell (which makes much more explicit use of monads), options are known as the &quot;Maybe monad&quot;.</p>
+<h2 id="values"><a class="header" href="#values">Values</a></h2>
+<p>The type <code>t option</code> has exactly one more value than the type <code>t</code> itself. Formally,</p>
+<pre><code class="language-sml">datatype 'a option = NONE | SOME of 'a
+</code></pre>
+<p>So for each value <code>v : t</code>, <code>SOME(v) : t option</code>. And <code>NONE</code> is a value of type <code>t option</code> for each type <code>t</code>, as required by the surrounding context. Options can be nested, e.g. <code>SOME(SOME(3)) : int option option</code>.</p>
+<p><code>SOME</code> and <code>NONE</code> are the two constructors of the <code>t option</code> type, so, in addition to the constructs generally available in pattern matching (e.g. wildcards and identifier binding), we can pattern match against <code>SOME</code> and <code>NONE</code>.</p>
+<pre><code class="language-sml">fun defaultToThree (NONE : int option):int = 3
+  | defaultToThree (SOME x) = x
+
+val 2 = defaultToThree(SOME 2)
+val 3 = defaultToThree(NONE)
+
+fun searchForEven [] = NONE
+  | searchForEven (x::xs) = if (x mod 2)=0 then SOME(x) else searchForEven xs
+
+val (SOME _) = searchForEven [1,2,3,4]
+val NONE = searchForEven [1,3,5]
+</code></pre>
+<p>If <code>t</code> is pretty-printed by the <code>smlnj</code> REPL (like <code>int</code>,<code>bool</code>,<code>string list</code>, etc.), so too is <code>t option</code>. This is demonstrated by the following <code>smlnj</code> REPL snippet.</p>
+<pre><code class="language-sml">- val k = SOME(SOME 5);
+val k = SOME (SOME 5) : int option option
+</code></pre>
+<h2 id="production"><a class="header" href="#production">Production</a></h2>
+<p>There are some basic SML functions which produce <code>option</code>s:</p>
+<pre><code class="language-sml">    Int.fromString : string -&gt; int option
+    Bool.fromString : string -&gt; bool option
+</code></pre>
+<p>Both of these functions are partial inverses to their respective <code>toString</code> functions (e.g. <code>Int.fromString(Int.toString(7)) == SOME 7</code>), but return an option so they can return <code>NONE</code> on strings which do not encode an <code>int</code> or <code>bool</code>, respectively.</p>
+<h2 id="elimination"><a class="header" href="#elimination">Elimination</a></h2>
+<p>Another option for casing on options is the function (provided in the <code>Option</code> structure - see below)</p>
+<pre><code class="language-sml">    Option.getOpt : 'a option * 'a -&gt; 'a
+</code></pre>
+<p>which behaves as follows: <code>Option.getOpt(SOME x,y)</code> will evaluate to <code>x</code>, and <code>Option.getOpt(NONE,y)</code> will evaluate to <code>y</code>. When writing functions operating on options, it is still generally preferable that you use clausal pattern matching to break into the &quot;<code>SOME</code> case&quot; and &quot;<code>NONE</code> case&quot;, but there are situations where <code>Option.getOpt</code> is an elegant solution.</p>
+<p>The <code>Option</code> structure also provides the &quot;join&quot; function</p>
+<pre><code class="language-sml">    Option.join : 'a option option -&gt; 'a option
+</code></pre>
+<p>which sends <code>SOME(X)</code> to <code>X</code> and <code>NONE</code> to <code>NONE</code>. </p>
+<h2 id="from-the-structure"><a class="header" href="#from-the-structure">From the Structure</a></h2>
+<p>The <code>Option</code> structure (part of the SMLNJ basis) provides a number of useful utilities for working with <code>option</code>s.</p>
+<p>In addition to the datatype <code>option</code> itself being available at top-level, the exception</p>
+<pre><code class="language-sml">    exception Option
+</code></pre>
+<p>is available at top-level as well.</p>
+<h3 id="basic-functions"><a class="header" href="#basic-functions">Basic Functions</a></h3>
+<p>The <code>Option</code> structure provides <code>bool</code>ean-valued functions for detecting whether a given option value is <code>NONE</code> or <code>SOME</code>, and for extracting values from <code>SOME</code>.</p>
+<pre><code class="language-sml">    Option.isSome : 'a option -&gt; bool
+    Option.isNone : 'a option -&gt; bool
+    Option.valOf : 'a option -&gt; 'a
+</code></pre>
+<p><code>Option.valOf NONE</code> raises the exception <code>Option</code>. <strong>NOTE:</strong> Do <em>not</em> use these fuctions in place of pattern-matching on an option value. Expressions like <code>if Option.isSome(X) then Option.valOf(X) else e2</code> are bad style.</p>
+<h3 id="options-as-containers-hofs"><a class="header" href="#options-as-containers-hofs">&quot;Options-as-containers&quot; HOFs</a></h3>
+<p>Options are an instance of a more general structure in functional programming known as a <em>monad</em>. Accordingly, there are a number of higher-order functions which we can define on options. In particular, <code>option</code> comes equipped with a <em>map</em> operation:</p>
+<pre><code class="language-sml">    Option.map : ('a -&gt; 'b) -&gt; 'a option -&gt; 'b option
+</code></pre>
+<p>which does what you might expect, given its type: <code>Option.map f (SOME x)</code> evaluates to <code>SOME(f(x))</code>, and <code>Option.map f NONE</code> produces <code>NONE</code>. As usual with &quot;map&quot; functions, we generally require <code>f</code> to be total.</p>
+<p>Options, as a &quot;container&quot; of data, also admit a <em>filtering</em> operation:</p>
+<pre><code class="language-sml">    Option.filter : ('a -&gt; bool) -&gt; 'a option -&gt; 'a option
+</code></pre>
+<p>Which is implemented as</p>
+<pre><code class="language-sml">fun filter p = fn NONE =&gt; NONE | (SOME x) =&gt; if p(x) then SOME x else NONE
+</code></pre>
+<p>i.e. it &quot;filters&quot; out the value <code>x</code> if <code>x</code> does not &quot;satisfy&quot; <code>p</code> (<code>p(x) == false</code>). As usual with &quot;filter&quot; functions, we generally require <code>p</code> to be total.</p>
+<p>The <code>Option</code> structure also provides a utility for &quot;folding&quot; an option:</p>
+<pre><code class="language-sml">    Option.fold : ('a * 'b -&gt; 'b) -&gt; 'b -&gt; 'a option -&gt; 'b
+</code></pre>
+<p>which we might implement as</p>
+<pre><code class="language-sml">fun fold g z NONE = z
+  | fold g z (SOME x) = g(x,z)
+</code></pre>
+<p>We often assume that <code>g</code> is total. In certain situations, we also want the two arguments of <code>g</code> to be the same type, and might assume that <code>g</code> is &quot;associative&quot; (in the sense that <code>g(x,g(y,z)) == g(g(x,y),z)</code> for all <code>x,y,z</code>) or that <code>z</code> is a &quot;unit&quot; for <code>g</code> (i.e. <code>g(x,z) == x == g(z,x)</code> for all <code>x</code>).</p>
+<h3 id="options-as-partiality-hofs"><a class="header" href="#options-as-partiality-hofs">&quot;Options-as-partiality&quot; HOFs</a></h3>
+<p>As mentioned above, options provide a way to represent partial functions: a function <code>f : t1 -&gt; t2 option</code> can be thought of as a function which is defined on some inputs (<code>f(x) == SOME(z)</code>) and not on others (<code>f(y) == NONE</code>). The <code>Option</code> structure provides several utilities consistent with this interpretation. First is composition of these &quot;partial functions&quot;.</p>
+<pre><code class="language-sml">    Option.compose : ('a -&gt; 'c) -&gt; ('b -&gt; 'a option) -&gt; 'b -&gt; 'c option
+    Option.composePartial : ('a -&gt; 'c option) -&gt; ('b -&gt; 'a option) -&gt; 'b -&gt; 'c option
+</code></pre>
+<p>So <code>(Option.compose (g,f))(x)</code> will return <code>NONE</code> if <code>f(x) == NONE</code>, and will return <code>SOME(g(y))</code> if <code>f(x) == SOME(y)</code>. <code>Option.composePartial</code> will behave similarly, except it will return <code>g(y)</code> in the <code>f(x) == SOME(y)</code> case, since <code>g</code> returns an option.</p>
+<p>It also provides a &quot;partial&quot; version of its map function:</p>
+<pre><code class="language-sml">    Option.mapPartial : ('a -&gt; 'b option) -&gt; 'a option -&gt; 'b option
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../types/list.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../types/sig.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../types/list.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../types/sig.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>
