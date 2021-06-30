@@ -1,0 +1,716 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Continuation Passing Style - SML Help</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="A resource for learning SML">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../favicon.svg">
+                        <link rel="shortcut icon" href="../favicon.png">
+                <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+                <link rel="stylesheet" href="../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+                <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Welcome!</a></li><li class="chapter-item expanded "><a href="../start/index.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../start/install.html"><strong aria-hidden="true">1.1.</strong> Install &amp; run SML</a></li><li class="chapter-item expanded "><a href="../start/syntax.html"><strong aria-hidden="true">1.2.</strong> Syntax Cheatsheet</a></li><li class="chapter-item expanded "><a href="../start/common.html"><strong aria-hidden="true">1.3.</strong> Common Tasks</a></li></ol></li><li class="chapter-item expanded "><a href="../types/index.html"><strong aria-hidden="true">2.</strong> Types &amp; Signatures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/type.html"><strong aria-hidden="true">2.1.</strong> Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/bool.html"><strong aria-hidden="true">2.1.1.</strong> bool</a></li><li class="chapter-item expanded "><a href="../types/int.html"><strong aria-hidden="true">2.1.2.</strong> int</a></li><li class="chapter-item expanded "><a href="../types/real.html"><strong aria-hidden="true">2.1.3.</strong> real</a></li><li class="chapter-item expanded "><a href="../types/string.html"><strong aria-hidden="true">2.1.4.</strong> string</a></li><li class="chapter-item expanded "><a href="../types/function.html"><strong aria-hidden="true">2.1.5.</strong> function types</a></li></ol></li><li class="chapter-item expanded "><a href="../types/sig.html"><strong aria-hidden="true">2.2.</strong> Signatures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/list.html"><strong aria-hidden="true">2.2.1.</strong> list</a></li><li class="chapter-item expanded "><a href="../types/dict.html"><strong aria-hidden="true">2.2.2.</strong> dictionaries</a></li><li class="chapter-item expanded "><a href="../types/regex.html"><strong aria-hidden="true">2.2.3.</strong> regular expressions</a></li><li class="chapter-item expanded "><a href="../seq/seq.html"><strong aria-hidden="true">2.2.4.</strong> sequences</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../debugging/index.html"><strong aria-hidden="true">3.</strong> Debugging</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../debugging/errors.html"><strong aria-hidden="true">3.1.</strong> Common Errors</a></li><li class="chapter-item expanded "><a href="../debugging/hints.html"><strong aria-hidden="true">3.2.</strong> Debugging Hints</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/index.html"><strong aria-hidden="true">4.</strong> Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/basic.html"><strong aria-hidden="true">4.1.</strong> Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/eval.html"><strong aria-hidden="true">4.1.1.</strong> Evaluation</a></li><li class="chapter-item expanded "><a href="../concepts/eeq.html"><strong aria-hidden="true">4.1.2.</strong> Extensional Equivalence</a></li><li class="chapter-item expanded "><a href="../concepts/patternmatch.html"><strong aria-hidden="true">4.1.3.</strong> Pattern Matching</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/recind.html"><strong aria-hidden="true">4.2.</strong> Recursion and Induction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/induct.html"><strong aria-hidden="true">4.2.1.</strong> Inductive Proofs</a></li><li class="chapter-item expanded "><a href="../concepts/rec.html"><strong aria-hidden="true">4.2.2.</strong> Recursion</a></li><li class="chapter-item expanded "><a href="../concepts/tail.html"><strong aria-hidden="true">4.2.3.</strong> Tail Recursion</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/analysis.html"><strong aria-hidden="true">4.3.</strong> Asymptotic Analysis</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/workspan.html"><strong aria-hidden="true">4.3.1.</strong> Work and Span</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/datatypes.html"><strong aria-hidden="true">4.4.</strong> Datatypes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/poly.html"><strong aria-hidden="true">4.4.1.</strong> Parametric Polymorphism</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/hofs.html"><strong aria-hidden="true">4.5.</strong> Higher Order Functions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/curry.html"><strong aria-hidden="true">4.5.1.</strong> Currying and Staging</a></li><li class="chapter-item expanded "><a href="../concepts/common.html"><strong aria-hidden="true">4.5.2.</strong> Common HOFs and Partial Evaluation</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/control.html"><strong aria-hidden="true">4.6.</strong> Control Flow</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/cps.html" class="active"><strong aria-hidden="true">4.6.1.</strong> Continuation Passing Style</a></li><li class="chapter-item expanded "><a href="../concepts/exn.html"><strong aria-hidden="true">4.6.2.</strong> Exceptions</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/mods.html"><strong aria-hidden="true">4.7.</strong> Modules</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/mods.html"><strong aria-hidden="true">4.7.1.</strong> Basics and Ascription</a></li><li class="chapter-item expanded "><a href="../concepts/functors.html"><strong aria-hidden="true">4.7.2.</strong> Functors</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/apps.html"><strong aria-hidden="true">4.8.</strong> Applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/sequences.html"><strong aria-hidden="true">4.8.1.</strong> Sequences</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../examples/index.html"><strong aria-hidden="true">5.</strong> Examples</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../examples/basics.html"><strong aria-hidden="true">5.1.</strong> Basics</a></li><li class="chapter-item expanded "><a href="../examples/recursion.html"><strong aria-hidden="true">5.2.</strong> Recursion &amp; Induction</a></li></ol></li><li class="chapter-item expanded "><a href="../about.html">About</a></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">SML Help</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <style>
+.center{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+figure figcaption {
+    text-align: center;
+}
+</style>
+<h1 id="continuation-passing-style"><a class="header" href="#continuation-passing-style">Continuation Passing Style</a></h1>
+<p>We have seen how we can write functions that are <em>tail recursive</em>, in that they
+only make recursive calls as <em>tail calls</em>, where the recursive calls is the last
+thing that the function does (i.e. there is no deferred work). This commonly was
+realized by implementing the tail-recursive function with an <em>accumulator</em>,
+which simply stored the intermediate values that were computed. In this section,
+we will explore an concept known as <em>continuation-passing style</em>, which sees the
+use of <em>functions as accumulators</em>, which lets us use more explicit logic when
+encoding the control flow of our programs, as well as the intermediate results
+of our computations.</p>
+<h2 id="continuation-passing-style-the-idea"><a class="header" href="#continuation-passing-style-the-idea">Continuation Passing Style: The Idea</a></h2>
+<p>Consider the computation of <code>(2 + 3) * 4</code>.</p>
+<p>Clearly, there is an ordering to how we should evaluate this. We should sum <code>2</code>
+and <code>3</code> first, then take the <em>result of that</em> and multiply it by <code>4</code>. There is
+kind of a catch here, that is quickly glossed over by our human brains - we
+refer to &quot;the result of that&quot; rather casually. We haven't explicitly named it,
+but we nonetheless make an appeal to intuition to get our point across.</p>
+<p>How else might we represent this computation? Well, we could use lambda
+expressions, and then use the power of function application to compute the
+result. Then, we might obtain that this is akin to evaluating <code>(fn res =&gt; res * 4) (2 + 3)</code>. This would be a more direct translation of the idea of &quot;add 2 and 3,
+then pass the result of that to 4&quot;. We note that, in the process, we have
+explicitly made clear what we mean by &quot;the result of that&quot; - it is now bound to
+a name, that being <code>res</code>.</p>
+<p>We can take this one step further. If we think about it a bit more, we might
+want to consider starting at a &quot;single&quot; value, so that we don't have to consider
+the operation of <code>2 + 3</code> as one step. Then, we might instead write &quot;take 2, add
+the previous result to 3, and then multiply the previous result by 4&quot;. Clearly,
+we have now made it deliberate that we are passing around a <em>single value</em> that
+we are performing operations on at each step. How would we write this as a
+lambda expression, however?</p>
+<p>We might write <code>(fn res =&gt; (fn res2 =&gt; res2 * 4) (res + 3)) 2</code> to encode the
+previous instructions. This essentially makes <code>res</code> the <em>first</em> &quot;previous
+result&quot;, and then the result of <code>2 + 3</code> is <code>res2</code>, the <em>second</em> &quot;previous
+result&quot;. Make sure you understand what is happening here - we are binding <code>2</code> to
+the identifier <code>res</code>, then binding the result of <code>res + 3</code> to the identifier
+<code>res2</code>.</p>
+<p>However, it is still on us to provide the value of <code>2</code>. We to somehow encode the
+notion of the <em>computation</em> of <code>(2 + 3) * 4</code>, not necessarily evaluating the
+expression ourselves. We know that placing an expression within the confines of
+a lambda expression will &quot;freeze&quot; the computation, causing it to only resume
+once the lambda expression is given an input, so what we can do is simply do the
+same with a trivial input. Our trivial input here will be <code>()</code>, or unit, since
+we always have access to it, and there is only one value of type <code>unit</code>.</p>
+<p>So somehow, we can encode the idea of this expression with <code>(fn () =&gt; (fn res =&gt; (fn res2 =&gt; res2 * 4) (res + 3)) 2)</code>. Seen in this way, we have somehow encoded
+the desired expression not by actually executing it, but forming some large
+function <em>a priori</em> that essentially does the same thing. We thus form a correspondence between evaluating an expression by <em>carrying out each step in real time</em> and by <em>writing out the steps to be done at a later time</em>. We hope to show that two are really equivalent - this will be important to understand for later.</p>
+<h2 id="continuation-passing-style-a-case-study"><a class="header" href="#continuation-passing-style-a-case-study">Continuation Passing Style: A Case Study</a></h2>
+<p>We will now discuss continuation passing style more explicitly.</p>
+<p>It is hopefully clear that the previous example of <code>(fn () =&gt; (fn res =&gt; (fn res2 =&gt; res2 * 4) (res + 3)) 2)</code> encodes, in some form, the <em>idea</em>
+of the computation of the expression <code>(2 + 3) * 4</code>. Somewhat key, however, is
+that computation <em>does not execute</em> until we actually feed a unit to it. It is
+important to note the distinction between <em>doing something</em> and <em>writing the
+instructions to do something</em>. A continuation can be thought of as a
+<em>blueprint</em>, or a <em>contingency plan</em>. We will expand more on what we mean by
+this shortly, but a continuation essentially represents <em>what instructions need
+to be executed</em>. This is a very powerful idea, because programs can continuously
+alter continuations by adding more instructions or even executing different
+continuations in order to determine what computations ultimately need to be
+executed.</p>
+<p>We will first consider a simple example before going into the definition.</p>
+<pre><code class="language-sml">(* factCPS : int -&gt; (int -&gt; 'a) -&gt; 'a *)
+(* REQUIRES: true *)
+(* ENSURES: factCPS n k ~= k (n!) *)
+fun factCPS 0 k = k 1
+  | factCPS n k = factCPS (n-1) (fn res =&gt; k (n * res))
+</code></pre>
+<p>Here, <code>factCPS</code> takes in two arguments - one is the counter for the factorial
+function (as normal), and the other is the <em>continuation</em>. In this case, the
+continuation is a function from <code>int -&gt; 'a</code>. The idea here is that the
+continuation should represent what work is <em>left to do</em>. It is left polymorphic,
+however, in order to give the user control over what they want the function to
+do. In order to compute the factorial of <code>n</code> directly, one could just evaluate
+<code>factCPS n Fn.id</code>, however we grant more versatility to the user in that they
+are not <em>just</em> constrained to computing the factorial. If one wanted a textual
+representation of the factorial of <code>n</code>, they could evaluate <code>factCPS n Int.toString</code>, for instance. This way, we get additional versatility out of our
+implementation.</p>
+<p>We will now consider a trace of <code>factCPS 3 Int.toString</code> to fully understand the
+mechanism by which it works.</p>
+<figure class="aligncenter">
+    <img src="../assets/cps.png" alt="CPS Trace" width="1500"/>
+    <figcaption><b>Fig 1.</b> Code trace of the evaluation of `factCPS 3 Int.toString` </figcaption>
+</figure>
+<p>As we can see, this code trace does correctly result in <code>Int.toString 6</code>, which
+is our desired result. Of particular interest to our analysis is the
+<em>continuation</em> of the function, which seems to grow with every line through
+<code>factCPS</code>'s recursion, until ultimately being reduced down step-wise until it
+yields our final result. </p>
+<p>The colors in the image denote the difference between the <em>current</em> value of <code>k</code>
+and the new, <em>constructed</em> k. For instance, <code>k</code> is originally <code>Int.toString</code>
+(which is the blue-colored text), however it is eventually wrapped in <code>(fn res =&gt; ... (3 * res))</code>, which is the RHS of the call to <code>factCPS 3 Int.toString</code>.
+Thus, the &quot;inner&quot; <code>k</code> in the third line is in orange, to signify that it is in
+fact the same as the entire continuation from the previous line (also in
+orange), which is the &quot;previous&quot; <code>k</code>. Seen in this way, all that each recursive
+call seems to be doing is appending a layer to the continuation, while the
+inside remains the same.</p>
+<p><strong>NOTE:</strong> The definition of <code>factCPS</code> says that the input to each lambda
+expression should be named <code>res</code>. In order to make understanding clearer and
+avoid namespace collisions, we have opted to name it <code>res</code>, <code>res2</code>, and <code>res3</code>,
+on each recursive call to <code>factCPS</code>. Note that this renaming does not affect the
+evaluation of <code>factCPS 3 Int.toString</code> and does keep it exactly equivalent to
+how it is actually evaluated<a href="#footnote1"> <sup> [1] </sup> </a>.</p>
+<p>So hopefully now we are convinced of <code>factCPS</code>'s correctness<a href="#footnote2"> <sup>[2]</sup> </a>. What might not be evident, however, is <em>why</em>. </p>
+<p>Recall our previous metaphor with regards to writing down instructions. It is
+hopefully not too difficult to see that this large lambda expression that we are
+constructing is akin to writing down instructions - we specify the operations
+that should occur when it is ultimately &quot;collapsed&quot; (by being given an input
+value), but nothing actually occurs until then. It merely encodes that
+information in the meantime. The next diagram will attempt to more specifically
+show this relationship between the &quot;instructions&quot; and how it arises from the
+definition of <code>factCPS</code>:</p>
+<figure class="aligncenter">
+    <img src="../assets/updown.png" alt="Instructions" width="1500"/>
+    <figcaption><b>Fig 2.</b> Relationship between an arbitrary recursive call of `factCPS` and the "instructions" that it writes down. </figcaption>
+</figure>
+<p>The middle of this image is supposed to denote the &quot;instructions&quot; that you might
+write if you were to codify the algorithm to determine the factorial of \( n \).
+Note that these instructions are actually read from bottom to top - thus, we
+start with 1 and then work out way up multiplying until we reach \( n \), which
+presumably should give us the actual factorial. </p>
+<p>Now consider if we were at some arbitrary point of execution of the expression
+<code>factCPS n initK</code>, for some arbitrary <code>initK : int -&gt; 'a</code>. That is, suppose that 
+<code>factCPS n initK</code> has reduced down to <code>factCPS i k'</code>, for some other <code>k</code> (which 
+is the result of modifying the continuation throughout the recursive calls of 
+<code>factCPS</code> until now. Then, we should see that the form of <code>k</code> should look something 
+like <code>(fn res =&gt; (fn res2 =&gt; ... (fn resn =&gt; initK (n * resn)) ... ((i + 2) * res)) ((i + 1) * res))</code>. That is, it exactly captures the idea of the instructions in
+orange - it covers the multiplication of all of the terms from \( i+1 \) to \( n \). </p>
+<p>What is the action of the recursive call <em>at</em> <code>factCPS i k</code>? Well, clearly it
+should reduce to <code>factCPS (i-1) (fn res =&gt; k (i * res))</code> - that is, it wraps <code>k</code>
+in the lambda expression <code>(fn res =&gt; k (i * res))</code>, which is just the
+&quot;instruction&quot; to multiply the result by <code>i</code>, which exactly corresponds to the
+instruction in blue.</p>
+<p>How do we compute the rest of the factorial function? Everything seems correct
+so far, but that is all that we will have in our accumulation of <code>k</code>. The rest
+of the instructions are exactly corresponding to the recursive call - to
+<code>factCPS i</code> itself. <code>factCPS i</code>, as the recursive call, will continue to go and
+compute the factorial all the way down to 0. Thus, even though we have not
+written them down yet, we can use the &quot;recursive leap of faith&quot; to <em>assume</em> that
+<code>factCPS i k</code> will behave properly, and write down the instructions for
+multiplying <code>i-1</code> through <code>1</code> properly, which will result in the final, correct
+result.</p>
+<p><strong>NOTE:</strong> An equivalent, but also very <em>important</em> way to view CPS functions is
+that recursive calls <em>pass their result</em> to their continuation. For instance, as
+we have defined, <code>factCPS n k</code> should be extensionally equivalent to <code>k (fact n)</code>, or in other words, <code>factCPS n k</code> will be the same as passing the actual
+factorial of <code>n</code> to <code>k</code>. This means that when we are writing our function, we
+can make that assumption - <code>factCPS (n-1) (fn res =&gt; k (n * res))</code> should pass
+the result of \( (n-1)! \) to <code>(fn res =&gt; k (n * res))</code>. This is equivalent to, in
+our &quot;instructions&quot; analogy, saying that <code>factCPS i k</code> should faithfully execute
+all the instructions of multiplying from <code>1</code> to <code>i</code> - that is, <code>factCPS i k</code>
+should pass the result of \( i! \) to <code>k</code>.</p>
+<p>So now, we can sort of inductively see how <code>factCPS</code> writes down the entire page of
+instructions, which should mean that it is correct when we execute it. This is
+not an inductive proof in itself, but this should give the intuition for <em>why</em>
+it does work.</p>
+<p>An additional way to think about CPS functions is that they behave similarly to
+a <em>stack</em>. This is because, as we have seen, we are continuously wrapping lambda
+expressions with other lambda expressions - we can only &quot;pop&quot; off a lambda
+expression by evaluating it with an argument, or &quot;push&quot; on more instructions by
+wrapping our continuation in more lambda expressions. We cannot access the ones
+inside. As such, we could visualize the evaluation of <code>factCPS 3 k</code>
+as the following diagram:</p>
+<figure class="aligncenter">
+    <img src="../assets/stack.png" alt="CPS Stack" width="1500"/>
+    <figcaption><b>Fig 3.</b> A visualization of the "stack" of instructions created by evaluating `factCPS 3 k`. </figcaption>
+</figure>
+<p>We would build this stack up from the bottom by first putting our <code>k</code> on (as our
+&quot;original&quot; <code>k</code>), then wrapping it in more lambda expressions as we go along the
+recursive calls (so, for instance, the orange brick is added by <code>factCPS 3 k'</code>, and
+the red brick is added by <code>factCPS 2 k''</code>, for their own respective continuations
+<code>k'</code> and <code>k''</code>). Then, once we are at the end, our &quot;instruction stack&quot; looks
+like the one currently pictured. At that point, we have nothing left to do but
+execute the stack of instructions with an initial value of <code>1</code>, which will cause
+the bricks to start being popped off one by one, and then ultimately result in the 
+value of <code>6</code> being applied to <code>k</code>. </p>
+<p>Another, equivalent way to view continuations is as <em>donuts</em>.</p>
+<figure class="aligncenter">
+    <img src="../assets/donut.png" alt="CPS Donut" width="1500"/>
+    <figcaption><b>Fig 4.</b> An artist's rendition of the "CPS Donut" of instructions created by evaluating `factCPS 3 k` (colorized, 2020). </figcaption>
+</figure>
+<p>As you can see, we cannot access the inner layers of the CPS Donut without first
+biting through the outer layers (corresponding to our evaluation of the outer
+layers first). One can only imagine what it would taste like in real life.</p>
+<p><strong>NOTE:</strong> It is not important to be able to draw these examples, or parrot them
+verbatim. They are merely here to try and provide some intuition as to what is
+happening with CPS. It is very important to be able to understand <em>why</em> it is
+that CPS functions work, which may be rather daunting and hard-to-grasp at
+first.</p>
+<h3 id="footnotes"><a class="header" href="#footnotes">Footnotes</a></h3>
+<p><a id="footnote1"> [1]: In fact, it is
+<a href="https://en.wikipedia.org/wiki/Lambda_calculus#Alpha_equivalence"><em>alpha equivalent!</em></a> </a></p>
+<p><a id="footnote2"> [2]: Though perhaps we should not be, until we write a full inductive proof of correctness! </a></p>
+<h2 id="continuation-passing-style-the-definition"><a class="header" href="#continuation-passing-style-the-definition">Continuation Passing Style: The Definition</a></h2>
+<p>We are now ready to attempt a definition of continuation passing style.</p>
+<blockquote>
+<p><strong>[Continuation]</strong> A <em>continuation</em> is a function that specifies what is
+supposed to be done with the result of a computation.</p>
+</blockquote>
+<blockquote>
+<p><strong>[Continuation Passing Style]</strong> A function is said to be written in
+<em>continuation passing style</em> if it satisfies the following conditions:</p>
+<ol>
+<li>
+<p>It takes in and uses continuation(s).</p>
+</li>
+<li>
+<p>It calls functions with continuations (including itself) as tail calls.</p>
+</li>
+<li>
+<p>It can only call its continuations in tail calls.</p>
+</li>
+</ol>
+<p>The key characteristic of CPS functions is that they are generally written
+with the goal of <em>passing their results to their continuations</em>. These
+continuations specify what computations should occur next.</p>
+</blockquote>
+<p>First, take a moment to assure yourself that the implementation of <code>factCPS</code>
+that we have so deeply studied <em>is</em>, in fact, in continuation passing style<a href="#footnote3">
+<sup> [3] </sup></a>.</p>
+<pre><code class="language-sml">fun factCPS 0 k = k 1
+  | factCPS n k = factCPS (n-1) (fn res =&gt; k (n * res))
+</code></pre>
+<p>As we have seen, clearly <code>k</code> is <code>factCPS</code>'s continuation, and it does call it in
+tail calls (as well as itself). This seems consistent with our definition. </p>
+<p>An important corollary of this definition is that a CPS function <em>cannot case on
+a recursive call to itself</em>. So, for instance, making a recursive call to a CPS
+function to see if it succeeds, then taking some action based on that premise is
+illegal. You may not fully understand what that means at the present, but we
+will explore this idea more in the future.</p>
+<p>A somewhat interesting note is that every direct-style (which is how we will
+term the kinds of functions that we have written until now) function admits a
+continuation passing style implementation. This means that continuation passing
+style is nothing arcane, but it is merely a <em>different way of viewing
+computation</em>. Functions written in continuation passing style can have
+significant performance benefits when compared to their direct style
+counterparts, so there are reasons to use continuation passing style other than
+just for the sake of it. </p>
+<h3 id="footnotes-1"><a class="header" href="#footnotes-1">Footnotes</a></h3>
+<p><a id="footnote3"> [3]: Otherwise, you should be quite concerned about the competency of the author, and you would probably be better off reading a different help site.</p>
+<h2 id="continuation-passing-style-a-case-study-v20"><a class="header" href="#continuation-passing-style-a-case-study-v20">Continuation Passing Style: A Case Study v2.0</a></h2>
+<p>We will now explore an example of a CPS function that makes use of some concept
+of limited <em>backtracking</em>, or <em>checkpointing</em>. Somewhat key to this example is
+that it writes down not just <em>one</em> instruction at each recursive call, but
+<em>multiple</em>.</p>
+<pre><code class="language-sml">fun treeSumCPS Empty k = k 0
+  | treeSumCPS (Node (L, x, R)) k = 
+  treeSumCPS L (fn leftSum =&gt; treeSumCPS R (fn rightSum =&gt; k (leftSum + x + rightSum))
+</code></pre>
+<p>This function computes the sum of the elements in an int tree. The recursive
+case has a slightly more intimidating-looking continuation, however we can view
+it as simply a case of the continuation being wrapped <em>twice</em>.</p>
+<p>Consider how we would normally want to approach this problem. In a typical
+<code>treeSum</code>, we might compute both the left and right sums, and then simply add
+the results to <code>x</code>. This suffices, and follows rather intuitively, but in CPS we
+must make our control flow <em>explicit</em>. In this manner, we must be very specific
+about <em>what</em> we should do and in which <em>order</em>. To that end, we fix a direction
+to visit first (in this case, left, though it does not matter), and then compute
+the sum of that direction, with the promise that we will eventually use the
+result of the left side to compute the final result.</p>
+<p>To visualize what is happening, consider the following tree.</p>
+<figure class="aligncenter">
+    <img src="../assets/cpsTree.png" alt="Tree to be summed"
+    width="200" class="center"/>
+    <figcaption><b>Fig 5.</b> A tree of ints to be summed, whose node contents are conveniently enumerated according to visit order. </figcaption>
+</figure>
+<p>We will run through a mock simulation of the evaluation of <code>treeSumCPS T k</code>,
+where <code>T</code> is the tree pictured, and <code>k</code> is some arbitrary continuation. First,
+note that we will take the convention that &quot;Tn&quot; for some number n will denote
+the subtree rooted at the vertex n, and &quot;Sn&quot; will denote the sum of that
+subtree.</p>
+<p>Firstly, we know that from <code>treeSumCPS T k</code> we should obtain <code>treeSumCPS T2 (fn S2 =&gt; treeSumCPS T4 (fn S4 =&gt; k (S2 + 1 + S4))</code>.</p>
+<figure class="aligncenter">
+    <img src="../assets/phase1.png" alt="Phase 1"
+    width="3000" class="center">
+    <figcaption class="center"><b>Fig 6.</b> Phase 1 of evaluation of the tree T. </figcaption>
+</figure>
+<p>We can think of the individual calls to <code>treeSumCPS</code> on <code>T2</code> and <code>T4</code> as leaving
+&quot;flags&quot; on each arm of the edges coming from vertex 1 - denoting which node that
+we should visit next. Clearly, we visit <code>T2</code> first, so the red brick
+corresponding to <code>T2</code> is on top.</p>
+<p>Our next move is to pop it off first, which will cause our expression to now
+have three bricks - two corresponding to the children of <code>T3</code>, and one
+corresponding to <code>T4</code>. We can visualize the next phase as the following:</p>
+<figure class="aligncenter">
+    <img src="../assets/phase2.png" alt="Phase 2"
+    width="3000" class="center">
+    <figcaption class="center"><b>Fig 7.</b> Phase 2 of evaluation of the tree T. Note that two extra "bricks" have been added due to evaluation of treeSumCPS T2. </figcaption>
+</figure>
+<p>where the brick labelled <code>treeSumCPS E</code> corrresponds to the empty child of
+<code>T2</code>. Note that we have retained the blue flag at <code>T4</code> and left its brick alone,
+since for all intents and purposes we have not yet &quot;touched&quot; it - we have not
+evaluated our stack to that point. Note that due to corresponding to the <code>Empty</code>
+case, the purple brick will not add any new bricks, but merely defer to the next
+brick on the stack - the orange brick. Thus, the next step looks like the
+following:</p>
+<figure class="aligncenter">
+    <img src="../assets/phase3.png" alt="Phase 3"
+    width="3000" class="center">
+    <figcaption class="center"><b>Fig 8.</b> Phase 3 of evaluation of the tree T. Note that this follows from evaluating both of the top bricks from the previous step. </figcaption>
+</figure>
+<p>In this step, the green and light blue bricks again correspond to empty trees,
+so they simply dissolve without generating more instructions. As such, we reduce
+to the following diagram:</p>
+<figure class="aligncenter">
+    <img src="../assets/phase4.png" alt="Phase 4"
+    width="3000" class="center">
+    <figcaption class="center"><b>Fig 9.</b> Phase 4 of evaluation of the tree T. Note that, after finishing our evaluation of all of the bricks of the left side, we return to our long-neglected "checkpoint" on the right side of the tree.. </figcaption>
+</figure>
+<p>We see in this step that, as the figure caption says, we have returned to the
+right hand side after finishing all evaluation on the left hand side of the
+tree. Thus, our construction was correct - we placed the blue brick onto the
+stack at the very beginning, then proceeded to forget about it until now. This
+works in our favor, however, as we only return to it once we have finished with
+everything on the left. One more step of evaluation yields:</p>
+<figure class="aligncenter">
+    <img src="../assets/phase5.png" alt="Phase 5"
+    width="3000" class="center">
+    <figcaption class="center"><b>Fig 10.</b> Phase 5 of evaluation of the tree T. </figcaption>
+</figure>
+<p>Thus, all we have left are empty bricks, so we are very close to termination.</p>
+<p>This demonstration was far from a rigorous treatment, and also omitted any
+mention of the actual value being passed into each continuation - this can be
+inductively assumed to be the proper sum at any given brick. We invite the
+reader to conduct any detailed analysis on their own, similarly to the treatment
+of <code>factCPS</code>, in order to truly grasp how the different subtree sums are
+computed and passed around.</p>
+<p>The main point in this example, however, was to demonstrate how even a slightly
+more complicated function can result in elegant, powerful control-flow behavior.
+By simply wrapping our continuation twice, we ensured that we could set up a
+&quot;checkpointing&quot; system, where we could set &quot;flags&quot; to jump back to once
+finishing a certain computation. This is an important idea to cognize with
+continuation passing style. </p>
+<p>In the next example, we will explore how we can set up more complicated
+arrangements of control flow through usage of two continuations.</p>
+<h2 id="continuation-passing-style-a-case-study-in-success-and-failure"><a class="header" href="#continuation-passing-style-a-case-study-in-success-and-failure">Continuation Passing Style: A Case Study in Success and Failure</a></h2>
+<p>Duality seems to permeate computational problems. When trying to write programs,
+we often come to cases where we need to make a choice between two extremes - on
+or off, keep or don't, left or right, 1 or 0. With the capacity to make choices,
+however, comes the possibility of making the <em>wrong</em> choice. In such a case, we
+might want the ability to remember the choice we made, and take the other one,
+or <em>backtrack</em>. </p>
+<blockquote>
+<p><strong>[Backtracking]</strong> Backtracking is a strategy employed by algorithms when
+trying to find all the possible &quot;options&quot; or &quot;possibilities&quot;, so as to locate
+the &quot;best&quot; solution, or alternatively just one feasible solution. Problems
+that admit backtracking solutions include the N-queens puzzle, constraint
+satisfaction problems, and Sudoku.</p>
+</blockquote>
+<p>At first, backtracking might seem like it is akin to what was done in the
+previous example, with our idea of &quot;checkpointing&quot;, except that we never really
+&quot;reset&quot; our state. When we set checkpoints to go back to in the <code>treeSumCPS</code>
+example, we always did so while retaining the sum of the left side, so we never
+lost information. In a backtracking problem, we may need to throw away
+everything that we've done in the meantime and go to a different solution
+entirely.</p>
+<p>In this example, we will analyze a classic optimization problem, and how it
+admits a CPS solution.</p>
+<blockquote>
+<p><strong>[Knapsack Problem - Decision Version]</strong> The <em>knapsack problem</em> is a resource
+allocation problem which traditionally concerns a person with a knapsack that
+can only contain a certain total weight of items. The person has to choose between a
+collection of items (all of differing weight and value) so as to maximize the
+amount of value collected, while being below the maximum weight limit of the knapsack.
+Note that items can be taken more than once.</p>
+<p>In this chapter, we will be concerned specifically with the <em>decision problem</em>
+version of the knapsack problem, which, instead of asking for a maximizing
+assignment, instead asks if there <em>exists</em> an assignment that can achieve a
+certain threshold of value.</p>
+</blockquote>
+<p>We will now write a continuation passing style function that solves the
+knapsack problem.</p>
+<pre><code class="language-sml">type weight = int
+type value = int
+
+(* knapsackCPS : 
+ *            (value * weight) list -&gt; 
+ *            value -&gt; 
+ *            weight -&gt; 
+ *            ((value * weight) list -&gt; 'a) -&gt; 
+ *            (unit -&gt; 'a) -&gt; 
+ *            'a 
+ * REQUIRES: The weights and values of the elements in L are strictly positive.
+ * ENSURES: knapsackCPS L minVal maxWeight sc fc ~= sc L' for some L' that only
+ * contains elements of L, such that the total value of L' &gt;= minVal and the 
+ * total weight of L' &lt;= maxWeight, if such an L' exists. If no such L' exists, 
+ * then it should be equivalent to fc ().
+ *)
+
+fun knapsackCPS 
+  (L : (value * weight) list) 
+  (minVal : value) 
+  (maxWeight : weight) 
+  (sc : (value * weight) list -&gt; 'a) 
+  (fc : unit -&gt; 'a)
+  : 'a =
+  case L of
+    [] =&gt; if minVal &lt;= 0 andalso maxWeight &gt;= 0 then sc [] 
+                                                else k ()
+  | (v, w)::xs =&gt; if maxWeight &lt; 0 then k ()
+                                   else
+    knapsackCPS ((v, w)::xs) (minVal - v) (maxWeight - w) 
+    (fn L' =&gt; sc ((v, w)::L')) (fn () =&gt; knapsackCPS xs minVal maxWeight sc fc)
+</code></pre>
+<p>We see that <code>knapsackCPS</code> takes in a list of items, each represented as 
+a <code>value * weight</code> tuple, where <code>value</code> and <code>weight</code> are both really just 
+aliases for <code>int</code>. It also takes in a minimum threshold for the knapsack's 
+value, <code>minVal</code>, and a maximum weight of items to be taken <code>maxWeight</code>. Of 
+particular interest, however, are the parameters <code>sc</code> and <code>fc</code> - denoting 
+what we call the <em>success</em> and <em>failure</em> continuations. The goal of our 
+function is to ultimately find a list <code>L'</code> that contains elements that are also 
+in <code>L</code> (with duplicates allowed). This corresponds to choosing how many of each 
+item in the allowed collection to pick.</p>
+<p>If such a list exists, then we should return <code>sc L'</code>. Otherwise, if there is no
+such list, we should return <code>fc ()</code>. </p>
+<p>Rather immediately, this should seem as a kind of different problem. There isn't
+really a better algorithm than brute forcing possibilities, but if we try a
+possibility and it turns out to be wrong, we want to have the option to be able
+to <em>backtrack</em> and try something else entirely. We will demonstrate how this is
+realized in the algorithm in the next part.</p>
+<pre><code class="language-sml">case L of
+    [] =&gt; if minVal &lt;= 0 andalso maxWeight &gt;= 0 then sc [] 
+                                                else k ()
+</code></pre>
+<p>For the base case, however, we know that if we are given no items whatsoever,
+then we cannot place anything in our knapsack. Thus, we have no choice but to
+have a value and weight of 0. As such, if we know that our minimum value is at
+most 0 and our maximum weight is at least 0, then a valid list value for <code>L'</code> is
+just the empty list, so we can call our success continuation in <code>sc []</code>. Otherwise, 
+we must call the failure continuation, as the problem is not solvable.</p>
+<p>Note that, since we plan to write this function recursively, if we were given an
+initial list that was non-empty, we may eventually recurse down to the empty
+case. It may then seem like a concern that we are calling <code>sc []</code>, as we might
+actually call <code>sc</code> on a list that contains elements. Note that this is not a
+concern - by the structure of CPS functions, if we were to recurse down to the
+base case, our &quot;promise&quot; is that the success continuation <code>sc</code> that we enter the
+base case with is not the &quot;original&quot; <code>sc</code> that we were passed - by this point,
+it should have accumulated a great deal of &quot;information&quot; and thus become more
+advanced than simply returning <code>sc []</code>, for the original <code>sc</code>. For the base
+case, it is sufficient to simply solve it from the perspective of having been
+originally given <code>[]</code>.</p>
+<p>In the recursive case, we now have to think about how we might solve the
+knapsack problem given that we have a non-empty collection of items to take.
+Right off the bat, we can say that if our <code>maxWeight &lt; 0</code>, then this problem is
+unsolvable, since we cannot possibly have a negative total weight (our weights
+in this problem are strictly positive), so in that case we would simply call our
+failure continuation.</p>
+<p>Otherwise, however, we now need to actually think about what to do. Oftentimes,
+it is very helpful reduce the problem to making a <em>binary choice</em>, and then
+simply explore the consequences of doing so from there. In this case, we can
+imagine our choice to be whether to put the first element of the list into the
+knapsack, or to not. </p>
+<pre><code class="language-sml">| (v, w)::xs =&gt; if maxWeight &lt; 0 then k ()
+                                   else
+    knapsackCPS ((v, w)::xs) (minVal - v) (maxWeight - w) 
+    (fn L' =&gt; sc ((v, w)::L')) (fn () =&gt; knapsackCPS xs minVal maxWeight sc fc)
+</code></pre>
+<p>What does our recursive call for putting the first element <code>(v, w)</code> into the
+knapsack look like? It takes the form of <code>knapsackCPS ((v, w)::xs) (minVal - v)  (maxWeight -  w) sc' fc'</code>, for some <code>sc'</code> and <code>fc'</code> that we will determine later. We 
+keep the list the same, to account for the fact that we can have duplicates - in the 
+next step, we want to reconsider whether we want to put <code>(v, w)</code> on again. If we
+commit to putting <code>(v, w)</code> in the knapsack, however, we need to somehow encode
+the fact that our value has gone up by <code>v</code>, and our knapsack's weight has gone
+up by <code>w</code>. This is achieved by setting the new minimum value to be <code>minVal - v</code>,
+and the new max weight to be <code>maxWeight - w</code> - we simply lower our thresholds,
+which is functionally the same.</p>
+<p>What should our continuations be? Remember that by the recursive leap of faith,
+we can assume a kind of &quot;promise&quot; of this recursive call - that is, we can
+assume that <code>knapsackCPS ((v, w)::xs) (minVal - v) (maxWeight - w) sc' fc'</code>
+obeys the same ENSURES clause as was written above, for its own <code>sc'</code> and <code>fc'</code>.
+We now should define what to do in the case that either is called.</p>
+<p>We are, at this point, not actually at the stage where we know if <code>sc'</code> or <code>fc'</code>
+is going to be called, or on what, if at all. The power in CPS comes from the
+fact that this <em>does not matter</em>, and we can write our algorithm despite
+that. Earlier, we discussed the concept of continuations as <em>contingency plans</em>.
+In this function, we are going to be using that strategy to full effect.</p>
+<p>Think of <code>sc'</code> and <code>fc'</code> as contingency plans for the success and failure case,
+respectively. <em>If</em> we were to succeed on this recursive call, what should we do?
+If we were to fail, what should we do? Even though we have no idea what the
+input to the continuation is, the fact that it is a function allows us (inside
+the scope of the body of <code>sc'</code>) to <em>assume we have access to it</em>. </p>
+<p>As such, the first thing we may write for <code>sc'</code> is <code>fn L' =&gt; ...</code>. Now, we must 
+fill in the ellipses. If <code>sc'</code> is called, we know that it must be called with an 
+appropriate <code>L'</code> that satisfies the ENSURES conditions. Recall that this recursive call
+emerged in the first place from our <em>choice</em> - to place <code>(v, w)</code> inside of the
+knapsack. Thus, if the call to <code>knapsackCPS</code> succeeds, we know that placing <code>(v, w)</code> inside the knapsack must be feasible, by extension. So then we know it makes
+sense to write <code>fn L' =&gt; sc ((v, w)::L')</code> for <code>sc'</code>, which intuitively means
+&quot;take the answer (knapsack) to the recursive call and then put <code>(v, w)</code> in it,
+then call success on it&quot;. Thus, we have written down a <em>contingency plan</em> for
+what we should do <em>if</em>, at some point in the future, our success continuation is
+called.</p>
+<p>What about <code>fc'</code>? What should we do if we fail? Well, if our recursive call to
+<code>knapsackCPS</code> does not succeed, that must mean that our choice to place <code>(v, w)</code>
+inside of the knapsack was wrong. In that case, we want to make the other choice - 
+to not put <code>(v, w)</code> inside the knapsack. Thus, we write <code>fn () =&gt; knapsackCPS xs minVal maxWeight sc fc</code>, which has the exact same parameters as what we were
+initially passed, except we have gotten rid of <code>(v, w)</code> (since we know to put it
+in the knapsack is a mistake). Our <code>sc</code> and <code>fc</code> remain the same, since on a
+sucess or fail to this call, we just do whatever we would normally do on a
+success or fail.</p>
+<p>This, in only a few lines (and generous whitespace), we have written an
+algorithm for a backtracking knapsack problem solver. While it looks
+intimidating at first, the overall algorithm reduces down to only a few simple
+steps, which is written in an elegant and explicit manner due to continuation
+passing style.</p>
+<h2 id="conclusions"><a class="header" href="#conclusions">Conclusions</a></h2>
+<p>In this section, we explored the idea of continuation passing style, which lets
+us phrase the control flow of our functions in a more explicit manner, granting
+us more versatility in our implementation. We saw how CPS functions can be
+viewed as simply a more advanced form of accumulation, as well as how having
+multiple continuations (corresponding to success and failure cases) allows us to
+explore expansive trees of binary choices to find solutions.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../concepts/control.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../concepts/exn.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../concepts/control.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../concepts/exn.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

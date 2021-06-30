@@ -1,0 +1,363 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Parametric Polymorphism - SML Help</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="A resource for learning SML">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../favicon.svg">
+                        <link rel="shortcut icon" href="../favicon.png">
+                <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+                <link rel="stylesheet" href="../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+                <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Welcome!</a></li><li class="chapter-item expanded "><a href="../start/index.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../start/install.html"><strong aria-hidden="true">1.1.</strong> Install &amp; run SML</a></li><li class="chapter-item expanded "><a href="../start/syntax.html"><strong aria-hidden="true">1.2.</strong> Syntax Cheatsheet</a></li><li class="chapter-item expanded "><a href="../start/common.html"><strong aria-hidden="true">1.3.</strong> Common Tasks</a></li></ol></li><li class="chapter-item expanded "><a href="../types/index.html"><strong aria-hidden="true">2.</strong> Types &amp; Signatures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/type.html"><strong aria-hidden="true">2.1.</strong> Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/bool.html"><strong aria-hidden="true">2.1.1.</strong> bool</a></li><li class="chapter-item expanded "><a href="../types/int.html"><strong aria-hidden="true">2.1.2.</strong> int</a></li><li class="chapter-item expanded "><a href="../types/real.html"><strong aria-hidden="true">2.1.3.</strong> real</a></li><li class="chapter-item expanded "><a href="../types/string.html"><strong aria-hidden="true">2.1.4.</strong> string</a></li><li class="chapter-item expanded "><a href="../types/function.html"><strong aria-hidden="true">2.1.5.</strong> function types</a></li></ol></li><li class="chapter-item expanded "><a href="../types/sig.html"><strong aria-hidden="true">2.2.</strong> Signatures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/list.html"><strong aria-hidden="true">2.2.1.</strong> list</a></li><li class="chapter-item expanded "><a href="../types/dict.html"><strong aria-hidden="true">2.2.2.</strong> dictionaries</a></li><li class="chapter-item expanded "><a href="../types/regex.html"><strong aria-hidden="true">2.2.3.</strong> regular expressions</a></li><li class="chapter-item expanded "><a href="../seq/seq.html"><strong aria-hidden="true">2.2.4.</strong> sequences</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../debugging/index.html"><strong aria-hidden="true">3.</strong> Debugging</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../debugging/errors.html"><strong aria-hidden="true">3.1.</strong> Common Errors</a></li><li class="chapter-item expanded "><a href="../debugging/hints.html"><strong aria-hidden="true">3.2.</strong> Debugging Hints</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/index.html"><strong aria-hidden="true">4.</strong> Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/basic.html"><strong aria-hidden="true">4.1.</strong> Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/eval.html"><strong aria-hidden="true">4.1.1.</strong> Evaluation</a></li><li class="chapter-item expanded "><a href="../concepts/eeq.html"><strong aria-hidden="true">4.1.2.</strong> Extensional Equivalence</a></li><li class="chapter-item expanded "><a href="../concepts/patternmatch.html"><strong aria-hidden="true">4.1.3.</strong> Pattern Matching</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/recind.html"><strong aria-hidden="true">4.2.</strong> Recursion and Induction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/induct.html"><strong aria-hidden="true">4.2.1.</strong> Inductive Proofs</a></li><li class="chapter-item expanded "><a href="../concepts/rec.html"><strong aria-hidden="true">4.2.2.</strong> Recursion</a></li><li class="chapter-item expanded "><a href="../concepts/tail.html"><strong aria-hidden="true">4.2.3.</strong> Tail Recursion</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/analysis.html"><strong aria-hidden="true">4.3.</strong> Asymptotic Analysis</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/workspan.html"><strong aria-hidden="true">4.3.1.</strong> Work and Span</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/datatypes.html"><strong aria-hidden="true">4.4.</strong> Datatypes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/poly.html" class="active"><strong aria-hidden="true">4.4.1.</strong> Parametric Polymorphism</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/hofs.html"><strong aria-hidden="true">4.5.</strong> Higher Order Functions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/curry.html"><strong aria-hidden="true">4.5.1.</strong> Currying and Staging</a></li><li class="chapter-item expanded "><a href="../concepts/common.html"><strong aria-hidden="true">4.5.2.</strong> Common HOFs and Partial Evaluation</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/control.html"><strong aria-hidden="true">4.6.</strong> Control Flow</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/cps.html"><strong aria-hidden="true">4.6.1.</strong> Continuation Passing Style</a></li><li class="chapter-item expanded "><a href="../concepts/exn.html"><strong aria-hidden="true">4.6.2.</strong> Exceptions</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/mods.html"><strong aria-hidden="true">4.7.</strong> Modules</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/mods.html"><strong aria-hidden="true">4.7.1.</strong> Basics and Ascription</a></li><li class="chapter-item expanded "><a href="../concepts/functors.html"><strong aria-hidden="true">4.7.2.</strong> Functors</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/apps.html"><strong aria-hidden="true">4.8.</strong> Applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/sequences.html"><strong aria-hidden="true">4.8.1.</strong> Sequences</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../examples/index.html"><strong aria-hidden="true">5.</strong> Examples</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../examples/basics.html"><strong aria-hidden="true">5.1.</strong> Basics</a></li><li class="chapter-item expanded "><a href="../examples/recursion.html"><strong aria-hidden="true">5.2.</strong> Recursion &amp; Induction</a></li></ol></li><li class="chapter-item expanded "><a href="../about.html">About</a></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">SML Help</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="parametric-polymorphism"><a class="header" href="#parametric-polymorphism">Parametric Polymorphism</a></h1>
+<p>Type safety is a very powerful concept, one that lets us pin down the space of
+allowable inputs to only a narrow space of values. In this way, we can ensure
+that the function is only allowed to be applied to those arguments that we are
+interested in, making any other computations illegal. Sometimes, however, we are
+interested in making a function more <em>general</em>, with arguments that can somehow
+<em>range over types</em>. We will see how SML achieves this with <em>parametric
+polymorphism</em>, which is a separate concept than other forms of polymorphism that
+you may have seen before.</p>
+<h2 id="motivation"><a class="header" href="#motivation">Motivation</a></h2>
+<p>Suppose that we wanted to write a length function for lists.</p>
+<p>Well first, we might want to specify. What <em>type</em> of list? Let's say that we
+first have int lists.</p>
+<p>Well, the implementation is easy:</p>
+<pre><code class="language-sml">fun lengthInt ([] : int list) : int = 0
+  | lengthInt (x::xs : int list) : int = 1 + lengthInt xs
+</code></pre>
+<p>But suppose that we don't only want the length of int lists, but also the length
+of string and char lists. Well then, we'll need to define a few more functions:</p>
+<pre><code class="language-sml">fun lengthString ([] : string list) : int = 0
+  | lengthString (x::xs : string list) : int = 1 + lengthString xs
+
+fun lengthChar ([] : char list) : int = 0
+  | lengthChar (x::xs : char list) : int = 1 + lengthChar xs
+</code></pre>
+<p>This becomes unnecessarily tedious. As we can see, other than the name of the
+function and the type annotations, these functions have exactly the same code.
+Nothing about the functions themselves make use of the fact that the lists in
+question contain ints, strings, or chars - they are merely manipulated as
+arbitrary elements. We would like to be able to write a <code>length</code> function that
+works on a list of any type.</p>
+<h2 id="the-idea"><a class="header" href="#the-idea">The Idea</a></h2>
+<p>We've seen something similar to this - we know that lists of all kinds exist. No
+matter whether it is an <code>int list</code>, a <code>string list</code>, or a <code>char list</code>, we know
+that <code>::</code> is always valid to use when consing an element onto a list of the
+appropriate type. Indeed, we say that <code>::</code> has type <code>t * t list -&gt; t list</code> for
+all types <code>t</code>. Cons is thus <em>polymorphic</em>, it can be used on many different
+types (though never two at the same time, for instance <code>1::[&quot;hello&quot;]</code> is still
+ill-typed). </p>
+<p>This has been something of an alternative definition for what we will be
+discussing in this chapter - parametric polymorphism. Seen in this way, all
+polymorphic functions are <em>parameterized</em> by a <em>type variable</em> that ranges over
+types. We will go more in depth into this idea.</p>
+<blockquote>
+<p><strong>[Type variable]</strong> A type variable is a type that is quantified over types -
+that is, it can specifically take on the form of many types. They are
+enumerated as <code>'a</code>, <code>'b</code>, <code>'c</code>, and so on, and they are referred to by Greek
+letters. For instance, <code>'a</code> is &quot;alpha&quot;, <code>'b</code> is &quot;beta&quot;, <code>'c</code> is &quot;gamma&quot;, and
+so on.</p>
+</blockquote>
+<p>Type variables are themselves valid types. As such, we can rewrite <code>length</code> as:</p>
+<pre><code class="language-sml">fun length ([] : 'a list) : int = 0
+  | length (x::xs : 'a list) : int = 1 + length xs
+</code></pre>
+<p><code>'a</code> is quantified over all types, so <em>no matter</em> what type the input list to
+<code>length</code> is, it will work correctly, as SML will use <em>type inference</em> to
+determine what the proper type of the <code>length</code> function should be, in any given
+context. Note that <code>'a</code> is a <em>variable</em>, and as always, in proofs, we must
+quantify our variables. <code>'a</code> and other type variables thus implicitly correspond
+to having a &quot;for-all&quot; quantifier in front of it - so we say that an expression of type <code>'a</code> has type <code>t</code>, for all types <code>t</code>. We further note that this is really syntactic sugar for the notation:</p>
+<pre><code class="language-sml">fun 'a length ([] : 'a list) : int = 0
+  | length (x::xs : 'a list) : int = 1 + length xs
+</code></pre>
+<p>This specifies that the length function itself is parameterized over <code>'a</code>.
+Although <code>'a</code> is a &quot;parameter&quot; of <code>length</code>, it is not truly an argument - we do
+not explicitly pass in the type to <code>length</code>. In an abstract sense, however, we
+do, as each &quot;instantiation&quot; of <code>length</code> has been &quot;supplied&quot; an argument to <code>'a</code>
+to produce a &quot;copy&quot; of the function. You can think of it as if <code>length</code> has
+infinitely many different variations that can be selected, depending on what the
+given type is inferred to be. Note that the &quot;type&quot; that is chosen does not
+necessarily need to be a concrete type - it may itself compose of type
+variables. For instance, consider the following code:</p>
+<pre><code class="language-sml">fun tupleLength [] = 0
+  | tupleLength ((x, y)::xys) = 1 + length xys
+</code></pre>
+<p>Disregard the rather strange implementation, which is a rather arcane way of
+rewriting <code>length</code> with unnecessary overhead. In this example, we can see that
+the list <code>xys</code> contains tuples of two elements, the types of which are unknown
+to us. Without knowing a concrete type, we can only conclude that the type of
+<code>length</code> is <code>('a * 'b) list -&gt; int</code>. This is because the elements of the tuple
+do not necessarily have to be correlated with each other - <code>'a</code> and <code>'b</code> are
+thus independent, though they <em>could</em> be instantiated to the same type. As such,
+we have taken a type variable and replaced it with two more type variables,
+which gives us a little more information but still quite a bit of leeway.
+<code>tupleLength</code> is thus itself still polymorphic, with the same type of <code>('a * 'b) list -&gt; int</code>.</p>
+<p><strong>NOTE:</strong> We have now reached a point where we will begin to omit explicit type
+annotations, as they tend to unnecessarily constrain the types of functions. It
+is also a good exercise to be able to understand conceptually how type inference
+is carried out, which is covered more in the next section.</p>
+<p>An important principle to note, however, is that an <code>'a</code> type does not magically
+&quot;just work&quot; with regards to type safety. For instance, let us consider the
+following code fragment, which is ill-typed:</p>
+<pre><code class="language-sml">fun inc (x : 'a) : int = 1 + x
+</code></pre>
+<p>Note that, in this case, type annotations have actually worked against us! Had
+we removed the type annotations, this code would compile. The reason why this
+code is ill-typed is because, while we are allowed to use a type <em>more
+generally</em> than it actually is, we cannot use a polymorphic type <em>more
+specifically</em>. The reason for this is because if we think about it as if we
+explicitly passed in some type variable, in the <em>scope of the function</em> <code>inc</code>,
+<code>inc</code> has fixed <code>'a</code> to be some type. It then attempts to add 1 to <code>x</code>, which is
+a value of that fixed, arbitrary type. However, we cannot add 1 to a value of
+any type - we can only safely add 1 to <code>x</code> if we know that <code>x</code> has type <code>int</code>.
+If <code>'a</code> were instantiated to be a <code>string</code>, it would violate type safety to
+allow this code to compile. As such, we <em>cannot</em> explicitly type annotate <code>x</code> to
+be of type <code>'a</code>, as it is used <em>more specifically</em> than that in the body of the
+function.</p>
+<h2 id="other-forms-of-polymorphism"><a class="header" href="#other-forms-of-polymorphism">Other Forms of Polymorphism</a></h2>
+<p>A similar idea of extending functions to working on many types is exhibited by
+<em>equality types</em>, which are a behind-the-scenes process that you have already
+been exposed to. Consider the type of the function <code>=</code> - the equality operator.
+Clearly, it cannot have type <code>'a * 'a -&gt; bool</code>, since some types don't make
+sense to compare for equality. For instance, how would you compare whether or
+not a real is equal to another? Machine representations are finite, so asking
+the question is bound to introduce problems. Another difficulty is in <em>function
+types</em> - determining if two arbitrary functions are extensionally equivalent is
+an uncomputable problem (closely related to the Halting Problem). As such, we
+would like <code>=</code> to work on a wide spectrum of types, but also not work on
+another, also very wide spectrum of types.</p>
+<p>To do this, SML has a concept of <em>equality types</em>. The type variable <code>''a</code> (and
+<code>''b</code> and <code>''c</code>, as normal) are not quantified over all types, but merely all
+equality types. This includes <code>int</code>, <code>bool</code>, <code>string</code>, and any datatype built up
+from non-equality types, among others. Thus, the <code>=</code> operator actually has type
+<code>''a * ''a -&gt; bool</code>, so as to only work on compatible types. </p>
+<p><strong>NOTE:</strong> Note that the polymorphism demonstrated by <code>length</code> is of a different
+flavor than that of <code>+</code>, <code>*</code>, or other overloaded functions. The overloading of
+basic arithmetic functions to work on ints and reals is more in line with what
+might be referred to as &quot;ad hoc&quot; polymorphism, which is merely the compatibility
+of a single operator with several possibly heterogeneous implementations, with
+the precise implementation being chosen by context (such as type, in this case).
+It is thus important to note that while parametric polymorphism identifies a
+single, <em>general</em> implementation with many types, ad hoc polymorphism identifies
+several different implementations with different use cases. Ad hoc polymorphism
+is noticeably more inelegant than parametric polymorphism, but it is useful in
+the cases that you only have a small subset of types to extend an operator to.</p>
+<h2 id="type-inference"><a class="header" href="#type-inference">Type Inference</a></h2>
+<p>During compilation, SML will often need to determine exactly what the type of
+the expression that we are looking at. This is not so different of a problem
+than type-checking, however. On a high level, SML simply assigns everything a
+very general type, and then begins looking at clues from the context so as to
+narrow down what the &quot;most general type&quot; is. By &quot;most general type&quot;, we usually
+mean the most general type an expression can have, meaning that we do not use
+specific instances of polymorphic expressions, but just the polymorphic type
+itself. It is valid to say that the <code>length</code> function has type <code>int list -&gt; int</code>, but its most general type is <code>'a list -&gt; int</code>.</p>
+<blockquote>
+<p><strong>[Type Inference]</strong> A procedure employed by type systems to <em>infer</em> the type
+of expressions and functions, even when not explicitly given those types.</p>
+</blockquote>
+<p>This is how we can, for instance, determine that the function <code>fn x =&gt; x + 1</code>
+must have type <code>int -&gt; int</code>. <code>x</code> is not deliberately stated to have any type,
+but we know that it wouldn't make sense for <code>x</code> to be any other type than <code>int</code></p>
+<ul>
+<li>it would otherwise not type-check. Note that <code>x</code> cannot be <code>real</code>, since <code>+</code>
+cannot have an input type of <code>real * int</code>.</li>
+</ul>
+<p>We might also think of it like this - consider the expression <code>fn x =&gt; x + 1</code>.
+Most generally, we know that its type should an instance of type <code>'a</code>. Moreover, we see that it is a lambda expression, so it must now be an instance of <code>'a -&gt; 'b</code>. The input is <code>x</code>, so we assign <code>x</code> to be an instance of type <code>'a</code>. We then attempt to apply the <code>+</code> operator to <code>x</code>, so for this to typecheck, <code>x</code> must have type <code>int</code>. The outcome of an <code>int</code> and an <code>int</code> with <code>+</code> should be an <code>int</code>, and that's the entire function body, so the whole expression has type <code>int -&gt; int</code>.</p>
+<h2 id="conclusions"><a class="header" href="#conclusions">Conclusions</a></h2>
+<p>Parametric polymorphism offers us a clean and elegant way to extend <em>general
+implementations</em> to work across a spectrum of types. In this way, we can still
+preserve type safety while allowing us to avoid writing out the same
+implementations for many different types. Type inference also conveniently lets
+us omit manually determining the type of our code, instead being able to
+determine it from context. Ultimately, parametric polymorphism is a simple idea
+that offers us a great deal of versatility.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../concepts/datatypes.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../concepts/hofs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../concepts/datatypes.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../concepts/hofs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

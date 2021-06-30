@@ -1,0 +1,308 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Sequences - SML Help</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="A resource for learning SML">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../favicon.svg">
+                        <link rel="shortcut icon" href="../favicon.png">
+                <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+                <link rel="stylesheet" href="../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+                <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Welcome!</a></li><li class="chapter-item expanded "><a href="../start/index.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../start/install.html"><strong aria-hidden="true">1.1.</strong> Install &amp; run SML</a></li><li class="chapter-item expanded "><a href="../start/syntax.html"><strong aria-hidden="true">1.2.</strong> Syntax Cheatsheet</a></li><li class="chapter-item expanded "><a href="../start/common.html"><strong aria-hidden="true">1.3.</strong> Common Tasks</a></li></ol></li><li class="chapter-item expanded "><a href="../types/index.html"><strong aria-hidden="true">2.</strong> Types &amp; Signatures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/type.html"><strong aria-hidden="true">2.1.</strong> Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/bool.html"><strong aria-hidden="true">2.1.1.</strong> bool</a></li><li class="chapter-item expanded "><a href="../types/int.html"><strong aria-hidden="true">2.1.2.</strong> int</a></li><li class="chapter-item expanded "><a href="../types/real.html"><strong aria-hidden="true">2.1.3.</strong> real</a></li><li class="chapter-item expanded "><a href="../types/string.html"><strong aria-hidden="true">2.1.4.</strong> string</a></li><li class="chapter-item expanded "><a href="../types/function.html"><strong aria-hidden="true">2.1.5.</strong> function types</a></li></ol></li><li class="chapter-item expanded "><a href="../types/sig.html"><strong aria-hidden="true">2.2.</strong> Signatures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/list.html"><strong aria-hidden="true">2.2.1.</strong> list</a></li><li class="chapter-item expanded "><a href="../types/dict.html"><strong aria-hidden="true">2.2.2.</strong> dictionaries</a></li><li class="chapter-item expanded "><a href="../types/regex.html"><strong aria-hidden="true">2.2.3.</strong> regular expressions</a></li><li class="chapter-item expanded "><a href="../seq/seq.html"><strong aria-hidden="true">2.2.4.</strong> sequences</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../debugging/index.html"><strong aria-hidden="true">3.</strong> Debugging</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../debugging/errors.html"><strong aria-hidden="true">3.1.</strong> Common Errors</a></li><li class="chapter-item expanded "><a href="../debugging/hints.html"><strong aria-hidden="true">3.2.</strong> Debugging Hints</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/index.html"><strong aria-hidden="true">4.</strong> Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/basic.html"><strong aria-hidden="true">4.1.</strong> Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/eval.html"><strong aria-hidden="true">4.1.1.</strong> Evaluation</a></li><li class="chapter-item expanded "><a href="../concepts/eeq.html"><strong aria-hidden="true">4.1.2.</strong> Extensional Equivalence</a></li><li class="chapter-item expanded "><a href="../concepts/patternmatch.html"><strong aria-hidden="true">4.1.3.</strong> Pattern Matching</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/recind.html"><strong aria-hidden="true">4.2.</strong> Recursion and Induction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/induct.html"><strong aria-hidden="true">4.2.1.</strong> Inductive Proofs</a></li><li class="chapter-item expanded "><a href="../concepts/rec.html"><strong aria-hidden="true">4.2.2.</strong> Recursion</a></li><li class="chapter-item expanded "><a href="../concepts/tail.html"><strong aria-hidden="true">4.2.3.</strong> Tail Recursion</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/analysis.html"><strong aria-hidden="true">4.3.</strong> Asymptotic Analysis</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/workspan.html"><strong aria-hidden="true">4.3.1.</strong> Work and Span</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/datatypes.html"><strong aria-hidden="true">4.4.</strong> Datatypes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/poly.html"><strong aria-hidden="true">4.4.1.</strong> Parametric Polymorphism</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/hofs.html"><strong aria-hidden="true">4.5.</strong> Higher Order Functions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/curry.html"><strong aria-hidden="true">4.5.1.</strong> Currying and Staging</a></li><li class="chapter-item expanded "><a href="../concepts/common.html"><strong aria-hidden="true">4.5.2.</strong> Common HOFs and Partial Evaluation</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/control.html"><strong aria-hidden="true">4.6.</strong> Control Flow</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/cps.html"><strong aria-hidden="true">4.6.1.</strong> Continuation Passing Style</a></li><li class="chapter-item expanded "><a href="../concepts/exn.html"><strong aria-hidden="true">4.6.2.</strong> Exceptions</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/mods.html"><strong aria-hidden="true">4.7.</strong> Modules</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/mods.html"><strong aria-hidden="true">4.7.1.</strong> Basics and Ascription</a></li><li class="chapter-item expanded "><a href="../concepts/functors.html"><strong aria-hidden="true">4.7.2.</strong> Functors</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/apps.html"><strong aria-hidden="true">4.8.</strong> Applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/sequences.html" class="active"><strong aria-hidden="true">4.8.1.</strong> Sequences</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../examples/index.html"><strong aria-hidden="true">5.</strong> Examples</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../examples/basics.html"><strong aria-hidden="true">5.1.</strong> Basics</a></li><li class="chapter-item expanded "><a href="../examples/recursion.html"><strong aria-hidden="true">5.2.</strong> Recursion &amp; Induction</a></li></ol></li><li class="chapter-item expanded "><a href="../about.html">About</a></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">SML Help</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="sequences"><a class="header" href="#sequences">Sequences</a></h1>
+<p>In programming, we often need to write fast algorithms that use enumerable collections. Currently we use the list datatype to represent enumerable collections. There are some crucial limitations of lists though.</p>
+<p>A great application of SML's modules system is the sequence signature. The implementation of sequences (which is specific to 15150) allows for parallelism and accessing any element in O(1) time; it also comes with some helpful functions.</p>
+<p>Similar to our notation for lists, our notation for sequences looks like <code>&lt;x_1, x_2, x_3, ..., x_n&gt;</code>.</p>
+<h2 id="sequences-vs-lists"><a class="header" href="#sequences-vs-lists">Sequences vs. Lists</a></h2>
+<p>Here are some advantages / disadvantages of sequences and lists. Considering sequences and lists purely from an algorithm-writing perspective, the only con of sequences is the slow cons operation.</p>
+<table><thead><tr><th></th><th>Sequences</th><th>Lists</th></tr></thead><tbody>
+<tr><td>Accessing element i</td><td>O(1)</td><td>O(i)</td></tr>
+<tr><td>Parallelism</td><td>✅</td><td>❌</td></tr>
+<tr><td>Pattern matching</td><td>❌</td><td>✅</td></tr>
+<tr><td>cons operation</td><td>O(n) work</td><td>O(1) work</td></tr>
+<tr><td>Writing proofs</td><td>Difficult</td><td>Relatively easy</td></tr>
+</tbody></table>
+<h2 id="important-sequence-functions"><a class="header" href="#important-sequence-functions">Important sequence functions</a></h2>
+<p>Some frequently used sequence functions are <code>nth</code>, <code>tabulate</code>, <code>map</code>, <code>filter</code>, and <code>reduce</code>. For a comprehensive documentation of the sequence library, see http://www.cs.cmu.edu/~15150/resources/libraries/sequence.pdf. The following section will define each of the functions, give examples of their usage, and analyze their work and span.</p>
+<h3 id="seqnth"><a class="header" href="#seqnth"><code>Seq.nth</code></a></h3>
+<p>The function <code>Seq.nth</code> allows for extracting any element from a sequence in O(1) work and span. This is a significant advantage over lists, which could take up to O(n) work and span, in the case of finding the last element of the list. <code>Seq.nth</code> has type <code>'a seq -&gt; int -&gt; 'a seq</code>.</p>
+<p>An example: Let's say the sequence <code>S</code> is bound to the value <code>&lt;0, 1, 2&gt;</code>, which has type <code>int seq</code>. Then,</p>
+<ul>
+<li><code>Seq.nth S 0</code> evaluates to <code>0</code></li>
+<li><code>Seq.nth S 2</code> evaluates to <code>2</code></li>
+<li><code>Seq.nth S 5</code> raises an exception <code>Range</code>, which occurs when the index is too large or small.</li>
+</ul>
+<h3 id="seqtabulate"><a class="header" href="#seqtabulate"><code>Seq.tabulate</code></a></h3>
+<p>This is a very common tool for constructing a sequence. The type of <code>Seq.tabulate</code> is <code>(int -&gt; 'a) -&gt; int -&gt; 'a seq</code>. The first argument is a function which maps an index to a value, and the second argument is an integer specifying the length of the sequence. In general:</p>
+<p><code>Seq.tabulate f n ==&gt; &lt;f 0, f 1, f 2, ..., f (n-1)&gt;</code></p>
+<p>As a concrete example:</p>
+<p><code>Seq.tabulate (fn i =&gt; i) 5 ==&gt; &lt;0, 1, 2, 3, 4&gt;</code></p>
+<p>Let's try writing a function that reverses a sequence. For example,</p>
+<p><code>reverse &lt;0, 1, 2, 3, 4&gt; ==&gt; &lt;4, 3, 2, 1, 0&gt;</code></p>
+<p>This function <code>reverse</code> would have type <code>'a seq -&gt; 'a seq</code>. In the above example, we have a sequence of length 5. The element at index 0 moves to index 4, the element at index 1 moves to index 3, ..., the element at index 4 moves to index 0. Generally, if the sequence has length <code>n</code>, the element at index <code>i</code> should move to <code>n - i - 1</code>. It's pretty easy to make off-by-one errors here, so be careful and test sequence functions thoroughly! The implementation of <code>reverse</code> is as follows:</p>
+<pre><code>fun reverse S =
+  let
+    val n = Seq.length S
+  in
+    Seq.tabulate (fn i =&gt; Seq.nth S (n-i-1)) n
+  end
+</code></pre>
+<p>It's also possible to write functions that deal with nested sequences. Let's write a function <code>multtable : int -&gt; int seq seq</code> that, when given a positive integer <code>n</code>, makes an <code>n</code> by <code>n</code> multiplication table. For example,</p>
+<pre><code>multtable 5 ==&gt;
+&lt;&lt;0,0,0,0,0&gt;,
+ &lt;0,1,2,3,4&gt;,
+ &lt;0,2,4,6,8&gt;,
+ &lt;0,3,6,9,12&gt;,
+ &lt;0,4,8,12,16&gt;&gt;
+</code></pre>
+<p>This time, the function that we're tabulating with needs to output a sequence, like <code>&lt;0,2,4,6,8&gt;</code>.</p>
+<p>Here is the implementation:</p>
+<pre><code>fun multtable n =
+  Seq.tabulate (fn i =&gt;
+    Seq.tabulate (fn j =&gt; i*j) n) n
+</code></pre>
+<p>Let's analyze the work of <code>multtable</code>. The function <code>(fn i =&gt; Seq.tabulate (fn j =&gt; i*j) n)</code> has <code>O(n)</code> work. This is since the function evaluates <code>i*j</code> (for different values of <code>j</code>) <code>n</code> times. The function is called <code>n</code> times (from the outer tabulate). Therefore, the total work of this function is <code>O(n^2)</code>.</p>
+<p>For the span analysis, note that the function <code>(fn i =&gt; Seq.tabulate (fn j =&gt; i*j) n)</code> has <code>O(1)</code> span, because <code>i*j</code> is evaluated in parallel for all the different values of <code>j</code>. Then, the entire function has <code>O(1)</code> span because the function <code>(fn i =&gt; Seq.tabulate (fn j =&gt; i*j) n)</code> is called all in parallel.</p>
+<p>In general, the cost graph for <code>Seq.tabulate</code> looks like this.</p>
+<figure class="aligncenter">
+    <img src="../assets/tabulatecost.png"
+    width="600" class="center"/>
+    <figcaption>The cost graph for Seq.tabulate. Each branch at the top represents a different independent task for the processor(s) to perform.  </figcaption>
+</figure>
+<p>The work of <code>Seq.tabulate f S</code> is the sum of all costs in the graph above. The span is the maximum cost of any one of the branches, because the function is called on 0, 1, ..., n-1 in parallel.</p>
+<h3 id="seqmap"><a class="header" href="#seqmap"><code>Seq.map</code></a></h3>
+<p><code>Seq.map</code> is similar to <code>List.map</code>. The type of <code>Seq.map</code> is <code>('a -&gt; 'b) -&gt; 'a seq -&gt; 'b seq</code>. Given a function <code>f : 'a -&gt; 'b</code> and a sequence <code>&lt;x_1, x_2, x_3, ..., x_n&gt; : 'a seq</code>, we have:</p>
+<pre><code>Seq.map f &lt;x_1, x_2, x_3, ..., x_n&gt; = &lt;f x_1, f x_2, f x_3, ..., f x_n&gt;
+</code></pre>
+<p>The work of evaluating the above expression is (work of doing <code>f x_1</code>) + (work of doing <code>f x_2</code>) + ... + (work of doing <code>f x_n</code>).
+The calls <code>f x_1, f x_2, f x_3, ..., f x_n</code> are all done in parallel. So, the span is the max of (span of doing <code>f x_1</code>, span of doing <code>f x_2</code>, ..., span of doing <code>f x_n</code>).</p>
+<h3 id="seqreduce"><a class="header" href="#seqreduce"><code>Seq.reduce</code></a></h3>
+<p><code>Seq.reduce</code> is like <code>List.foldr</code>, but with sequences. The type is <code>Seq.reduce : ('a * 'a -&gt; 'a) -&gt; 'a -&gt; 'a seq -&gt; 'a</code>. In English, <code>Seq.reduce</code> takes in a combining function, a base value, and a sequence to &quot;reduce&quot;. For example, <code>Seq.reduce g z &lt;x_0, x_1, x_2, ..., x_n&gt;</code> is extensionally equivalent to <code>g(x_0, g(x_1, g(x_2, ..., g(x_n, z)))... )</code>. Notice that the combining function is <code>'a * 'a -&gt; 'a</code> instead of <code>'a * 'b -&gt; 'b</code>, as in <code>List.foldr</code>.</p>
+<p>The neat part is, <code>Seq.reduce</code> also supports parallelism. In particular, when a combining function <code>g</code> has constant span, then <code>Seq.reduce g z S</code> has O(log |S|) span. We pay a slight cost: the function <code>g</code> must be associative, which means that <code>g(g(a,b),c) = g(a,g(b,c))</code> for all <code>a,b,c</code>. Furthermore, <code>z</code> must be the identity for <code>g</code>, which means <code>g(a,z) = g(z,a) = a</code> for all <code>a</code>.</p>
+<p>To analyze the work and span, let's consider how SML actually evaluates <code>Seq.reduce g z S</code>. It first calls the combining function <code>g</code> on each pair of elements: <code>x_0</code> and <code>x_1</code>, <code>x_2</code> and <code>x_3</code>, and so on. All of these calls can be made in parallel. Then, we combine the intermediate results together. At the very end, all of the elements of <code>S</code> will be combined together.</p>
+<figure class="aligncenter">
+    <img src="../assets/reducecost.png"
+    width="600" class="center"/>
+    <figcaption>The cost graph for Seq.reduce. Each branch at the top represents a different independent task for the processor(s) to perform.  </figcaption>
+</figure>
+<p>The work is the sum of doing all the work shown in the cost graph, while the span is the longest path through the cost graph. Therefore, for constant <code>g</code>, the work of <code>Seq.reduce g z S</code> is O(|S|), and the span is O(log |S|).</p>
+<p>An example of using this function is finding the sum of a sequence. So, <code>Seq.reduce (op +) 0 &lt;1, 2, 3, 4&gt;</code> evaluates to <code>10</code>.</p>
+<h3 id="seqfilter"><a class="header" href="#seqfilter"><code>Seq.filter</code></a></h3>
+<p>Again, a sequence function is analogous to a list function. <code>Seq.filter</code> is like <code>List.filter</code>. It takes in a predicate function of type <code>'a -&gt; bool</code> and a sequence of type <code>'a seq</code>, and keeps elements <code>x</code> such that <code>p x</code> evaluates to true. However, <code>Seq.filter</code> is optimized for parallel performance. The work is O(|S|). The span is O(log |S|), which may seem surprising as the predicate function may be applied to all elements in parallel. However, it is difficult to find out the number of elements that satisfy the predicate, and thus it's not possible to find the length of the filtered sequence in O(1). The implementation details are tricky, but use a divide-and-conquer approach just like <code>Seq.reduce</code>.</p>
+<h3 id="seqappend"><a class="header" href="#seqappend"><code>Seq.append</code></a></h3>
+<p>Just like <code>@</code>, the function <code>Seq.append : 'a seq * 'a seq -&gt; 'a seq</code> puts two sequences together. The work to create the appended sequence, such as in the call <code>Seq.append (S1,S2)</code>, is O(|S1| + |S2|). To justify this, think about how <code>Seq.append</code> may be implemented using <code>Seq.tabulate</code>. The tabulating function maps indices between 0 and |S1|-1 to elements from S1, and maps indices between |S1| and |S1 + S2| - 1 to elements from S2. Additionally, the span of <code>Seq.append</code> is O(1) regardless of the input sequences. This makes intuitive sense because <code>Seq.tabulate</code> also has O(1) span, when given a constant tabulating function.</p>
+<h2 id="examples-of-functions-involving-sequences"><a class="header" href="#examples-of-functions-involving-sequences">Examples of functions involving sequences</a></h2>
+<h2 id="exercise-pascals-triangle"><a class="header" href="#exercise-pascals-triangle">Exercise: Pascal's triangle</a></h2>
+<p>Our task is to write a function <code>pascal : int -&gt; int seq seq</code>. Given a nonnegative integer <code>n</code>, <code>pascal n</code> evaluates to the first <code>n+1</code> rows of Pascal's triangle. For example:</p>
+<pre><code>pascal 5 =
+&lt;&lt;1&gt;,
+ &lt;1,1&gt;,
+ &lt;1,2,1&gt;,
+ &lt;1,3,3,1&gt;,
+ &lt;1,4,6,4,1&gt;,
+ &lt;1,5,10,10,5,1&gt;&gt;
+</code></pre>
+<p>Let's try to do this task without using the formula for entries of Pascal's triangle. The 0th row of Pascal's triangle is our base case. Then, we can add elements from the (n-1)th row to calculate elements in the nth row (in parallel!). This is an incremental approach: we add one row of the answer at a time.</p>
+<p>This problem has a bit of a dynamic programming flavor, in that we should remember the previous row to help calculate new rows. One issue is that using <code>Seq.append</code> or <code>Seq.cons</code> to add a row to a sequence is expensive. However, remember the pros and cons of sequences vs. lists! Adding on a row to a list requires just O(1) work. Therefore, our approach for this problem will use both sequences and lists. The solution is below. Note that it uses the function <code>reverse</code> from the <code>Seq.tabulate</code> section of this article.</p>
+<pre><code>fun pascalH 0 = [Seq.singleton 1]
+  | pascalH n =
+    let
+      val (prev::rest) = pascalH (n-1)
+      fun rowmaker 0 = 1
+        | rowmaker i =
+          if i = n then 1
+          else Seq.nth prev i + Seq.nth prev (i-1)
+      val new = Seq.tabulate rowmaker (n+1)
+    in
+      new::prev::rest
+    end
+
+fun pascal n = reverse (Seq.fromList (pascalH n))
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../concepts/apps.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../examples/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../concepts/apps.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../examples/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>
