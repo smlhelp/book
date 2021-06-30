@@ -14,7 +14,7 @@
     - [string](types/string.md)
     - [function types](types/function.md)
     - [list](types/list.md)
-    - [options](types/option.md)
+    - [options](types/options.md)
   - [Signatures](types/sig.md)
     - [dictionaries](types/dict.md)
     - [regular expressions](types/regex.md)
