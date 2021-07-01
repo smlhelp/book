@@ -16,3 +16,8 @@ The `Permute` module contains utilities for permutating and sorting lists. The f
 
 [Documentation](https://github.com/smlhelp/aux-library/blob/main/documentation/permute.pdf) -- [Code](https://github.com/smlhelp/aux-library/blob/main/Permute.sml)
 
+
+## CPS Iterate
+The `CPSIterate` module allows for imperative-programming-esque loops, but defined entirely functionally and entirely in continuation passing style. 
+
+[Documentation](https://github.com/smlhelp/aux-library/blob/main/documentation/cpsIterate.pdf) -- [Code](https://github.com/smlhelp/aux-library/blob/main/CPSIterate.sml)
