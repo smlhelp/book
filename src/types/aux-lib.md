@@ -10,6 +10,8 @@ Provides polymorphic binary trees in a structure `Tree`, with a couple basic met
 
 In particular, this includes the functions `inord` and `foldr`, which are used in the `OrdTreeSet` functor (see **Sets** below) and critical to the associated representation independence result.
 
+[Code](https://github.com/smlhelp/aux-library/blob/main/Tree.sml)
+
 ## Timing
 The `Timing` module includes types for encoding years, months, days, times, time zones, etc., as well as numerous utilities for working with them. This module primarily serves as an extended example of how to use custom SML `datatypes` to encode data, and how to take advantage of pattern matching to write elegant code. This module includes some imperative features (achieved utilizing basis modules unique to SMLNJ), such as stopwatches, countdown timers, and functions which obtain the current time. 
 
