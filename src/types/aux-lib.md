@@ -5,6 +5,8 @@ This page collects the documentation of the [Auxiliary Library](https://github.c
 
 Unless otherwise stated, the documentation assumes SMLNJ v110.99. Some features (e.g. modifications of the pretty printer) might not work in other versions of SMLNJ.
 
+All the documents & code here should be considered "work-in-progress". If you spot an error in either, you can report it [here](https://forms.gle/yuyc17oBnT4JvG5h9).
+
 ## Trees
 Provides polymorphic binary trees in a structure `Tree`, with a couple basic methods for working with them. 
 
