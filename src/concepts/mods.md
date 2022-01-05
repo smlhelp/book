@@ -213,6 +213,7 @@ struct
     fun get_y (x, y) = y
     fun get_dist (x, y) = Math.sqrt (Math.pow (x, 2.0) + Math.pow (y, 2.0))
 end
+```
 
 ```sml
 structure PolarGeo : GEOMETRY =
