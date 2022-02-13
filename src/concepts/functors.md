@@ -79,7 +79,7 @@ struct
 
     fun size S = S.size S
 
-    fun empty S = S.empty
+    val empty = S.empty
 end
 ```
 
@@ -146,7 +146,7 @@ struct
 
     fun size S = S.size S
 
-    fun empty S = S.empty
+    val empty = S.empty
 end
 ```
 
@@ -217,7 +217,7 @@ struct
 
     fun size S = S.size S
 
-    fun empty S = S.empty
+    val empty = S.empty
 
 end
 
@@ -251,7 +251,7 @@ struct
 
     fun size S = S.size S
 
-    fun empty S = S.empty
+    val empty = S.empty
 
 end
 
