@@ -201,7 +201,7 @@ What issues can occur if we forget about the existence of this syntactic sugar?
 Consider the following code:
 
 ```sml
-functor BoundedStack (structure S: STACK) :> BOUNDED_STACK =
+functor BoundedStack (structure S : STACK) :> BOUNDED_STACK =
 struct
     type 'a t = 'a S.t
 
@@ -234,7 +234,7 @@ the inputs. Even though we have only specified one field, not including the
 ```sml
 functor BoundedStack (UnnamedStructure :
                       sig
-                        structure S: STACK
+                        structure S : STACK
                       end) :> BOUNDED_STACK =
 struct
     type 'a t = 'a S.t
