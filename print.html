@@ -1851,7 +1851,7 @@ We are really looking for <em>valuability of arguments</em>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="inductive-proofs"><a class="header" href="#inductive-proofs">Inductive Proofs</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="recursion"><a class="header" href="#recursion">Recursion</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="tail-recursion"><a class="header" href="#tail-recursion">Tail Recursion</a></h1>
-<p><em>By Eunice Chen and Brandon Wu, December 2020</em></p>
+<p><em>By Eunice Chen and Brandon Wu, December 2020. Revised March 2022</em></p>
 <p>In programs, functions often make calls to either themselves (recursive calls) or other functions. There are two types of function calls: non-tail calls, and <strong>tail calls</strong>. A function call is called a <strong>tail call</strong> if the caller does not modify or examine the result of the function call.</p>
 <p>If every recursive call made by a function is a <strong>tail call</strong>, that function is called <strong>tail recursive</strong>. Put another way, a function is <strong>tail recursive</strong> if the last operation performed by the function is the recursive call.</p>
 <p>Suppose we have the following function to sum the elements of a list:</p>
@@ -1912,7 +1912,7 @@ fun sum L = tsum (L, 0)
 </code></pre>
 <p>This is closer, but we still are doing computation after the recursive call: we add the results of the recursive call to each other, then return. Let's try to use the accumulator idea we had earlier in the <code>sum</code> function, but this time, since we calculate the <code>n</code>th and (<code>n-1</code>)th Fibonacci number, we will pass in two accumulators. Accumulator <code>a</code> will hold the <code>n</code>th Fibonacci number, and accumulator <code>b</code> will hold the (<code>n-1</code>)th Fibonacci number.</p>
 <pre><code class="language-sml">fun fib' (0, a, b) = a
-  | fib' (n, a, b) = fib' (n-1, a + b, b)
+  | fib' (n, a, b) = fib' (n-1, a + b, a)
 </code></pre>
 <p>And if we call <code>fib' (n, 1, 0)</code>, observe that we will indeed get the correct result.</p>
 <h1 id="further-practice"><a class="header" href="#further-practice">Further Practice</a></h1>
@@ -2724,7 +2724,7 @@ manner. This is an important idea with many applications, such as when building
 up a data structure to make queries to, or in graphics when a lot of work must
 first be done to preprocess the given data.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="common-hofs-and-partial-evaluation"><a class="header" href="#common-hofs-and-partial-evaluation">Common HOFs and Partial Evaluation</a></h1>
-<p><em>By Brandon Wu, June 2020</em></p>
+<p><em>By Brandon Wu, June 2020. Revised March 2022</em></p>
 <p>In this section, we will explore a number of common higher-order functions that
 we will make use of. These higher-order functions embody <em>design patterns</em> that
 are common in programming, and represent a <em>generalized notion</em> of a large space
@@ -2896,10 +2896,10 @@ by the given higher-order function.</p>
 <p>A key strength of higher-order functions lies in <em>partial evaluation</em>, where we
 can use higher-order functions to further derive other functions (and possibly
 higher-order functions, themselves). It is fine for, in the case of finding the
-sum of a single list <code>L</code>, to simply evaluate <code>map (op+) L</code>, but in the general
-case it is a strength that we can bind the function <code>map (op+)</code> to the name
+sum of a single list <code>L</code>, to simply evaluate <code>foldr (op+) 0 L</code>, but in the general
+case it is a strength that we can bind the function <code>foldr (op+) 0</code> to the name
 <code>sum</code>. This comes in handy especially if we want to sum over <em>many</em> lists, so
-that we don't continuously have to compute the result of <code>map (op+)</code> (though it
+that we don't continuously have to compute the result of <code>foldr (op+) 0</code> (though it
 has negligible computational cost, admittedly).</p>
 <p>Seen in this way, it is as if higher-order functions are at the root of a large
 <em>tree</em> of potential functions, where each node in the tree is an
@@ -2932,7 +2932,7 @@ figure figcaption {
 }
 </style>
 <h1 id="continuation-passing-style"><a class="header" href="#continuation-passing-style">Continuation Passing Style</a></h1>
-<p><em>By Brandon Wu, June 2020</em></p>
+<p><em>By Brandon Wu, June 2020. Revised March 2022</em></p>
 <p>We have seen how we can write functions that are <em>tail recursive</em>, in that they
 only make recursive calls as <em>tail calls</em>, where the recursive calls is the last
 thing that the function does (i.e. there is no deferred work). This commonly was
@@ -3211,14 +3211,14 @@ subtree.</p>
 we should visit next. Clearly, we visit <code>T2</code> first, so the red brick
 corresponding to <code>T2</code> is on top.</p>
 <p>Our next move is to pop it off first, which will cause our expression to now
-have three bricks - two corresponding to the children of <code>T3</code>, and one
+have three bricks - two corresponding to the children of <code>T2</code>, and one
 corresponding to <code>T4</code>. We can visualize the next phase as the following:</p>
 <figure class="aligncenter">
     <img src="concepts/../assets/phase2.png" alt="Phase 2"
     width="3000" class="center">
     <figcaption class="center"><b>Fig 7.</b> Phase 2 of evaluation of the tree T. Note that two extra "bricks" have been added due to evaluation of treeSumCPS T2. </figcaption>
 </figure>
-<p>where the brick labelled <code>treeSumCPS E</code> corrresponds to the empty child of
+<p>where the brick labelled <code>treeSumCPS E</code> corresponds to the empty child of
 <code>T2</code>. Note that we have retained the blue flag at <code>T4</code> and left its brick alone,
 since for all intents and purposes we have not yet &quot;touched&quot; it - we have not
 evaluated our stack to that point. Note that due to corresponding to the <code>Empty</code>
@@ -3327,8 +3327,8 @@ fun knapsackCPS
   : 'a =
   case L of
     [] =&gt; if minVal &lt;= 0 andalso maxWeight &gt;= 0 then sc [] 
-                                                else k ()
-  | (v, w)::xs =&gt; if maxWeight &lt; 0 then k ()
+                                                else fc ()
+  | (v, w)::xs =&gt; if maxWeight &lt; 0 then fc ()
                                    else
     knapsackCPS ((v, w)::xs) (minVal - v) (maxWeight - w) 
     (fn L' =&gt; sc ((v, w)::L')) (fn () =&gt; knapsackCPS xs minVal maxWeight sc fc)
@@ -3351,7 +3351,7 @@ to <em>backtrack</em> and try something else entirely. We will demonstrate how t
 realized in the algorithm in the next part.</p>
 <pre><code class="language-sml">case L of
     [] =&gt; if minVal &lt;= 0 andalso maxWeight &gt;= 0 then sc [] 
-                                                else k ()
+                                                else fc ()
 </code></pre>
 <p>For the base case, however, we know that if we are given no items whatsoever,
 then we cannot place anything in our knapsack. Thus, we have no choice but to
@@ -3381,7 +3381,7 @@ it is very helpful reduce the problem to making a <em>binary choice</em>, and th
 simply explore the consequences of doing so from there. In this case, we can
 imagine our choice to be whether to put the first element of the list into the
 knapsack, or to not. </p>
-<pre><code class="language-sml">| (v, w)::xs =&gt; if maxWeight &lt; 0 then k ()
+<pre><code class="language-sml">| (v, w)::xs =&gt; if maxWeight &lt; 0 then fc ()
                                    else
     knapsackCPS ((v, w)::xs) (minVal - v) (maxWeight - w) 
     (fn L' =&gt; sc ((v, w)::L')) (fn () =&gt; knapsackCPS xs minVal maxWeight sc fc)

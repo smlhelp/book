@@ -137,7 +137,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="tail-recursion"><a class="header" href="#tail-recursion">Tail Recursion</a></h1>
-<p><em>By Eunice Chen and Brandon Wu, December 2020</em></p>
+<p><em>By Eunice Chen and Brandon Wu, December 2020. Revised March 2022</em></p>
 <p>In programs, functions often make calls to either themselves (recursive calls) or other functions. There are two types of function calls: non-tail calls, and <strong>tail calls</strong>. A function call is called a <strong>tail call</strong> if the caller does not modify or examine the result of the function call.</p>
 <p>If every recursive call made by a function is a <strong>tail call</strong>, that function is called <strong>tail recursive</strong>. Put another way, a function is <strong>tail recursive</strong> if the last operation performed by the function is the recursive call.</p>
 <p>Suppose we have the following function to sum the elements of a list:</p>
@@ -198,7 +198,7 @@ fun sum L = tsum (L, 0)
 </code></pre>
 <p>This is closer, but we still are doing computation after the recursive call: we add the results of the recursive call to each other, then return. Let's try to use the accumulator idea we had earlier in the <code>sum</code> function, but this time, since we calculate the <code>n</code>th and (<code>n-1</code>)th Fibonacci number, we will pass in two accumulators. Accumulator <code>a</code> will hold the <code>n</code>th Fibonacci number, and accumulator <code>b</code> will hold the (<code>n-1</code>)th Fibonacci number.</p>
 <pre><code class="language-sml">fun fib' (0, a, b) = a
-  | fib' (n, a, b) = fib' (n-1, a + b, b)
+  | fib' (n, a, b) = fib' (n-1, a + b, a)
 </code></pre>
 <p>And if we call <code>fib' (n, 1, 0)</code>, observe that we will indeed get the correct result.</p>
 <h1 id="further-practice"><a class="header" href="#further-practice">Further Practice</a></h1>

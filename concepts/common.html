@@ -137,7 +137,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="common-hofs-and-partial-evaluation"><a class="header" href="#common-hofs-and-partial-evaluation">Common HOFs and Partial Evaluation</a></h1>
-<p><em>By Brandon Wu, June 2020</em></p>
+<p><em>By Brandon Wu, June 2020. Revised March 2022</em></p>
 <p>In this section, we will explore a number of common higher-order functions that
 we will make use of. These higher-order functions embody <em>design patterns</em> that
 are common in programming, and represent a <em>generalized notion</em> of a large space
@@ -309,10 +309,10 @@ by the given higher-order function.</p>
 <p>A key strength of higher-order functions lies in <em>partial evaluation</em>, where we
 can use higher-order functions to further derive other functions (and possibly
 higher-order functions, themselves). It is fine for, in the case of finding the
-sum of a single list <code>L</code>, to simply evaluate <code>map (op+) L</code>, but in the general
-case it is a strength that we can bind the function <code>map (op+)</code> to the name
+sum of a single list <code>L</code>, to simply evaluate <code>foldr (op+) 0 L</code>, but in the general
+case it is a strength that we can bind the function <code>foldr (op+) 0</code> to the name
 <code>sum</code>. This comes in handy especially if we want to sum over <em>many</em> lists, so
-that we don't continuously have to compute the result of <code>map (op+)</code> (though it
+that we don't continuously have to compute the result of <code>foldr (op+) 0</code> (though it
 has negligible computational cost, admittedly).</p>
 <p>Seen in this way, it is as if higher-order functions are at the root of a large
 <em>tree</em> of potential functions, where each node in the tree is an
