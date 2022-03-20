@@ -1,5 +1,5 @@
 # Common HOFs and Partial Evaluation
-_By Brandon Wu, June 2020_
+_By Brandon Wu, June 2020. Revised March 2022_
 
 In this section, we will explore a number of common higher-order functions that
 we will make use of. These higher-order functions embody _design patterns_ that
@@ -212,10 +212,10 @@ by the given higher-order function.
 A key strength of higher-order functions lies in _partial evaluation_, where we
 can use higher-order functions to further derive other functions (and possibly
 higher-order functions, themselves). It is fine for, in the case of finding the
-sum of a single list `L`, to simply evaluate `map (op+) L`, but in the general
-case it is a strength that we can bind the function `map (op+)` to the name
+sum of a single list `L`, to simply evaluate `foldr (op+) 0 L`, but in the general
+case it is a strength that we can bind the function `foldr (op+) 0` to the name
 `sum`. This comes in handy especially if we want to sum over _many_ lists, so
-that we don't continuously have to compute the result of `map (op+)` (though it
+that we don't continuously have to compute the result of `foldr (op+) 0` (though it
 has negligible computational cost, admittedly).
 
 Seen in this way, it is as if higher-order functions are at the root of a large
