@@ -64,7 +64,7 @@ in `L` and `false` otherwise. We can do this with this same idea of iteration.
 
 ```sml
 fun search ([] : int list, y : int) : bool = false
-  | search (x::xs : int list, y ; int) : bool =
+  | search (x::xs : int list, y : int) : bool =
     if x = y
     then true (* we can stop iterating if we find the value *)
     else search (xs, y)
@@ -74,7 +74,7 @@ Alternatively we can write this as:
 
 ```sml
 fun search ([] : int list, y : int) : bool = false
-  | search (x::xs : int list, y ; int) : bool =
+  | search (x::xs : int list, y : int) : bool =
     (x = y) orelse (search (xs, y))
 ```
 
@@ -157,5 +157,5 @@ fun search ([] : int list, y : int) : bool = false
     (print (Int.toString x); (x = y) orelse (search (xs, y)))
 ```
 
-It should be noted that `;` often doens't ''play nice'' with many things in SML
-so it is best to enclose every sequene of expressions with parentheses.
+It should be noted that `;` often doesn't ''play nice'' with many things in SML,
+so it is best to enclose every sequence of expressions with parentheses as we did above.
