@@ -230,7 +230,7 @@ structure BoundedStack2 = BoundedStack(Stack2)
 </code></pre>
 <p><strong>NOTE</strong>: SML functors are <em>generative</em>, meaning that applying the same functor
 to the same structure twice yields two unique structures. As such,
-<code>'a BoundedStack1.t</code> and <code>'a BoundedStack2.t</code> are recognized as being two
+if we had <code>structure BS1 = BoundedStack(Stack1)</code> and <code>structure BS2 = BoundedStack(Stack1)</code>, then the types <code>BS1.t</code> and <code>BS2.t</code> are recognized as being two
 distinct types, despite the fact that they are &quot;constructed&quot; in the same manner.</p>
 <p><code>BoundedStack1</code> and <code>BoundedStack2</code> implement <code>BOUNDED_STACK</code>, so they all can access
 the fields of the <code>BOUNDED_STACK</code> signature. Presumably, the only change they display
