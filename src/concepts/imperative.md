@@ -159,8 +159,6 @@ the side effects up until now.
 > 😰 If you try to call this implementation of `fact` more than once, something
 > unexpected might happen. Can you figure out what it is, and why that is?
 
-Another example of how you might be able to use semicolons is with exceptions.
-In can help serve as a null check
 
 # Operations
 
