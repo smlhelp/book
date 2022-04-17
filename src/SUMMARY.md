@@ -45,6 +45,8 @@
         - [Functors](concepts/functors.md)
     - [Applications](concepts/apps.md)
         - [Sequences](concepts/sequences.md)
+    - [Lazy Evaluation](concepts/lazy.md)
+    - [Imperative](concepts/imperative.md)
 - [Examples](examples/README.md)
   - [Basics](examples/basics.md)
   - [Recursion & Induction](examples/recursion.md)
