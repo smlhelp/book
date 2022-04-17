@@ -1,5 +1,5 @@
 # Lazy Evaluation
-_By Len Huang, Cooper Pierce, and Brandon Wu, January 2021_
+_By Len Huang, Cooper Pierce, and Brandon Wu, January 2021. Rewritten by Thea Brick, April 2022._
 
 In programming languages, there's a few different strategies by which arguments
 of a function call are evaluated. One you should be familiar with is **_eager_**
@@ -16,7 +16,8 @@ called **thunks**.
 Let's say I have the function `double : int -> int` which doubles a number, and
 `square : int -> int`, which squares a number. In both **_lazy_** and
 **_eager_** evaluation, `double (square (double 2)) ==>* 32`. However, they differ
-in the way which they "arrive" at `32`.
+in the way which they "arrive" at `32`. SML is an eager language, so the code
+(eagerly) steps as follows:
 
 ```sml
 val double : int -> int = fn n => 2 * n
@@ -29,16 +30,17 @@ val square : int -> int = fn n => n * n
 ==> 32
 ```
 
-You can see that in an eager language, we evaluated the arguments first.
-However, in the lazy language, arguments will be evaluated as _needed_.
-The notion of _need_ will be subjective relative to what's being implemented.
+You can see that we evaluated the arguments first. However, when doing things
+lazily, arguments will be evaluated as _needed_. The notion of _need_ will be
+subjective relative to what's being implemented. The question now remains, since
+SML is eager, how do we do things lazily?
 
 ### Introducing Laziness with Thunks
 
-SML is an eager language. But what if we wanted to simulate lazy evaluation?
-First we need a way to wait until we _need_ an argument to evaluate it. This
-is where **thunks** come into play. A **thunk** is a function of type
-`unit -> t` for some type `t`. They help us represent this notion of
+Since SML is an eager language, to have lazy evaluation we must simulate it in
+some way. To do this, we need a way to wait until we _need_ an argument to
+evaluate it. This is where **thunks** come into play. A **thunk** is a function
+of type `unit -> t` for some type `t`. They help us represent this notion of
 "evaluation by need" by wrapping an expression in a function, which delays
 the computation of that expression.
 
@@ -187,6 +189,38 @@ infinite loop and eventually overflow.
 > `raise exception Overflow [overflow]`. We'll get em next time 😞
 >
 > _- The inner dialogue of the SML Compiler_
+
+## Thunks and Continuations
+
+Another way to think of **thunks** is in relation to continuations. We've seen
+before continuations being passed into functions as a way to represent _what
+instructions need to be executed_. Here, we are using the same idea but rather
+than forcing all those instructions to be executed now, we are passing them off
+so that they can be done when and if they are needed.
+
+In the `fibs` example we can see this where the `lazylist` is defined to be the
+specific element of the fibonacci sequence, and a continuation (thunk) to
+produce the next element (along with a new continuation to compute the next next
+element, and so on infinitely).
+
+Another example that may be more enlightening is the function that tries to
+find all elements in a list that satisfy some predicate `p`:
+```sml
+fun listFind (p : 'a -> bool) ([] : 'a list) : 'a lazylist = Nil
+  | listFind p (x::xs) =
+        if p x
+        then Cons (x, fn () => listFind p xs)
+        else listFind p xs
+
+val p = fn x => x mod 2 = 0
+val res : int lazylist = listFind p [1,2,3,4]
+```
+Here, `res` would be bound to `Cons(2, fn () => listFind p [3,4])`. Our program
+is basically saying "I found this element, 2, that satisfies your predicate, and
+if you'd like to find another element: here's a continuation/thunk that will do
+that for you". So rather than having to evaluate a predicate (with a
+potentially large cost-bound) over a potentially huge list, we can be lazy, and
+only look at what we need.
 
 # Conclusion
 
