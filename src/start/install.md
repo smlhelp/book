@@ -39,6 +39,7 @@ are using regular vim. If you are using neovim or some other vim derivative,
 I'll provide links to the repositories I use, but *don't* run the exact commands -
 they are for vim users specifically. Furthermore, this guide is for unix based machines -
 not Windows. If you are on Windows, please check the associated repositories for instructions.
+(Note, this will Work on WSL if you are using that, just not pure Windows)
 
 ### Vim - the quick and easy version
 
@@ -49,7 +50,7 @@ autocmd BufNewFile,BufRead *.fun set syntax=sml
 autocmd BufNewFile,BufRead *.sig set syntax=sml
 ```
 to your `.vimrc` file. You can find this file at `~/.vimrc`. You should now have syntax
-highlighting!
+highlighting on your `.sig` and `.fun` files!
 
 ### Vim - the nitty gritty (but totally worth it) version
 
@@ -57,7 +58,7 @@ highlighting!
 
 If you already have one, feel free to skip this step!
 
-There are many many choices for a Vim plugin manager, but I recommend using [Vim-Plug](https://github.com/junegunn/vim-plug). You can set it up with:
+There are many many choices for a Vim plugin manager, but I recommend using [Vim-Plug](https://github.com/junegunn/vim-plug). You can install it with:
 
 `curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim`
 
@@ -114,7 +115,8 @@ Just uncomment the line (remove the quote at the front):
 `"au FileType sml setlocal conceallevel=2`
 
 #### Step 5) Keybindings
-If you want to use some of the other features, just look at the keybind config, most useful, in my opinion, 
+If you want to use some of the other features, just look at the keybind config. 
+The most useful, in my opinion, 
 is opening the REPL within vim which is by default `<leader> is`. I believe `<leader>` is `\` by default, so in order to open the REPL type `\is`. 
 If this doesn’t work, you probably have a custom leader key which you can check with `:let mapleader`. Likewise,
 to close the REPL is `<leader> ik`. 
