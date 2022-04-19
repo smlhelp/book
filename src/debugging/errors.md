@@ -19,16 +19,12 @@ we only have one cons constructor (in particular `5::[]`). SML, understandably,
 won't know what to do and will raise a nonexhaustive match exception and crash.
 
 This can occur in other places besides function inputs. For example,
-consider the following function:
+consider the following expression:
 ```sml
-fun example x =
-    case x of 
-         5 => "yay!"
-       | 6 => "boo!"
+val x = case [] of x::xs => 5
 ```
-What would happen if we called `example 7`? Again, SML wouldn't know what to do (as 7 is not equal to 5 or 6) and would
-again raise a nonexhaustive match error. That is to say, nonexhaustive match errors
-can occur wherever you have some sort of pattern matched cases.
+
+Since `[]` cannot pattern match to `x::xs`, SML raises a match nonexhaustive exception.
 
 #### Should we always be afraid of nonexhaustive warnings?
 The short answer is yes, the long answer is no. It is ok to have a nonexhaustive
