@@ -22,7 +22,7 @@ that are bound to identifiers, which cannot be determined _a priori_ at compile
 time. As such, we have no way of telling beforehand if such errors will occur -
 forcing us to define some notion of a _run-time error_.
 
-There are numerous examples of built-in SML exceptions however, you will encounter
+There are numerous examples of built-in SML exceptions, however, you will encounter
 some far more than others. The following is a brief overview of what they are,
 when you will encounter them, and how to deal with them.
 
@@ -68,7 +68,8 @@ Bind is similar to match, but crucially different.
 While Match is raised when you are unable to match with any clause, Bind is raised when you try to "force" a binding that cannot happen. 
 An example of this would be `val 5 = 4`. SML we see that you are trying to force the value `4` to be assigned to the value `5` which
 obviously cannot happen.
-In pattern matching, on the other hand, while we are attempting to produce a binding in case expressions/function clauses, we aren't "forcing" any bindings. 
+
+In pattern matching, while we are attempting to produce a binding in case expressions/function clauses, we aren't "forcing" any bindings. 
 Instead, we are simply attempting to find a case that could match our expression (and we only bind to the pattern if we find a successful case). 
 If we aren't able to find a case that works, we raise `Match` to indicate that we tried to find a case that could match with our expression, 
 but couldn't due to non-exhaustive casing.
