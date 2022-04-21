@@ -1,12 +1,56 @@
 # Common Errors
-_By Eunice Chen, January 2021_. _Revised February 2021_
+_By Eunice Chen, January 2021_. _Revised April 2022_
 
 In this section, we will explore some common mistakes and errors that may occur
 when programming in Standard ML.
 
 ## Casing Issues
 ### Match Nonexhaustive
-Though the code will still compile and run with this warning, it often indicates that the logic in your code does not cover all cases. It is always a good idea to check if you are missing some cases in your thinking, or if the warning comes from a scenario that will never happen according to the function specification. Even if there is a case that may not happen according to the function specification, it may be useful to raise an exception in the "impossible" case to get rid of this warning, because if your code somehow violates the specification and ends up in this case, then you can catch the error and debug it.
+A Match Nonexhaustive warning occurs when your cases in a pattern matching expression, are, well, non-exhaustive. This means that
+there is some case/combination of constructors, values, or other pattern that could appear as an input, but is not covered in your code.
+A straightforward example would be a function like this:
+```sml
+fun addList [] = 0
+  | addList x::y::L = x + y + (addList L)
+```
+What would happen if we called `addList [5]`? We couldn't match on the first clause
+because the list is non-empty, and we couldn't match on the second clause because
+we only have one cons constructor (in particular `5::[]`). SML, understandably,
+won't know what to do and will raise a nonexhaustive match exception and crash.
+
+This can occur in other places besides function inputs. For example,
+consider the following function:
+```sml
+fun example x =
+    case x of 
+         5 => "yay!"
+       | 6 => "boo!"
+```
+What would happen if we called `example 7`? Again, SML wouldn't know what to do (as 7 is not equal to 5 or 6) and would
+again raise a nonexhaustive match error. That is to say, nonexhaustive match errors
+can occur wherever you have some sort of pattern matched cases.
+
+#### Should we always be afraid of nonexhaustive warnings?
+The short answer is yes, the long answer is no. It is ok to have a nonexhaustive
+warning *if* you can prove that the nonexhaustive case will never occur.
+An example of this is the following:
+```sml
+fun NE_Match x =
+  let
+    L = [1, 2]
+  in
+    case L of
+         x::y::xs => "more than two elements!"
+       | [] => "empty!"
+  end
+```
+While this is certainly a contrived example, even though SML will warn us
+of a nonexhaustive match, we have no reason to worry about it. As we can see, `L`
+is bound to `[1, 2]` and therefore will always match on the first case (it has at least two `cons` constructors). This,
+although I may be stretching the defintion of a "proof", indeed proves that
+`L` will always match to one of our patterns, and therefore will never raise 
+a match nonexhaustive exception. In such a case, it may be useful to cover your cases which will never occur with a 
+wildcard (`_`).
 
 ### Nested Cases
 When you nest case expressions within case expressions, it's good to wrap your case statements with parentheses. SML will continue to look for patterns to case on, so using parentheses will let it know when to "stop".
