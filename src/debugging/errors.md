@@ -38,7 +38,7 @@ An example of this is the following:
 ```sml
 fun NE_Match x =
   let
-    L = [1, 2]
+    val L = [1, 2]
   in
     case L of
          x::y::xs => "at least two elements!"
