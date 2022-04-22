@@ -28,7 +28,8 @@ fun example x =
 ```
 What would happen if we called `example 7`? Again, SML wouldn't know what to do (as 7 is not equal to 5 or 6) and would
 again raise a nonexhaustive match error. That is to say, nonexhaustive match errors
-can occur wherever you have some sort of pattern matched cases.
+can occur wherever you have some sort of pattern matched cases. In order to fix a match nonexhaustive
+error, simply add the case(s) that you are missing.
 
 #### Should we always be afraid of nonexhaustive warnings?
 The short answer is yes, the long answer is no. It is ok to have a nonexhaustive
@@ -40,13 +41,13 @@ fun NE_Match x =
     L = [1, 2]
   in
     case L of
-         x::y::xs => "more than two elements!"
+         x::y::xs => "at least two elements!"
        | [] => "empty!"
   end
 ```
 While this is certainly a contrived example, even though SML will warn us
 of a nonexhaustive match, we have no reason to worry about it. As we can see, `L`
-is bound to `[1, 2]` and therefore will always match on the first case (it has at least two `cons` constructors). This,
+is bound to `[1, 2]` (which is equivalent to `1::2::[]`) and therefore will always match on the first case (it has at least two `cons` constructors). This,
 although I may be stretching the defintion of a "proof", indeed proves that
 `L` will always match to one of our patterns, and therefore will never raise 
 a match nonexhaustive exception. In such a case, it may be useful to cover your cases which will never occur with a 
