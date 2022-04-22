@@ -26,22 +26,22 @@ After finishing this, you should be able to type in `smlnj` from the command lin
 
 Now that you've set up SML/NJ, you might want to make it a bit nicer to work with.
 
-## VSCode
+### VSCode
 Simply install the Standard ML plugin. From the extensions window in VS Code, just type "Standard ML"
 in the search and it should come up. If it does not, you can manually download the extension [here](https://marketplace.visualstudio.com/items?itemName=freebroccolo.sml)
 and install from the `.vsix` file. This can be done by clicking the three dots in the top right of the extensions menu
 and clicking "install from vsix". From there, simply provide the `.vsix` file you downloaded and now you're all set up!
 
-## Vim/Neovim
+### Vim
 
 For the purposes of this document, I will provide instructions as if you 
-are using regular vim. If you are using neovim or some other vim derivative,
+are using regular Vim. If you are using neovim or some other vim derivative,
 I'll provide links to the repositories I use, but *don't* run the exact commands -
 they are for vim users specifically. Furthermore, this guide is for unix based machines -
 not Windows. If you are on Windows, please check the associated repositories for instructions.
 (Note, this will Work on WSL if you are using that, just not pure Windows)
 
-### Vim - the quick and easy version
+### The quick and easy version
 
 If all you care about is syntax highlighting outside of what the 15150 setup script
 provides, simply add
@@ -52,7 +52,7 @@ autocmd BufNewFile,BufRead *.sig set syntax=sml
 to your `.vimrc` file. You can find this file at `~/.vimrc`. You should now have syntax
 highlighting on your `.sig` and `.fun` files!
 
-### Vim - the nitty gritty (but totally worth it) version
+### The nitty gritty (but totally worth it) version
 
 #### Step 1) Installing a Plug-In manager
 
@@ -109,7 +109,7 @@ When you open vim, type `:PlugInstall` and it should pop up a window where you s
 You have syntax highlighting (and other cool features)
 
 #### Step 4) Optional Cool stuff
-Conceal characters allow you to replace fn and 'a with actual lambdas an alphas! It’s kind of hard to explain, but a really cool feature so try it!
+Conceal characters allow you to replace `fn` and `'a` with actual lambdas an alphas! It’s kind of hard to explain, but it's a really cool feature so try it!
 Just uncomment the line (remove the quote at the front):
 
 `"au FileType sml setlocal conceallevel=2`
