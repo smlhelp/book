@@ -46,8 +46,8 @@ not Windows. If you are on Windows, please check the associated repositories for
 If all you care about is syntax highlighting outside of what the 15150 setup script
 provides, simply add
 ```
-autocmd BufNewFile,BufRead *.fun set syntax=sml
-autocmd BufNewFile,BufRead *.sig set syntax=sml
+autocmd BufNewFile,BufRead *.fun set ft=sml
+autocmd BufNewFile,BufRead *.sig set ft=sml
 ```
 to your `.vimrc` file. You can find this file at `~/.vimrc`. You should now have syntax
 highlighting on your `.sig` and `.fun` files!
