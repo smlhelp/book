@@ -1,0 +1,366 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Lazy Evaluation - SML Help</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="A resource for learning SML">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Welcome!</a></li><li class="chapter-item expanded "><a href="../start/index.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../start/install.html"><strong aria-hidden="true">1.1.</strong> Install & run SML</a></li><li class="chapter-item expanded "><a href="../start/syntax.html"><strong aria-hidden="true">1.2.</strong> Syntax Cheatsheet</a></li><li class="chapter-item expanded "><a href="../start/common.html"><strong aria-hidden="true">1.3.</strong> Common Tasks</a></li></ol></li><li class="chapter-item expanded "><a href="../types/index.html"><strong aria-hidden="true">2.</strong> Types & Signatures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/type.html"><strong aria-hidden="true">2.1.</strong> Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/bool.html"><strong aria-hidden="true">2.1.1.</strong> bool</a></li><li class="chapter-item expanded "><a href="../types/int.html"><strong aria-hidden="true">2.1.2.</strong> int</a></li><li class="chapter-item expanded "><a href="../types/real.html"><strong aria-hidden="true">2.1.3.</strong> real</a></li><li class="chapter-item expanded "><a href="../types/string.html"><strong aria-hidden="true">2.1.4.</strong> string</a></li><li class="chapter-item expanded "><a href="../types/function.html"><strong aria-hidden="true">2.1.5.</strong> function types</a></li><li class="chapter-item expanded "><a href="../types/list.html"><strong aria-hidden="true">2.1.6.</strong> list</a></li><li class="chapter-item expanded "><a href="../types/options.html"><strong aria-hidden="true">2.1.7.</strong> options</a></li></ol></li><li class="chapter-item expanded "><a href="../types/sig.html"><strong aria-hidden="true">2.2.</strong> Signatures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/basis.html"><strong aria-hidden="true">2.2.1.</strong> Basis Library Documentation</a></li><li class="chapter-item expanded "><a href="../types/aux-lib.html"><strong aria-hidden="true">2.2.2.</strong> Auxiliary Library Documentation</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../debugging/index.html"><strong aria-hidden="true">3.</strong> Debugging</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../debugging/errors.html"><strong aria-hidden="true">3.1.</strong> Common Errors</a></li><li class="chapter-item expanded "><a href="../debugging/hints.html"><strong aria-hidden="true">3.2.</strong> Debugging Hints</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/index.html"><strong aria-hidden="true">4.</strong> Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/basic.html"><strong aria-hidden="true">4.1.</strong> Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/eval.html"><strong aria-hidden="true">4.1.1.</strong> Evaluation</a></li><li class="chapter-item expanded "><a href="../concepts/eeq.html"><strong aria-hidden="true">4.1.2.</strong> Extensional Equivalence</a></li><li class="chapter-item expanded "><a href="../concepts/patternmatch.html"><strong aria-hidden="true">4.1.3.</strong> Pattern Matching</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/recind.html"><strong aria-hidden="true">4.2.</strong> Recursion and Induction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/induct.html"><strong aria-hidden="true">4.2.1.</strong> Inductive Proofs</a></li><li class="chapter-item expanded "><a href="../concepts/rec.html"><strong aria-hidden="true">4.2.2.</strong> Recursion</a></li><li class="chapter-item expanded "><a href="../concepts/tail.html"><strong aria-hidden="true">4.2.3.</strong> Tail Recursion</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/analysis.html"><strong aria-hidden="true">4.3.</strong> Asymptotic Analysis</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/workspan.html"><strong aria-hidden="true">4.3.1.</strong> Work and Span</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/datatypes.html"><strong aria-hidden="true">4.4.</strong> Datatypes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/poly.html"><strong aria-hidden="true">4.4.1.</strong> Parametric Polymorphism</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/hofs.html"><strong aria-hidden="true">4.5.</strong> Higher Order Functions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/curry.html"><strong aria-hidden="true">4.5.1.</strong> Currying and Staging</a></li><li class="chapter-item expanded "><a href="../concepts/common.html"><strong aria-hidden="true">4.5.2.</strong> Common HOFs and Partial Evaluation</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/control.html"><strong aria-hidden="true">4.6.</strong> Control Flow</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/cps.html"><strong aria-hidden="true">4.6.1.</strong> Continuation Passing Style</a></li><li class="chapter-item expanded "><a href="../concepts/exn.html"><strong aria-hidden="true">4.6.2.</strong> Exceptions</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/mods.html"><strong aria-hidden="true">4.7.</strong> Modules</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/mods.html"><strong aria-hidden="true">4.7.1.</strong> Basics and Ascription</a></li><li class="chapter-item expanded "><a href="../concepts/functors.html"><strong aria-hidden="true">4.7.2.</strong> Functors</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/apps.html"><strong aria-hidden="true">4.8.</strong> Applications</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/sequences.html"><strong aria-hidden="true">4.8.1.</strong> Sequences</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/lazy.html" class="active"><strong aria-hidden="true">4.9.</strong> Lazy Evaluation</a></li><li class="chapter-item expanded "><a href="../concepts/imperative.html"><strong aria-hidden="true">4.10.</strong> Imperative</a></li></ol></li><li class="chapter-item expanded "><a href="../examples/index.html"><strong aria-hidden="true">5.</strong> Examples</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../examples/basics.html"><strong aria-hidden="true">5.1.</strong> Basics</a></li><li class="chapter-item expanded "><a href="../examples/recursion.html"><strong aria-hidden="true">5.2.</strong> Recursion & Induction</a></li></ol></li><li class="chapter-item expanded "><a href="../about.html">About</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">SML Help</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="lazy-evaluation"><a class="header" href="#lazy-evaluation">Lazy Evaluation</a></h1>
+<p><em>By Len Huang, Cooper Pierce, and Brandon Wu, January 2021. Rewritten by Thea Brick, April 2022.</em></p>
+<p>In programming languages, there's a few different strategies by which arguments
+of a function call are evaluated. One you should be familiar with is <strong><em>eager</em></strong>
+evaluation. SML is an <strong><em>eager</em></strong> language. In other words, we evaluate the
+arguments first. We'll be discussing how to &quot;implement&quot; the exact
+opposite form of evaluation: <strong><em>lazy</em></strong> evaluation. In <strong><em>lazy</em></strong> evaluation,
+arguments are evaluated as needed. To implement this, we'll make use of an idea
+called <strong>thunks</strong>.</p>
+<h2 id="eager-vs-lazy"><a class="header" href="#eager-vs-lazy">Eager vs Lazy</a></h2>
+<h3 id="eager-evaluation"><a class="header" href="#eager-evaluation">Eager Evaluation</a></h3>
+<p>Let's say I have the function <code>double : int -&gt; int</code> which doubles a number, and
+<code>square : int -&gt; int</code>, which squares a number. In both <strong><em>lazy</em></strong> and
+<strong><em>eager</em></strong> evaluation, <code>double (square (double 2)) ==&gt;* 32</code>. However, they differ
+in the way which they &quot;arrive&quot; at <code>32</code>. SML is an eager language, so the code
+(eagerly) steps as follows:</p>
+<pre><code class="language-sml">val double : int -&gt; int = fn n =&gt; 2 * n
+val square : int -&gt; int = fn n =&gt; n * n
+
+(* Eager *)
+    double (square (double 2))
+==&gt; double (square 4)
+==&gt; double 16
+==&gt; 32
+</code></pre>
+<p>You can see that we evaluated the arguments first. However, when doing things
+lazily, arguments will be evaluated as <em>needed</em>. The notion of <em>need</em> will be
+subjective relative to what's being implemented. The question now remains, since
+SML is eager, how do we do things lazily?</p>
+<h3 id="introducing-laziness-with-thunks"><a class="header" href="#introducing-laziness-with-thunks">Introducing Laziness with Thunks</a></h3>
+<p>Since SML is an eager language, to have lazy evaluation we must simulate it in
+some way. To do this, we need a way to wait until we <em>need</em> an argument to
+evaluate it. This is where <strong>thunks</strong> come into play. A <strong>thunk</strong> is a function
+of type <code>unit -&gt; t</code> for some type <code>t</code>. They help us represent this notion of
+&quot;evaluation by need&quot; by wrapping an expression in a function, which delays
+the computation of that expression.</p>
+<p>Let's say we have some function <code>f</code> and argument <code>x</code>. When we run <code>f x</code>, <code>x</code>
+will get evaluated immediately. However, by wrapping <code>x</code> inside a function,
+we can delay its computation <em>(assume <code>f</code>'s type is correct)</em>: <code>f (fn () =&gt; x)</code>.
+Since <strong><em>functions are values</em></strong>, this lambda function is already fully evaluated.
+However, <code>x</code> has yet to be evaluated! Now we can wait to evaluate <code>x</code> by passing
+in <code>() : unit</code> to the lambda function at some point. A lambda expression is like
+a lawn mower on a cord - it has the potential to start doing some kind of work,
+but not until its cord is pulled.</p>
+<p>Let's see how that changes things in our earlier example. Here, we change <code>square</code>
+into a lazy version that accepts a <strong>thunk</strong> instead of an <code>int</code>.</p>
+<pre><code class="language-sml">val double : int -&gt; int = fn n =&gt; 2 * n
+fun square (f : unit -&gt; int) : int = f () * f ()
+
+(* Lazy *)
+    double (square (fn () =&gt; double 2))
+==&gt; double ((fn () =&gt; double 2) () * (fn () =&gt; double 2) ())
+==&gt; double (double 2 * double 2)
+==&gt; double (4 * 4)
+==&gt; double 16
+==&gt; 32
+</code></pre>
+<p>You can see that with lazy evaluation, we put off the computation of <code>double 2</code>
+until we &quot;needed it&quot;. That &quot;need&quot; is subjective, but the key idea is that we
+delayed the computation of <code>double 2</code> by wrapping it a <strong>thunk</strong>. Lets see
+what this looks like in normal algebra.</p>
+<p><strong>NOTE</strong>: You can see that the computation was &quot;put off&quot; since we had to
+recompute the value of <code>double 2</code> twice. This seems rather inefficient, since we
+don't want to have to recompute every time we use the value of some expression
+multiple times. In other <em>lazy languages</em> that use a primarily lazy evaluation
+strategy, there tends to be a sophisticated system of <em>memoization</em> (or,
+remembering values) so that values do not have to be recomputed.</p>
+<pre><code class="language-sml">(* Eager *)                  (* Lazy *)
+    2 * (2 * 2)^2                2 * (2 * 2)^2
+==&gt; 2 * (4)^2                ==&gt; 2 * ((2 * 2) * (2 * 2))
+==&gt; 2 * (4 * 4)              ==&gt; 2 * (4 * 4)
+==&gt; 2 * 16                   ==&gt; 2 * 16
+==&gt; 32                       ==&gt; 32
+</code></pre>
+<p><strong>NOTE</strong>: In another sense, in a lazy setting, the final computed value of <code>2 * (2 * 2)^2</code> is just the computation of <code>2 * (2 * 2)^2</code> itself. Lazy evaluation is lazy because it
+does not move until it is forced to - thus, in this example, we have shown how
+algebraically we can obtain the final value of <code>2 * (2 * 2)^2</code> <em>when forced</em>,
+where we use the term &quot;forcing&quot; to refer to forcing a lazy expression to
+evaluate to a traditional &quot;value&quot;.</p>
+<p>Since <code>square</code> is now the lazy function, we are delaying the evaluation of
+<code>square</code>'s arguments. That's why in eager evaluation, we just do <code>2 * 2 ==&gt; 4</code>
+before we square that value, whereas in lazy evaluation, we square the
+unevaluated arguments by doing <code>(2 * 2) * (2 * 2)</code>.</p>
+<p><em>Note, we let the type of a <strong>thunk</strong> be <code>unit -&gt; 'a</code> just because it's convenient.</em>
+<em>Theoretically we could use a different type to represent thunks since all we need</em>
+<em>is a way to wrap an expression in a function to delay its computation.</em></p>
+<h2 id="lazy-lists"><a class="header" href="#lazy-lists">Lazy Lists</a></h2>
+<p>Now that we have established this notion of <strong><em>laziness</em></strong> in SML, we can do
+even fancier things, like create <em>infinite data structures</em>! Unlike regular data
+structures, infinite data structures have the potential to encode an <em>unbounded</em>
+amount of data. Let's first look at
+a lazy list and compare it to a normal list.</p>
+<pre><code class="language-sml">datatype 'a list     = [ ] |  ::  of 'a * 'a list
+datatype 'a lazylist = Nil | Cons of 'a * (unit -&gt; 'a lazylist)
+</code></pre>
+<p>You'll see that a <code>lazylist</code> is very similar to normal <code>list</code>s. The only difference
+is that the computation of the list's tail has been delayed with a thunk.
+Just like before where we delayed computation of arguments for functions, we are now delaying the
+computation of arguments for constructors. You can sort of think of it like
+instead of having <code>x::xs</code>, we now have <code>x::(fn () =&gt; xs)</code>. This can help us create
+infinite lists since the true computation of the list tail is always delayed.</p>
+<p>For example, if I wanted to represent a list of fibonacci numbers, I could do:</p>
+<pre><code class="language-sml">val fibs : int lazylist =
+    let
+        fun fib' x y = Cons(x, fn () =&gt; fib' y (x + y))
+    in
+        fib' 0 1
+    end
+
+(* Iterate through lazy list *)
+val Cons(a1, f1) = fibs
+val Cons(a2, f2) = f1 ()
+val Cons(a3, f3) = f2 ()
+val Cons(a4, f3) = f3 ()
+val Cons(a5, f5) = f4 ()
+
+(* Test cases *)
+val 0 = a1
+val 1 = a2
+val 1 = a3
+val 2 = a4
+val 3 = a5
+</code></pre>
+<p>Here, we have a value <code>fibs : int lazylist</code> that represents the entire list of
+fibonacci numbers. Instead of immediately evaluating the tail of the list, the
+lazy list allows us to wait until a later time to continue iterating the list.
+We can exploit this by later triggering the evaluation of <code>fib' y (x + y)</code>.</p>
+<p>Note that if you tried to do this with normal lists, we would get some circular
+evaluation since the computation is not being delayed. For example:</p>
+<pre><code class="language-sml">(* Example REPL Output *)
+
+- fun fib x y = x::(fib' y (x + y));
+
+val fib = fn : int -&gt; int -&gt; int list
+
+- fib 0 1;
+
+uncaught exception Overflow [overflow]
+  raised at: &lt;file stdIn&gt;
+</code></pre>
+<p>We get an <code>exception Overflow</code> since SML is trying to eagerly evaluate the
+arguments passed into the constructor <code>::</code>. This causes it to go into an
+infinite loop and eventually overflow.</p>
+<blockquote>
+<p>&quot;What's the tail of the list? I'm eager and I evaluate the arguments of the
+constructor first! Why it's <code>fib y (x + y)</code>! How exciting. Let's evaluate
+this. Well <code>fib y (x + y) ==&gt; y::(fib (x + y) (y + (x + y)))</code>. What's the
+tail of the list? I'm eager and I evaluate the arguments of the constructor
+first! Why it's <code>fib (x + y) (y + (x + y))</code>! How exciting. Let's evaluate
+this...</p>
+<p><em>a few steps later...</em></p>
+<p>Why it's <code>fib ((y + (x + y)) + ((x + y + (y + (x + y))))) (((x + y + (y + (x + y)))) + ((y + (x + y)) + ((x + y + (y + (x + y))))))</code>!
+dang this is one thicc expression. It's time to surrender and
+<code>raise exception Overflow [overflow]</code>. We'll get em next time 😞</p>
+<p><em>- The inner dialogue of the SML Compiler</em></p>
+</blockquote>
+<h2 id="thunks-and-continuations"><a class="header" href="#thunks-and-continuations">Thunks and Continuations</a></h2>
+<p>Another way to think of <strong>thunks</strong> is in relation to continuations. We've seen
+before continuations being passed into functions as a way to represent <em>what
+instructions need to be executed</em>. Here, we are using the same idea but rather
+than forcing all those instructions to be executed now, we are passing them off
+so that they can be done when and if they are needed.</p>
+<p>In the <code>fibs</code> example we can see this where the <code>lazylist</code> is defined to be the
+specific element of the fibonacci sequence, and a continuation (thunk) to
+produce the next element (along with a new continuation to compute the next next
+element, and so on infinitely).</p>
+<p>Another example that may be more enlightening is the function that tries to
+find all elements in a list that satisfy some predicate <code>p</code>:</p>
+<pre><code class="language-sml">fun listFind (p : 'a -&gt; bool) ([] : 'a list) : 'a lazylist = Nil
+  | listFind p (x::xs) =
+        if p x
+        then Cons (x, fn () =&gt; listFind p xs)
+        else listFind p xs
+
+val p = fn x =&gt; x mod 2 = 0
+val res : int lazylist = listFind p [1,2,3,4]
+</code></pre>
+<p>Here, <code>res</code> would be bound to <code>Cons(2, fn () =&gt; listFind p [3,4])</code>. Our program
+is basically saying &quot;I found this element, 2, that satisfies your predicate, and
+if you'd like to find another element: here's a continuation/thunk that will do
+that for you&quot;. So rather than having to evaluate a predicate (with a
+potentially large cost-bound) over a potentially huge list, we can be lazy, and
+only look at what we need.</p>
+<h1 id="conclusion"><a class="header" href="#conclusion">Conclusion</a></h1>
+<p>Even though SML is an eager language, we can utilize <strong>thunks</strong> to delay the
+computation of arguments. This allows us to simulate and represent a more
+<strong>lazy</strong> style of evaluation, where we evaluate arguments <em>as needed</em>. Using
+this idea, we can even represent things like infinite lists in SML!</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../concepts/sequences.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../concepts/imperative.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../concepts/sequences.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../concepts/imperative.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
