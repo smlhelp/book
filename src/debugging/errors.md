@@ -32,7 +32,7 @@ can occur wherever you have some sort of pattern matched cases. In order to fix 
 error, simply add the case(s) that you are missing.
 
 #### Should we always be afraid of nonexhaustive warnings?
-The short answer is yes, the long answer is no. It is ok to have a nonexhaustive
+It is ok to have a nonexhaustive
 warning *if* you can prove that the nonexhaustive case will never occur.
 An example of this is the following:
 ```sml
@@ -47,11 +47,9 @@ fun NE_Match x =
 ```
 While this is certainly a contrived example, even though SML will warn us
 of a nonexhaustive match, we have no reason to worry about it. As we can see, `L`
-is bound to `[1, 2]` (which is equivalent to `1::2::[]`) and therefore will always match on the first case (it has at least two `cons` constructors). This,
-although I may be stretching the defintion of a "proof", indeed proves that
-`L` will always match to one of our patterns, and therefore will never raise 
-a match nonexhaustive exception. In such a case, it may be useful to cover your cases which will never occur with a 
-wildcard (`_`).
+is bound to `[1, 2]` (which is equivalent to `1::2::[]`) and therefore will always match on the first case (it has at least two `cons` constructors).
+This proves that `L` will always match to one of our patterns, and therefore will never raise 
+a match nonexhaustive exception. Still, it is good style to cover all cases by using a wildcard (`_`).
 
 ### Nested Cases
 When you nest case expressions within case expressions, it's good to wrap your case statements with parentheses. SML will continue to look for patterns to case on, so using parentheses will let it know when to "stop".
