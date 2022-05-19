@@ -22,28 +22,25 @@ that are bound to identifiers, which cannot be determined _a priori_ at compile
 time. As such, we have no way of telling beforehand if such errors will occur -
 forcing us to define some notion of a _run-time error_.
 
-You have likely already encountered exceptions - the canonical example is of `1
-div 0`, which, when entered in the REPL, will result in an `uncaught exception
-Div`. This is because we cannot sensically evaluate `1 div 0` to some value -
-what integer could we possibly return? The other option, then, is to simply
-quit, and not even try to evaluate further. This is why division by zero results
-in an exception.
+There are numerous examples of built-in SML exceptions, however, you will encounter
+some far more than others. The following is a brief overview of what they are,
+when you will encounter them, and how to deal with them.
 
-Another example is of the declaration `val x::xs = []`. This signifies an
-attempt at pattern matching, where we attempt to pattern match `x::xs` to `[]`.
-Plainly, however, we cannot possibly carry this out - what values could we bind
-to `x` and `xs` to make this valid? Thus, we will also need to have some
-exception for an incorrect binding - which is appropriately named as the `Bind`
-exception.
+### Fail
+Whether you knew it or not, you have certainly seen `Fail` before! Whenever
+you have a homework problem where we give you an unimplemented function
+in the form `fun myFunction x = raise Fail "Unimplemented"` you are using the 
+power of exceptions! `Fail` can be thought of as an all-purpose exception,
+nothing super special, but quite useful!
 
-Finally, in general we are interested in writing functions that are
-_exhaustive_, in that they are defined on all values of their input type. Even
-if a function is only _meant_ to be called on values within a certain domain, it
-is often a good idea to be safe and cover all of the cases anyways. We call such
-a function that is not defined on certain inputs _nonexhaustive_, and defining
-them will generally result in a non-exhaustive match warning, though it will
-still be permitted.
+### Div
+This one is fairly straight-forward. `Div` is raised whenever you do a division
+operation that is mathematically invalid such as `1 div 0`.
 
+### Match
+The match exception is raised whenever you have a case of nonexhaustive pattern matching.
+We *generally* want our patterns to be exhaustive, meaning that no matter the input,
+it matches to one of the buckets established by our patterns. 
 Consider the function `fn true => 1`, which is plainly nonexhaustive, not
 covering the `false` case. Nonetheless, it is a function of type `bool -> int`
 that can be bound to an identifier. How, then, should we handle the case of
@@ -52,9 +49,39 @@ causing it to fly under the radar of our compile-time tests. At run-time, then,
 we cannot evaluate this expression through function application - the function
 does not specify what it should return in this case! As such, we will simply
 raise a `Match` exception, signifying that the function's input was not able to
-match to any particular clause of the function. Note how this differs from
-`Bind`, which occurs as a result of attempting to produce a binding, not when
-attempting to apply a function.
+match to any particular clause of the function.
+
+#### Examples
+Lines that cause exceptions will be marked `(* ! *)`
+```sml
+fun f 1 = 5
+  | f 5 = 10
+
+val x = f 6 (* ! *)
+
+val y = case [] of x::xs => 17 (* ! *)
+```
+
+
+### Bind
+Bind is similar to match, but crucially different.
+While Match is raised when you are unable to match with any clause, Bind is raised when you try to "force" a binding that cannot happen. 
+An example of this would be `val 5 = 4`. SML we see that you are trying to force the value `4` to be assigned to the value `5` which
+obviously cannot happen.
+
+In pattern matching, while we are attempting to produce a binding in case expressions/function clauses, we aren't "forcing" any bindings. 
+Instead, we are simply attempting to find a case that could match our expression (and we only bind to the pattern if we find a successful case). 
+If we aren't able to find a case that works, we raise `Match` to indicate that we tried to find a case that could match with our expression, 
+but couldn't due to non-exhaustive casing.
+
+`Bind` on the other hand is caused when we don't even try to case to see whether a pattern works or not. 
+Instead, we are saying that our expression *has* to bind with some pattern. If that binding cannot happen, then `Bind` is raised.
+
+#### Examples
+```sml
+val () = 5
+val "polly" = "honk" (* could you imagine! :O *)
+```
 
 ## Defining Exceptions: Basic
 We have now seen the built-in exceptions that are automatically raised for
