@@ -137,12 +137,50 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="common-errors"><a class="header" href="#common-errors">Common Errors</a></h1>
-<p><em>By Eunice Chen, January 2021</em>. <em>Revised February 2021</em></p>
+<p><em>By Eunice Chen, January 2021</em>. <em>Revised April 2022</em></p>
 <p>In this section, we will explore some common mistakes and errors that may occur
 when programming in Standard ML.</p>
 <h2 id="casing-issues"><a class="header" href="#casing-issues">Casing Issues</a></h2>
 <h3 id="match-nonexhaustive"><a class="header" href="#match-nonexhaustive">Match Nonexhaustive</a></h3>
-<p>Though the code will still compile and run with this warning, it often indicates that the logic in your code does not cover all cases. It is always a good idea to check if you are missing some cases in your thinking, or if the warning comes from a scenario that will never happen according to the function specification. Even if there is a case that may not happen according to the function specification, it may be useful to raise an exception in the &quot;impossible&quot; case to get rid of this warning, because if your code somehow violates the specification and ends up in this case, then you can catch the error and debug it.</p>
+<p>A Match Nonexhaustive warning occurs when your cases in a pattern matching expression, are, well, non-exhaustive. This means that
+there is some case/combination of constructors, values, or other pattern that could appear as an input, but is not covered in your code.
+A straightforward example would be a function like this:</p>
+<pre><code class="language-sml">fun addList [] = 0
+  | addList x::y::L = x + y + (addList L)
+</code></pre>
+<p>What would happen if we called <code>addList [5]</code>? We couldn't match on the first clause
+because the list is non-empty, and we couldn't match on the second clause because
+we only have one cons constructor (in particular <code>5::[]</code>). SML, understandably,
+won't know what to do and will raise a nonexhaustive match exception and crash.</p>
+<p>This can occur in other places besides function inputs. For example,
+consider the following function:</p>
+<pre><code class="language-sml">fun example x =
+    case x of 
+         5 =&gt; &quot;yay!&quot;
+       | 6 =&gt; &quot;boo!&quot;
+</code></pre>
+<p>What would happen if we called <code>example 7</code>? Again, SML wouldn't know what to do (as 7 is not equal to 5 or 6) and would
+again raise a nonexhaustive match error. That is to say, nonexhaustive match errors
+can occur wherever you have some sort of pattern matched cases. In order to fix a match nonexhaustive
+error, simply add the case(s) that you are missing.</p>
+<h4 id="should-we-always-be-afraid-of-nonexhaustive-warnings"><a class="header" href="#should-we-always-be-afraid-of-nonexhaustive-warnings">Should we always be afraid of nonexhaustive warnings?</a></h4>
+<p>It is ok to have a nonexhaustive
+warning <em>if</em> you can prove that the nonexhaustive case will never occur.
+An example of this is the following:</p>
+<pre><code class="language-sml">fun NE_Match x =
+  let
+    val L = [1, 2]
+  in
+    case L of
+         x::y::xs =&gt; &quot;at least two elements!&quot;
+       | [] =&gt; &quot;empty!&quot;
+  end
+</code></pre>
+<p>While this is certainly a contrived example, even though SML will warn us
+of a nonexhaustive match, we have no reason to worry about it. As we can see, <code>L</code>
+is bound to <code>[1, 2]</code> (which is equivalent to <code>1::2::[]</code>) and therefore will always match on the first case (it has at least two <code>cons</code> constructors).
+This proves that <code>L</code> will always match to one of our patterns, and therefore will never raise 
+a match nonexhaustive exception. Still, it is good style to cover all cases by using a wildcard (<code>_</code>).</p>
 <h3 id="nested-cases"><a class="header" href="#nested-cases">Nested Cases</a></h3>
 <p>When you nest case expressions within case expressions, it's good to wrap your case statements with parentheses. SML will continue to look for patterns to case on, so using parentheses will let it know when to &quot;stop&quot;.</p>
 <p>For example, the following code will compile without warnings:</p>

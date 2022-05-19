@@ -1353,12 +1353,50 @@ val k = SOME (SOME 5) : int option option
 <p><a href="https://raw.githubusercontent.com/smlhelp/aux-library/main/SET.sig">sig</a> -- <a href="https://raw.githubusercontent.com/smlhelp/aux-library/main/Set.sml">struct</a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="debugging"><a class="header" href="#debugging">Debugging</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="common-errors"><a class="header" href="#common-errors">Common Errors</a></h1>
-<p><em>By Eunice Chen, January 2021</em>. <em>Revised February 2021</em></p>
+<p><em>By Eunice Chen, January 2021</em>. <em>Revised April 2022</em></p>
 <p>In this section, we will explore some common mistakes and errors that may occur
 when programming in Standard ML.</p>
 <h2 id="casing-issues"><a class="header" href="#casing-issues">Casing Issues</a></h2>
 <h3 id="match-nonexhaustive"><a class="header" href="#match-nonexhaustive">Match Nonexhaustive</a></h3>
-<p>Though the code will still compile and run with this warning, it often indicates that the logic in your code does not cover all cases. It is always a good idea to check if you are missing some cases in your thinking, or if the warning comes from a scenario that will never happen according to the function specification. Even if there is a case that may not happen according to the function specification, it may be useful to raise an exception in the &quot;impossible&quot; case to get rid of this warning, because if your code somehow violates the specification and ends up in this case, then you can catch the error and debug it.</p>
+<p>A Match Nonexhaustive warning occurs when your cases in a pattern matching expression, are, well, non-exhaustive. This means that
+there is some case/combination of constructors, values, or other pattern that could appear as an input, but is not covered in your code.
+A straightforward example would be a function like this:</p>
+<pre><code class="language-sml">fun addList [] = 0
+  | addList x::y::L = x + y + (addList L)
+</code></pre>
+<p>What would happen if we called <code>addList [5]</code>? We couldn't match on the first clause
+because the list is non-empty, and we couldn't match on the second clause because
+we only have one cons constructor (in particular <code>5::[]</code>). SML, understandably,
+won't know what to do and will raise a nonexhaustive match exception and crash.</p>
+<p>This can occur in other places besides function inputs. For example,
+consider the following function:</p>
+<pre><code class="language-sml">fun example x =
+    case x of 
+         5 =&gt; &quot;yay!&quot;
+       | 6 =&gt; &quot;boo!&quot;
+</code></pre>
+<p>What would happen if we called <code>example 7</code>? Again, SML wouldn't know what to do (as 7 is not equal to 5 or 6) and would
+again raise a nonexhaustive match error. That is to say, nonexhaustive match errors
+can occur wherever you have some sort of pattern matched cases. In order to fix a match nonexhaustive
+error, simply add the case(s) that you are missing.</p>
+<h4 id="should-we-always-be-afraid-of-nonexhaustive-warnings"><a class="header" href="#should-we-always-be-afraid-of-nonexhaustive-warnings">Should we always be afraid of nonexhaustive warnings?</a></h4>
+<p>It is ok to have a nonexhaustive
+warning <em>if</em> you can prove that the nonexhaustive case will never occur.
+An example of this is the following:</p>
+<pre><code class="language-sml">fun NE_Match x =
+  let
+    val L = [1, 2]
+  in
+    case L of
+         x::y::xs =&gt; &quot;at least two elements!&quot;
+       | [] =&gt; &quot;empty!&quot;
+  end
+</code></pre>
+<p>While this is certainly a contrived example, even though SML will warn us
+of a nonexhaustive match, we have no reason to worry about it. As we can see, <code>L</code>
+is bound to <code>[1, 2]</code> (which is equivalent to <code>1::2::[]</code>) and therefore will always match on the first case (it has at least two <code>cons</code> constructors).
+This proves that <code>L</code> will always match to one of our patterns, and therefore will never raise 
+a match nonexhaustive exception. Still, it is good style to cover all cases by using a wildcard (<code>_</code>).</p>
 <h3 id="nested-cases"><a class="header" href="#nested-cases">Nested Cases</a></h3>
 <p>When you nest case expressions within case expressions, it's good to wrap your case statements with parentheses. SML will continue to look for patterns to case on, so using parentheses will let it know when to &quot;stop&quot;.</p>
 <p>For example, the following code will compile without warnings:</p>
@@ -3579,24 +3617,23 @@ dealing with cases where computation is made infeasible by the <em>values</em>
 that are bound to identifiers, which cannot be determined <em>a priori</em> at compile
 time. As such, we have no way of telling beforehand if such errors will occur -
 forcing us to define some notion of a <em>run-time error</em>.</p>
-<p>You have likely already encountered exceptions - the canonical example is of <code>1 div 0</code>, which, when entered in the REPL, will result in an <code>uncaught exception Div</code>. This is because we cannot sensically evaluate <code>1 div 0</code> to some value -
-what integer could we possibly return? The other option, then, is to simply
-quit, and not even try to evaluate further. This is why division by zero results
-in an exception.</p>
-<p>Another example is of the declaration <code>val x::xs = []</code>. This signifies an
-attempt at pattern matching, where we attempt to pattern match <code>x::xs</code> to <code>[]</code>.
-Plainly, however, we cannot possibly carry this out - what values could we bind
-to <code>x</code> and <code>xs</code> to make this valid? Thus, we will also need to have some
-exception for an incorrect binding - which is appropriately named as the <code>Bind</code>
-exception.</p>
-<p>Finally, in general we are interested in writing functions that are
-<em>exhaustive</em>, in that they are defined on all values of their input type. Even
-if a function is only <em>meant</em> to be called on values within a certain domain, it
-is often a good idea to be safe and cover all of the cases anyways. We call such
-a function that is not defined on certain inputs <em>nonexhaustive</em>, and defining
-them will generally result in a non-exhaustive match warning, though it will
-still be permitted.</p>
-<p>Consider the function <code>fn true =&gt; 1</code>, which is plainly nonexhaustive, not
+<p>There are numerous examples of built-in SML exceptions, however, you will encounter
+some far more than others. The following is a brief overview of what they are,
+when you will encounter them, and how to deal with them.</p>
+<h3 id="fail"><a class="header" href="#fail">Fail</a></h3>
+<p>Whether you knew it or not, you have certainly seen <code>Fail</code> before! Whenever
+you have a homework problem where we give you an unimplemented function
+in the form <code>fun myFunction x = raise Fail &quot;Unimplemented&quot;</code> you are using the 
+power of exceptions! <code>Fail</code> can be thought of as an all-purpose exception,
+nothing super special, but quite useful!</p>
+<h3 id="div"><a class="header" href="#div">Div</a></h3>
+<p>This one is fairly straight-forward. <code>Div</code> is raised whenever you do a division
+operation that is mathematically invalid such as <code>1 div 0</code>.</p>
+<h3 id="match"><a class="header" href="#match">Match</a></h3>
+<p>The match exception is raised whenever you have a case of nonexhaustive pattern matching.
+We <em>generally</em> want our patterns to be exhaustive, meaning that no matter the input,
+it matches to one of the buckets established by our patterns. 
+Consider the function <code>fn true =&gt; 1</code>, which is plainly nonexhaustive, not
 covering the <code>false</code> case. Nonetheless, it is a function of type <code>bool -&gt; int</code>
 that can be bound to an identifier. How, then, should we handle the case of
 attempting to evaluate <code>(fn true =&gt; 1) false</code>? This is a well-typed expression,
@@ -3604,9 +3641,31 @@ causing it to fly under the radar of our compile-time tests. At run-time, then,
 we cannot evaluate this expression through function application - the function
 does not specify what it should return in this case! As such, we will simply
 raise a <code>Match</code> exception, signifying that the function's input was not able to
-match to any particular clause of the function. Note how this differs from
-<code>Bind</code>, which occurs as a result of attempting to produce a binding, not when
-attempting to apply a function.</p>
+match to any particular clause of the function.</p>
+<h4 id="examples"><a class="header" href="#examples">Examples</a></h4>
+<p>Lines that cause exceptions will be marked <code>(* ! *)</code></p>
+<pre><code class="language-sml">fun f 1 = 5
+  | f 5 = 10
+
+val x = f 6 (* ! *)
+
+val y = case [] of x::xs =&gt; 17 (* ! *)
+</code></pre>
+<h3 id="bind"><a class="header" href="#bind">Bind</a></h3>
+<p>Bind is similar to match, but crucially different.
+While Match is raised when you are unable to match with any clause, Bind is raised when you try to &quot;force&quot; a binding that cannot happen. 
+An example of this would be <code>val 5 = 4</code>. SML we see that you are trying to force the value <code>4</code> to be assigned to the value <code>5</code> which
+obviously cannot happen.</p>
+<p>In pattern matching, while we are attempting to produce a binding in case expressions/function clauses, we aren't &quot;forcing&quot; any bindings. 
+Instead, we are simply attempting to find a case that could match our expression (and we only bind to the pattern if we find a successful case). 
+If we aren't able to find a case that works, we raise <code>Match</code> to indicate that we tried to find a case that could match with our expression, 
+but couldn't due to non-exhaustive casing.</p>
+<p><code>Bind</code> on the other hand is caused when we don't even try to case to see whether a pattern works or not. 
+Instead, we are saying that our expression <em>has</em> to bind with some pattern. If that binding cannot happen, then <code>Bind</code> is raised.</p>
+<h4 id="examples-1"><a class="header" href="#examples-1">Examples</a></h4>
+<pre><code class="language-sml">val () = 5
+val &quot;polly&quot; = &quot;honk&quot; (* could you imagine! :O *)
+</code></pre>
 <h2 id="defining-exceptions-basic"><a class="header" href="#defining-exceptions-basic">Defining Exceptions: Basic</a></h2>
 <p>We have now seen the built-in exceptions that are automatically raised for
 certain prescribed use cases. Oftentimes, however, we are interested in our own
@@ -5704,7 +5763,7 @@ unexpected might happen. Can you figure out what it is, and why that is?</p>
 <li><code>exp1;exp2</code> first runs <code>exp1</code> and then returns <code>exp2</code>, which is
 useful for side effects.</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="examples"><a class="header" href="#examples">Examples</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="examples-2"><a class="header" href="#examples-2">Examples</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="sml-basics-examples"><a class="header" href="#sml-basics-examples">SML Basics Examples</a></h1>
 <p><em>By Eunice Chen, May 2020</em></p>
 <h2 id="types-1"><a class="header" href="#types-1">Types</a></h2>
