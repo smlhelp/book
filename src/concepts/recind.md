@@ -121,7 +121,7 @@ fun exp' Zero = 1
 ```
 
 The `ENSURES` is a bit sloppy because we haven't defined taking exponents of values of type `nat`,
-but hopefully has meaning for the code's reader. Now, if we wanted
+but hopefully it has meaning for the code's reader. Now, if we wanted
 to prove the correctness of this version of `exp'`, our base case would be showing
 `exp' Zero == ` \\( 2^0 \\). The inductive step would be showing that if `exp' n == ` \\( 2^n \\), then
 `exp' (Succ n) == ` \\( 2^{n+1} \\). We'll omit the proof's details.
@@ -163,9 +163,79 @@ the first two clauses of `exp''` deal with those cases. Again, we omit the detai
 
 ## List Recursion
 
+Let's first define lists. Here are some examples of `int list`s:
 
+```sml
+[1,5,1,5,0]
+[42,~42]
+[]
+```
+The last one is called the empty list.
+We can also build lists containing other types:
+```sml
+["h","e","l","l","o"]
+```
+Let `t` be some type. Intuitively, a value of type `t list` has a bunch of values of type `t` inside it (or is the empty list).
+We can readily access the first element of the list (also called the **_head_**) by pattern matching with
+the `::` operator (pronounced "cons").
+
+We can build lists using the constructors `[]` and `::`. The empty list, `[]`, is the base case.
+The inductive case is `::`, which is an infix operator that takes in `t * t list` and creates a `t list`.
+For example, `1::[]` is the list `[1]`, and `1::[2,3]` is the list `[1,2,3]`. It adds an element to
+the front of a list.
+
+The inductive definition of lists means that it's natural to write recursive functions on lists.
+We can write a function that computes the length of a list as follows:
+
+```sml
+(* length : int list -> int
+ * REQUIRES: true
+ * ENSURES: length L returns the number of values in L.
+ *)
+fun length [] = 0
+  | length (x::xs) = 1 + length xs
+```
+
+Our function takes in an `int list`, and outputs an `int`. For the empty list, we return 0 straight away.
+A nonempty list has the form `x::xs`, where `x` is the first element of the list, and `xs` is the rest of the list.
+(Perhaps `xs` means there are many `x`'s, or it's a homophone of "excess". We will never know.)
+In the recursive case, we calculate the length of the rest of the list by evaluating `length xs`,
+and then add 1 to account for `x` being in the original list as well.
+
+Now, let's write a slightly more complex function, `@`, which appends together two lists. It is an infix operator,
+and to notate this we write `infix @`. For example,
+
+```sml
+[1,2,3] @ [4,5,6] == [1,2,3,4,5,6]
+["s", "o"] @ ["u", "p"] == ["s", "o", "u", "p"]
+[] @ [] == []
+```
+
+Here is the implementation:
+```sml
+(* @ : int list * int list -> int list
+ * REQUIRES: true
+ * ENSURES: A @ B evaluates to a list with 
+ * all the elements of A, then all the elements of B
+ *)
+fun @ ([], B) = B
+  | @ (x::xs, B) = x::( @(xs, B))
+
+infix @
+```
+
+(Note you will not be able to run this code in the smlnj REPL, because `@` is a keyword that we cannot overwrite.
+However, you may give the function a different name for testing purposes.)
+
+Our `@` function recurses on the left list. If it's empty, we just return the right list.
+If it's nonempty, we evaluate `xs @ B`, and then tack on `x` to the beginning.
+
+Note we did not declare `@` to be infix until after the function declaration, so within the function body,
+we used `@(xs, B)` instead of `xs @ B`.
 
 ## List Induction
+
+
 
 ## Takeaways
 
