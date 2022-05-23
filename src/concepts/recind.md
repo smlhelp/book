@@ -26,7 +26,7 @@ Such a solution is not possible when doing functional programming. Indeed, pure 
 The following is a correct SML implementation of `exp`. Type annotations have been omitted, for clarity.
 ```sml
 (* exp : int -> int
-   REQUIRES: n>=0 
+ * REQUIRES: n>=0 
  * ENSURES: exp n == 2^n
  *)
 fun exp 0 = 1
@@ -78,7 +78,7 @@ This concludes the inductive step.
 There are some things to note about this proof. First, every time we are evaluating SML code,
 we justify which line of code allows us to make a particular step.
 For example, when evaluating `exp (k+1)`, clause 2 of `exp` tells us that expression is
-extensionally equivalent to `2 * exp (k+1-1)`. In fact, we say `exp (k+1)` **_steps to_**
+extensionally equivalent to `2 * exp (k+1-1)`. In fact, we can say `exp (k+1)` **_steps to_**
 `2 * exp (k+1-1)`.
 
 Second, we've abbreviated the induction hypothesis citation as "IH". Furthermore, note how
@@ -88,12 +88,82 @@ natural numbers. Rather, we assume the theorem is true for some fixed `k` (which
 The principle of mathematical induction works due to a sort of domino effect. Let's notate
 that the theorem is true for an integer `n` with \\( P(n) \\). In the above proof, we've shown
 \\( P(0) \\), and that \\( P(k) \implies P(k+1) \\) for all \\(k \geq 0 \\).
-Then suppose we wanted to show \\( P(2) \\). We begin with \\( P(0) \\), and from the inductive step get
+
+For example, suppose we wanted to show \\( P(2) \\). We begin with \\( P(0) \\), and from the inductive step get
 \\( P(1) \\). Then we apply the inductive step again to get \\( P(2) \\).
 
 ## The "Type" of Natural Numbers
 
+We can *inductively* define the natural numbers using Peano's axioms:
+
+\\( 0 \\) is a natural number.
+For every natural number \\( n \\), \\( S(n) \\) is a natural number.
+
+We call \\( S(n) \\) the successor of \\( n \\). It's just a fancy term for saying "add 1".
+Using these axioms, we can create a datatype that encapsulates natural numbers:
+
+`datatype nat = Zero | Succ of nat`
+
+This is essentially saying that `Zero : nat`, and
+if some expression `e : nat`, then `Succ e` also has type `nat`.
+For example, the number 3 corresponds to `Succ (Succ (Succ Zero))`.
+
+Using this datatype, we can view the principle of mathematical induction merely as
+**_structural induction_** on the `nat` datatype. As an example, let us rewrite `exp` as:
+
+```sml
+(* exp' : nat -> int
+ * REQUIRES: true 
+ * ENSURES: exp' n == 2^n
+ *)
+fun exp' Zero = 1
+  | exp' (Succ n) = 2 * exp' n
+```
+
+The `ENSURES` is a bit sloppy because we haven't defined taking exponents of values of type `nat`,
+but hopefully has meaning for the code's reader. Now, if we wanted
+to prove the correctness of this version of `exp'`, our base case would be showing
+`exp' Zero == ` \\( 2^0 \\). The inductive step would be showing that if `exp' n == ` \\( 2^n \\), then
+`exp' (Succ n) == ` \\( 2^{n+1} \\). We'll omit the proof's details.
+
+It may seem pointless to write the above code (indeed, it is not that practical). Although there
+are two advantages: we don't need to restrict the inputs to `exp'` anymore, because negative numbers
+are not natural numbers! So, we won't need to worry about looping forever, which would happen
+in the earlier version of `exp` if we tried evaluating `exp ~1`. Also, the code portrays how
+**_structural induction_** is basically an overpowered version of the principle of mathematical induction.
+
+## Strong induction
+
+For proofs on natural numbers, we can also make use of **_strong induction_**. With strong induction, the
+inductive step is showing that for an arbitrary \\( k > 0 \\),
+\\( P(0), P(1), \cdots, P(k-1) \\) all together imply \\( P(k) \\). In other words, we can make use of
+the theorem being true on all previous natural numbers, as our induction hypothesis.
+
+With `exp`, the recursive case only references `exp (n-1)`, so the principle of mathematical induction
+(also known as simple induction) is sufficient. But for code which references not just the previous number,
+strong induction will be useful in proofs. For example, let us rewrite `exp` one last time:
+
+```sml
+(* exp'' : int -> int
+ * REQUIRES: n >= 0
+ * ENSURES: exp'' n == 2^n
+ *)
+fun exp'' 0 = 1
+  | exp'' 1 = 2
+  | exp'' n = exp'' (n-1) + 2 * exp'' (n-2)
+```
+
+This code is needlessly complicated and inefficient, but it works.
+It only exists for us to illustrate strong induction. The recursive case uses both `n-1` and `n-2`,
+so we'll need strong induction to prove the correctness of `exp''`.
+
+In addition, **the proof mirrors the code.** What we mean by this is, there should be a different case
+for each clause of the function. Our proof would have a base case for both `n = 0` and `n = 1`, because
+the first two clauses of `exp''` deal with those cases. Again, we omit the details of `exp''`'s correctness.
+
 ## List Recursion
+
+
 
 ## List Induction
 
