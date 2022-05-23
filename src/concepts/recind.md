@@ -66,8 +66,11 @@ Induction hypothesis: Assume that `exp k ==` \\( 2^k \\).
 We want to show the theorem for `k+1`.
 
 `exp (k+1) == 2 * exp (k+1-1)` (by clause 2 of `exp`)
+
 `== 2 * exp k` (by math, \\(k+1-1 \\) `==` \\(k \\) )
+
 `== 2 *` \\(2^k \\) (by IH)
+
 `==` \\(2^{k+1} \\) (math)
 
 This concludes the inductive step. 
