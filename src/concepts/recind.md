@@ -32,8 +32,8 @@ The following is a correct SML implementation of `exp`. Type annotations have be
 fun exp 0 = 1
   | exp n = 2 * exp(n-1)
 ```
-In the above code, we specify the **_base case_** that \( 2^0 = 1 \). Then, for inputs greater than 0,
-we first compute \(2^{n-1} \) recursively, and then multiply 2 to it.
+In the above code, we specify the **_base case_** that \\( 2^0 = 1 \\). Then, for inputs greater than 0,
+we first compute \\(2^{n-1} \\) recursively, and then multiply 2 to it.
 By "recursively", we are assuming our code works for smaller inputs.
 You can trace through a few test cases to convince yourself that these elegant two lines of code
 indeed implement `exp`.
@@ -45,7 +45,7 @@ between induction and recursion. We can use the principle of mathematical induct
 **_prove_** that our `exp` code works. Here is the theorem we want to show. Recall that we use
 `==` to denote two expressions being extensionally equivalent.
 
-**Theorem:** `exp n ==` \(2^n\) for all integer values \( n \geq 0 \).
+**Theorem:** `exp n ==` \\(2^n\\) for all integer values \\( n \geq 0 \\).
 
 **Proof:** We use the principle of mathematical induction on `n`.
 
@@ -53,22 +53,22 @@ between induction and recursion. We can use the principle of mathematical induct
 
 `exp 0 == 1` (by clause 1 of `exp`)
 
-`1 ==` \(2^0\) (math)
+`1 ==` \\(2^0\\) (math)
 
 When dealing with arithmetic, we may justify proof steps by "math".
 Also, unless stated otherwise, we may assume SML implements basic mathematical operations correctly,
 such as `+` and `*`.
 
-**Inductive step:** Let `k >= 0` be fixed. 
+**Inductive step:** Let \\( k \geq 0 \\) be fixed. 
 
-Induction hypothesis: Assume that `exp k ==` \( 2^k \).
+Induction hypothesis: Assume that `exp k ==` \\( 2^k \\).
 
 We want to show the theorem for `k+1`.
 
 `exp (k+1) == 2 * exp (k+1-1)` (by clause 2 of `exp`)
-`== 2 * exp k` (by math, \(k+1-1\) `==` \(k\) )
-`== 2 *` \(2^k \) (by IH)
-`==` \(2^{k+1} \) (math)
+`== 2 * exp k` (by math, \\(k+1-1 \\) `==` \\(k \\) )
+`== 2 *` \\(2^k \\) (by IH)
+`==` \\(2^{k+1} \\) (math)
 
 This concludes the inductive step. 
 
@@ -80,13 +80,13 @@ extensionally equivalent to `2 * exp (k+1-1)`. In fact, we say `exp (k+1)` **_st
 
 Second, we've abbreviated the induction hypothesis citation as "IH". Furthermore, note how
 we quantified the induction hypothesis: we are not assuming the theorem is true for all
-natural numbers. Rather, we assume the theorem is true for some fixed `k` (which is \( \geq 0 \) ).
+natural numbers. Rather, we assume the theorem is true for some fixed `k` (which is \\( \geq 0 \\) ).
 
 The principle of mathematical induction works due to a sort of domino effect. Let's notate
-that the theorem is true for an integer `n` with \( P(n) \). In the above proof, we've shown
-\( P(0) \), and that \( P(k) \implies P(k+1) \) for all \(k \geq 0 \).
-Then suppose we wanted to show \( P(2) \). We begin with \( P(0) \), and from the inductive step get
-\( P(1) \). Then we apply the inductive step again to get \( P(2) \).
+that the theorem is true for an integer `n` with \\( P(n) \\). In the above proof, we've shown
+\\( P(0) \\), and that \\( P(k) \implies P(k+1) \\) for all \\(k \geq 0 \\).
+Then suppose we wanted to show \\( P(2) \\). We begin with \\( P(0) \\), and from the inductive step get
+\\( P(1) \\). Then we apply the inductive step again to get \\( P(2) \\).
 
 ## The "Type" of Natural Numbers
 
