@@ -54,7 +54,7 @@ Nice job! We've leveraged inductive reasoning to help us define the base case fo
 
 ### 2. Define the Inductive Hypothesis
 
-The next step in our proof is to define the inductive hypothesis. Here, we'll assume the correctness of a smaller part, then use that to prove the correctness of a bigger part. More specifically, we'll be using some ideas of [structural induction](https://smlhelp.github.io/#todolinktostructuralinductionsection) for this problem. Let's elaborate more on that:
+The next step in our proof is to define the inductive hypothesis. Here, we'll assume the correctness of a smaller part, then use that to prove the correctness of a bigger part. More specifically, we'll be using some ideas of [structural induction](https://smlhelp.github.io/book/concepts/structural.html) for this problem. Let's elaborate more on that:
 
 > **Induction Hypothesis:** Assume for all `L : int tree` and `R : int tree` that `treeSum L` is correct and `treeSum R` is correct.
 
