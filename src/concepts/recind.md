@@ -277,6 +277,7 @@ Induction hypothesis: Assume that `length xs` evaluates to a value.
 Let `x : int` be an arbitrary value. We want to show that `length (x::xs)` evaluates to a value.
 
 `length (x::xs) ==> 1 + length xs` (by clause 2 of `length`)
+
 `==> 1 + v` (by IH, `length xs ==> v` for some value `v`)
 
 Now, `1 + v` evaluates to a value (we assume that SML implements operators like `+` correctly, and we
