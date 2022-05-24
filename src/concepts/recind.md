@@ -203,7 +203,7 @@ In the recursive case, we calculate the length of the rest of the list by evalua
 and then add 1 to account for `x` being in the original list as well.
 
 Now, let's write a slightly more complex function, `@`, which appends together two lists. It is an infix operator,
-and to notate this we write `infix @`. For example,
+and to notate this we write `infix @`. Here are examples of using `@`:
 
 ```sml
 [1,2,3] @ [4,5,6] == [1,2,3,4,5,6]
@@ -218,10 +218,10 @@ Here is the implementation:
  * ENSURES: A @ B evaluates to a list with 
  * all the elements of A, then all the elements of B
  *)
-fun @ ([], B) = B
-  | @ (x::xs, B) = x::( @(xs, B))
-
 infix @
+
+fun [] @ B = B
+  | (x::xs) @ B = x::(xs @ B)
 ```
 
 (Note you will not be able to run this code in the smlnj REPL, because `@` is a keyword that we cannot overwrite.
@@ -230,10 +230,21 @@ However, you may give the function a different name for testing purposes.)
 Our `@` function recurses on the left list. If it's empty, we just return the right list.
 If it's nonempty, we evaluate `xs @ B`, and then tack on `x` to the beginning.
 
-Note we did not declare `@` to be infix until after the function declaration, so within the function body,
-we used `@(xs, B)` instead of `xs @ B`.
-
 ## List Induction
+
+Let's consider proofs by structural induction on lists. Let's say we want to show that some property \\( P \\)
+is true for all values of type `t list`. It suffices to show the following:
+
+Base case: \\( P( \\) `[]` \\() \\). In other words, we show the theorem holds for the empty list.
+
+Inductive step: For any value `xs : t list`, and any value `x : t`,
+\\( P( \\) `xs` \\() \implies P( \\) `x::xs` \\() \\).
+
+For example, if the type `t` is `int`, then \\( P( \\) `[1,2]` \\( ) \\) is true because
+the base case tells us \\( P( \\) `[]` \\( ) \\), and then one application of the inductive step gets us
+\\( P( \\) `2::[]` \\( ) \\), and one more application of the inductive step gets us
+\\( P( \\) 1::2::[] \\( ) \\). Remember that `1::2::[]` is the same thing as `[1,2]`.
+
 
 
 
