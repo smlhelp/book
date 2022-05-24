@@ -1,0 +1,122 @@
+\documentclass[margin=0.5cm]{standalone} 
+
+\usepackage{varwidth}
+
+%
+% Cooper Pierce <cppierce@andrew.cmu.edu>
+%
+% For use in the book, 
+%   1. compile with latexmk, 
+%   2. use dvisvgm
+% E.g., latexmk redblack 
+%   && dvisvgm --no-fonts --clipjoin --bbox=papersize redblack
+%   && mv redblack-1.svg redblack.svg
+% (for whatever reason my version of pdflatex makes a two page dvi)
+%
+%
+
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{forest}
+
+\begin{document}
+    \pagecolor{white}
+    \tikzset{%
+        /forest,
+        forest node/.style={circle, inner sep=0pt, text centered},
+        arn n/.append style={
+            text=white, 
+            font=\sffamily\bfseries,
+            draw=black,
+            fill=black,
+            text width=1.5em,
+        },
+        arn r/.append style={%
+            text=white,
+            font=\sffamily\bfseries,
+            draw=red,
+            fill=red,
+            text width=1.5em,
+        },
+    }
+
+    \forestset{%
+        default preamble={
+            for tree={
+                font=\sffamily,
+                forest node,
+                edge path={
+                    \noexpand\path[color=black, -stealth', \forestoption{edge}]
+                    (!u.parent anchor) -- (.child anchor)\forestoption{edge label};
+                },
+                l sep+=.25cm,
+                s sep+=.25cm,
+                fit=band,
+            }
+        }
+    }
+    \begin{varwidth}{\textwidth}
+    \begin{forest}
+        [, arn n
+            [, arn r
+                [+, arn r, 
+                    [a]
+                    [b]
+                ]
+                [c]
+            ]
+            [d]
+        ]
+        \node at (current bounding box.north west)
+            [draw,aspect=6]
+            {\emph{Case 1}};
+    \end{forest}\hspace{3em}
+    \begin{forest}
+        [, arn n
+            [, arn r
+                [a]
+                [+, arn r,
+                    [b]
+                    [c]
+                ]
+            ]
+            [d]
+        ]
+        \node at (current bounding box.north west)
+            [draw,aspect=6]
+            {\emph{Case 2}};
+    \end{forest}
+    \vspace{2em}
+
+    \begin{forest}
+        [, arn n
+            [a]
+            [, arn r
+                [b]
+                [+, arn r,
+                    [c]
+                    [d]
+                ]
+            ]
+        ]
+        \node at (current bounding box.north east)
+            [draw,aspect=6]
+            {\emph{Case 3}};
+    \end{forest}\hspace{3em}
+    \begin{forest}
+        [, arn n
+            [a]
+            [, arn r
+                [+, arn r,
+                    [b]
+                    [c]
+                ]
+                [d]
+            ]
+        ]
+        \node at (current bounding box.north east)
+            [draw,aspect=6]
+            {\emph{Case 4}};
+    \end{forest}
+    \end{varwidth}
+\end{document}

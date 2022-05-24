@@ -1,4 +1,6 @@
 # Common HOFs and Partial Evaluation
+_By Brandon Wu, June 2020. Revised March 2022_
+
 In this section, we will explore a number of common higher-order functions that
 we will make use of. These higher-order functions embody _design patterns_ that
 are common in programming, and represent a _generalized notion_ of a large space
@@ -14,7 +16,7 @@ fun incList [] = []
   | incList (x::xs) = (x + 1) :: incList xs
 ```
 This is not too bad to do - we simply need to increment each individual element, and then
-simply cons it back on recursively. Suppose further that, as the arithmetically-minded 
+simply cons it back on recursively. Suppose further that, as the arithmetically-minded
 scholars that we are, we are also interested in negating the sign of each
 element in a list.
 ```sml
@@ -93,7 +95,7 @@ or alternatively _indicator function_, which simply returns `true` on those
 "yes"-cases and `no` on "no"-cases. Seen in this way, `filter` does something
 very similar to `map`, where it takes in the function it needs to apply to the
 elements of the list. In the case where the predicate holds, the element is
-kept, otherwise the element is discarded. 
+kept, otherwise the element is discarded.
 
 We could, for instance, obtain all the even integers in a list `L : int list` by
 writing the expression `filter (fn x => x mod 2 = 0) L`.
@@ -108,21 +110,21 @@ result from a collection of data - not another collection of data itself. This
 describes a very common pattern known as _folding_.
 
 ```sml
-(* foldl : ('a * 'b -> 'b) -> 'a list -> 'b -> 'b *)
-fun foldl g [] z = z
-  | foldl g (x::xs) z = foldl g xs (g(x, z))
+(* foldl : ('a * 'b -> 'b) -> 'b -> 'a list -> 'b *)
+fun foldl g z [] = z
+  | foldl g z (x::xs) = foldl g (g(x, z)) xs
 
-(* foldr : ('a * 'b -> 'b) -> 'a list -> 'b -> 'b *)
-fun foldr g [] z = z
-  | foldr g (x::xs) z = g(x, foldr g xs z)
+(* foldr : ('a * 'b -> 'b) -> 'b -> 'a list -> 'b *)
+fun foldr g z [] = z
+  | foldr g z (x::xs) = g(x, foldr g z xs)
 ```
 
 More specifically, `foldl` and `foldr` both describe two ways of combining the
 elements in a list, given a function `g`. The role of `z` is that of a "base
 case" in our accumulated value, so that we have an initial point to start from
-when using the function `g`. The result of `foldl g [x_1, ..., x_n] z` is to
-evaluate to `f(x_n, ..., f(x_2, f(x_1, z))...)`, and the result of `foldr g [x_1,
-..., x_n] z` is to evaluate to `f(x_1, ..., f(x_n-1, f(x_n, z))...)`. We are
+when using the function `g`. The result of `foldl g z [x_1, ..., x_n]` is to
+evaluate to `f(x_n, ..., f(x_2, f(x_1, z))...)`, and the result of `foldr g z [x_1,
+..., x_n]` is to evaluate to `f(x_1, ..., f(x_n-1, f(x_n, z))...)`. We are
 thus choosing whether we want to fold from the _left_ of the list or the
 _right_.
 
@@ -137,8 +139,8 @@ single string, which you could accomplish with `foldr (op^) ""`, or if you wante
 to sum the elements of a list, which could be done with `foldl (op+) 0`. Note that
 in the case of summing a list, `foldr` would work too - this is because `+` is
 an _associative_ function, meaning that it does not matter which order you
-evaluate it in (or in proper terms, \(f(x, f(y, z)) \cong f(f(x, y), z)\), for
-all \(x, y, z\)). 
+evaluate it in (or in proper terms, \\( f(x, f(y, z)) \cong f(f(x, y), z) \\), for
+all \\( x, y, z \\)).
 
 For many purposes, it will be the case that your `z` will be some _identity_
 value, such as `0` for summing a list, or the empty string for concatenating all
@@ -168,8 +170,8 @@ I hope makes apparent why `foldr` is the right fold for the task, as opposed to
 
 ## Compose
 One of the major examples that we used to motivate totality was that of
-_function composition_, the classic example being \(f(g(x))\), for some
-functions \(f\) and \(g\). This is a very common idea, where we have some form
+_function composition_, the classic example being \\( f(g(x)) \\), for some
+functions \\( f \\) and \\( g \\). This is a very common idea, where we have some form
 of data that we would like to put through a series of transformations. If our
 transformations are inherently disparate (such as being bound to identifiers of
 different functions), we may have to write code that looks like `f1 (f2 (f3 (f4
@@ -184,7 +186,7 @@ the deliberate identification of the arguments to functions, instead making use
 of _combinators_. In a similar flavor, we would like to eliminate the explicit
 need to construct the lambda expression that takes in the input `x`. We might
 then call back to another common mathematical operator, that being of _function
-composition_, or `o`. 
+composition_, or `o`.
 ```sml
 infix o
 (* o : ('b -> 'c) -> ('a -> 'b) -> ('a -> 'c) *)
@@ -205,16 +207,16 @@ complicated sequences of transformations.
 At this point, we have seen several examples of common higher-order functions,
 as well as potential use cases. These use cases often look nothing alike, but
 they all share a fundamental similarity in their _structure_, which is specified
-by the given higher-order function. 
+by the given higher-order function.
 
 A key strength of higher-order functions lies in _partial evaluation_, where we
 can use higher-order functions to further derive other functions (and possibly
 higher-order functions, themselves). It is fine for, in the case of finding the
-sum of a single list `L`, to simply evaluate `map (op+) L`, but in the general
-case it is a strength that we can bind the function `map (op+)` to the name
+sum of a single list `L`, to simply evaluate `foldr (op+) 0 L`, but in the general
+case it is a strength that we can bind the function `foldr (op+) 0` to the name
 `sum`. This comes in handy especially if we want to sum over _many_ lists, so
-that we don't continuously have to compute the result of `map (op+)` (though it
-has negligible computational cost, admittedly). 
+that we don't continuously have to compute the result of `foldr (op+) 0` (though it
+has negligible computational cost, admittedly).
 
 Seen in this way, it is as if higher-order functions are at the root of a large
 _tree_ of potential functions, where each node in the tree is an

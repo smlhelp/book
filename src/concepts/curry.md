@@ -1,21 +1,23 @@
 # Currying and Staging
+_By Brandon Wu, June 2020_
+
 Suppose that we are interested in writing a function
 that adds two numbers. This is fairly simple - this is not a new concept to us.
-```sml 
-fun add (x, y) = x + y 
+```sml
+fun add (x, y) = x + y
 ```
 
 Then this function should clearly have type `int * int -> int`. We also know
-that this notation is really just syntactic sugar for the following: 
-```sml 
-val add = fn (x, y) => x + y 
+that this notation is really just syntactic sugar for the following:
+```sml
+val add = fn (x, y) => x + y
 ```
 
 It binds the lambda expression that takes in a tuple of two integers and adds
 them together to the identifier of `add`. Yet with our knowledge of expressions
-and values, it is not too outlandish to write the following instead: 
-```sml 
-fun addCurry x = fn y => x + y 
+and values, it is not too outlandish to write the following instead:
+```sml
+fun addCurry x = fn y => x + y
 ```
 
 What might be the type of this function? Well, we know that `addCurry` takes in
@@ -44,44 +46,44 @@ int) -> int`, which is a function that takes in a function from `int -> int` and
 returns an integer.
 
 Note that in the curried example of `addCurry` we wrote above, this is really
-syntactic sugar for the following: 
-```sml 
+syntactic sugar for the following:
+```sml
 val addCurry = fn x => fn y => x + y
 ```
 
 Not being ones to skimp on the syntactic sugar (which perhaps spells danger for
 our syntactic blood sugar levels), we can take this one step further. We can
-write the exact same declaration in a more concise way, using the form: 
+write the exact same declaration in a more concise way, using the form:
 ```sml
-fun addCurry x y = x + y 
-``` 
-This thus will curry our arguments for us, when we separate them by a space. 
+fun addCurry x y = x + y
+```
+This thus will curry our arguments for us, when we separate them by a space.
 
 Note that our implementations of `addCurry` and `add` are _not_ extensionally
 equivalent - for the simple reason that they do not even have the same type!
 They do, however, in a sense _correspond_, in that they seem to do the _same
 thing_ - that is, add numbers together. The manner in which they do so is
-entirely disparate, however. 
+entirely disparate, however.
 
 It is important to note that currying our functions gives us a notion of
 _partial application_, where we can give a curried function only _some_ of its
 "arguments". This lends us to further specialization and modularity based on the
 use case and amount of information available. This is discussed more in the
-coming section. 
+coming section.
 
-## Revisiting Extensional Equivalence 
-In previous chapters, we have explored the idea of extensional equivalence, and 
-constructed a definition for extensional equivalence that covered two cases - 
+## Revisiting Extensional Equivalence
+In previous chapters, we have explored the idea of extensional equivalence, and
+constructed a definition for extensional equivalence that covered two cases -
 the function case and the non-function case.
 
 We seemed to agree on a meaning that said that, for non-function values, two
 values are extensionally equivalent if they are the _same value_, which is an
-perhaps an ill-justified definition that may leave a bad taste in one's mouth, 
-but ultimately boils down to our intuitive notion that, yes, some values are 
-just the _same_ and we can't really do much more than question that. For 
-instance, we can see that `(1, 2, "hi")` and `(1, 2, "hi")` are the "same", 
-and neither are the same as `(2, 1, "hello")`. For functions, however, we 
-decided on a slightly more appeasing definition that defined a function by 
+perhaps an ill-justified definition that may leave a bad taste in one's mouth,
+but ultimately boils down to our intuitive notion that, yes, some values are
+just the _same_ and we can't really do much more than question that. For
+instance, we can see that `(1, 2, "hi")` and `(1, 2, "hi")` are the "same",
+and neither are the same as `(2, 1, "hello")`. For functions, however, we
+decided on a slightly more appeasing definition that defined a function by
 its _input-output_ behavior. We restate the definition below:
 
 > **[Extensional Equivalence (Functions)]** We say two expressions `e : t1 ->
@@ -98,11 +100,11 @@ return are extensionally equivalent_.
 
 No matter how deeply nested this currying takes place, this definition will
 suffice. Types must be finite, so we must eventually reach a point where we can
-say that values are "the same" (excluding the existence of non-equality types, perhaps). 
+say that values are "the same" (excluding the existence of non-equality types, perhaps).
 We can see now that this idea of extensional equivalence is elegantly
 compatible with the existence of curried functions, being a recursive definition
 much in the same way that the `datatype`s that we declare or the `fun`ctions
-that we write are. 
+that we write are.
 
 ## Staging
 With curried functions, we can have much more deliberate control over _when_ a
@@ -128,7 +130,7 @@ work" with a single one of its arguments. Even if we were to curry `add`, with
 only one `int` it can't really do anything but simply wait for the second
 argument. In this case, the efficiency benefits are marginal at best. The
 computations are somewhat "dependent" - we need access to both arguments in
-order to do anything meaningful. 
+order to do anything meaningful.
 
 Consider a more contrived example:
 ```sml
@@ -143,7 +145,7 @@ fun contrived x y =
 The function `contrived` takes in two arguments `x` and `y`. It then performs
 some transformation on `x` using the function `horrible_computation` (which
 takes 3 years to run, unfortunately), and then adds `y` to the result of that
-transformation `z`. 
+transformation `z`.
 
 Suppose that we are interested in computing the results of `contrived 4 2` and
 `contrived 4 5`, for no reason other than because we can. Then, clearly
@@ -192,8 +194,8 @@ We can do this because `contrivedStaged 4` computes the result of
 function that it returns. This means that, in the scope of `intermediate`, it
 contains the answer that was common to both of the expressions we wrote earlier.
 Now, we can execute the step of `y + z` (which is nearly instantaneous), cutting
-our runtime in half. Now, we can obtain the result of `contrived 4 2` and 
-`contrived 4 5` in only 3 years (though to evaluate both of those expressions 
+our runtime in half. Now, we can obtain the result of `contrived 4 2` and
+`contrived 4 5` in only 3 years (though to evaluate both of those expressions
 themselves would still take 6 years!).
 
 It is important to note that currying is _not_ the same thing as staging.
@@ -201,4 +203,4 @@ It is important to note that currying is _not_ the same thing as staging.
 though it had the same type, let us structure our queries in a more optimal
 manner. This is an important idea with many applications, such as when building
 up a data structure to make queries to, or in graphics when a lot of work must
-first be done to preprocess the given data. 
+first be done to preprocess the given data.

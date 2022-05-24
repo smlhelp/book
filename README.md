@@ -12,11 +12,14 @@ Thanks for checking out `smlhelp.github.io`!
     - Conceptual Notes (`srcj/concepts`)
     - Worked example, video or written (`src/examples/written`)
     - Something else (talk to Jacob if your idea doesn't fit these categories)
-2. If a page already exists (probably at `src/MMMMMM/NNNNNN.md`, for some `MMMMMM` and `NNNNNN`) where you can add your content, add it there
+2. If a page already exists (probably at `src/MMMMMM/NNNNNN.md`, for some `MMMMMM` and `NNNNNN`) where you can add your content, add it there. Make sure to update the author attribution:
+    - If you fixed typos and made minor edits, add "_Revised &lt;current month&gt;_" to attribution
+    - If you wrote a new section or performed significant rewrites, add "_Rewritten by &lt;your name&gt;, &lt;current month&gt;_" 
 3. If no such page exists:
     - Create the file in the appropriate `src/MMMMMM` directory. Give it a short, descriptive, lowercase-alphabetical name, like `minimax.md`
     - Write your content (in markdown) to the file
     - Open up `src/SUMMARY.md` and add a link to your content (follow the format of the other links). The url should be `MMMMMM/NNNNNN.md`, where your new file is located at `src/MMMMMM/NNNNNN.md`
+    - Write "_By &lt;your name&gt;, &lt;current month&gt;_" (with a line break afterwards) beneath the page title
 4. Add, commit, push, and pull-request your changes.
 5. If your changes get approved and merged, add a separate pull request to add yourself to the list of contributors on the "About" page (if you're not on it).
 

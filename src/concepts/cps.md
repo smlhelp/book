@@ -10,6 +10,8 @@ figure figcaption {
 </style>
 
 # Continuation Passing Style
+_By Brandon Wu, June 2020. Revised March 2022_
+
 We have seen how we can write functions that are _tail recursive_, in that they
 only make recursive calls as _tail calls_, where the recursive calls is the last
 thing that the function does (i.e. there is no deferred work). This commonly was
@@ -349,7 +351,7 @@ we should visit next. Clearly, we visit `T2` first, so the red brick
 corresponding to `T2` is on top.
 
 Our next move is to pop it off first, which will cause our expression to now
-have three bricks - two corresponding to the children of `T3`, and one
+have three bricks - two corresponding to the children of `T2`, and one
 corresponding to `T4`. We can visualize the next phase as the following:
 
 <figure class="aligncenter">
@@ -358,7 +360,7 @@ corresponding to `T4`. We can visualize the next phase as the following:
     <figcaption class="center"><b>Fig 7.</b> Phase 2 of evaluation of the tree T. Note that two extra "bricks" have been added due to evaluation of treeSumCPS T2. </figcaption>
 </figure>
 
-where the brick labelled `treeSumCPS E` corrresponds to the empty child of
+where the brick labelled `treeSumCPS E` corresponds to the empty child of
 `T2`. Note that we have retained the blue flag at `T4` and left its brick alone,
 since for all intents and purposes we have not yet "touched" it - we have not
 evaluated our stack to that point. Note that due to corresponding to the `Empty`
@@ -483,8 +485,8 @@ fun knapsackCPS
   : 'a =
   case L of
     [] => if minVal <= 0 andalso maxWeight >= 0 then sc [] 
-                                                else k ()
-  | (v, w)::xs => if maxWeight < 0 then k ()
+                                                else fc ()
+  | (v, w)::xs => if maxWeight < 0 then fc ()
                                    else
     knapsackCPS ((v, w)::xs) (minVal - v) (maxWeight - w) 
     (fn L' => sc ((v, w)::L')) (fn () => knapsackCPS xs minVal maxWeight sc fc)
@@ -512,7 +514,7 @@ realized in the algorithm in the next part.
 ```sml
 case L of
     [] => if minVal <= 0 andalso maxWeight >= 0 then sc [] 
-                                                else k ()
+                                                else fc ()
 ```
 
 For the base case, however, we know that if we are given no items whatsoever,
@@ -548,7 +550,7 @@ imagine our choice to be whether to put the first element of the list into the
 knapsack, or to not. 
 
 ```sml
-| (v, w)::xs => if maxWeight < 0 then k ()
+| (v, w)::xs => if maxWeight < 0 then fc ()
                                    else
     knapsackCPS ((v, w)::xs) (minVal - v) (maxWeight - w) 
     (fn L' => sc ((v, w)::L')) (fn () => knapsackCPS xs minVal maxWeight sc fc)

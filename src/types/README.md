@@ -1,1 +1,1 @@
-# Types & Singatures
+# Types & Signatures

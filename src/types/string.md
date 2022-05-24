@@ -1,4 +1,6 @@
 # String
+_By Brandon Wu, May 2020_
+
 `string` is the SML type of ordered collections of characters. 
 
 ## Values

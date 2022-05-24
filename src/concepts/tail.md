@@ -1,4 +1,6 @@
 # Tail Recursion
+_By Eunice Chen and Brandon Wu, December 2020. Revised March 2022_
+
 In programs, functions often make calls to either themselves (recursive calls) or other functions. There are two types of function calls: non-tail calls, and **tail calls**. A function call is called a **tail call** if the caller does not modify or examine the result of the function call.
 
 If every recursive call made by a function is a **tail call**, that function is called **tail recursive**. Put another way, a function is **tail recursive** if the last operation performed by the function is the recursive call.
@@ -79,7 +81,7 @@ fun fib 0 = (1, 0)
 This is closer, but we still are doing computation after the recursive call: we add the results of the recursive call to each other, then return. Let's try to use the accumulator idea we had earlier in the `sum` function, but this time, since we calculate the `n`th and (`n-1`)th Fibonacci number, we will pass in two accumulators. Accumulator `a` will hold the `n`th Fibonacci number, and accumulator `b` will hold the (`n-1`)th Fibonacci number.
 ```sml
 fun fib' (0, a, b) = a
-  | fib' (n, a, b) = fib' (n-1, a + b, b)
+  | fib' (n, a, b) = fib' (n-1, a + b, a)
 ```
 And if we call `fib' (n, 1, 0)`, observe that we will indeed get the correct result.
 

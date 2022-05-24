@@ -1,4 +1,6 @@
 # Pattern Matching
+_By Kaz Zhou, September 2020_. _Revised May 2021_
+
 Patterns take on many appearances, such as:
 
 - Constants: `150`
@@ -9,9 +11,11 @@ Patterns take on many appearances, such as:
     - Lists: `x::xs`
     - Other datatypes: `Node(L,x,R)`
 
-Patterns can be matched against values to form bindings. In the following example, `1` gets bound to `x`, and `2` gets bound to `y`.
+Patterns can be matched against values to form bindings. Consider the following declaration:
 
 ```val (x,y) = (1,2)```
+
+The result is that `1` gets bound to `x`, and `2` gets bound to `y`.
 
 Pattern matching may fail. For example, the following raises exception `Bind`.
 
@@ -36,24 +40,31 @@ fun fiction 1 = 1
 ```
 There are many inputs which do not match with either `1`, `2`, or `3`. For example, `fiction 4` would raise exception `Match`.
 
+A more subtle bug is when patterns are redundant. The following example has the clauses of `fact` swapped.
+```
+fun factloop n = n * factloop(n-1)
+  | factloop 0 = 1
+```
+The second clause of `factloop` never gets executed! When evaluating `factloop 0`, SML will try to match `0` to each pattern, *in order*. Therefore, `factloop 0` steps to `0 * factloop(-1)`, because `0` can match to `n`. Convince yourself that `factloop k` will loop forever for any `k` of type `int`!
+
 ## Lambda expressions:
 ```(fn [] => false | x::xs => true) [1,2,3]```
 
-The lambda expression is similar to a function; as it turns an input into an output. In the example above, `[1,2,3]` is the input. It doesn't match with `[]`, but it does match with `x::xs`. Namely, `1` gets bound to `x`, and the list `[2,3]` gets bound to `xs`. As a result of this successful pattern matching, the lambda expression returns `true`. 
+The lambda expression is similar to a function, as it turns an input into an output. In the example above, `[1,2,3]` is the input. It doesn't match with `[]`, but it does match with `x::xs`. Namely, `1` gets bound to `x`, and the list `[2,3]` gets bound to `xs`. As a result of this successful pattern matching, the lambda expression returns `true`. 
     
-You should still make sure your patterns are exhaustive. For example, the following codeblock raises exception `Match`:
+You should still make sure your patterns are exhaustive. For example, the following expression raises exception `Match`:
 
 ```(fn [] => false) [1,2,3]```
 
 ## Case expressions:
 ```
-fun fact x =
+fun fact' x =
     case x of
         0 => 1
-      | n => n * fact (n-1)
+      | n => n * fact' (n-1)
 ```
-First, note that this codeblock does the same thing as the example for function declarations. However, it uses an extra `case` expression.
+First, note that `fact'` does the same thing as `fact`. However, it uses an extra `case` expression.
     
-Let's consider what happens when `fact` is given an input, like `5`. First, `5` gets bound to `x`. Then, the `case` expression tries to match `5` to a pattern. In this scenario, `5` successfully pattern matches with `n`, so `5` gets bound to `n`. Therefore, `fact 5` evaluates to `5 * fact(4)`. 
+Let's consider what happens when we evaluate `fact' 5`. First, `5` gets bound to `x`. Then, the `case` expression tries to match `5` to a pattern. In this scenario, `5` successfully pattern matches with `n`, so `5` gets bound to `n`. Therefore, `fact' 5` evaluates to `5 * fact' 4`. 
     
 As usual, the patterns in `case` expressions should be exhaustive.

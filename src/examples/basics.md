@@ -1,4 +1,5 @@
 # SML Basics Examples
+_By Eunice Chen, May 2020_
 
 ## Types
 For each of the following declarations, state the type and value of `x`.
