@@ -88,7 +88,7 @@ we quantified the induction hypothesis: we are not assuming the theorem is true 
 natural numbers. Rather, we assume the theorem is true for some fixed `k` (which is \\( \geq 0 \\) ).
 
 The principle of mathematical induction works due to a sort of domino effect. Let's notate
-that the theorem is true for an integer `n` with \\( P(n) \\). In the above proof, we've shown
+that the theorem is true for an integer \\( n \\) with \\( P(n) \\). In the above proof, we've shown
 \\( P(0) \\), and that \\( P(k) \implies P(k+1) \\) for all \\(k \geq 0 \\).
 
 For example, suppose we wanted to show \\( P(2) \\). We begin with \\( P(0) \\), and from the inductive step get
@@ -161,7 +161,7 @@ so we'll need strong induction to prove the correctness of `exp''`.
 
 In addition, **the proof mirrors the code.** What we mean by this is, there should be a different case
 for each clause of the function. Our proof would have a base case for both `n = 0` and `n = 1`, because
-the first two clauses of `exp''` deal with those cases. Again, we omit the details of `exp''`'s correctness.
+the first two clauses of `exp''` deal with those cases. Again, we omit the details of proving `exp''`'s correctness.
 
 ## List Recursion
 
@@ -226,9 +226,6 @@ fun [] @ B = B
   | (x::xs) @ B = x::(xs @ B)
 ```
 
-(Note you will not be able to run this code in the smlnj REPL, because `@` is a keyword that we cannot overwrite.
-However, you may give the function a different name for testing purposes.)
-
 Our `@` function recurses on the left list. If it's empty, we just return the right list.
 If it's nonempty, we evaluate `xs @ B`, and then tack on `x` to the beginning.
 
@@ -274,7 +271,7 @@ evaluates to a value.
 
 **Base case:** We prove the theorem when `L` is `[]`.
 
-`length [] ==> 0` by clause 1 of `length`. 0 is a value, as desired.
+`length [] ==> 0` by clause 1 of `length`. `0` is a value, as desired.
 
 **Inductive step:** Let `xs` be some value of type `int list`.
 
