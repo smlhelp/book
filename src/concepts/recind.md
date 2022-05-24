@@ -161,7 +161,7 @@ so we'll need strong induction to prove the correctness of `exp''`.
 
 In addition, **the proof mirrors the code.** What we mean by this is, there should be a different case
 for each clause of the function. Our proof would have a base case for both `n = 0` and `n = 1`, because
-the first two clauses of `exp''` deal with those cases. Again, we omit the details of `exp''`'s correctness.
+the first two clauses of `exp''` deal with those cases. Again, we omit the details of proving `exp''`'s correctness.
 
 ## List Recursion
 
@@ -225,9 +225,6 @@ infix @
 fun [] @ B = B
   | (x::xs) @ B = x::(xs @ B)
 ```
-
-(Note you will not be able to run this code in the smlnj REPL, because `@` is a keyword that we cannot overwrite.
-However, you may give the function a different name for testing purposes.)
 
 Our `@` function recurses on the left list. If it's empty, we just return the right list.
 If it's nonempty, we evaluate `xs @ B`, and then tack on `x` to the beginning.
