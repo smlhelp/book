@@ -126,7 +126,7 @@ to prove the correctness of this version of `exp'`, our base case would be showi
 `exp' Zero == ` \\( 2^0 \\). The inductive step would be showing that if `exp' n == ` \\( 2^n \\), then
 `exp' (Succ n) == ` \\( 2^{n+1} \\). We'll omit the proof's details.
 
-It may seem pointless to write the above code (indeed, it is not that practical). Although there
+It may seem pointless to write the above code (indeed, it is not that practical). But, there
 are two advantages: we don't need to restrict the inputs to `exp'` anymore, because negative numbers
 are not natural numbers! So, we won't need to worry about looping forever, which would happen
 in the earlier version of `exp` if we tried evaluating `exp ~1`. Also, the code portrays how
@@ -235,20 +235,98 @@ If it's nonempty, we evaluate `xs @ B`, and then tack on `x` to the beginning.
 Let's consider proofs by structural induction on lists. Let's say we want to show that some property \\( P \\)
 is true for all values of type `t list`. It suffices to show the following:
 
-Base case: \\( P( \\) `[]` \\() \\). In other words, we show the theorem holds for the empty list.
+**Base case:** \\( P( \\) `[]` \\() \\). In other words, we show the theorem holds for the empty list.
 
-Inductive step: For any value `xs : t list`, and any value `x : t`,
+**Inductive step:** For any value `xs : t list`, and any value `x : t`,
 \\( P( \\) `xs` \\() \implies P( \\) `x::xs` \\() \\).
 
 For example, if the type `t` is `int`, then \\( P( \\) `[1,2]` \\( ) \\) is true because
 the base case tells us \\( P( \\) `[]` \\( ) \\), and then one application of the inductive step gets us
 \\( P( \\) `2::[]` \\( ) \\), and one more application of the inductive step gets us
-\\( P( \\) 1::2::[] \\( ) \\). Remember that `1::2::[]` is the same thing as `[1,2]`.
+\\( P( \\) `1::2::[]` \\( ) \\). Remember that `1::2::[]` is the same thing as `[1,2]`.
 
+### Proving the totality of `length`
 
+Recall the code of `length`, which has type `int list -> int`:
 
+```sml
+fun length [] = 0
+  | length (x::xs) = 1 + length xs
+```
+
+**Theorem:** for all values `L : int list`, `length L` evaluates to a value.
+
+In other words, the theorem states that the function `length` is **_total_**.
+We'll use `==>` throughout the proof to denote "steps to", as we are trying to show `length L`
+evaluates to a value. 
+
+> Be careful not to mix up `==>` and `==`. For example, `4 == 2+2` is true
+> because the expressions are extensionally equivalent, but no compiler in their right mind would
+> step `4` to `2+2`. Therefore `4 ==> 2+2` is nonsense.)
+
+**Proof:** We'll use structural induction on `L`.
+
+**Base case:** We prove the theorem when `L` is `[]`.
+
+`length [] ==> 0` by clause 1 of `length`. 0 is a value, as desired.
+
+**Inductive step:** Let `xs` be some value of type `int list`.
+
+Induction hypothesis: Assume that `length xs` evaluates to a value.
+
+Let `x : int` be an arbitrary value. We want to show that `length (x::xs)` evaluates to a value.
+
+`length (x::xs) ==> 1 + length xs` (by clause 2 of `length`)
+`==> 1 + v` (by IH, `length xs ==> v` for some value `v`)
+
+Now, `1 + v` evaluates to a value (we assume that SML implements operators like `+` correctly, and we
+do not care about overflow). This concludes the inductive step.
+
+Note how powerful structural induction is! We've proven a fact about *all* values of type `int list`
+(there are very many such values). To conquer the infinite, we only needed to prove a base case
+and the inductive step, due to the inductive nature of lists.
+
+Let's now sketch out a proof that `@` is total (that is, for all values `A : int list` and `B : int list`,
+`A @ B` evaluates to a value). Recall the code of `@`:
+
+```
+fun [] @ B = B
+  | (x::xs) @ B = x::(xs @ B)
+```
+
+Note that the code of `@` does not care what the right list, `B`, looks like!
+We only case on whether the left list is empty or nonempty.
+As such, it makes sense that a proof about `@` would use structural induction on the left list, `A`.
+(Again, **the proof mirrors the code**!)
+
+The base case would involve proving `[] @ B` evaluates to a value, for any `B : int list`.
+
+The inductive step would roughly be: given an arbitrary `xs : int list` and `x : int`, prove that
+for all `B : int list`, the fact that `xs @ B` evaluates to a value implies that 
+`(x::xs) @ B` evaluates to a value.
+
+We leave the proof's details as an exercise, but they are quite similar to the proof that `length` is total.
+The main difference is we are letting `B` be an arbitrary value of type `int list` throughout the entire proof.
 
 ## Takeaways
+
+Functional programming lends itself very nicely to recursive code, rather than iterative code.
+Induction is a powerful technique for proving theorems about recursive functions.
+There are different types of induction, useful for functions on various types.
+For natural numbers, we may use simple or strong induction. (Or, we can be fancy
+and consider the datatype of natural numbers, `nat`, and use structural induction.)
+For lists and other recursively defined datatypes, structural induction is the way to go.
+
+> Not all proofs about SML code need induction!
+> Recursion and induction go hand in hand. So, if you were tasked with
+> proving a theorem on a *non-recursive* function, there will be no need for induction!
+
+We also saw how **proofs mirror the code**. Non-recursive clauses in functions (that is,
+where the function does not call itself) correspond to base cases in proofs. Recursive clauses
+in functions correspond to inductive steps. (When we move into more complex datatypes
+than lists, which may have multiple inductive cases, there may be multiple inductive steps!)
+The deep connection between recursion and induction is just another example of how
+the fields of computer science and mathematics are closely tied.
 
 ### Footnotes
 - [1] SML actually does have mutable data cells called `ref`s. For this reason, SML is not (strictly speaking) a _pure_ functional programming language. But we primarily program with the parts of SML which are pure, and therefore don't have to worry about _side effects_.
