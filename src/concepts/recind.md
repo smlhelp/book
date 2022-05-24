@@ -266,6 +266,10 @@ evaluates to a value.
 > because the expressions are extensionally equivalent, but no compiler in their right mind would
 > step `4` to `2+2`. Therefore `4 ==> 2+2` is nonsense.)
 
+> Furthermore, "steps to", or `==>`, is very different from \\( \implies \\). 
+> `==>` is used when talking about expressions in SML.
+> \\( \implies \\) is not particular to SML, since it's the symbol for logical implication.
+
 **Proof:** We'll use structural induction on `L`.
 
 **Base case:** We prove the theorem when `L` is `[]`.
