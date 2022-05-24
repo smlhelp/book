@@ -88,7 +88,7 @@ we quantified the induction hypothesis: we are not assuming the theorem is true 
 natural numbers. Rather, we assume the theorem is true for some fixed `k` (which is \\( \geq 0 \\) ).
 
 The principle of mathematical induction works due to a sort of domino effect. Let's notate
-that the theorem is true for an integer `n` with \\( P(n) \\). In the above proof, we've shown
+that the theorem is true for an integer \\( n \\) with \\( P(n) \\). In the above proof, we've shown
 \\( P(0) \\), and that \\( P(k) \implies P(k+1) \\) for all \\(k \geq 0 \\).
 
 For example, suppose we wanted to show \\( P(2) \\). We begin with \\( P(0) \\), and from the inductive step get
@@ -271,7 +271,7 @@ evaluates to a value.
 
 **Base case:** We prove the theorem when `L` is `[]`.
 
-`length [] ==> 0` by clause 1 of `length`. 0 is a value, as desired.
+`length [] ==> 0` by clause 1 of `length`. `0` is a value, as desired.
 
 **Inductive step:** Let `xs` be some value of type `int list`.
 
