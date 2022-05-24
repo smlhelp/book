@@ -1,6 +1,6 @@
 # Recursion and Induction
 
-By Jacob Neumann and Kaz Zhou, May 2022.
+_By Jacob Neumann and Kaz Zhou, May 2022_
 
 ## Introduction
 Functional programmers have a particular affinity for the technique of **_recursion_**. Recursion is a way of writing functions: a given SML function either will or won't be _recursive_, and you can tell by looking at its declaration. Most of the main functions (i.e. the ones doing the "real work" of a problem) you write when programming in a functional style will be recursive, and _thinking recursively_ is an essential skill for functional programming. Indeed, many of the features of functional programming languages like SML are designed to facilitate writing recursive functions. And &mdash; as we discuss more in [the page about datatypes](datatypes.md) &mdash; we'll also be designing our data to make it easier to define recursive functions.
