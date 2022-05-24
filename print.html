@@ -2147,7 +2147,7 @@ extensionally equivalent to <code>2 * exp (k+1-1)</code>. In fact, we can say <c
 we quantified the induction hypothesis: we are not assuming the theorem is true for all
 natural numbers. Rather, we assume the theorem is true for some fixed <code>k</code> (which is \( \geq 0 \) ).</p>
 <p>The principle of mathematical induction works due to a sort of domino effect. Let's notate
-that the theorem is true for an integer <code>n</code> with \( P(n) \). In the above proof, we've shown
+that the theorem is true for an integer \( n \) with \( P(n) \). In the above proof, we've shown
 \( P(0) \), and that \( P(k) \implies P(k+1) \) for all \(k \geq 0 \).</p>
 <p>For example, suppose we wanted to show \( P(2) \). We begin with \( P(0) \), and from the inductive step get
 \( P(1) \). Then we apply the inductive step again to get \( P(2) \).</p>
@@ -2201,7 +2201,7 @@ It only exists for us to illustrate strong induction. The recursive case uses bo
 so we'll need strong induction to prove the correctness of <code>exp''</code>.</p>
 <p>In addition, <strong>the proof mirrors the code.</strong> What we mean by this is, there should be a different case
 for each clause of the function. Our proof would have a base case for both <code>n = 0</code> and <code>n = 1</code>, because
-the first two clauses of <code>exp''</code> deal with those cases. Again, we omit the details of <code>exp''</code>'s correctness.</p>
+the first two clauses of <code>exp''</code> deal with those cases. Again, we omit the details of proving <code>exp''</code>'s correctness.</p>
 <h2 id="list-recursion"><a class="header" href="#list-recursion">List Recursion</a></h2>
 <p>Let's first define lists. Here are some examples of <code>int list</code>s:</p>
 <pre><code class="language-sml">[1,5,1,5,0]
@@ -2250,8 +2250,6 @@ infix @
 fun [] @ B = B
   | (x::xs) @ B = x::(xs @ B)
 </code></pre>
-<p>(Note you will not be able to run this code in the smlnj REPL, because <code>@</code> is a keyword that we cannot overwrite.
-However, you may give the function a different name for testing purposes.)</p>
 <p>Our <code>@</code> function recurses on the left list. If it's empty, we just return the right list.
 If it's nonempty, we evaluate <code>xs @ B</code>, and then tack on <code>x</code> to the beginning.</p>
 <h2 id="list-induction"><a class="header" href="#list-induction">List Induction</a></h2>
@@ -2285,7 +2283,7 @@ step <code>4</code> to <code>2+2</code>. Therefore <code>4 ==&gt; 2+2</code> is 
 </blockquote>
 <p><strong>Proof:</strong> We'll use structural induction on <code>L</code>.</p>
 <p><strong>Base case:</strong> We prove the theorem when <code>L</code> is <code>[]</code>.</p>
-<p><code>length [] ==&gt; 0</code> by clause 1 of <code>length</code>. 0 is a value, as desired.</p>
+<p><code>length [] ==&gt; 0</code> by clause 1 of <code>length</code>. <code>0</code> is a value, as desired.</p>
 <p><strong>Inductive step:</strong> Let <code>xs</code> be some value of type <code>int list</code>.</p>
 <p>Induction hypothesis: Assume that <code>length xs</code> evaluates to a value.</p>
 <p>Let <code>x : int</code> be an arbitrary value. We want to show that <code>length (x::xs)</code> evaluates to a value.</p>
