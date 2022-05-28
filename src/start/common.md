@@ -141,7 +141,7 @@ to print every element we visit while we are searching:
 
 ```sml
 fun search ([] : int list, y : int) : bool = false
-  | search (x::xs : int list, y ; int) : bool =
+  | search (x::xs : int list, y : int) : bool =
     let
       val () = print (Int.toString x)
     in
@@ -153,7 +153,7 @@ Alternatively, we can use the sequencing operator `;` to put the prints in line.
 
 ```sml
 fun search ([] : int list, y : int) : bool = false
-  | search (x::xs : int list, y ; int) : bool =
+  | search (x::xs : int list, y : int) : bool =
     (print (Int.toString x); (x = y) orelse (search (xs, y)))
 ```
 
