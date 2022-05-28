@@ -975,7 +975,7 @@ in ... end
 <p>In our search example, we can use the <code>Int.toString : int -&gt; string</code> function
 to print every element we visit while we are searching:</p>
 <pre><code class="language-sml">fun search ([] : int list, y : int) : bool = false
-  | search (x::xs : int list, y ; int) : bool =
+  | search (x::xs : int list, y : int) : bool =
     let
       val () = print (Int.toString x)
     in
@@ -984,7 +984,7 @@ to print every element we visit while we are searching:</p>
 </code></pre>
 <p>Alternatively, we can use the sequencing operator <code>;</code> to put the prints in line.</p>
 <pre><code class="language-sml">fun search ([] : int list, y : int) : bool = false
-  | search (x::xs : int list, y ; int) : bool =
+  | search (x::xs : int list, y : int) : bool =
     (print (Int.toString x); (x = y) orelse (search (xs, y)))
 </code></pre>
 <p>It should be noted that <code>;</code> often doesn't ''play nice'' with many things in SML,
