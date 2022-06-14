@@ -4001,7 +4001,7 @@ viewed as simply a more advanced form of accumulation, as well as how having
 multiple continuations (corresponding to success and failure cases) allows us to
 explore expansive trees of binary choices to find solutions.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="exceptions"><a class="header" href="#exceptions">Exceptions</a></h1>
-<p><em>By Brandon Wu, June 2020</em></p>
+<p><em>By Brandon Wu, June 2020. Revised June 2022</em></p>
 <p>So far, we have seen how we can manipulate the constructs of SML to create
 unique control flow behavior in the form of continuation passing style. In this
 section, we will discuss <em>exceptions</em>, which are themselves a builtin feature of
@@ -4182,7 +4182,7 @@ handler by doing something like the following:</p>
 
 fun factException 0 = raise Return 1
   | factException n = factException (n - 1) handle (Return res) =&gt; raise Return
-  (n - 1)
+  (n * res)
 </code></pre>
 <p><strong>NOTE:</strong> It is not clear why anyone would want to define <code>fact</code> this way.</p>
 <p>This example makes use of an exception, <code>Return : int -&gt; exn</code>, which wraps the
