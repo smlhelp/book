@@ -1,5 +1,5 @@
 # Exceptions
-_By Brandon Wu, June 2020_
+_By Brandon Wu, June 2020. Revised June 2022_
 
 So far, we have seen how we can manipulate the constructs of SML to create
 unique control flow behavior in the form of continuation passing style. In this
@@ -214,7 +214,7 @@ exception Return of int
 
 fun factException 0 = raise Return 1
   | factException n = factException (n - 1) handle (Return res) => raise Return
-  (n - 1)
+  (n * res)
 ```
 
 **NOTE:** It is not clear why anyone would want to define `fact` this way.
