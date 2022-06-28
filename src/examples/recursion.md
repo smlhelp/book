@@ -7,31 +7,55 @@ For each of the following expressions, state its type and value.
 ```sml
 fun f (x : int) : int = f x
 ```
-Type: `int -> int`\
-Value: The value is the function itself
+<!-- Need to use rust to support the eyeball thing -->
+```rust,ignore
+Click the eyeball icon to see the answer --->
+# Type:  int -> int
+# Value: the function itself, fn x => <body>
+```
 
 ```sml
 val x = []::(150::[])
 ```
-Type: `int list`\
-Value: [150]
+```rust,ignore
+Click the eyeball icon to see the answer --->
+# Type:  not well typed
+# Value: no value, it is not well-typed
+```
+
+```sml
+val x = [122]::([150]::[])
+```
+```rust,ignore
+Click the eyeball icon to see the answer --->
+# Type:  int list list
+# Value: [122]::([150]::[])
+#  also: [[122], [150]]
+#  also: (122::[])::((150::[])::[])
+```
 
 ```sml
 fun f L =
     case L of
       [] => [[]]
-    | x::xs => [x] @ []
+    | x::xs => [x + 1] @ []
 ```
-Type: not well-typed\
-Value: no value, because it is not well-typed
+```rust,ignore
+Click the eyeball icon to see the answer --->
+# Type:  not well-typed
+# Value: no value, because it is not well-typed
+```
 
 What is the type and value of x?
 ```sml
 fun f (y : int) : int = f y
 val x : int = f y
 ```
-Type: int\
-Value: No value, because it loops forever
+```rust,ignore
+Click the eyeball icon to see the answer --->
+# Type:  int
+# Value: No value, because it loops forever
+```
 
 What is the type and value of y?
 ```sml
@@ -43,8 +67,11 @@ val x =
     end
 val y = incr
 ```
-Type: No type, since incr is not in scope\
-Value: No value, since incr is not in scope
+```rust,ignore
+Click the eyeball icon to see the answer --->
+# Type:  No type, since incr is not in scope
+# Value: No value, since incr is not in scope
+```
 
 ## Recursion
 
