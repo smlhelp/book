@@ -142,24 +142,34 @@
 <p>For each of the following declarations, state the type and value of <code>x</code>.</p>
 <pre><code class="language-sml">val x = 1 &gt; 5
 </code></pre>
-<p>Type: <code>bool</code></p>
-<p>Value: <code>false</code></p>
+<pre><code class="language-rust ignore">Click the eyeball icon to see the answer ---&gt;
+<span class="boring">Type:  bool
+</span><span class="boring">Value: false
+</span></code></pre>
 <pre><code class="language-sml">val x = 15 div 0
 </code></pre>
-<p>Type: <code>int</code></p>
-<p>Value: Does not reduce to a value because it raises an exception</p>
+<pre><code class="language-rust ignore">Click the eyeball icon to see the answer ---&gt;
+<span class="boring">Type:  int
+</span><span class="boring">Value: Does not reduce to a value because it raises an exception
+</span></code></pre>
 <pre><code class="language-sml">val x = 15.0 div 0.0
 </code></pre>
-<p>Type: not well-typed (<code>div</code> is a function of type <code>int * int -&gt; int</code>)</p>
-<p>Value: No value, since it is not well-typed</p>
+<pre><code class="language-rust ignore">Click the eyeball icon to see the answer ---&gt;
+<span class="boring">Type:  not well-typed (`div` is a function of type `int * int -&gt; int`)
+</span><span class="boring">Value: No value, since it is not well-typed
+</span></code></pre>
 <pre><code class="language-sml">val x = fn (n : int) =&gt; Int.toString n
 </code></pre>
-<p>Type: <code>int -&gt; string</code></p>
-<p>Value: <code>fn n =&gt; Int.toString n</code></p>
+<pre><code class="language-rust ignore">Click the eyeball icon to see the answer ---&gt;
+<span class="boring">Type:  int -&gt; string
+</span><span class="boring">Value: fn n =&gt; Int.toString n
+</span></code></pre>
 <pre><code class="language-sml">val x = fn n =&gt; (&quot;1&quot; ^ &quot;5&quot;) ^ (Int.toString n)
 </code></pre>
-<p>Type: <code>int -&gt; string</code></p>
-<p>Value: <code>fn (n : int) =&gt; (&quot;1&quot; ^ &quot;5&quot;) ^ (Int.toString n)</code></p>
+<pre><code class="language-rust ignore">Click the eyeball icon to see the answer ---&gt;
+<span class="boring">Type:  int -&gt; string
+</span><span class="boring">Value: fn (n : int) =&gt; (&quot;1&quot; ^ &quot;5&quot;) ^ (Int.toString n)
+</span></code></pre>
 <h2 id="scope"><a class="header" href="#scope">Scope</a></h2>
 <h3 id="example-0"><a class="header" href="#example-0">Example 0</a></h3>
 <pre><code class="language-sml">let
@@ -169,10 +179,12 @@ in
 end
 </code></pre>
 <p>What is the value of the let-in-end expression?</p>
-<p>Value: No value, because <code>z</code> is not in scope (will cause an error).</p>
+<pre><code class="language-rust ignore">Click the eyeball icon to see the answer ---&gt;
+<span class="boring">Value: No value, because `z` is not in scope (will cause an error).
+</span></code></pre>
 <h3 id="example-1"><a class="header" href="#example-1">Example 1</a></h3>
 <pre><code class="language-sml">val y = 0
-val z = 
+val z =
     (let
       val x : int = 1
       fun f (x : int) = x
@@ -183,13 +195,21 @@ val z =
 val a = y
 </code></pre>
 <p>What is the value of <code>y</code> before the let-in-end expression?</p>
-<p>y = 0</p>
+<pre><code class="language-rust ignore">Click the eyeball icon to see the answer ---&gt;
+<span class="boring">y = 0
+</span></code></pre>
 <p>What is the value of <code>y</code> within the let-in-end expression?</p>
-<p>y = 2</p>
+<pre><code class="language-rust ignore">Click the eyeball icon to see the answer ---&gt;
+<span class="boring">y = 2
+</span></code></pre>
 <p>What is the value of <code>a</code>?</p>
-<p>a = 0</p>
+<pre><code class="language-rust ignore">Click the eyeball icon to see the answer ---&gt;
+<span class="boring">a = 0
+</span></code></pre>
 <p>What is the value of <code>z</code>?</p>
-<p>z = 2</p>
+<pre><code class="language-rust ignore">Click the eyeball icon to see the answer ---&gt;
+<span class="boring">z = 2
+</span></code></pre>
 <h3 id="example-2"><a class="header" href="#example-2">Example 2</a></h3>
 <pre><code class="language-sml">val x : int = 1 
 fun f (x : int) = x + 1
@@ -198,23 +218,27 @@ val z : int = f y
 val a : int = x
 </code></pre>
 <p>What are the values of <code>x</code>, <code>y</code>, <code>z</code>, and <code>a</code>?</p>
-<p>x = 1</p>
-<p>y = 2</p>
-<p>z = 3</p>
-<p>a = 1</p>
+<pre><code class="language-rust ignore">Click the eyeball icon to see the answer ---&gt;
+<span class="boring">x = 1
+</span><span class="boring">y = 2
+</span><span class="boring">z = 3
+</span><span class="boring">a = 1
+</span></code></pre>
 <h3 id="example-3"><a class="header" href="#example-3">Example 3</a></h3>
 <pre><code class="language-sml">val x = 1
 val y = 2
-fun f (x, y) = 
-    case x of 
+fun f (x, y) =
+    case x of
       0 =&gt; 0
     | y =&gt; y
 val a = f (y, x)
 val b = f (x, y)
 </code></pre>
 <p>What are the values of <code>a</code> and <code>b</code>?</p>
-<p>a = 2</p>
-<p>b = 1</p>
+<pre><code class="language-rust ignore">Click the eyeball icon to see the answer ---&gt;
+<span class="boring">a = 2
+</span><span class="boring">b = 1
+</span></code></pre>
 
                     </main>
 

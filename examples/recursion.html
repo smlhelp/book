@@ -142,25 +142,42 @@
 <p>For each of the following expressions, state its type and value.</p>
 <pre><code class="language-sml">fun f (x : int) : int = f x
 </code></pre>
-<p>Type: <code>int -&gt; int</code><br />
-Value: The value is the function itself</p>
+<!-- Need to use rust to support the eyeball thing -->
+<pre><code class="language-rust ignore">Click the eyeball icon to see the answer ---&gt;
+<span class="boring">Type:  int -&gt; int
+</span><span class="boring">Value: the function itself, fn x =&gt; &lt;body&gt;
+</span></code></pre>
 <pre><code class="language-sml">val x = []::(150::[])
 </code></pre>
-<p>Type: <code>int list</code><br />
-Value: [150]</p>
+<pre><code class="language-rust ignore">Click the eyeball icon to see the answer ---&gt;
+<span class="boring">Type:  not well typed
+</span><span class="boring">Value: no value, it is not well-typed
+</span></code></pre>
+<pre><code class="language-sml">val x = [122]::([150]::[])
+</code></pre>
+<pre><code class="language-rust ignore">Click the eyeball icon to see the answer ---&gt;
+<span class="boring">Type:  int list list
+</span><span class="boring">Value: [122]::([150]::[])
+</span><span class="boring"> also: [[122], [150]]
+</span><span class="boring"> also: (122::[])::((150::[])::[])
+</span></code></pre>
 <pre><code class="language-sml">fun f L =
     case L of
       [] =&gt; [[]]
-    | x::xs =&gt; [x] @ []
+    | x::xs =&gt; [x + 1] @ []
 </code></pre>
-<p>Type: not well-typed<br />
-Value: no value, because it is not well-typed</p>
+<pre><code class="language-rust ignore">Click the eyeball icon to see the answer ---&gt;
+<span class="boring">Type:  not well-typed
+</span><span class="boring">Value: no value, because it is not well-typed
+</span></code></pre>
 <p>What is the type and value of x?</p>
 <pre><code class="language-sml">fun f (y : int) : int = f y
 val x : int = f y
 </code></pre>
-<p>Type: int<br />
-Value: No value, because it loops forever</p>
+<pre><code class="language-rust ignore">Click the eyeball icon to see the answer ---&gt;
+<span class="boring">Type:  int
+</span><span class="boring">Value: No value, because it loops forever
+</span></code></pre>
 <p>What is the type and value of y?</p>
 <pre><code class="language-sml">val x =
     let
@@ -170,8 +187,10 @@ Value: No value, because it loops forever</p>
     end
 val y = incr
 </code></pre>
-<p>Type: No type, since incr is not in scope<br />
-Value: No value, since incr is not in scope</p>
+<pre><code class="language-rust ignore">Click the eyeball icon to see the answer ---&gt;
+<span class="boring">Type:  No type, since incr is not in scope
+</span><span class="boring">Value: No value, since incr is not in scope
+</span></code></pre>
 <h2 id="recursion"><a class="header" href="#recursion">Recursion</a></h2>
 <h2 id="induction"><a class="header" href="#induction">Induction</a></h2>
 <p>Given the following function:</p>
