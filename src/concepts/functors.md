@@ -466,7 +466,7 @@ a typeclass implementing `ORDERED`, and exports a structure whose keys are the
 type of the given typeclass. We thus will define our functor with the following
 preliminaries:
 ```sml
-functor RedBlackDict (Key : ORDERED) :> DICT =
+functor RedBlackDict (Key : ORDERED) :> DICT where type key = Key.t =
 struct
     type key = Key.t
     datatype color = Red | Black
@@ -482,6 +482,14 @@ access to the `Key.compare` function, which we will use when inserting into our
 dictionary. We define a `color` type (which only consists of the constant
 constructors `Red` and `Black`) for tagging the nodes of the red-black tree
 (leaves are considered to be black).
+
+> *Note: We use the `where` syntax to indicate that the `type key` will be the
+> same as `Key.t` to the outside world. This is important because our
+> `RedBlackDict` is opaquely ascribed, meaning that without this syntax, we
+> wouldn't know what the type of `key` is, and thus could not actually add any
+> keys! While before we avoided using `where` by just making the ascription
+> transparent, we don't want to do that here, because we don't want the outside
+> world to mess with our red-black tree and potentially mess up the invariant!*
 
 The question becomes: how should we implement insert? We cannot be so naive as
 to simply insert as we would in an ordinary binary search tree, as this would
@@ -624,7 +632,7 @@ Our completed code for a red-black tree implementation of dictionaries is thus
 as follows. Note that the implementation of `lookup` is very straightforward, and
 
 ```sml
-functor RedBlackDict (Key : ORDERED) :> DICT =
+functor RedBlackDict (Key : ORDERED) :> DICT where type key = Key.t =
 struct
     type key = Key.t
     datatype color = Red | Black
