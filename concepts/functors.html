@@ -524,7 +524,7 @@ previous section - we will instead design a <code>RedBlackDict</code> functor th
 a typeclass implementing <code>ORDERED</code>, and exports a structure whose keys are the
 type of the given typeclass. We thus will define our functor with the following
 preliminaries:</p>
-<pre><code class="language-sml">functor RedBlackDict (Key : ORDERED) :&gt; DICT =
+<pre><code class="language-sml">functor RedBlackDict (Key : ORDERED) :&gt; DICT where type key = Key.t =
 struct
     type key = Key.t
     datatype color = Red | Black
@@ -539,6 +539,15 @@ access to the <code>Key.compare</code> function, which we will use when insertin
 dictionary. We define a <code>color</code> type (which only consists of the constant
 constructors <code>Red</code> and <code>Black</code>) for tagging the nodes of the red-black tree
 (leaves are considered to be black).</p>
+<blockquote>
+<p><em>Note: We use the <code>where</code> syntax to indicate that the <code>type key</code> will be the
+same as <code>Key.t</code> to the outside world. This is important because our
+<code>RedBlackDict</code> is opaquely ascribed, meaning that without this syntax, we
+wouldn't know what the type of <code>key</code> is, and thus could not actually add any
+keys! While before we avoided using <code>where</code> by just making the ascription
+transparent, we don't want to do that here, because we don't want the outside
+world to mess with our red-black tree and potentially mess up the invariant!</em></p>
+</blockquote>
 <p>The question becomes: how should we implement insert? We cannot be so naive as
 to simply insert as we would in an ordinary binary search tree, as this would
 quickly cause problems with our invariants. In particular, we must be mindful of
@@ -653,7 +662,7 @@ because of the signature that we are ascribing to, helper functions such as
 is no harm in declaring them within the namespace of the functor.</p>
 <p>Our completed code for a red-black tree implementation of dictionaries is thus
 as follows. Note that the implementation of <code>lookup</code> is very straightforward, and</p>
-<pre><code class="language-sml">functor RedBlackDict (Key : ORDERED) :&gt; DICT =
+<pre><code class="language-sml">functor RedBlackDict (Key : ORDERED) :&gt; DICT where type key = Key.t =
 struct
     type key = Key.t
     datatype color = Red | Black
