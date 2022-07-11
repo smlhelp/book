@@ -4,10 +4,7 @@ _By Thea Brick, December 2021_
 
 ## Looping and Iterating
 
-Often times we want to iterate through each element in a list. The main way we
-want to implement this in SML is via recursion. We can define this at on an
-extremely abstract level as taking some base accumulator and combining it with
-an element to make a new accumulator.
+Often times we want to iterate through each element in a list. The main way we want to implement this in SML is via recursion. We can define this at on an extremely abstract level as taking some base accumulator and combining it with an element to make a new accumulator.
 
 ```sml
 (* some base accumulator *)
@@ -27,9 +24,7 @@ fun iterate ([]) = acc
     end
 ```
 
-To make this more concrete, we can imagine we are trying to sum an int list.
-The base accumulator would be what the sum of the empty list is. The combine
-function would be simply adding the element onto the accumulator.
+To make this more concrete, we can imagine we are trying to sum an int list. The base accumulator would be what the sum of the empty list is. The combine function would be simply adding the element onto the accumulator.
 
 ```sml
 val acc : int = 0
@@ -45,22 +40,18 @@ fun iterate ([] : int list) : int = acc
     end
 ```
 
-Now iterate will sum up a list for us. Generally we simply our functions a bit,
-so it might be more common to see something along the lines of:
+Now iterate will sum up a list for us. Generally we simply our functions a bit, so it might be more common to see something along the lines of:
 
 ```sml
 fun sum ([] : int list) : int = 0
   | sum (x::xs : int list) : int = x + (sum xs)
 ```
 
-Observe that these are same, just we are removing the let expression and
-simplifying some things for the sake of readability.
+Observe that these are same, just we are removing the let expression and simplifying some things for the sake of readability.
 
 ## Searching
 
-Often times we may be given a list and we'd like to see if an element is in
-said list. In this case we want `search (L, y)`to evaluate to `true` if `y` is
-in `L` and `false` otherwise. We can do this with this same idea of iteration.
+Often times we may be given a list and we'd like to see if an element is in said list. In this case we want `search (L, y)`to evaluate to `true` if `y` is in `L` and `false` otherwise. We can do this with this same idea of iteration.
 
 ```sml
 fun search ([] : int list, y : int) : bool = false
@@ -78,8 +69,7 @@ fun search ([] : int list, y : int) : bool = false
     (x = y) orelse (search (xs, y))
 ```
 
-If we require that the list is sorted, then we can alter our function to stop
-looking through the list once we pass where `y` should be:
+If we require that the list is sorted, then we can alter our function to stop looking through the list once we pass where `y` should be:
 
 ```sml
 fun sortedSearch ([] : int list, y : int) : bool = false
@@ -89,15 +79,13 @@ fun sortedSearch ([] : int list, y : int) : bool = false
 
 ## Runtime checks
 
-If we ever wanted to ensure that we have some property at runtime, we can write
-some thing of the following form:
+If we ever wanted to ensure that we have some property at runtime, we can write some thing of the following form:
 
 ```sml
 val _ = (condition_that_should_be_true) orelse (raise Fail "Condition False!")
 ```
 
-So for instance, suppose we wanted to enforce that our sortedSearch function
-from before actually sorted int lists.
+So for instance, suppose we wanted to enforce that our sortedSearch function from before actually sorted int lists.
 
 ```sml
 fun isSorted ([] : int list) : bool = true
@@ -117,16 +105,11 @@ fun sortedSearch (L, y) =
   end
 ```
 
-Importantly, we generally just assume that a function has an assumed property
-when passed into the function (and we don't care about inputs that don't
-satisfy this), so inserting runtime checks like these are mainly useful for
-debugging.
+Importantly, we generally just assume that a function has an assumed property when passed into the function (and we don't care about inputs that don't satisfy this), so inserting runtime checks like these are mainly useful for debugging.
 
 ## Print-line Debugging
 
-SMLNJ defines the function `print : string -> unit` which outputs the passed
-string. We can use val declarations to in let expressiosn to print out a message
-while we are computing some result:
+SMLNJ defines the function `print : string -> unit` which outputs the passed string. We can use val declarations to in let expressiosn to print out a message while we are computing some result:
 
 ```sml
 let
@@ -136,8 +119,7 @@ let
 in ... end
 ```
 
-In our search example, we can use the `Int.toString : int -> string` function
-to print every element we visit while we are searching:
+In our search example, we can use the `Int.toString : int -> string` function to print every element we visit while we are searching:
 
 ```sml
 fun search ([] : int list, y : int) : bool = false
@@ -157,5 +139,4 @@ fun search ([] : int list, y : int) : bool = false
     (print (Int.toString x); (x = y) orelse (search (xs, y)))
 ```
 
-It should be noted that `;` often doesn't ''play nice'' with many things in SML,
-so it is best to enclose every sequence of expressions with parentheses as we did above.
+It should be noted that `;` often doesn't ''play nice'' with many things in SML, so it is best to enclose every sequence of expressions with parentheses as we did above.

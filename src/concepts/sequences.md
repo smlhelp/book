@@ -1,4 +1,5 @@
 # Sequences
+
 _By Kaz Zhou, January 2021_. _Revised April 2021_
 
 In programming, we often need to write fast algorithms that use enumerable collections. Currently we use the list datatype to represent enumerable collections. There are some crucial limitations of lists though.
@@ -11,13 +12,13 @@ Similar to our notation for lists, our notation for sequences looks like `<x_1, 
 
 Here are some advantages / disadvantages of sequences and lists. Considering sequences and lists purely from an algorithm-writing perspective, the only con of sequences is the slow cons operation.
 
-| | Sequences | Lists |
-| --- | --- | --- |
-| Accessing element i | O(1) | O(i) |
-| Parallelism | ✅ | ❌ |
-| Pattern matching | ❌ | ✅ |
-| cons operation | O(n) work | O(1) work |
-| Writing proofs | Difficult | Relatively easy |
+|                     | Sequences | Lists           |
+| ------------------- | --------- | --------------- |
+| Accessing element i | O(1)      | O(i)            |
+| Parallelism         | ✅        | ❌              |
+| Pattern matching    | ❌        | ✅              |
+| cons operation      | O(n) work | O(1) work       |
+| Writing proofs      | Difficult | Relatively easy |
 
 ## Important sequence functions
 
@@ -28,23 +29,24 @@ Some frequently used sequence functions are `nth`, `tabulate`, `map`, `filter`, 
 The function `Seq.nth` allows for extracting any element from a sequence in O(1) work and span. This is a significant advantage over lists, which could take up to O(n) work and span, in the case of finding the last element of the list. `Seq.nth` has type `'a seq -> int -> 'a seq`.
 
 An example: Let's say the sequence `S` is bound to the value `<0, 1, 2>`, which has type `int seq`. Then,
-* `Seq.nth S 0` evaluates to `0`
-* `Seq.nth S 2` evaluates to `2`
-* `Seq.nth S 5` raises an exception `Range`, which occurs when the index is too large or small.
+
+- `Seq.nth S 0` evaluates to `0`
+- `Seq.nth S 2` evaluates to `2`
+- `Seq.nth S 5` raises an exception `Range`, which occurs when the index is too large or small.
 
 ### `Seq.tabulate`
 
 This is a very common tool for constructing a sequence. The type of `Seq.tabulate` is `(int -> 'a) -> int -> 'a seq`. The first argument is a function which maps an index to a value, and the second argument is an integer specifying the length of the sequence. In general:
 
-```Seq.tabulate f n ==> <f 0, f 1, f 2, ..., f (n-1)>```
+`Seq.tabulate f n ==> <f 0, f 1, f 2, ..., f (n-1)>`
 
 As a concrete example:
 
-```Seq.tabulate (fn i => i) 5 ==> <0, 1, 2, 3, 4>```
+`Seq.tabulate (fn i => i) 5 ==> <0, 1, 2, 3, 4>`
 
 Let's try writing a function that reverses a sequence. For example,
 
-```reverse <0, 1, 2, 3, 4> ==> <4, 3, 2, 1, 0>```
+`reverse <0, 1, 2, 3, 4> ==> <4, 3, 2, 1, 0>`
 
 This function `reverse` would have type `'a seq -> 'a seq`. In the above example, we have a sequence of length 5. The element at index 0 moves to index 4, the element at index 1 moves to index 3, ..., the element at index 4 moves to index 0. Generally, if the sequence has length `n`, the element at index `i` should move to `n - i - 1`. It's pretty easy to make off-by-one errors here, so be careful and test sequence functions thoroughly! The implementation of `reverse` is as follows:
 
@@ -71,6 +73,7 @@ multtable 5 ==>
 This time, the function that we're tabulating with needs to output a sequence, like `<0,2,4,6,8>`.
 
 Here is the implementation:
+
 ```
 fun multtable n =
   Seq.tabulate (fn i =>
@@ -99,8 +102,7 @@ The work of `Seq.tabulate f S` is the sum of all costs in the graph above. The s
 Seq.map f <x_1, x_2, x_3, ..., x_n> = <f x_1, f x_2, f x_3, ..., f x_n>
 ```
 
-The work of evaluating the above expression is (work of doing `f x_1`) + (work of doing `f x_2`) + ... + (work of doing `f x_n`).
-The calls `f x_1, f x_2, f x_3, ..., f x_n` are all done in parallel. So, the span is the max of (span of doing `f x_1`, span of doing `f x_2`, ..., span of doing `f x_n`).
+The work of evaluating the above expression is (work of doing `f x_1`) + (work of doing `f x_2`) + ... + (work of doing `f x_n`). The calls `f x_1, f x_2, f x_3, ..., f x_n` are all done in parallel. So, the span is the max of (span of doing `f x_1`, span of doing `f x_2`, ..., span of doing `f x_n`).
 
 ### `Seq.reduce`
 
@@ -121,9 +123,11 @@ The work is the sum of doing all the work shown in the cost graph, while the spa
 An example of using this function is finding the sum of a sequence. So, `Seq.reduce (op +) 0 <1, 2, 3, 4>` evaluates to `10`.
 
 ### `Seq.filter`
+
 Again, a sequence function is analogous to a list function. `Seq.filter` is like `List.filter`. It takes in a predicate function of type `'a -> bool` and a sequence of type `'a seq`, and keeps elements `x` such that `p x` evaluates to true. However, `Seq.filter` is optimized for parallel performance. The work is O(|S|). The span is O(log |S|), which may seem surprising as the predicate function may be applied to all elements in parallel. However, it is difficult to find out the number of elements that satisfy the predicate, and thus it's not possible to find the length of the filtered sequence in O(1). The implementation details are tricky, but use a divide-and-conquer approach just like `Seq.reduce`.
 
 ### `Seq.append`
+
 Just like `@`, the function `Seq.append : 'a seq * 'a seq -> 'a seq` puts two sequences together. The work to create the appended sequence, such as in the call `Seq.append (S1,S2)`, is O(|S1| + |S2|). To justify this, think about how `Seq.append` may be implemented using `Seq.tabulate`. The tabulating function maps indices between 0 and |S1|-1 to elements from S1, and maps indices between |S1| and |S1 + S2| - 1 to elements from S2. Additionally, the span of `Seq.append` is O(1) regardless of the input sequences. This makes intuitive sense because `Seq.tabulate` also has O(1) span, when given a constant tabulating function.
 
 ## Examples of functions involving sequences
@@ -131,6 +135,7 @@ Just like `@`, the function `Seq.append : 'a seq * 'a seq -> 'a seq` puts two se
 ## Exercise: Pascal's triangle
 
 Our task is to write a function `pascal : int -> int seq seq`. Given a nonnegative integer `n`, `pascal n` evaluates to the first `n+1` rows of Pascal's triangle. For example:
+
 ```
 pascal 5 =
 <<1>,
@@ -140,10 +145,10 @@ pascal 5 =
  <1,4,6,4,1>,
  <1,5,10,10,5,1>>
 ```
+
 Let's try to do this task without using the formula for entries of Pascal's triangle. The 0th row of Pascal's triangle is our base case. Then, we can add elements from the (n-1)th row to calculate elements in the nth row (in parallel!). This is an incremental approach: we add one row of the answer at a time.
 
 This problem has a bit of a dynamic programming flavor, in that we should remember the previous row to help calculate new rows. One issue is that using `Seq.append` or `Seq.cons` to add a row to a sequence is expensive. However, remember the pros and cons of sequences vs. lists! Adding on a row to a list requires just O(1) work. Therefore, our approach for this problem will use both sequences and lists. The solution is below. Note that it uses the function `reverse` from the `Seq.tabulate` section of this article.
-
 
 ```
 fun pascalH 0 = [Seq.singleton 1]

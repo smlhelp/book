@@ -1,13 +1,17 @@
 # Recursion & Induction
+
 _By Eunice Chen, June 2020_
 
 ## Types
+
 For each of the following expressions, state its type and value.
 
 ```sml
 fun f (x : int) : int = f x
 ```
+
 <!-- Need to use rust to support the eyeball thing -->
+
 ```rust,ignore
 Click the eyeball icon to see the answer --->
 # Type:  int -> int
@@ -17,6 +21,7 @@ Click the eyeball icon to see the answer --->
 ```sml
 val x = []::(150::[])
 ```
+
 ```rust,ignore
 Click the eyeball icon to see the answer --->
 # Type:  not well typed
@@ -26,6 +31,7 @@ Click the eyeball icon to see the answer --->
 ```sml
 val x = [122]::([150]::[])
 ```
+
 ```rust,ignore
 Click the eyeball icon to see the answer --->
 # Type:  int list list
@@ -40,6 +46,7 @@ fun f L =
       [] => [[]]
     | x::xs => [x + 1] @ []
 ```
+
 ```rust,ignore
 Click the eyeball icon to see the answer --->
 # Type:  not well-typed
@@ -47,10 +54,12 @@ Click the eyeball icon to see the answer --->
 ```
 
 What is the type and value of x?
+
 ```sml
 fun f (y : int) : int = f y
 val x : int = f y
 ```
+
 ```rust,ignore
 Click the eyeball icon to see the answer --->
 # Type:  int
@@ -58,6 +67,7 @@ Click the eyeball icon to see the answer --->
 ```
 
 What is the type and value of y?
+
 ```sml
 val x =
     let
@@ -67,6 +77,7 @@ val x =
     end
 val y = incr
 ```
+
 ```rust,ignore
 Click the eyeball icon to see the answer --->
 # Type:  No type, since incr is not in scope
@@ -75,9 +86,10 @@ Click the eyeball icon to see the answer --->
 
 ## Recursion
 
-
 ## Induction
+
 Given the following function:
+
 ```sml
 (* length: int list -> int *)
 fun length [] = 0
