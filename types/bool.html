@@ -138,7 +138,7 @@
                     <main>
                         <h1 id="bool"><a class="header" href="#bool">Bool</a></h1>
 <p><em>By Jacob Neumann, May 2020</em></p>
-<p><code>bool</code> is the SML type of booleans. The <code>bool</code> type supports the usual constructs of boolean logic and &quot;conditionals&quot; (<code>if</code> expressions). <code>bool</code> is also the type produced when evaluating (in)equality between values of (suitable) types. </p>
+<p><code>bool</code> is the SML type of booleans. The <code>bool</code> type supports the usual constructs of boolean logic and &quot;conditionals&quot; (<code>if</code> expressions). <code>bool</code> is also the type produced when evaluating (in)equality between values of (suitable) types.</p>
 <h2 id="values"><a class="header" href="#values">Values</a></h2>
 <p>There are exactly two values of type <code>bool</code>, <code>true</code> and <code>false</code>.</p>
 <pre><code class="language-sml">datatype bool = true | false
@@ -172,11 +172,9 @@ val res1 = if true then 5 else 2
 (* Evaluates to 7 *)
 val res2 = if false then 3+3 else 7
 </code></pre>
-<p>Note that the expression between <code>then</code> and <code>else</code> (the &quot;then branch&quot;) has the same type as the expression after the <code>else</code> (the &quot;else branch&quot;). This is necessary: the SML typechecker does not evaluate expressions, and so does not &quot;know&quot; that, for instance, <code>if false then e1 else e2</code> will always reduce to <code>e2</code>. As far as the typechecker knows, <code>if false then e1 else e2</code> could reduce to <code>e1</code>. So, in order for the typechecker to be able to assign a type to the expression <code>if false then e1 else e2</code>, it must be the case that <code>e1</code> and <code>e2</code> have the same type. More formally, </p>
+<p>Note that the expression between <code>then</code> and <code>else</code> (the &quot;then branch&quot;) has the same type as the expression after the <code>else</code> (the &quot;else branch&quot;). This is necessary: the SML typechecker does not evaluate expressions, and so does not &quot;know&quot; that, for instance, <code>if false then e1 else e2</code> will always reduce to <code>e2</code>. As far as the typechecker knows, <code>if false then e1 else e2</code> could reduce to <code>e1</code>. So, in order for the typechecker to be able to assign a type to the expression <code>if false then e1 else e2</code>, it must be the case that <code>e1</code> and <code>e2</code> have the same type. More formally,</p>
 <blockquote>
-<p>[If-Then]  An expression <code>if b then e1 else e2</code> is well-typed (with type <code>t</code>) 
-if and only if 
-<code>b : bool</code> and <code>e1 : t</code> and <code>e2 : t</code>.</p>
+<p>[If-Then] An expression <code>if b then e1 else e2</code> is well-typed (with type <code>t</code>) if and only if <code>b : bool</code> and <code>e1 : t</code> and <code>e2 : t</code>.</p>
 </blockquote>
 <p>It is worth noting that <code>if b then e1 else e2</code> is equivalent to the following expression, written using SML's <code>case</code> syntax.</p>
 <pre><code class="language-sml">    case b of

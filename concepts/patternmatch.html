@@ -161,8 +161,8 @@
 <pre><code>fun fact 0 = 1
   | fact n = n * fact(n-1)
 </code></pre>
-<p>The function <code>fact</code> is given an <code>int</code> as input. If the input successfully matches the pattern <code>0</code>, then the function returns <code>1</code>. Otherwise, the input is matched with the pattern <code>n</code>, binding the input to <code>n</code>. For example, if we evaluate <code>fact 5</code>, then <code>5</code> is bound to <code>n</code>, so the expression becomes <code>5 * fact(4)</code>. </p>
-<p>Each clause of the function declaration tells <code>fact</code> what it should do, depending on the input. The bar, <code>|</code>, acts as a separator between the two clauses. </p>
+<p>The function <code>fact</code> is given an <code>int</code> as input. If the input successfully matches the pattern <code>0</code>, then the function returns <code>1</code>. Otherwise, the input is matched with the pattern <code>n</code>, binding the input to <code>n</code>. For example, if we evaluate <code>fact 5</code>, then <code>5</code> is bound to <code>n</code>, so the expression becomes <code>5 * fact(4)</code>.</p>
+<p>Each clause of the function declaration tells <code>fact</code> what it should do, depending on the input. The bar, <code>|</code>, acts as a separator between the two clauses.</p>
 <p>Note that it's important for your patterns to be <em>exhaustive</em>. The above function is fine, because all values of type <code>int</code> can match with either <code>0</code> or <code>n</code>. However, suppose we had the following function:</p>
 <pre><code>fun fiction 1 = 1
   | fiction 2 = 2
@@ -176,7 +176,7 @@
 <p>The second clause of <code>factloop</code> never gets executed! When evaluating <code>factloop 0</code>, SML will try to match <code>0</code> to each pattern, <em>in order</em>. Therefore, <code>factloop 0</code> steps to <code>0 * factloop(-1)</code>, because <code>0</code> can match to <code>n</code>. Convince yourself that <code>factloop k</code> will loop forever for any <code>k</code> of type <code>int</code>!</p>
 <h2 id="lambda-expressions"><a class="header" href="#lambda-expressions">Lambda expressions:</a></h2>
 <p><code>(fn [] =&gt; false | x::xs =&gt; true) [1,2,3]</code></p>
-<p>The lambda expression is similar to a function, as it turns an input into an output. In the example above, <code>[1,2,3]</code> is the input. It doesn't match with <code>[]</code>, but it does match with <code>x::xs</code>. Namely, <code>1</code> gets bound to <code>x</code>, and the list <code>[2,3]</code> gets bound to <code>xs</code>. As a result of this successful pattern matching, the lambda expression returns <code>true</code>. </p>
+<p>The lambda expression is similar to a function, as it turns an input into an output. In the example above, <code>[1,2,3]</code> is the input. It doesn't match with <code>[]</code>, but it does match with <code>x::xs</code>. Namely, <code>1</code> gets bound to <code>x</code>, and the list <code>[2,3]</code> gets bound to <code>xs</code>. As a result of this successful pattern matching, the lambda expression returns <code>true</code>.</p>
 <p>You should still make sure your patterns are exhaustive. For example, the following expression raises exception <code>Match</code>:</p>
 <p><code>(fn [] =&gt; false) [1,2,3]</code></p>
 <h2 id="case-expressions"><a class="header" href="#case-expressions">Case expressions:</a></h2>
@@ -186,7 +186,7 @@
       | n =&gt; n * fact' (n-1)
 </code></pre>
 <p>First, note that <code>fact'</code> does the same thing as <code>fact</code>. However, it uses an extra <code>case</code> expression.</p>
-<p>Let's consider what happens when we evaluate <code>fact' 5</code>. First, <code>5</code> gets bound to <code>x</code>. Then, the <code>case</code> expression tries to match <code>5</code> to a pattern. In this scenario, <code>5</code> successfully pattern matches with <code>n</code>, so <code>5</code> gets bound to <code>n</code>. Therefore, <code>fact' 5</code> evaluates to <code>5 * fact' 4</code>. </p>
+<p>Let's consider what happens when we evaluate <code>fact' 5</code>. First, <code>5</code> gets bound to <code>x</code>. Then, the <code>case</code> expression tries to match <code>5</code> to a pattern. In this scenario, <code>5</code> successfully pattern matches with <code>n</code>, so <code>5</code> gets bound to <code>n</code>. Therefore, <code>fact' 5</code> evaluates to <code>5 * fact' 4</code>.</p>
 <p>As usual, the patterns in <code>case</code> expressions should be exhaustive.</p>
 
                     </main>

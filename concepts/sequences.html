@@ -143,13 +143,14 @@
 <p>Similar to our notation for lists, our notation for sequences looks like <code>&lt;x_1, x_2, x_3, ..., x_n&gt;</code>.</p>
 <h2 id="sequences-vs-lists"><a class="header" href="#sequences-vs-lists">Sequences vs. Lists</a></h2>
 <p>Here are some advantages / disadvantages of sequences and lists. Considering sequences and lists purely from an algorithm-writing perspective, the only con of sequences is the slow cons operation.</p>
-<table><thead><tr><th></th><th>Sequences</th><th>Lists</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th></th><th>Sequences</th><th>Lists</th></tr></thead><tbody>
 <tr><td>Accessing element i</td><td>O(1)</td><td>O(i)</td></tr>
 <tr><td>Parallelism</td><td>✅</td><td>❌</td></tr>
 <tr><td>Pattern matching</td><td>❌</td><td>✅</td></tr>
 <tr><td>cons operation</td><td>O(n) work</td><td>O(1) work</td></tr>
 <tr><td>Writing proofs</td><td>Difficult</td><td>Relatively easy</td></tr>
 </tbody></table>
+</div>
 <h2 id="important-sequence-functions"><a class="header" href="#important-sequence-functions">Important sequence functions</a></h2>
 <p>Some frequently used sequence functions are <code>nth</code>, <code>tabulate</code>, <code>map</code>, <code>filter</code>, and <code>reduce</code>. For a comprehensive documentation of the sequence library, see http://www.cs.cmu.edu/~15150/resources/libraries/sequence.pdf. The following section will define each of the functions, give examples of their usage, and analyze their work and span.</p>
 <h3 id="seqnth"><a class="header" href="#seqnth"><code>Seq.nth</code></a></h3>
@@ -202,8 +203,7 @@
 <p><code>Seq.map</code> is similar to <code>List.map</code>. The type of <code>Seq.map</code> is <code>('a -&gt; 'b) -&gt; 'a seq -&gt; 'b seq</code>. Given a function <code>f : 'a -&gt; 'b</code> and a sequence <code>&lt;x_1, x_2, x_3, ..., x_n&gt; : 'a seq</code>, we have:</p>
 <pre><code>Seq.map f &lt;x_1, x_2, x_3, ..., x_n&gt; = &lt;f x_1, f x_2, f x_3, ..., f x_n&gt;
 </code></pre>
-<p>The work of evaluating the above expression is (work of doing <code>f x_1</code>) + (work of doing <code>f x_2</code>) + ... + (work of doing <code>f x_n</code>).
-The calls <code>f x_1, f x_2, f x_3, ..., f x_n</code> are all done in parallel. So, the span is the max of (span of doing <code>f x_1</code>, span of doing <code>f x_2</code>, ..., span of doing <code>f x_n</code>).</p>
+<p>The work of evaluating the above expression is (work of doing <code>f x_1</code>) + (work of doing <code>f x_2</code>) + ... + (work of doing <code>f x_n</code>). The calls <code>f x_1, f x_2, f x_3, ..., f x_n</code> are all done in parallel. So, the span is the max of (span of doing <code>f x_1</code>, span of doing <code>f x_2</code>, ..., span of doing <code>f x_n</code>).</p>
 <h3 id="seqreduce"><a class="header" href="#seqreduce"><code>Seq.reduce</code></a></h3>
 <p><code>Seq.reduce</code> is like <code>List.foldr</code>, but with sequences. The type is <code>Seq.reduce : ('a * 'a -&gt; 'a) -&gt; 'a -&gt; 'a seq -&gt; 'a</code>. In English, <code>Seq.reduce</code> takes in a combining function, a base value, and a sequence to &quot;reduce&quot;. For example, <code>Seq.reduce g z &lt;x_0, x_1, x_2, ..., x_n&gt;</code> is extensionally equivalent to <code>g(x_0, g(x_1, g(x_2, ..., g(x_n, z)))... )</code>. Notice that the combining function is <code>'a * 'a -&gt; 'a</code> instead of <code>'a * 'b -&gt; 'b</code>, as in <code>List.foldr</code>.</p>
 <p>The neat part is, <code>Seq.reduce</code> also supports parallelism. In particular, when a combining function <code>g</code> has constant span, then <code>Seq.reduce g z S</code> has O(log |S|) span. We pay a slight cost: the function <code>g</code> must be associative, which means that <code>g(g(a,b),c) = g(a,g(b,c))</code> for all <code>a,b,c</code>. Furthermore, <code>z</code> must be the identity for <code>g</code>, which means <code>g(a,z) = g(z,a) = a</code> for all <code>a</code>.</p>

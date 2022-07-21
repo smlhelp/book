@@ -138,22 +138,8 @@
                     <main>
                         <h1 id="functors"><a class="header" href="#functors">Functors</a></h1>
 <p><em>By Cooper Pierce and Brandon Wu, February 2021</em></p>
-<p>We have so far discussed the usage of modules for explicitly structuring our
-code, in that we are afforded a degree of <em>modularity</em> in how the different
-components of some software can fit together. We have used language like
-&quot;swapping out&quot; modules or &quot;substituting&quot; modules for one another, but this is
-very imprecise. What exactly do we mean when we say to swap one module for
-another? Certainly, it would be messy to have to go through our code and change
-every mention of <code>StructureA</code> for <code>StructureB</code>, and we would like to avoid some
-kind of global change that requires an extenuous amount of effort on the
-client's part.</p>
-<p>Going through and changing every mention of a particular structure in order to
-achieve &quot;modularization&quot; is akin to saying that using a particular higher-order
-function by replacing specifically what each function parameter is in each
-invocation is how we can achieve &quot;parameterization&quot; in the function argument. In
-reality, this does not offer any more versatility. In this chapter, we will
-discuss <em>functors</em>, which are akin to <em>higher-order modules</em>, which are allowed
-to take other modules in as arguments.</p>
+<p>We have so far discussed the usage of modules for explicitly structuring our code, in that we are afforded a degree of <em>modularity</em> in how the different components of some software can fit together. We have used language like &quot;swapping out&quot; modules or &quot;substituting&quot; modules for one another, but this is very imprecise. What exactly do we mean when we say to swap one module for another? Certainly, it would be messy to have to go through our code and change every mention of <code>StructureA</code> for <code>StructureB</code>, and we would like to avoid some kind of global change that requires an extenuous amount of effort on the client's part.</p>
+<p>Going through and changing every mention of a particular structure in order to achieve &quot;modularization&quot; is akin to saying that using a particular higher-order function by replacing specifically what each function parameter is in each invocation is how we can achieve &quot;parameterization&quot; in the function argument. In reality, this does not offer any more versatility. In this chapter, we will discuss <em>functors</em>, which are akin to <em>higher-order modules</em>, which are allowed to take other modules in as arguments.</p>
 <h2 id="functors-the-basics"><a class="header" href="#functors-the-basics">Functors: The Basics</a></h2>
 <p>Firstly, consider the signature of a stack.</p>
 <pre><code class="language-sml">signature STACK =
@@ -167,14 +153,8 @@ sig
 end
 
 </code></pre>
-<p>Suppose that we would like to <em>extend</em> the definition of a stack such that it
-has a limit on how many elements that it contains. However, we don't necessarily
-know which implementation of a stack to use - there could be several such
-existing implementations, so we would like to instead make our <code>BoundedStack</code>
-structure a <em>parameter of</em> an existing structure ascribing to <code>STACK</code>.</p>
-<p>We will then use a very similar signature to <code>STACK</code> called <code>BOUNDED_STACK</code>,
-which is the exact same except for having an <code>exception Full</code> for use if a stack
-is given too many elements.</p>
+<p>Suppose that we would like to <em>extend</em> the definition of a stack such that it has a limit on how many elements that it contains. However, we don't necessarily know which implementation of a stack to use - there could be several such existing implementations, so we would like to instead make our <code>BoundedStack</code> structure a <em>parameter of</em> an existing structure ascribing to <code>STACK</code>.</p>
+<p>We will then use a very similar signature to <code>STACK</code> called <code>BOUNDED_STACK</code>, which is the exact same except for having an <code>exception Full</code> for use if a stack is given too many elements.</p>
 <pre><code class="language-sml">signature BOUNDED_STACK =
 sig
     type 'a t
@@ -186,8 +166,7 @@ sig
     val empty : 'a t
 end
 </code></pre>
-<p>We first consider the case where we have a hard limit of 10 items in a given
-stack.</p>
+<p>We first consider the case where we have a hard limit of 10 items in a given stack.</p>
 <pre><code class="language-sml">functor BoundedStack (S : STACK) :&gt; BOUNDED_STACK =
 struct
     type 'a t = 'a S.t
@@ -207,12 +186,7 @@ struct
     val empty = S.empty
 end
 </code></pre>
-<p>We see that most of this code is duplicated - we have based the majority of the
-design of this <code>BoundedStack</code> in terms of <code>S</code>, which is the given implementation
-of a stack. The correctness of a <code>BoundedStack</code> is thus totally dependent on
-whether or not the given <code>S</code> is correct, but we achieve <em>modularity</em> in that we
-can freely swap out a structure ascribing to <code>STACK</code> for another when
-instantiating a given <code>BoundedStack</code>.</p>
+<p>We see that most of this code is duplicated - we have based the majority of the design of this <code>BoundedStack</code> in terms of <code>S</code>, which is the given implementation of a stack. The correctness of a <code>BoundedStack</code> is thus totally dependent on whether or not the given <code>S</code> is correct, but we achieve <em>modularity</em> in that we can freely swap out a structure ascribing to <code>STACK</code> for another when instantiating a given <code>BoundedStack</code>.</p>
 <p>To put it concretely, suppose that we have two structures:</p>
 <pre><code class="language-sml">structure Stack1 :&gt; STACK =
 struct
@@ -228,20 +202,10 @@ end
 <pre><code class="language-sml">structure BoundedStack1 = BoundedStack(Stack1)
 structure BoundedStack2 = BoundedStack(Stack2)
 </code></pre>
-<p><strong>NOTE</strong>: SML functors are <em>generative</em>, meaning that applying the same functor
-to the same structure twice yields two unique structures. As such,
-if we had <code>structure BS1 = BoundedStack(Stack1)</code> and <code>structure BS2 = BoundedStack(Stack1)</code>, then the types <code>BS1.t</code> and <code>BS2.t</code> are recognized as being two
-distinct types, despite the fact that they are &quot;constructed&quot; in the same manner.</p>
-<p><code>BoundedStack1</code> and <code>BoundedStack2</code> implement <code>BOUNDED_STACK</code>, so they all can access
-the fields of the <code>BOUNDED_STACK</code> signature. Presumably, the only change they display
-from <code>Stack1</code> and <code>Stack2</code> are in raising the exception <code>Full</code> when the stack is given more than
-ten elements.</p>
+<p><strong>NOTE</strong>: SML functors are <em>generative</em>, meaning that applying the same functor to the same structure twice yields two unique structures. As such, if we had <code>structure BS1 = BoundedStack(Stack1)</code> and <code>structure BS2 = BoundedStack(Stack1)</code>, then the types <code>BS1.t</code> and <code>BS2.t</code> are recognized as being two distinct types, despite the fact that they are &quot;constructed&quot; in the same manner.</p>
+<p><code>BoundedStack1</code> and <code>BoundedStack2</code> implement <code>BOUNDED_STACK</code>, so they all can access the fields of the <code>BOUNDED_STACK</code> signature. Presumably, the only change they display from <code>Stack1</code> and <code>Stack2</code> are in raising the exception <code>Full</code> when the stack is given more than ten elements.</p>
 <h2 id="functors-syntactic-sugar"><a class="header" href="#functors-syntactic-sugar">Functors: Syntactic Sugar</a></h2>
-<p>SML offers some &quot;syntactic sugar&quot; for functor arguments, allowing us to
-(seemingly) parameterize them by terms other than structures. It is a little
-unsavory to have to hard code the limit of the <code>BoundedStack</code> within the functor
-itself, rather than having it be parameterized by the limit itself, so we can
-actually also write the following:</p>
+<p>SML offers some &quot;syntactic sugar&quot; for functor arguments, allowing us to (seemingly) parameterize them by terms other than structures. It is a little unsavory to have to hard code the limit of the <code>BoundedStack</code> within the functor itself, rather than having it be parameterized by the limit itself, so we can actually also write the following:</p>
 <pre><code class="language-sml">functor BoundedStack (structure S : STACK
                       val limit : int) :&gt; BOUNDED_STACK =
 struct
@@ -261,13 +225,8 @@ struct
     val empty = S.empty
 end
 </code></pre>
-<p>The only difference is that instead of taking in a single <code>S : STACK</code>, we
-specify &quot;<code>structure S : STACK val limit : int</code>&quot; within the parentheses of the
-functor's input. Note that there are no commas or delimiters other than spaces.</p>
-<p>In reality, this is something of a lie. While this seems to give the impression
-that <code>BoundedStack</code> is taking in <em>two</em> things, a structure named <code>S</code> ascribing
-to <code>STACK</code> and a value of type int named <code>limit</code>, in reality functors can only
-take in other structures. This is thus <em>syntactic sugar</em> for the following code:</p>
+<p>The only difference is that instead of taking in a single <code>S : STACK</code>, we specify &quot;<code>structure S : STACK val limit : int</code>&quot; within the parentheses of the functor's input. Note that there are no commas or delimiters other than spaces.</p>
+<p>In reality, this is something of a lie. While this seems to give the impression that <code>BoundedStack</code> is taking in <em>two</em> things, a structure named <code>S</code> ascribing to <code>STACK</code> and a value of type int named <code>limit</code>, in reality functors can only take in other structures. This is thus <em>syntactic sugar</em> for the following code:</p>
 <pre><code class="language-sml">functor BoundedStack (UnnamedStructure :
                       sig
                         structure S : STACK
@@ -278,30 +237,11 @@ struct
     (* same code as before *)
 end
 </code></pre>
-<p>The <code>open</code> keyword specifies to <em>open</em> the namespace within a given module,
-effectively promoting all contents of it to the top level. Thus, if we were to
-<code>open Stack1</code>, as per our previous example, we could write <code>push</code> instead of
-<code>Stack1.push</code>, <code>pop</code> instead of <code>Stack1.pop</code>, and so on and so forth. Thus, what
-this syntactic sugar does is specify to take in a <em>single structure</em> ascribing
-to a signature that <em>contains</em> a structure ascribing to <code>STACK</code> and an int-typed
-value, named <code>S</code> and <code>limit</code> respectively.</p>
-<p><strong>CAUTION</strong>: This is a very important point to cognize! This can be the source
-of many frustrated hours of debugging due to a simple syntax error.</p>
-<p>The reason why we must <code>open UnnamedStructure</code> in order to be able to use the
-same code is because we cannot say <code>S.push</code>, for instance, as we did in the
-original implementation of <code>BoundedStack</code>. We would instead have to specify
-<code>UnnamedStructure.S.push</code>, which is not what our previous code says. However, if
-we <code>open UnnamedStructure</code> first, the <code>S</code> structure is promoted to the top
-level, and we can now access it without first having to go through
-<code>UnnamedStructure</code>.</p>
-<p>The reason for naming the input structure <code>UnnamedStructure</code> should hopefully
-now be clear. Indeed, it is a <em>phantom structure</em> of a sort, since in the
-syntactic sugar case, we never give it a name, and indeed we never really
-acknowledge its existence at all. Yet it is important to realize what is really
-happening, that there really <em>is</em> a structure being taken in as input, and then
-immediately opened for its contents.</p>
-<p>What issues can occur if we forget about the existence of this syntactic sugar?
-Consider the following code:</p>
+<p>The <code>open</code> keyword specifies to <em>open</em> the namespace within a given module, effectively promoting all contents of it to the top level. Thus, if we were to <code>open Stack1</code>, as per our previous example, we could write <code>push</code> instead of <code>Stack1.push</code>, <code>pop</code> instead of <code>Stack1.pop</code>, and so on and so forth. Thus, what this syntactic sugar does is specify to take in a <em>single structure</em> ascribing to a signature that <em>contains</em> a structure ascribing to <code>STACK</code> and an int-typed value, named <code>S</code> and <code>limit</code> respectively.</p>
+<p><strong>CAUTION</strong>: This is a very important point to cognize! This can be the source of many frustrated hours of debugging due to a simple syntax error.</p>
+<p>The reason why we must <code>open UnnamedStructure</code> in order to be able to use the same code is because we cannot say <code>S.push</code>, for instance, as we did in the original implementation of <code>BoundedStack</code>. We would instead have to specify <code>UnnamedStructure.S.push</code>, which is not what our previous code says. However, if we <code>open UnnamedStructure</code> first, the <code>S</code> structure is promoted to the top level, and we can now access it without first having to go through <code>UnnamedStructure</code>.</p>
+<p>The reason for naming the input structure <code>UnnamedStructure</code> should hopefully now be clear. Indeed, it is a <em>phantom structure</em> of a sort, since in the syntactic sugar case, we never give it a name, and indeed we never really acknowledge its existence at all. Yet it is important to realize what is really happening, that there really <em>is</em> a structure being taken in as input, and then immediately opened for its contents.</p>
+<p>What issues can occur if we forget about the existence of this syntactic sugar? Consider the following code:</p>
 <pre><code class="language-sml">functor BoundedStack (structure S : STACK) :&gt; BOUNDED_STACK =
 struct
     type 'a t = 'a S.t
@@ -326,9 +266,7 @@ structure BoundedStack1 = BoundedStack(Stack1)
 structure BoundedStack2 = BoundedStack(Stack2)
 </code></pre>
 <p>This code <em>will not compile!</em> Can you see why?</p>
-<p>The issue is that we have added a prefix of <code>structure</code> to <code>S : STACK</code> within
-the inputs. Even though we have only specified one field, not including the
-<code>limit</code> as a parameter, this will be interpreted as the following:</p>
+<p>The issue is that we have added a prefix of <code>structure</code> to <code>S : STACK</code> within the inputs. Even though we have only specified one field, not including the <code>limit</code> as a parameter, this will be interpreted as the following:</p>
 <pre><code class="language-sml">functor BoundedStack (UnnamedStructure :
                       sig
                         structure S : STACK
@@ -355,20 +293,9 @@ end
 structure BoundedStack1 = BoundedStack(Stack1)
 structure BoundedStack2 = BoundedStack(Stack2)
 </code></pre>
-<p>Thus, <code>BoundedStack</code> is no longer a functor taking in a structure ascribing to
-<code>STACK</code>, but a functor taking in a structure ascribing to <code>sig structure S: STACK end</code>. In other words, taking in a structure <em>containing</em> a structure
-ascrbing to <code>STACK</code>! Thus, the line <code>structure BoundedStack1 = BoundedStack(Stack1)</code> will not type-check, as <code>Stack1</code> does not ascribe to the
-same signature that <code>BoundedStack</code> is expecting. This one simple syntax error
-can be the source of much pain and frustration, so we caution the reader to be
-particular with their syntax, and mindful of what is really happening under the
-hood.</p>
+<p>Thus, <code>BoundedStack</code> is no longer a functor taking in a structure ascribing to <code>STACK</code>, but a functor taking in a structure ascribing to <code>sig structure S: STACK end</code>. In other words, taking in a structure <em>containing</em> a structure ascrbing to <code>STACK</code>! Thus, the line <code>structure BoundedStack1 = BoundedStack(Stack1)</code> will not type-check, as <code>Stack1</code> does not ascribe to the same signature that <code>BoundedStack</code> is expecting. This one simple syntax error can be the source of much pain and frustration, so we caution the reader to be particular with their syntax, and mindful of what is really happening under the hood.</p>
 <h2 id="case-study-typeclasses"><a class="header" href="#case-study-typeclasses">Case study: Typeclasses</a></h2>
-<p>Certain types have some functionality or operation in common. Depending on the
-operation in question, we can say that these types fall into the same
-<em>typeclass</em>, which is a common interface consisting of a type and the desired
-operations. Note that typeclass membership is not a formally defined
-relationship, but instead a useful categorization that we use in order to
-classify types that we intend to parameterize some implementation over.</p>
+<p>Certain types have some functionality or operation in common. Depending on the operation in question, we can say that these types fall into the same <em>typeclass</em>, which is a common interface consisting of a type and the desired operations. Note that typeclass membership is not a formally defined relationship, but instead a useful categorization that we use in order to classify types that we intend to parameterize some implementation over.</p>
 <p>For a concrete example of a typeclass, consider the <code>ORDERED</code> typeclass.</p>
 <pre><code class="language-sml">signature ORDERED =
 sig
@@ -376,10 +303,7 @@ sig
     val compare : t * t -&gt; order
 end
 </code></pre>
-<p>The <code>ORDERED</code> typeclass consists of those types that admit a <em>sensible
-ordering</em>, which we will not (and perhaps cannot) define. Thus, we can witness
-<code>int</code> and <code>string</code> as valid instances of the <code>ORDERED</code> typeclass with the
-following structures:</p>
+<p>The <code>ORDERED</code> typeclass consists of those types that admit a <em>sensible ordering</em>, which we will not (and perhaps cannot) define. Thus, we can witness <code>int</code> and <code>string</code> as valid instances of the <code>ORDERED</code> typeclass with the following structures:</p>
 <pre><code class="language-sml">structure IntOrder : ORDERED =
 struct
     type t = int
@@ -392,22 +316,9 @@ struct
     val compare = String.compare
 end
 </code></pre>
-<p>Note that it is useful, in this case, for our instances of the <code>ORDERED</code>
-typeclass to be <em>transparently ascribed</em>, since it is the whole point that we
-are aware of the type that the typeclass is associated with.</p>
-<p><strong>NOTE</strong>: In actuality, we use transparent ascription as somewhat of a
-sledgehammer to avoid having to talk about a different language construct,
-namely <code>where</code> clauses. A <code>where</code> clause modifies a signature containing an
-abstract type, and concretely specifies what that type should be. For instance,
-we could discuss the signature <code>signature ORDERED type t end where type t = int</code>. A structure ascribing to this signature would &quot;publish&quot; the details of the
-type <code>t</code> (which is really an <code>int</code>), the same way that transparent ascription
-would. With <code>where</code> clauses, however, if there are multiple abstract types, we
-can be selective about which ones that are made &quot;transparent&quot;. For the purposes
-of this chapter, however, we will largely avoid <code>where</code> clauses.</p>
-<p>These definitions come very naturally from the fact that the <code>String</code> and <code>Int</code>
-libraries included with the Standard ML basis library already implement
-<code>compare</code> fields, however we can also define types such as <code>int list</code> to be
-instances of <code>ORDERED</code>:</p>
+<p>Note that it is useful, in this case, for our instances of the <code>ORDERED</code> typeclass to be <em>transparently ascribed</em>, since it is the whole point that we are aware of the type that the typeclass is associated with.</p>
+<p><strong>NOTE</strong>: In actuality, we use transparent ascription as somewhat of a sledgehammer to avoid having to talk about a different language construct, namely <code>where</code> clauses. A <code>where</code> clause modifies a signature containing an abstract type, and concretely specifies what that type should be. For instance, we could discuss the signature <code>signature ORDERED type t end where type t = int</code>. A structure ascribing to this signature would &quot;publish&quot; the details of the type <code>t</code> (which is really an <code>int</code>), the same way that transparent ascription would. With <code>where</code> clauses, however, if there are multiple abstract types, we can be selective about which ones that are made &quot;transparent&quot;. For the purposes of this chapter, however, we will largely avoid <code>where</code> clauses.</p>
+<p>These definitions come very naturally from the fact that the <code>String</code> and <code>Int</code> libraries included with the Standard ML basis library already implement <code>compare</code> fields, however we can also define types such as <code>int list</code> to be instances of <code>ORDERED</code>:</p>
 <pre><code class="language-sml">structure IntListOrder : ORDERED =
 struct
     type t = int list
@@ -421,16 +332,8 @@ struct
           | GREATER =&gt; GREATER
 end
 </code></pre>
-<p>This structure defines a <em>lexicographic ordering</em> on int lists, using the fact
-that values of type <code>int</code> are already ordered. It prioritizes the relative
-comparison of the corresponding elements of both lists first, and then the
-length (akin to how a dictionary is ordered).</p>
-<p>Indeed, we can take this one step further and see that lexicographic orderings
-form a <em>functor</em>, in that we can parameterize the ordering of some type of list,
-given that we can order the elements of the list. Like a higher-order function,
-this saves us from having to repeat the same code over and over to declare
-<code>StringListOrder</code> and <code>CharListOrder</code> structures, instead encapsulating the
-common pattern. We can implement the <code>LexicListOrder</code> functor as follows:</p>
+<p>This structure defines a <em>lexicographic ordering</em> on int lists, using the fact that values of type <code>int</code> are already ordered. It prioritizes the relative comparison of the corresponding elements of both lists first, and then the length (akin to how a dictionary is ordered).</p>
+<p>Indeed, we can take this one step further and see that lexicographic orderings form a <em>functor</em>, in that we can parameterize the ordering of some type of list, given that we can order the elements of the list. Like a higher-order function, this saves us from having to repeat the same code over and over to declare <code>StringListOrder</code> and <code>CharListOrder</code> structures, instead encapsulating the common pattern. We can implement the <code>LexicListOrder</code> functor as follows:</p>
 <pre><code class="language-sml">functor LexicListOrder (O : ORDERED) : ORDERED =
 struct
     type t = O.t list
@@ -444,34 +347,19 @@ struct
           | GREATER =&gt; GREATER
 end
 </code></pre>
-<p>Note that since an instantiation of the <code>LexicListOrder</code> functor is itself a
-structure ascribing to <code>ORDERED</code>, it can be &quot;passed in&quot; as input to <em>itself</em>,
-resulting in <em>any</em> type of nested list being an instance of <code>ORDERED</code>, so long
-as the base type is also an instance of <code>ORDERED</code>.</p>
-<p>It is also useful to note that <em>equality types</em> in Standard ML are essentially a
-language-supported typeclass, akin to inbuilt support for the following
-signature:</p>
+<p>Note that since an instantiation of the <code>LexicListOrder</code> functor is itself a structure ascribing to <code>ORDERED</code>, it can be &quot;passed in&quot; as input to <em>itself</em>, resulting in <em>any</em> type of nested list being an instance of <code>ORDERED</code>, so long as the base type is also an instance of <code>ORDERED</code>.</p>
+<p>It is also useful to note that <em>equality types</em> in Standard ML are essentially a language-supported typeclass, akin to inbuilt support for the following signature:</p>
 <pre><code class="language-sml">signature EQ =
 sig
     type t
     val equal : t * t -&gt; bool
 end
 </code></pre>
-<p>The operations for <code>equal</code> for each &quot;instance&quot; of the typeclass are instead
-defined by Standard ML itself, and not user-defined. Thus, we can think of the
-equality operator <code>=</code> as simply invoking the <code>T.equal</code> method for the proper
-typeclass <code>T</code>, defined by the type that is being compared for equality.</p>
-<p>In this next section, we will explore a concrete use for typeclasses when
-designing functors.</p>
+<p>The operations for <code>equal</code> for each &quot;instance&quot; of the typeclass are instead defined by Standard ML itself, and not user-defined. Thus, we can think of the equality operator <code>=</code> as simply invoking the <code>T.equal</code> method for the proper typeclass <code>T</code>, defined by the type that is being compared for equality.</p>
+<p>In this next section, we will explore a concrete use for typeclasses when designing functors.</p>
 <h2 id="case-study-red-black-trees"><a class="header" href="#case-study-red-black-trees">Case study: Red-black trees</a></h2>
-<p>Typeclasses can be important when we are attempting to place some greater
-constraint on the types that may instantiate some universal type. In certain
-cases, we do not want the types that we are considering to truly be <em>any</em> type,
-but any of a limited subset of types that share some common characteristic or
-implement some operation. We will study the use of <em>red-black trees</em> as the
-underlying data structure for dictionaries.</p>
-<p>A dictionary is a simple data structure that maps keys to values. Consider its
-signature given below.</p>
+<p>Typeclasses can be important when we are attempting to place some greater constraint on the types that may instantiate some universal type. In certain cases, we do not want the types that we are considering to truly be <em>any</em> type, but any of a limited subset of types that share some common characteristic or implement some operation. We will study the use of <em>red-black trees</em> as the underlying data structure for dictionaries.</p>
+<p>A dictionary is a simple data structure that maps keys to values. Consider its signature given below.</p>
 <pre><code class="language-sml">signature DICT =
 sig
     type key
@@ -481,49 +369,20 @@ sig
     val lookup : 'a dict -&gt; key -&gt; 'a option
 end
 </code></pre>
-<p>It is a well-known fact that, utilizing a kind of <em>balanced binary tree</em> data
-structure, dictionaries can be implemented with an \( O(\log n) \) <code>insert</code> and
-<code>lookup</code> operation, as opposed to \( O(n) \) for other data structures such as
-lists. While there are many different implementations of balanced binary trees,
-we will consider a particular variant known as <em>red-black trees</em>.</p>
+<p>It is a well-known fact that, utilizing a kind of <em>balanced binary tree</em> data structure, dictionaries can be implemented with an \( O(\log n) \) <code>insert</code> and <code>lookup</code> operation, as opposed to \( O(n) \) for other data structures such as lists. While there are many different implementations of balanced binary trees, we will consider a particular variant known as <em>red-black trees</em>.</p>
 <blockquote>
-<p><strong>[Red-black tree]</strong>: A variant of self-balancing binary tree that ensures
-logarithmic search and insert time. It is named because of its nodes, which
-are marked as either <em>red</em> or <em>black</em>. Furthermore, it obeys the following
-properties:</p>
+<p><strong>[Red-black tree]</strong>: A variant of self-balancing binary tree that ensures logarithmic search and insert time. It is named because of its nodes, which are marked as either <em>red</em> or <em>black</em>. Furthermore, it obeys the following properties:</p>
 <ol>
 <li>All leaves are black.</li>
 <li>The children of a red node must be black.</li>
-<li>Any path from a given node to a leaf node must go through the same number
-of black nodes.</li>
+<li>Any path from a given node to a leaf node must go through the same number of black nodes.</li>
 </ol>
-<p>Note that as a variant of binary search tree, a red-black tree must also
-satisfy the invariant that the key stored at a node must be greater than or
-equal to every key in the left subtree, and less than or equal to every key in
-the right subtree.</p>
+<p>Note that as a variant of binary search tree, a red-black tree must also satisfy the invariant that the key stored at a node must be greater than or equal to every key in the left subtree, and less than or equal to every key in the right subtree.</p>
 </blockquote>
-<p>It is easy to reason about why this schema ensures that we have the proper
-asymptotic bound for search - the third property in particular ensures that, for
-any path from the root, the length of the longest path from the root to a leaf
-is at most twice that of the shortest path. This is because the longest such
-path you can construct from the root to a leaf (minimizing black nodes) is by
-alternating black and red nodes.</p>
-<p>This means that a given red-black tree is not as strictly balanced as some other
-variants (for instance, AVL trees), however it is always <em>approximately</em>
-balanced.</p>
-<p>We would like to create a structure for red-black tree dictionaries. There are
-some options that we have - we could simply hard-code a <code>TypeRedBlackDict :&gt; DICT</code> for any type <code>Type</code>, except that this would
-entail quite a bit of repeated code (and exertion on our part). Another solution
-would be to make the type of <code>'a dict</code> doubly-polymorphic instead - something
-like an <code>('a, 'b) dict</code>, where <code>'a</code> is the type of the dict's keys and <code>'b</code> the
-type of its contents. However, then we lose the guarantee that <code>'a</code> is a type
-that supports comparison, which means that we cannot satisfy the tree's
-invariants.</p>
-<p>The solution we will turn to is exactly similar to that as discussed in the
-previous section - we will instead design a <code>RedBlackDict</code> functor that takes in
-a typeclass implementing <code>ORDERED</code>, and exports a structure whose keys are the
-type of the given typeclass. We thus will define our functor with the following
-preliminaries:</p>
+<p>It is easy to reason about why this schema ensures that we have the proper asymptotic bound for search - the third property in particular ensures that, for any path from the root, the length of the longest path from the root to a leaf is at most twice that of the shortest path. This is because the longest such path you can construct from the root to a leaf (minimizing black nodes) is by alternating black and red nodes.</p>
+<p>This means that a given red-black tree is not as strictly balanced as some other variants (for instance, AVL trees), however it is always <em>approximately</em> balanced.</p>
+<p>We would like to create a structure for red-black tree dictionaries. There are some options that we have - we could simply hard-code a <code>TypeRedBlackDict :&gt; DICT</code> for any type <code>Type</code>, except that this would entail quite a bit of repeated code (and exertion on our part). Another solution would be to make the type of <code>'a dict</code> doubly-polymorphic instead - something like an <code>('a, 'b) dict</code>, where <code>'a</code> is the type of the dict's keys and <code>'b</code> the type of its contents. However, then we lose the guarantee that <code>'a</code> is a type that supports comparison, which means that we cannot satisfy the tree's invariants.</p>
+<p>The solution we will turn to is exactly similar to that as discussed in the previous section - we will instead design a <code>RedBlackDict</code> functor that takes in a typeclass implementing <code>ORDERED</code>, and exports a structure whose keys are the type of the given typeclass. We thus will define our functor with the following preliminaries:</p>
 <pre><code class="language-sml">functor RedBlackDict (Key : ORDERED) :&gt; DICT where type key = Key.t =
 struct
     type key = Key.t
@@ -534,62 +393,25 @@ struct
     (* ... *)
 end
 </code></pre>
-<p>Because we take as input a <code>Key</code> structure ascribing to <code>ORDERED</code>, we have
-access to the <code>Key.compare</code> function, which we will use when inserting into our
-dictionary. We define a <code>color</code> type (which only consists of the constant
-constructors <code>Red</code> and <code>Black</code>) for tagging the nodes of the red-black tree
-(leaves are considered to be black).</p>
+<p>Because we take as input a <code>Key</code> structure ascribing to <code>ORDERED</code>, we have access to the <code>Key.compare</code> function, which we will use when inserting into our dictionary. We define a <code>color</code> type (which only consists of the constant constructors <code>Red</code> and <code>Black</code>) for tagging the nodes of the red-black tree (leaves are considered to be black).</p>
 <blockquote>
-<p><em>Note: We use the <code>where</code> syntax to indicate that the <code>type key</code> will be the
-same as <code>Key.t</code> to the outside world. This is important because our
-<code>RedBlackDict</code> is opaquely ascribed, meaning that without this syntax, we
-wouldn't know what the type of <code>key</code> is, and thus could not actually add any
-keys! While before we avoided using <code>where</code> by just making the ascription
-transparent, we don't want to do that here, because we don't want the outside
-world to mess with our red-black tree and potentially mess up the invariant!</em></p>
+<p><em>Note: We use the <code>where</code> syntax to indicate that the <code>type key</code> will be the same as <code>Key.t</code> to the outside world. This is important because our <code>RedBlackDict</code> is opaquely ascribed, meaning that without this syntax, we wouldn't know what the type of <code>key</code> is, and thus could not actually add any keys! While before we avoided using <code>where</code> by just making the ascription transparent, we don't want to do that here, because we don't want the outside world to mess with our red-black tree and potentially mess up the invariant!</em></p>
 </blockquote>
-<p>The question becomes: how should we implement insert? We cannot be so naive as
-to simply insert as we would in an ordinary binary search tree, as this would
-quickly cause problems with our invariants. In particular, we must be mindful of
-the <em>black height</em> invariant, saying that all paths to leaves must have the same
-number of black nodes on them.</p>
-<p>The easiest case to tackle for insert is the <code>Leaf</code> case. How should we finish
-the definition of <code>fun insert Leaf (k, v) = </code>? Well, clearly we must insert a
-<code>Node(Leaf, (c, (k, v)), Leaf)</code> for some color <code>c</code>. Note that since a <code>Leaf</code> is
-considered to be colored black, if we choose <code>c</code> to be <code>Black</code>, we will run into
-issues with our black height invariant - we have replaced a <code>Leaf</code> (a subtree of
-black height 1) with a subtree of black height 2! This will disproportionately
-affect the black height of paths ending in this subtree, thus causing the
-invariant to be violated.</p>
-<p>Thus, the only sensible choice we can commit is to insert as a <code>Red</code> node. The
-astute reader may see that this will quickly cause issues - we will address this
-shortly. Thus, we can write</p>
+<p>The question becomes: how should we implement insert? We cannot be so naive as to simply insert as we would in an ordinary binary search tree, as this would quickly cause problems with our invariants. In particular, we must be mindful of the <em>black height</em> invariant, saying that all paths to leaves must have the same number of black nodes on them.</p>
+<p>The easiest case to tackle for insert is the <code>Leaf</code> case. How should we finish the definition of <code>fun insert Leaf (k, v) = </code>? Well, clearly we must insert a <code>Node(Leaf, (c, (k, v)), Leaf)</code> for some color <code>c</code>. Note that since a <code>Leaf</code> is considered to be colored black, if we choose <code>c</code> to be <code>Black</code>, we will run into issues with our black height invariant - we have replaced a <code>Leaf</code> (a subtree of black height 1) with a subtree of black height 2! This will disproportionately affect the black height of paths ending in this subtree, thus causing the invariant to be violated.</p>
+<p>Thus, the only sensible choice we can commit is to insert as a <code>Red</code> node. The astute reader may see that this will quickly cause issues - we will address this shortly. Thus, we can write</p>
 <pre><code class="language-sml">fun insert Leaf (k, v) = Node(Leaf, (Red, (k, v)), Leaf)
   | insert (Node (L, (c', (k', v')), R)) (k, v) = ...
 </code></pre>
-<p>How should we handle the <code>Node</code> case? Well, insertion really only happens at the
-leaves - the only thing that we can do at a <code>Node</code> is to propagate the change
-throughout the tree until it gets to where it needs to be. We have seen that
-this schema of an &quot;always-red&quot; insertion maintains the black-height invariant,
-however there is the <em>red-children</em> invariant as well - the children of a red
-node must themselves be red. This invariant is the one that we are not
-respecting, with our current schema.</p>
-<p>So we only run into an issue when we insert into the tree such that the new node
-is the child of a red node. Furthermore, we know that, if the tree that we are
-inserting into is truly a red-black tree, it must respect the red-children
-invariant, and thus the the parent of the inserted node must itself have a black
-parent. Thus, there can only be four cases for the &quot;site&quot; of the insertion:</p>
+<p>How should we handle the <code>Node</code> case? Well, insertion really only happens at the leaves - the only thing that we can do at a <code>Node</code> is to propagate the change throughout the tree until it gets to where it needs to be. We have seen that this schema of an &quot;always-red&quot; insertion maintains the black-height invariant, however there is the <em>red-children</em> invariant as well - the children of a red node must themselves be red. This invariant is the one that we are not respecting, with our current schema.</p>
+<p>So we only run into an issue when we insert into the tree such that the new node is the child of a red node. Furthermore, we know that, if the tree that we are inserting into is truly a red-black tree, it must respect the red-children invariant, and thus the the parent of the inserted node must itself have a black parent. Thus, there can only be four cases for the &quot;site&quot; of the insertion:</p>
 <figure class="aligncenter">
     <img src="../assets/redblack.svg" alt="Cases" width="1000"\>
     <figcaption><b>Fig 1.</b> Illustration of the four cases of the red-children
     invariant being broken following insertion. The inserted nodes are marked
     with a "plus". </figcaption>
 </figure>
-<p>Such an invariant violation is only a local concern, however. All that is needed
-in order to restore the invariant is to simple <em>rotate</em> the site of violation,
-and do a simple recoloring. We will illustrate only the first case, and the rest
-follow similarly. You may verify for yourself that this continues to preserve
-the ordering and black-height invariants.</p>
+<p>Such an invariant violation is only a local concern, however. All that is needed in order to restore the invariant is to simple <em>rotate</em> the site of violation, and do a simple recoloring. We will illustrate only the first case, and the rest follow similarly. You may verify for yourself that this continues to preserve the ordering and black-height invariants.</p>
 <figure class="aligncenter">
     <img src="../assets/balance.svg" alt="Balance" width="1000"\>
     <figcaption><b>Fig 2.</b> Illustration of the "balancing" necessary in order
@@ -606,13 +428,8 @@ the ordering and black-height invariants.</p>
             Node(Node(a,(Black,x),b), (Red,y), Node(c,(Black,z), d))
   | balance T = T
 </code></pre>
-<p>Note that if we are not in any of the four described cases, <code>balance</code> simply
-acts as the identity function, as there is no invariant being broken.</p>
-<p>However, this rotation may itself cause another site of red-children invariant
-violation, slightly farther up. As such, we must <em>propagate</em> this balancing
-operation as far up as necessary, in order to produce a proper binary tree at
-the very end. To this end, we can write the following code for the inductive
-case of <code>insert</code>:</p>
+<p>Note that if we are not in any of the four described cases, <code>balance</code> simply acts as the identity function, as there is no invariant being broken.</p>
+<p>However, this rotation may itself cause another site of red-children invariant violation, slightly farther up. As such, we must <em>propagate</em> this balancing operation as far up as necessary, in order to produce a proper binary tree at the very end. To this end, we can write the following code for the inductive case of <code>insert</code>:</p>
 <pre><code class="language-sml">fun insert Leaf (k, v) = Node(Leaf, (Red, (k, v)), Leaf)
   | insert (Node (L, (c', (k', v')), R)) (k, v) =
     case Key.compare (k, k') of
@@ -620,30 +437,14 @@ case of <code>insert</code>:</p>
       | EQUAL =&gt; Node(L, (c', (k, v)), R)
       | GREATER =&gt; balance(Node(L, (c', (k', v')), insert R (k ,v)))
 </code></pre>
-<p>This code ensures that, after descending into a subtree in order to insert the
-given key and value, a balancing operation is immediately performed once the
-insertion is complete. This ensures that we have a <em>bottom-up</em> propagation of
-balancings, immediately after completing the insertions. Note that because
-<code>balance</code> acts as the identity function on anything that does not pattern-match
-to either of the four cases, we perform only a negligible amount of extra checks
-at each recursive call, and ultimately are only concerned with those four cases.</p>
-<p>However, this code is not complete. There is a minor edge case that remains -
-what if we are too close to the root for any of the four cases to apply? Our
-previous analysis relied on the fact that we could assume that the parent of our
-inserted node was red, and thus had a black parent - what of the case where the
-parent of the inserted node <em>has no</em> parent?</p>
+<p>This code ensures that, after descending into a subtree in order to insert the given key and value, a balancing operation is immediately performed once the insertion is complete. This ensures that we have a <em>bottom-up</em> propagation of balancings, immediately after completing the insertions. Note that because <code>balance</code> acts as the identity function on anything that does not pattern-match to either of the four cases, we perform only a negligible amount of extra checks at each recursive call, and ultimately are only concerned with those four cases.</p>
+<p>However, this code is not complete. There is a minor edge case that remains - what if we are too close to the root for any of the four cases to apply? Our previous analysis relied on the fact that we could assume that the parent of our inserted node was red, and thus had a black parent - what of the case where the parent of the inserted node <em>has no</em> parent?</p>
 <p>Consider the case illustrated below:</p>
 <figure class="aligncenter">
     <img src="../assets/insert.svg" alt="Example of inserting two nodes into an empty tree" width="1000"\>
     <figcaption><b>Fig 3.</b> Demonstration of potential issues in inserting nodes at the root when lacking a black parent. </figcaption>
 </figure>
-<p>As we can see here, our previous reasoning does not catch this red-children
-violation because it does not conform to our previous cases, by virtue of the
-inserted node not having a grandfather. This case can <em>only</em> happen at the root,
-however, since that is the only location where that can occur. As a result, the
-simple solution is to simply make the root of any red-black tree black - it will
-preserve the black height invariant, but also result in this red-red violation
-being impossible. We can amend our code as follows:</p>
+<p>As we can see here, our previous reasoning does not catch this red-children violation because it does not conform to our previous cases, by virtue of the inserted node not having a grandfather. This case can <em>only</em> happen at the root, however, since that is the only location where that can occur. As a result, the simple solution is to simply make the root of any red-black tree black - it will preserve the black height invariant, but also result in this red-red violation being impossible. We can amend our code as follows:</p>
 <pre><code class="language-sml">fun insert' Leaf (k, v) = Node(Leaf, (Red, (k, v)), Leaf)
   | insert' (Node (L, (c', (k', v')), R)) (k, v) =
     case Key.compare (k, k') of
@@ -656,12 +457,8 @@ fun insert T (k, v) =
         Leaf =&gt; Leaf
       | Node (L, (_, (k', v')), R) =&gt; Node(L, (Black, (k', v')), R)
 </code></pre>
-<p>Finally, this results in our completed code for the <code>insert</code> function. Note that
-because of the signature that we are ascribing to, helper functions such as
-<code>balance</code> and <code>insert</code> will not be visible to the client of the module, so there
-is no harm in declaring them within the namespace of the functor.</p>
-<p>Our completed code for a red-black tree implementation of dictionaries is thus
-as follows. Note that the implementation of <code>lookup</code> is very straightforward, and</p>
+<p>Finally, this results in our completed code for the <code>insert</code> function. Note that because of the signature that we are ascribing to, helper functions such as <code>balance</code> and <code>insert</code> will not be visible to the client of the module, so there is no harm in declaring them within the namespace of the functor.</p>
+<p>Our completed code for a red-black tree implementation of dictionaries is thus as follows. Note that the implementation of <code>lookup</code> is very straightforward, and</p>
 <pre><code class="language-sml">functor RedBlackDict (Key : ORDERED) :&gt; DICT where type key = Key.t =
 struct
     type key = Key.t
@@ -700,20 +497,9 @@ struct
           | GREATER =&gt; lookup R k
 end
 </code></pre>
-<p>In the end, usage of modules allows us to write a powerful, parameterized
-implementation of a dictionary interface, in such a way that we ensure that our
-<em>representation invariants</em> are respected throughout each operation. By making
-a structure ascribing to the <code>ORDERED</code> typeclass a parameter of the functor
-<code>RedBlackDict</code>, we allow powerful generality in the type of the key to the
-dictionary, without having to introduce additional overhead in the functions of
-the module itself.</p>
+<p>In the end, usage of modules allows us to write a powerful, parameterized implementation of a dictionary interface, in such a way that we ensure that our <em>representation invariants</em> are respected throughout each operation. By making a structure ascribing to the <code>ORDERED</code> typeclass a parameter of the functor <code>RedBlackDict</code>, we allow powerful generality in the type of the key to the dictionary, without having to introduce additional overhead in the functions of the module itself.</p>
 <h2 id="conclusions"><a class="header" href="#conclusions">Conclusions</a></h2>
-<p>In this chapter, we have seen how functors are a potent tool when structuring
-our code, that allows us to enforce modularity and implement code reuse <em>within
-the language itself</em>. Functors also form the basis for a kind of <em>higher-order
-module</em>, where we can parameterize the structures we are capable of creating by
-other structures themselves, resulting in a greater degree of expression and
-versatility not unlike those of higher-order functions themselves.</p>
+<p>In this chapter, we have seen how functors are a potent tool when structuring our code, that allows us to enforce modularity and implement code reuse <em>within the language itself</em>. Functors also form the basis for a kind of <em>higher-order module</em>, where we can parameterize the structures we are capable of creating by other structures themselves, resulting in a greater degree of expression and versatility not unlike those of higher-order functions themselves.</p>
 
                     </main>
 

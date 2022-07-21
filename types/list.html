@@ -140,7 +140,7 @@
 <p><em>By Brandon Wu, May 2020</em></p>
 <p>Lists are the SML type of ordered collections of objects. Notably, you can create lists of any kind of object, so <code>int list</code>, <code>string list</code>, and <code>bool list</code> are all valid types. <code>list</code> on its own is a type constructor (meaning that it makes new types out of old types), so it is not a valid type by itself, however. Lists are not, however, the same as arrays - they do not have constant-time access to any given index of the list. Indeed, they are best thought of as not analogous to arrays in other languages at all. Instead, you only have access to the elements located at the very beginning of the list, the <em>head</em>. Additionally, lists are more <em>restricted</em> than data structures in some other languages - a given list has a fixed type for its elements. All of the elements in a list must be of the same type. For the purposes of this document, we will discuss only int lists.</p>
 <h2 id="values"><a class="header" href="#values">Values</a></h2>
-<p>We write lists as a sequence of integers, separated by commas, all enclosed with two square brackets. So then we have valid int lists as <code>[1, 2, 3]</code>, <code>[1, 5, 1, 5, 0]</code>, and <code>[]</code>, with the latter representing the empty list. We also refer to the empty list as <em>nil</em> (in addition, you can type <code>nil</code> instead of <code>[]</code> in code). </p>
+<p>We write lists as a sequence of integers, separated by commas, all enclosed with two square brackets. So then we have valid int lists as <code>[1, 2, 3]</code>, <code>[1, 5, 1, 5, 0]</code>, and <code>[]</code>, with the latter representing the empty list. We also refer to the empty list as <em>nil</em> (in addition, you can type <code>nil</code> instead of <code>[]</code> in code).</p>
 <p>The other essential component to lists is what is known as the <code>::</code> operator, referred to as &quot;cons&quot;. Cons can be used as a constructor for any fixed type of list, so we say that for any given type <code>t</code>:</p>
 <pre><code class="language-sml">(op ::) : t * t list -&gt; t list
 </code></pre>
@@ -158,7 +158,7 @@ fun length ([] : int list) : int = 0
 </code></pre>
 <p>where an int list can either be the empty list <code>[]</code>, or it can be <code>::</code> of a first element and the rest of the list (where <code>::</code> is an infix operator, so instead of being written as <code>::(x, xs)</code>, we have <code>x :: xs</code>). Note that this is not actually valid syntax, but you can think of the definition of int lists in this way.</p>
 <h2 id="motivation"><a class="header" href="#motivation">Motivation</a></h2>
-<p>Compared to other data structures, lists seem to have numerous disadvantages. As mentioned previously, they do not possess constant-time indexing like arrays in other languages - there is no way to instantly get the ith element of a list easily. Instead, you must &quot;cons off&quot; all the elements in front of that item in order to retrieve it - if you want to remove that item from the list, then you have to put the preceding elements <em>back</em> as well (and in the right order!). Lists are also inherently sequential - you cannot access multiple elements at one time. </p>
+<p>Compared to other data structures, lists seem to have numerous disadvantages. As mentioned previously, they do not possess constant-time indexing like arrays in other languages - there is no way to instantly get the ith element of a list easily. Instead, you must &quot;cons off&quot; all the elements in front of that item in order to retrieve it - if you want to remove that item from the list, then you have to put the preceding elements <em>back</em> as well (and in the right order!). Lists are also inherently sequential - you cannot access multiple elements at one time.</p>
 <p>The reason why we choose lists is that they have very nice mathematical properties. These &quot;disadvantages&quot; in the previous paragraph become strengths, when viewed in a certain manner. Lists are powerful for their simple, inductive definition (as shown in the previous section), which is sufficiently powerful to characterize many important principles in this class. Additionally, they are <em>persistent</em>, meaning that they cannot be mutated - any change to a list simply creates a new one instead, which is a very desirable property to have in functional programs. Though the interfacing behavior with these lists is limited, we will write programs where this limitation matters less. Our hope is that, throughout this course, you can begin to see that there is an elegance in simplicity.</p>
 <blockquote>
 <p><strong>[Case Study: Sorted Lists]</strong></p>
@@ -190,7 +190,7 @@ fun ([] : int list) @ (R : int list) : int list = R
 <p>How might you inductively define a list whose elements all satisfy some property <em>P</em>?</p>
 </li>
 <li>
-<p>Write an SML function that reverses a list. </p>
+<p>Write an SML function that reverses a list.</p>
 </li>
 </ol>
 

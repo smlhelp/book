@@ -138,8 +138,8 @@
                     <main>
                         <h1 id="option"><a class="header" href="#option">Option</a></h1>
 <p><em>By Jacob Neumann, June 2021</em></p>
-<p><code>option</code> is a SML datatype for handling potential undefined values. Formally, the option type is parametrized by a single polymorphic type variable, so for every SML type <code>t</code>, there is a type <code>t option</code>. </p>
-<p>The type <code>t option</code> represents the construction of &quot;either a value of <code>t</code>, or nothing&quot;. For instance, a value of type <code>bool option</code> is either true, false, or neither. A value of type <code>int option</code> is either some integer, or none. A function will return <code>t option</code> to represent the possibility that no acceptable value of type <code>t</code> can be identified to return, and have a value to return to signal this circumstance. See the &quot;Options-as-partiality&quot; HOFs section below for some functions elaborating on this understanding of options. </p>
+<p><code>option</code> is a SML datatype for handling potential undefined values. Formally, the option type is parametrized by a single polymorphic type variable, so for every SML type <code>t</code>, there is a type <code>t option</code>.</p>
+<p>The type <code>t option</code> represents the construction of &quot;either a value of <code>t</code>, or nothing&quot;. For instance, a value of type <code>bool option</code> is either true, false, or neither. A value of type <code>int option</code> is either some integer, or none. A function will return <code>t option</code> to represent the possibility that no acceptable value of type <code>t</code> can be identified to return, and have a value to return to signal this circumstance. See the &quot;Options-as-partiality&quot; HOFs section below for some functions elaborating on this understanding of options.</p>
 <p>Options also function as a kind of &quot;container&quot;: a value <code>x : t option</code> either &quot;contains&quot; a value of type <code>t</code> (<code>x = SOME(z)</code>) or is an &quot;empty container&quot; with no values (<code>x = NONE</code>). We can therefore view <code>t option</code> as a degenerate version of <code>t list</code>, where the &quot;list&quot; is constrained to be length at most one. The notion of a &quot;container&quot; is made precise in functional programming with the idea of a &quot;monad&quot;. In Haskell (which makes much more explicit use of monads), options are known as the &quot;Maybe monad&quot;.</p>
 <h2 id="values"><a class="header" href="#values">Values</a></h2>
 <p>The type <code>t option</code> has exactly one more value than the type <code>t</code> itself. Formally,</p>
@@ -177,7 +177,7 @@ val k = SOME (SOME 5) : int option option
 <p>The <code>Option</code> structure also provides the &quot;join&quot; function</p>
 <pre><code class="language-sml">    Option.join : 'a option option -&gt; 'a option
 </code></pre>
-<p>which sends <code>SOME(X)</code> to <code>X</code> and <code>NONE</code> to <code>NONE</code>. </p>
+<p>which sends <code>SOME(X)</code> to <code>X</code> and <code>NONE</code> to <code>NONE</code>.</p>
 <h2 id="from-the-structure"><a class="header" href="#from-the-structure">From the Structure</a></h2>
 <p>The <code>Option</code> structure (part of the SMLNJ basis) provides a number of useful utilities for working with <code>option</code>s.</p>
 <p>In addition to the datatype <code>option</code> itself being available at top-level, the exception</p>

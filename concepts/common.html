@@ -138,90 +138,43 @@
                     <main>
                         <h1 id="common-hofs-and-partial-evaluation"><a class="header" href="#common-hofs-and-partial-evaluation">Common HOFs and Partial Evaluation</a></h1>
 <p><em>By Brandon Wu, June 2020. Revised March 2022</em></p>
-<p>In this section, we will explore a number of common higher-order functions that
-we will make use of. These higher-order functions embody <em>design patterns</em> that
-are common in programming, and represent a <em>generalized notion</em> of a large space
-of potential functions that can be made to solve a myriad of problems. This
-section focuses on understanding the importance that higher-order functions
-offer us through increasing <em>abstraction</em>, as well as <em>modularity</em> in the
-structure of our code.</p>
+<p>In this section, we will explore a number of common higher-order functions that we will make use of. These higher-order functions embody <em>design patterns</em> that are common in programming, and represent a <em>generalized notion</em> of a large space of potential functions that can be made to solve a myriad of problems. This section focuses on understanding the importance that higher-order functions offer us through increasing <em>abstraction</em>, as well as <em>modularity</em> in the structure of our code.</p>
 <h2 id="designing-higher-order-functions"><a class="header" href="#designing-higher-order-functions">Designing Higher-Order Functions</a></h2>
 <p>Suppose that we are interested in incrementing all the numbers in a list by one.</p>
 <pre><code class="language-sml">fun incList [] = []
   | incList (x::xs) = (x + 1) :: incList xs
 </code></pre>
-<p>This is not too bad to do - we simply need to increment each individual element, and then
-simply cons it back on recursively. Suppose further that, as the arithmetically-minded
-scholars that we are, we are also interested in negating the sign of each
-element in a list.</p>
+<p>This is not too bad to do - we simply need to increment each individual element, and then simply cons it back on recursively. Suppose further that, as the arithmetically-minded scholars that we are, we are also interested in negating the sign of each element in a list.</p>
 <pre><code class="language-sml">fun negateList [] = []
   | negateList (x::xs) = (~x) :: negateList xs
 </code></pre>
-<p>These two look quite similar, which we begin to find unnerving. Hoping to get
-away from what is surely a wild coincidence, we try and write a function to take
-a list of strings and append the string <code>&quot;\n&quot;</code> to them (which denotes the
-newline character).</p>
+<p>These two look quite similar, which we begin to find unnerving. Hoping to get away from what is surely a wild coincidence, we try and write a function to take a list of strings and append the string <code>&quot;\n&quot;</code> to them (which denotes the newline character).</p>
 <pre><code class="language-sml">fun newLineList [] = []
   | newLineList (x::xs) = (x ^ &quot;\n&quot;) :: newLineList xs
 </code></pre>
 <p>We can't seem to escape!</p>
 <h3 id="map"><a class="header" href="#map">Map</a></h3>
-<p>We have seen that these functions we have written all look very similar - they
-perform a function on each element of a list, then cons the result back on to
-the recursive call so as to perform that operation on <em>every</em> element of the
-list. This is a common <em>design pattern</em>, or <em>template</em> for a function that we
-want to do a particular thing. For each specific operation we want to perform on
-a list, it seems we would have to write the same sort of function each time,
-only changing the operation that is performed at the recursive call. To avoid
-all that work, we will make use of <em>higher-order functions</em>.</p>
+<p>We have seen that these functions we have written all look very similar - they perform a function on each element of a list, then cons the result back on to the recursive call so as to perform that operation on <em>every</em> element of the list. This is a common <em>design pattern</em>, or <em>template</em> for a function that we want to do a particular thing. For each specific operation we want to perform on a list, it seems we would have to write the same sort of function each time, only changing the operation that is performed at the recursive call. To avoid all that work, we will make use of <em>higher-order functions</em>.</p>
 <pre><code class="language-sml">(* map : ('a -&gt; 'b) -&gt; 'a list -&gt; 'b list *)
 fun map f [] = []
   | map f (x::xs) = (f x) :: map f xs
 </code></pre>
-<p><code>map</code> thus both takes in a function (in this instance, the function <code>f</code>) and is <em>curried</em>, meaning that it itself returns a function. <code>map</code> takes in the
-function that you wish to apply to the entire list, and then the list, and then
-returns the result of applying that function to every element in the list. In
-other words, <code>map f [x_1, ..., x_n] ==&gt; [f x_1, ..., f x_n]</code>.</p>
-<p>We also note that <code>map</code> is <em>polymorphic</em>, as we learned earlier, and the
-function it takes in has type <code>'a -&gt; 'b</code>, which is the most general function
-type. This means that the function we pass in can describe any kind of
-transformation on some element, which grants us a great deal of versatility.</p>
-<p><code>map</code> <em>describes</em> a pattern, or a <em>family</em> of functions that all follow the same
-sort of structure. In the same way that <code>'a</code> is a variable ranging over all
-types, where we can describe each type as an <em>instance</em> of <code>'a</code>, we can describe
-functions like <code>incList</code>, <code>negateList</code>, and <code>newLineList</code> as being sort of
-&quot;instances&quot; of <code>map</code>. Specifically, we have that <code>incList</code> is extensionally
-equivalent to <code>map (fn x =&gt; x + 1)</code>, <code>negateList</code> is extensionally equivalent to
-<code>map ~</code>, and <code>newLineList</code> is extensionally equivalent to <code>map (fn x =&gt; x ^ &quot;\n&quot;)</code>.</p>
+<p><code>map</code> thus both takes in a function (in this instance, the function <code>f</code>) and is <em>curried</em>, meaning that it itself returns a function. <code>map</code> takes in the function that you wish to apply to the entire list, and then the list, and then returns the result of applying that function to every element in the list. In other words, <code>map f [x_1, ..., x_n] ==&gt; [f x_1, ..., f x_n]</code>.</p>
+<p>We also note that <code>map</code> is <em>polymorphic</em>, as we learned earlier, and the function it takes in has type <code>'a -&gt; 'b</code>, which is the most general function type. This means that the function we pass in can describe any kind of transformation on some element, which grants us a great deal of versatility.</p>
+<p><code>map</code> <em>describes</em> a pattern, or a <em>family</em> of functions that all follow the same sort of structure. In the same way that <code>'a</code> is a variable ranging over all types, where we can describe each type as an <em>instance</em> of <code>'a</code>, we can describe functions like <code>incList</code>, <code>negateList</code>, and <code>newLineList</code> as being sort of &quot;instances&quot; of <code>map</code>. Specifically, we have that <code>incList</code> is extensionally equivalent to <code>map (fn x =&gt; x + 1)</code>, <code>negateList</code> is extensionally equivalent to <code>map ~</code>, and <code>newLineList</code> is extensionally equivalent to <code>map (fn x =&gt; x ^ &quot;\n&quot;)</code>.</p>
 <p>We will now explore some more types of common patterns.</p>
 <h3 id="filter"><a class="header" href="#filter">Filter</a></h3>
-<p>Quite often, we have a collection of objects and are interested in only some of
-them - we want to select those that possess the desired property, and get rid of
-those that do not. In other words, we want to <em>filter</em> the list into only those
-such elements. The property that we desire, however, could be anything. All we
-need to be able to do is say &quot;yes&quot; or &quot;no&quot; at any given item,</p>
-<p>This is embodied in the implementation of <code>filter</code>, which abstracts away the
-specific property in question.</p>
+<p>Quite often, we have a collection of objects and are interested in only some of them - we want to select those that possess the desired property, and get rid of those that do not. In other words, we want to <em>filter</em> the list into only those such elements. The property that we desire, however, could be anything. All we need to be able to do is say &quot;yes&quot; or &quot;no&quot; at any given item,</p>
+<p>This is embodied in the implementation of <code>filter</code>, which abstracts away the specific property in question.</p>
 <pre><code class="language-sml">(* filter : ('a -&gt; bool) -&gt; 'a list -&gt; 'a list *)
 fun filter p [] = []
   | filter p (x::xs) = if p x then x :: filter p xs
                               else filter p xs
 </code></pre>
-<p>We describe the function <code>p</code> (of type <code>'a -&gt; bool</code>) as a <em>predicate function</em>,
-or alternatively <em>indicator function</em>, which simply returns <code>true</code> on those
-&quot;yes&quot;-cases and <code>no</code> on &quot;no&quot;-cases. Seen in this way, <code>filter</code> does something
-very similar to <code>map</code>, where it takes in the function it needs to apply to the
-elements of the list. In the case where the predicate holds, the element is
-kept, otherwise the element is discarded.</p>
-<p>We could, for instance, obtain all the even integers in a list <code>L : int list</code> by
-writing the expression <code>filter (fn x =&gt; x mod 2 = 0) L</code>.</p>
+<p>We describe the function <code>p</code> (of type <code>'a -&gt; bool</code>) as a <em>predicate function</em>, or alternatively <em>indicator function</em>, which simply returns <code>true</code> on those &quot;yes&quot;-cases and <code>no</code> on &quot;no&quot;-cases. Seen in this way, <code>filter</code> does something very similar to <code>map</code>, where it takes in the function it needs to apply to the elements of the list. In the case where the predicate holds, the element is kept, otherwise the element is discarded.</p>
+<p>We could, for instance, obtain all the even integers in a list <code>L : int list</code> by writing the expression <code>filter (fn x =&gt; x mod 2 = 0) L</code>.</p>
 <h3 id="fold"><a class="header" href="#fold">Fold</a></h3>
-<p>Map is very useful for performing some kind of transformation on a bulk group of
-data, however it retains the &quot;structure&quot; of the list. It maintains the elements
-in the same order as they were inputted, and simply transforms each piecewise to
-produce a final answer. Sometimes, we are interested in simply achieving a final
-result from a collection of data - not another collection of data itself. This
-describes a very common pattern known as <em>folding</em>.</p>
+<p>Map is very useful for performing some kind of transformation on a bulk group of data, however it retains the &quot;structure&quot; of the list. It maintains the elements in the same order as they were inputted, and simply transforms each piecewise to produce a final answer. Sometimes, we are interested in simply achieving a final result from a collection of data - not another collection of data itself. This describes a very common pattern known as <em>folding</em>.</p>
 <pre><code class="language-sml">(* foldl : ('a * 'b -&gt; 'b) -&gt; 'b -&gt; 'a list -&gt; 'b *)
 fun foldl g z [] = z
   | foldl g z (x::xs) = foldl g (g(x, z)) xs
@@ -230,100 +183,26 @@ fun foldl g z [] = z
 fun foldr g z [] = z
   | foldr g z (x::xs) = g(x, foldr g z xs)
 </code></pre>
-<p>More specifically, <code>foldl</code> and <code>foldr</code> both describe two ways of combining the
-elements in a list, given a function <code>g</code>. The role of <code>z</code> is that of a &quot;base
-case&quot; in our accumulated value, so that we have an initial point to start from
-when using the function <code>g</code>. The result of <code>foldl g z [x_1, ..., x_n]</code> is to
-evaluate to <code>f(x_n, ..., f(x_2, f(x_1, z))...)</code>, and the result of <code>foldr g z [x_1, ..., x_n]</code> is to evaluate to <code>f(x_1, ..., f(x_n-1, f(x_n, z))...)</code>. We are
-thus choosing whether we want to fold from the <em>left</em> of the list or the
-<em>right</em>.</p>
-<p><strong>NOTE:</strong> One way to remember which way that that each respective <code>fold</code> goes is
-to identify the corresponding side (left or right) as being the side of the most
-<em>deeply nested</em> element in the functions. As such, since <code>x_1</code> is the most
-leftmost element, <code>foldl</code> has <code>f(x_1, z)</code> as its innermost component, whereas
-since <code>x_n</code> is the most rightmost element, <code>foldr</code> has <code>f(x_n, z)</code>.</p>
-<p>Use cases for <code>fold</code> include if you wanted to turn a list of strings into a
-single string, which you could accomplish with <code>foldr (op^) &quot;&quot;</code>, or if you wanted
-to sum the elements of a list, which could be done with <code>foldl (op+) 0</code>. Note that
-in the case of summing a list, <code>foldr</code> would work too - this is because <code>+</code> is
-an <em>associative</em> function, meaning that it does not matter which order you
-evaluate it in (or in proper terms, \( f(x, f(y, z)) \cong f(f(x, y), z) \), for
-all \( x, y, z \)).</p>
-<p>For many purposes, it will be the case that your <code>z</code> will be some <em>identity</em>
-value, such as <code>0</code> for summing a list, or the empty string for concatenating all
-the strings in a list. This does not always have to be the case. One of the
-strengths of the implementation is that we can <em>specify</em> what our <code>z</code> is, and
-tailor that to our needs. For instance, if we wanted to append a <code>&quot;\n&quot;</code> to our
-string concatenation, we could use <code>foldr (op^) &quot;\n&quot;</code>. Fold offers us a great
-deal of flexibility with choosing how we want to reduce a list.</p>
-<p>It is somewhat important to note the type of the function <code>g</code> here. It has type
-<code>'a * 'b -&gt; 'b</code>, where <code>'a</code> is the type of the elements in the list that we are
-folding, and <code>'b</code> is the type of the initial accumulator and output. It is useful to
-think of this <code>'b</code> type as the type of the <code>fold</code> function's &quot;accumulator&quot;, or
-the information that it stores as it proceeds along its computation. In the case
-of <code>foldl</code>, this accumulator at a given point along the list is simply the
-folded value of the all the elements to the left - and in <code>foldr</code>, it is the
-folded value of all the elements to the right. The polymorphic nature of this
-accumulator becomes a major strength, as we can &quot;carry along&quot; any kind of
-information that we like, so long as we define how it changes when we receive a
-new <code>'a</code>-typed element from the list that we are folding.</p>
-<p>So, for instance, the accumulator in <code>foldl (op+) 0</code> is simply the sum of all
-the elements to the left of any given point. The accumulator of <code>foldr (op^) &quot;&quot;</code>
-is the concatenation of all of the strings to the right of a given point (which
-I hope makes apparent why <code>foldr</code> is the right fold for the task, as opposed to
-<code>foldl</code>!).</p>
+<p>More specifically, <code>foldl</code> and <code>foldr</code> both describe two ways of combining the elements in a list, given a function <code>g</code>. The role of <code>z</code> is that of a &quot;base case&quot; in our accumulated value, so that we have an initial point to start from when using the function <code>g</code>. The result of <code>foldl g z [x_1, ..., x_n]</code> is to evaluate to <code>f(x_n, ..., f(x_2, f(x_1, z))...)</code>, and the result of <code>foldr g z [x_1, ..., x_n]</code> is to evaluate to <code>f(x_1, ..., f(x_n-1, f(x_n, z))...)</code>. We are thus choosing whether we want to fold from the <em>left</em> of the list or the <em>right</em>.</p>
+<p><strong>NOTE:</strong> One way to remember which way that that each respective <code>fold</code> goes is to identify the corresponding side (left or right) as being the side of the most <em>deeply nested</em> element in the functions. As such, since <code>x_1</code> is the most leftmost element, <code>foldl</code> has <code>f(x_1, z)</code> as its innermost component, whereas since <code>x_n</code> is the most rightmost element, <code>foldr</code> has <code>f(x_n, z)</code>.</p>
+<p>Use cases for <code>fold</code> include if you wanted to turn a list of strings into a single string, which you could accomplish with <code>foldr (op^) &quot;&quot;</code>, or if you wanted to sum the elements of a list, which could be done with <code>foldl (op+) 0</code>. Note that in the case of summing a list, <code>foldr</code> would work too - this is because <code>+</code> is an <em>associative</em> function, meaning that it does not matter which order you evaluate it in (or in proper terms, \( f(x, f(y, z)) \cong f(f(x, y), z) \), for all \( x, y, z \)).</p>
+<p>For many purposes, it will be the case that your <code>z</code> will be some <em>identity</em> value, such as <code>0</code> for summing a list, or the empty string for concatenating all the strings in a list. This does not always have to be the case. One of the strengths of the implementation is that we can <em>specify</em> what our <code>z</code> is, and tailor that to our needs. For instance, if we wanted to append a <code>&quot;\n&quot;</code> to our string concatenation, we could use <code>foldr (op^) &quot;\n&quot;</code>. Fold offers us a great deal of flexibility with choosing how we want to reduce a list.</p>
+<p>It is somewhat important to note the type of the function <code>g</code> here. It has type <code>'a * 'b -&gt; 'b</code>, where <code>'a</code> is the type of the elements in the list that we are folding, and <code>'b</code> is the type of the initial accumulator and output. It is useful to think of this <code>'b</code> type as the type of the <code>fold</code> function's &quot;accumulator&quot;, or the information that it stores as it proceeds along its computation. In the case of <code>foldl</code>, this accumulator at a given point along the list is simply the folded value of the all the elements to the left - and in <code>foldr</code>, it is the folded value of all the elements to the right. The polymorphic nature of this accumulator becomes a major strength, as we can &quot;carry along&quot; any kind of information that we like, so long as we define how it changes when we receive a new <code>'a</code>-typed element from the list that we are folding.</p>
+<p>So, for instance, the accumulator in <code>foldl (op+) 0</code> is simply the sum of all the elements to the left of any given point. The accumulator of <code>foldr (op^) &quot;&quot;</code> is the concatenation of all of the strings to the right of a given point (which I hope makes apparent why <code>foldr</code> is the right fold for the task, as opposed to <code>foldl</code>!).</p>
 <h2 id="compose"><a class="header" href="#compose">Compose</a></h2>
-<p>One of the major examples that we used to motivate totality was that of
-<em>function composition</em>, the classic example being \( f(g(x)) \), for some
-functions \( f \) and \( g \). This is a very common idea, where we have some form
-of data that we would like to put through a series of transformations. If our
-transformations are inherently disparate (such as being bound to identifiers of
-different functions), we may have to write code that looks like <code>f1 (f2 (f3 (f4 (f5 x))))</code>. However, this can only happen if we <em>already have access to the
-element x</em>. So then, what happens if we want to give a name to the <em>process</em> of
-applying <code>f5</code>, then <code>f4</code>, then <code>f3</code>, then <code>f2</code>, and then <code>f1</code>?</p>
-<p>We could, of course, write the lambda expression <code>fn x =&gt; f1 (f2 (f3 (f4 (f5 x))))</code>, however that still can be rather ugly. There is an entire style of
-programming (named <em>point-free</em>, or <em>tacit</em> programming) that tries to eliminate
-the deliberate identification of the arguments to functions, instead making use
-of <em>combinators</em>. In a similar flavor, we would like to eliminate the explicit
-need to construct the lambda expression that takes in the input <code>x</code>. We might
-then call back to another common mathematical operator, that being of <em>function
-composition</em>, or <code>o</code>.</p>
+<p>One of the major examples that we used to motivate totality was that of <em>function composition</em>, the classic example being \( f(g(x)) \), for some functions \( f \) and \( g \). This is a very common idea, where we have some form of data that we would like to put through a series of transformations. If our transformations are inherently disparate (such as being bound to identifiers of different functions), we may have to write code that looks like <code>f1 (f2 (f3 (f4 (f5 x))))</code>. However, this can only happen if we <em>already have access to the element x</em>. So then, what happens if we want to give a name to the <em>process</em> of applying <code>f5</code>, then <code>f4</code>, then <code>f3</code>, then <code>f2</code>, and then <code>f1</code>?</p>
+<p>We could, of course, write the lambda expression <code>fn x =&gt; f1 (f2 (f3 (f4 (f5 x))))</code>, however that still can be rather ugly. There is an entire style of programming (named <em>point-free</em>, or <em>tacit</em> programming) that tries to eliminate the deliberate identification of the arguments to functions, instead making use of <em>combinators</em>. In a similar flavor, we would like to eliminate the explicit need to construct the lambda expression that takes in the input <code>x</code>. We might then call back to another common mathematical operator, that being of <em>function composition</em>, or <code>o</code>.</p>
 <pre><code class="language-sml">infix o
 (* o : ('b -&gt; 'c) -&gt; ('a -&gt; 'b) -&gt; ('a -&gt; 'c) *)
 fun f o g = fn x =&gt; f (g x)
 </code></pre>
-<p>Note that the types are constrained to permit the &quot;compatibility&quot; of the
-functions <code>f</code> and <code>g</code>. The input type of <code>f</code> can be general, as well as the
-output type of <code>g</code>, but the output type of <code>g</code> must match the input type of <code>f</code>.
-In this way, we can &quot;string along&quot; a series of functions in order to produce a
-single function that performs the &quot;pipeline&quot; of transformations that we desire.</p>
-<p>So, for instance, we could write the function that, given a tree of integers,
-sums all of the elements in the tree by simply writing <code>sum o inord</code>. We could,
-of course, simply write <code>treeSum</code>, however this idea is generalizable to more
-complicated sequences of transformations.</p>
+<p>Note that the types are constrained to permit the &quot;compatibility&quot; of the functions <code>f</code> and <code>g</code>. The input type of <code>f</code> can be general, as well as the output type of <code>g</code>, but the output type of <code>g</code> must match the input type of <code>f</code>. In this way, we can &quot;string along&quot; a series of functions in order to produce a single function that performs the &quot;pipeline&quot; of transformations that we desire.</p>
+<p>So, for instance, we could write the function that, given a tree of integers, sums all of the elements in the tree by simply writing <code>sum o inord</code>. We could, of course, simply write <code>treeSum</code>, however this idea is generalizable to more complicated sequences of transformations.</p>
 <h2 id="partial-evaluation-and-modularity"><a class="header" href="#partial-evaluation-and-modularity">Partial Evaluation and Modularity</a></h2>
-<p>At this point, we have seen several examples of common higher-order functions,
-as well as potential use cases. These use cases often look nothing alike, but
-they all share a fundamental similarity in their <em>structure</em>, which is specified
-by the given higher-order function.</p>
-<p>A key strength of higher-order functions lies in <em>partial evaluation</em>, where we
-can use higher-order functions to further derive other functions (and possibly
-higher-order functions, themselves). It is fine for, in the case of finding the
-sum of a single list <code>L</code>, to simply evaluate <code>foldr (op+) 0 L</code>, but in the general
-case it is a strength that we can bind the function <code>foldr (op+) 0</code> to the name
-<code>sum</code>. This comes in handy especially if we want to sum over <em>many</em> lists, so
-that we don't continuously have to compute the result of <code>foldr (op+) 0</code> (though it
-has negligible computational cost, admittedly).</p>
-<p>Seen in this way, it is as if higher-order functions are at the root of a large
-<em>tree</em> of potential functions, where each node in the tree is an
-increasingly-specialized function, until we arrive at some specific use case.
-This makes higher-order functions <em>modular</em>, as we can simply &quot;mix-and-match&quot;
-the arguments to HOFs such as <code>map</code> or <code>fold</code> until we arrive at the specific
-tools that we need.</p>
-<p>This is only an example of the way that abstraction and modularity grant us
-strength in programming. Through abstracting away even the specific operations
-that programs carry out, we can &quot;capture&quot; a large amount of potential functions
-that we may write.</p>
+<p>At this point, we have seen several examples of common higher-order functions, as well as potential use cases. These use cases often look nothing alike, but they all share a fundamental similarity in their <em>structure</em>, which is specified by the given higher-order function.</p>
+<p>A key strength of higher-order functions lies in <em>partial evaluation</em>, where we can use higher-order functions to further derive other functions (and possibly higher-order functions, themselves). It is fine for, in the case of finding the sum of a single list <code>L</code>, to simply evaluate <code>foldr (op+) 0 L</code>, but in the general case it is a strength that we can bind the function <code>foldr (op+) 0</code> to the name <code>sum</code>. This comes in handy especially if we want to sum over <em>many</em> lists, so that we don't continuously have to compute the result of <code>foldr (op+) 0</code> (though it has negligible computational cost, admittedly).</p>
+<p>Seen in this way, it is as if higher-order functions are at the root of a large <em>tree</em> of potential functions, where each node in the tree is an increasingly-specialized function, until we arrive at some specific use case. This makes higher-order functions <em>modular</em>, as we can simply &quot;mix-and-match&quot; the arguments to HOFs such as <code>map</code> or <code>fold</code> until we arrive at the specific tools that we need.</p>
+<p>This is only an example of the way that abstraction and modularity grant us strength in programming. Through abstracting away even the specific operations that programs carry out, we can &quot;capture&quot; a large amount of potential functions that we may write.</p>
 
                     </main>
 

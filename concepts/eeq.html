@@ -138,72 +138,19 @@
                     <main>
                         <h1 id="extensional-equivalence"><a class="header" href="#extensional-equivalence">Extensional Equivalence</a></h1>
 <p><em>By Brandon Wu, June 2020</em></p>
-<p>Up to this point, we have been using terms such as &quot;equal&quot; and &quot;equivalent&quot;
-rather casually. Such a notion of equality seems to be rather intuitive, at
-first glance, not necessarily in need of more exposition. After all, it seems to
-be our intuition that if two things are equal, we will &quot;know it when we see it&quot;.
-When working in the realm of mathematical expressions, we have some nice
-assumptions that lend credence to such a hypothesis - if we are evaluating the
-cosine of a number, we don't expect that the cosine function might wait forever
-before returning an answer to us. When working with SML code, this becomes a
-valid concern, and requires that we have a more particular definition of
-equivalence.</p>
+<p>Up to this point, we have been using terms such as &quot;equal&quot; and &quot;equivalent&quot; rather casually. Such a notion of equality seems to be rather intuitive, at first glance, not necessarily in need of more exposition. After all, it seems to be our intuition that if two things are equal, we will &quot;know it when we see it&quot;. When working in the realm of mathematical expressions, we have some nice assumptions that lend credence to such a hypothesis - if we are evaluating the cosine of a number, we don't expect that the cosine function might wait forever before returning an answer to us. When working with SML code, this becomes a valid concern, and requires that we have a more particular definition of equivalence.</p>
 <h2 id="motivation"><a class="header" href="#motivation">Motivation</a></h2>
-<p>It is at this point that we will try to make the <em>reasons</em> for defining an idea
-of extensional equivalence apparent. It has everything to do with the
-<em>extensional</em> behavior of our programs - the outputs that it returns given
-certain inputs.</p>
-<p>Extensional equivalence comes into play when reasoning about the correctness of
-programs. A large motive for why we write functional code is linked to an idea
-of a <em>formal proof</em> - when writing code without side effects, it is far easier
-to reason about the behavior of a program. We would like to be able to provide
-some rigorous argument as to why a program is correct. </p>
-<p>In imperative settings, it is quite difficult to go about doing so - when
-problems of state are added in, a programmer now not only needs to think about
-what step a particular program is in at a given moment, but also what the state
-of the program is as well. By state, we usually mean the particular arrangement
-of mutable data in the program's environment, such as the state of memory
-allocation, variable contents, and other transient factors. The possible
-configurations of such a state are generally infinite, which makes reasoning
-rather more difficult. While one can generally be <em>reasonably</em> sure what the
-state of a program should be, it does not always work out that way, as any
-programmer who has written a bug can attest. In functional programs, we eschew
-side effects for ease in reasoning about what a program truly outputs. Functions
-have well-defined results.</p>
-<p>Imperative programmers create functional programs. This is, at first, perhaps a
-surprising claim, but we will soon delineate what precisely we mean. In making
-this claim, we are only considering functions of a certain basic kind - that is,
-functions that <em>compute</em>, rather than <em>create</em> or <em>modify</em>. For instance, a
-program that generates the Fibonacci numbers, or computes the most efficient
-path through a given graph, or encodes some kind of data. We do not consider
-programs that, for instance, outputs to a file or prints the contents of the
-directory that the program file lives in. In addition, we speak only of programs
-that do not return <em>random results</em>, for instance random number generators or
-other random selectors. </p>
-<p>These programs have the characteristic that they are (in the general case)
-<em>deterministic</em>. Given the same inputs, they should return the same output -
-regardless of whether the language that they were implemented in is imperative
-in nature. So for these varieties of programs (which are very common
-computational problems), imperative programs make use of state to achieve a
-program that is functional in nature - that is, having no overall visible effect
-on the machine's state. Functional programming simply uses functional tools to
-achieve the same result, in the end.</p>
-<p>This is an important idea to cognize because it forms the basis for our concept
-of <em>correctness</em>. We identify a program's correctness by its ability to return
-the expected results when given some input. For instance, we know a factorial
-function that returns 5 upon being given 3 is no good. Having functional
-<em>components</em> helps us easily reason and build up functional <em>results</em> - that is,
-an end program that returns the correct results.</p>
-<p>As we will see, extensional equivalence will be a powerful tool when reasoning
-about the correctness of our code. It lets us prove in a mathematical sense
-whether functions are <em>correct</em>, as well as abstract between specific
-implementations. We will go further into detail on this later in the chapter.</p>
+<p>It is at this point that we will try to make the <em>reasons</em> for defining an idea of extensional equivalence apparent. It has everything to do with the <em>extensional</em> behavior of our programs - the outputs that it returns given certain inputs.</p>
+<p>Extensional equivalence comes into play when reasoning about the correctness of programs. A large motive for why we write functional code is linked to an idea of a <em>formal proof</em> - when writing code without side effects, it is far easier to reason about the behavior of a program. We would like to be able to provide some rigorous argument as to why a program is correct.</p>
+<p>In imperative settings, it is quite difficult to go about doing so - when problems of state are added in, a programmer now not only needs to think about what step a particular program is in at a given moment, but also what the state of the program is as well. By state, we usually mean the particular arrangement of mutable data in the program's environment, such as the state of memory allocation, variable contents, and other transient factors. The possible configurations of such a state are generally infinite, which makes reasoning rather more difficult. While one can generally be <em>reasonably</em> sure what the state of a program should be, it does not always work out that way, as any programmer who has written a bug can attest. In functional programs, we eschew side effects for ease in reasoning about what a program truly outputs. Functions have well-defined results.</p>
+<p>Imperative programmers create functional programs. This is, at first, perhaps a surprising claim, but we will soon delineate what precisely we mean. In making this claim, we are only considering functions of a certain basic kind - that is, functions that <em>compute</em>, rather than <em>create</em> or <em>modify</em>. For instance, a program that generates the Fibonacci numbers, or computes the most efficient path through a given graph, or encodes some kind of data. We do not consider programs that, for instance, outputs to a file or prints the contents of the directory that the program file lives in. In addition, we speak only of programs that do not return <em>random results</em>, for instance random number generators or other random selectors.</p>
+<p>These programs have the characteristic that they are (in the general case) <em>deterministic</em>. Given the same inputs, they should return the same output - regardless of whether the language that they were implemented in is imperative in nature. So for these varieties of programs (which are very common computational problems), imperative programs make use of state to achieve a program that is functional in nature - that is, having no overall visible effect on the machine's state. Functional programming simply uses functional tools to achieve the same result, in the end.</p>
+<p>This is an important idea to cognize because it forms the basis for our concept of <em>correctness</em>. We identify a program's correctness by its ability to return the expected results when given some input. For instance, we know a factorial function that returns 5 upon being given 3 is no good. Having functional <em>components</em> helps us easily reason and build up functional <em>results</em> - that is, an end program that returns the correct results.</p>
+<p>As we will see, extensional equivalence will be a powerful tool when reasoning about the correctness of our code. It lets us prove in a mathematical sense whether functions are <em>correct</em>, as well as abstract between specific implementations. We will go further into detail on this later in the chapter.</p>
 <h2 id="the-definition"><a class="header" href="#the-definition">The Definition</a></h2>
-<p>We will declare this definition of extensional equivalence for non-function
-expressions first, and then explore the function case later.</p>
+<p>We will declare this definition of extensional equivalence for non-function expressions first, and then explore the function case later.</p>
 <blockquote>
-<p><strong>[Extensional Equivalence (Non-Functions)]</strong> We say that two expressions <code>e : t</code> and <code>e' : t</code> for some type <code>t</code> are <em>extensionally equivalent</em> if they
-exhibit any of these three behaviors:</p>
+<p><strong>[Extensional Equivalence (Non-Functions)]</strong> We say that two expressions <code>e : t</code> and <code>e' : t</code> for some type <code>t</code> are <em>extensionally equivalent</em> if they exhibit any of these three behaviors:</p>
 <ol>
 <li>
 <p>Reduce to the same value</p>
@@ -218,241 +165,73 @@ exhibit any of these three behaviors:</p>
 <p>We will write <code>e == e'</code> to denote this.</p>
 </blockquote>
 <p><strong>NOTE:</strong> <code>==</code> is not valid SML code.</p>
-<p>As such, clearly expressions such as <code>2 + 2</code> and <code>3 + 1</code> should be extensionally
-equivalent, since they reduce to the same value, that being <code>4</code>. It is important
-to note that reduction is a <em>stronger</em> relation than extensional equivalence -
-if one expression reduces to another, then they must by definition be
-extensionally equivalent. However, extensional equivalence does not imply
-reduction. For instance, <code>4</code> does not reduce to <code>2 + 2</code>, since clearly <code>4</code> is
-already in its most simplified form. This corresponds to our intuition about
-traditional mathematical expressions, as we would expect that we could say that
-\( -1 \) and \( \cos(\pi) \) are equal, since they have the same value.</p>
-<p>With the second point, however, we depart from our normal mathematical
-reasoning. It is generally the case that, given a mathematical expression, we
-expect to be able to generate a result from it. That result may be undefined,
-and it may take some time, but in many cases we don't expect to have to account
-for a nonterminating computation. This is not the case in Standard ML. Now, any
-given function call may loop forever, which plainly is problematic for
-equivalence.</p>
-<p>As such, we will add a stipulation that two expressions (of the same type) that
-loop forever are extensionally equivalent. Note that even though two expressions
-of dissimilar types that loop forever have the same &quot;behavior&quot;, they cannot be
-extensionally equivalent by definition, as only expressions of the same type can
-be extensionally equivalent. </p>
-<p>The third case also arises from our usage of Standard ML, as expressions can
-potentially raise exceptions in cases where computation is not feasible. Some
-basic kinds of exceptions include <code>Div</code>, <code>Bind</code>, and <code>Match</code>. The precise
-mechanism of exceptions is not important, since we will cover that in more
-detail later on, but in order to maintain some notion of equivalence, we will
-simply require that two same-typed expressions raise the <em>same</em> exception. As
-such, expressions like <code>1 div 0</code> and <code>2 div 0</code> are extensionally equivalent,
-whereas <code>1 div 0</code> and <code>let val [] = [1] in () end</code> are not.</p>
-<p><strong>Note:</strong> It is not important to know specifically what the latter expression in
-the last example is doing - just know that it raises the exception <code>Bind</code>.</p>
-<p>In writing these definitions we have made a step towards cognizing extensional
-equivalence, but in a sense we have taken a step back as well. We have committed
-the same mistake by saying extensional equivalence holds when expressions
-&quot;reduce to the same value&quot;. We required this more stringent definition of
-extensional equivalence specifically because of callously using terms like
-&quot;equal&quot; and &quot;equivalent&quot;, and now we've so unthinkingly used the term &quot;same&quot;.
-But what does it mean for two values to be the &quot;same&quot;?</p>
-<p>For many cases, our intuition will suffice. It is clear to say that <code>2</code> is the
-same as <code>2</code>, and <code>2</code> is not the same as <code>&quot;two&quot;</code> (for any self-respecting
-programming language, in any case). For one, the types must be the same, and
-definitely one integer value should not be &quot;equal&quot; to any other separate integer
-value. We might then claim that two values are only &quot;equivalent&quot; if they denote
-the same literal value. </p>
-<p><strong>NOTE:</strong> The perceptive reader may notice that again, we have used the words
-&quot;same&quot; and &quot;separate&quot;. Unfortunately, there is only so far that we can dig this
-rabbit hole - at this point, we will have to rely on our intuitions to tell us
-that <code>2</code> is indeed the same value as <code>2</code>, and not the same value as <code>3</code> or <code>4</code>,
-and call it a day.</p>
-<p>This definition will suffice for most types. For functions, however, we will
-have to take a different approach.</p>
+<p>As such, clearly expressions such as <code>2 + 2</code> and <code>3 + 1</code> should be extensionally equivalent, since they reduce to the same value, that being <code>4</code>. It is important to note that reduction is a <em>stronger</em> relation than extensional equivalence - if one expression reduces to another, then they must by definition be extensionally equivalent. However, extensional equivalence does not imply reduction. For instance, <code>4</code> does not reduce to <code>2 + 2</code>, since clearly <code>4</code> is already in its most simplified form. This corresponds to our intuition about traditional mathematical expressions, as we would expect that we could say that \( -1 \) and \( \cos(\pi) \) are equal, since they have the same value.</p>
+<p>With the second point, however, we depart from our normal mathematical reasoning. It is generally the case that, given a mathematical expression, we expect to be able to generate a result from it. That result may be undefined, and it may take some time, but in many cases we don't expect to have to account for a nonterminating computation. This is not the case in Standard ML. Now, any given function call may loop forever, which plainly is problematic for equivalence.</p>
+<p>As such, we will add a stipulation that two expressions (of the same type) that loop forever are extensionally equivalent. Note that even though two expressions of dissimilar types that loop forever have the same &quot;behavior&quot;, they cannot be extensionally equivalent by definition, as only expressions of the same type can be extensionally equivalent.</p>
+<p>The third case also arises from our usage of Standard ML, as expressions can potentially raise exceptions in cases where computation is not feasible. Some basic kinds of exceptions include <code>Div</code>, <code>Bind</code>, and <code>Match</code>. The precise mechanism of exceptions is not important, since we will cover that in more detail later on, but in order to maintain some notion of equivalence, we will simply require that two same-typed expressions raise the <em>same</em> exception. As such, expressions like <code>1 div 0</code> and <code>2 div 0</code> are extensionally equivalent, whereas <code>1 div 0</code> and <code>let val [] = [1] in () end</code> are not.</p>
+<p><strong>Note:</strong> It is not important to know specifically what the latter expression in the last example is doing - just know that it raises the exception <code>Bind</code>.</p>
+<p>In writing these definitions we have made a step towards cognizing extensional equivalence, but in a sense we have taken a step back as well. We have committed the same mistake by saying extensional equivalence holds when expressions &quot;reduce to the same value&quot;. We required this more stringent definition of extensional equivalence specifically because of callously using terms like &quot;equal&quot; and &quot;equivalent&quot;, and now we've so unthinkingly used the term &quot;same&quot;. But what does it mean for two values to be the &quot;same&quot;?</p>
+<p>For many cases, our intuition will suffice. It is clear to say that <code>2</code> is the same as <code>2</code>, and <code>2</code> is not the same as <code>&quot;two&quot;</code> (for any self-respecting programming language, in any case). For one, the types must be the same, and definitely one integer value should not be &quot;equal&quot; to any other separate integer value. We might then claim that two values are only &quot;equivalent&quot; if they denote the same literal value.</p>
+<p><strong>NOTE:</strong> The perceptive reader may notice that again, we have used the words &quot;same&quot; and &quot;separate&quot;. Unfortunately, there is only so far that we can dig this rabbit hole - at this point, we will have to rely on our intuitions to tell us that <code>2</code> is indeed the same value as <code>2</code>, and not the same value as <code>3</code> or <code>4</code>, and call it a day.</p>
+<p>This definition will suffice for most types. For functions, however, we will have to take a different approach.</p>
 <blockquote>
-<p><strong>[Extensional Equivalence (Functions)]</strong> We say two expressions <code>e : t1 -&gt; t2</code> and <code>e' : t1 -&gt; t2</code> for some types <code>t1</code> and <code>t2</code> are extensionally
-equivalent if for all values <code>x : t1</code>, <code>e x</code>\( \cong \)<code>e' x</code>.</p>
+<p><strong>[Extensional Equivalence (Functions)]</strong> We say two expressions <code>e : t1 -&gt; t2</code> and <code>e' : t1 -&gt; t2</code> for some types <code>t1</code> and <code>t2</code> are extensionally equivalent if for all values <code>x : t1</code>, <code>e x</code>\( \cong \)<code>e' x</code>.</p>
 </blockquote>
-<p>We see that this definition simply takes our previous definition and moves it
-one step up. There is an interesting aspect of this rule that depends on a
-concept that we have yet to learn, but we will cover that when we get there.
-Seen in this way, we can say that two function values that are not the same
-literal value may be extensionally equivalent, as their <em>extensional</em> behavior
-(that is, their behavior when interacting with other objects) may be the same.</p>
-<p>More concretely, let us consider the example of <code>fn x =&gt; x + x</code> and <code>fn x =&gt; 2 * x</code>. Recall from the previous chapter that <code>fn x =&gt; x + x</code> in particular does
-<em>not</em> simplify to <code>fn x =&gt; 2 * x</code>, and is in fact itself a value - meaning that
-it is in its terminal form, being irreducible to anything other than itself. The
-right hand side of any lambda expression is, in a sense, <em>frozen</em> until the
-function is given an argument. So then <code>fn x =&gt; x + x</code> and <code>fn x =&gt; 2 * x</code> are
-different values, however it is obvious to see that on being given an input they
-evaluate to extensionally equivalent values (specifically, the same integer). </p>
-<p>As discussed before, our definition of &quot;equivalence&quot; identifies functions with
-the values that they output. It should feel intuitively clear - two functions
-are exactly equivalent if they return the same output for the same inputs. This
-seems to be the definition of computing the &quot;same&quot; function. Notice that we omit
-any mention of complexity or <em>how</em> the function goes about computing what it
-computes - no matter what path is taken, all that is important is what values
-are ultimately outputted. </p>
+<p>We see that this definition simply takes our previous definition and moves it one step up. There is an interesting aspect of this rule that depends on a concept that we have yet to learn, but we will cover that when we get there. Seen in this way, we can say that two function values that are not the same literal value may be extensionally equivalent, as their <em>extensional</em> behavior (that is, their behavior when interacting with other objects) may be the same.</p>
+<p>More concretely, let us consider the example of <code>fn x =&gt; x + x</code> and <code>fn x =&gt; 2 * x</code>. Recall from the previous chapter that <code>fn x =&gt; x + x</code> in particular does <em>not</em> simplify to <code>fn x =&gt; 2 * x</code>, and is in fact itself a value - meaning that it is in its terminal form, being irreducible to anything other than itself. The right hand side of any lambda expression is, in a sense, <em>frozen</em> until the function is given an argument. So then <code>fn x =&gt; x + x</code> and <code>fn x =&gt; 2 * x</code> are different values, however it is obvious to see that on being given an input they evaluate to extensionally equivalent values (specifically, the same integer).</p>
+<p>As discussed before, our definition of &quot;equivalence&quot; identifies functions with the values that they output. It should feel intuitively clear - two functions are exactly equivalent if they return the same output for the same inputs. This seems to be the definition of computing the &quot;same&quot; function. Notice that we omit any mention of complexity or <em>how</em> the function goes about computing what it computes - no matter what path is taken, all that is important is what values are ultimately outputted.</p>
 <h2 id="referential-transparency"><a class="header" href="#referential-transparency">Referential Transparency</a></h2>
-<p>In this section we will introduce a powerful idea called <em>referential
-transparency</em>, which follows as a direct consequence of our definition of
-extensional equivalence.</p>
+<p>In this section we will introduce a powerful idea called <em>referential transparency</em>, which follows as a direct consequence of our definition of extensional equivalence.</p>
 <blockquote>
-<p><strong>[Referential Transparency]</strong> Consider an expression <code>e</code> that contains the
-expression <code>e1</code> as a sub-expression. For any expression <code>e2</code>\( \cong \)<code>e1</code>, we
-can produce the expression <code>e'</code> as the same expression as <code>e</code>, but with each
-sub-expression <code>e1</code> replaced with <code>e2</code>, and we will have <code>e</code>\( \cong \)<code>e'</code>. In
-words, for an expression <code>e</code> that contains <code>e1</code>, we can swap out <code>e1</code> for an
-extensionally equivalent <code>e2</code> to obtain an expression extensionally equivalent
-to <code>e</code>.</p>
+<p><strong>[Referential Transparency]</strong> Consider an expression <code>e</code> that contains the expression <code>e1</code> as a sub-expression. For any expression <code>e2</code>\( \cong \)<code>e1</code>, we can produce the expression <code>e'</code> as the same expression as <code>e</code>, but with each sub-expression <code>e1</code> replaced with <code>e2</code>, and we will have <code>e</code>\( \cong \)<code>e'</code>. In words, for an expression <code>e</code> that contains <code>e1</code>, we can swap out <code>e1</code> for an extensionally equivalent <code>e2</code> to obtain an expression extensionally equivalent to <code>e</code>.</p>
 </blockquote>
-<p><strong>NOTE:</strong> The notion of a &quot;sub-expression&quot; here is not very well defined - we
-will use our intuition here, similarly with what it means to be the &quot;same
-expression&quot;. Gaining an intuition through examples will suffice.</p>
-<p>To illustrate this, we might say that the expression <code>4 * (2 + 2)</code> has the
-sub-expression <code>2 + 2</code>, and that <code>let val x = f (1 div 0) in x end</code> has <code>(1 div 0)</code> as a sub-expression. In the former case, we can use referential transparency
-to say that <code>4 * (2 + 2)</code>\( \cong \)<code>4 * 4</code> and <code>let val x = f (1 div 0) in x end</code>\( \cong \)<code>let val x = f (2 div 0) in x end</code>, by replacing the aforementioned
-sub-expressions with <code>4</code> and <code>2 div 0</code>, respectively.</p>
-<p>Referential transparency will let us abstract away from the specific makeup of a
-certain implementation or expression, instead replacing it as we see fit with
-something known to be extensionally equivalent, while still allowing us to
-maintain extensional equivalence. This comes in handy when proving that an
-implementation of a particular function is correct, as we can simply prove that
-it is extensionally equivalent to an existing, simpler implementation that is
-already known to be correct. This has consequences for simplifying and
-optimizing implementations.</p>
-<p>Later on, we will explore specifically how we may go about proving extensional
-equivalence. This will primarily take the form of mathematical or structural
-induction.</p>
+<p><strong>NOTE:</strong> The notion of a &quot;sub-expression&quot; here is not very well defined - we will use our intuition here, similarly with what it means to be the &quot;same expression&quot;. Gaining an intuition through examples will suffice.</p>
+<p>To illustrate this, we might say that the expression <code>4 * (2 + 2)</code> has the sub-expression <code>2 + 2</code>, and that <code>let val x = f (1 div 0) in x end</code> has <code>(1 div 0)</code> as a sub-expression. In the former case, we can use referential transparency to say that <code>4 * (2 + 2)</code>\( \cong \)<code>4 * 4</code> and <code>let val x = f (1 div 0) in x end</code>\( \cong \)<code>let val x = f (2 div 0) in x end</code>, by replacing the aforementioned sub-expressions with <code>4</code> and <code>2 div 0</code>, respectively.</p>
+<p>Referential transparency will let us abstract away from the specific makeup of a certain implementation or expression, instead replacing it as we see fit with something known to be extensionally equivalent, while still allowing us to maintain extensional equivalence. This comes in handy when proving that an implementation of a particular function is correct, as we can simply prove that it is extensionally equivalent to an existing, simpler implementation that is already known to be correct. This has consequences for simplifying and optimizing implementations.</p>
+<p>Later on, we will explore specifically how we may go about proving extensional equivalence. This will primarily take the form of mathematical or structural induction.</p>
 <h2 id="stepping-with-valuable-expressions"><a class="header" href="#stepping-with-valuable-expressions">Stepping with Valuable Expressions</a></h2>
-<p>Recall from the previous article that SML uses eager evaluation. In other words,
-the parameters of a function are evaluated before stepping into the function.</p>
-<p>When proving extensional equivalence theorems about SML code, though, we often
-end up in a situation where we want to step into a function, but the function is
-being applied to an expression that isn't a value.</p>
-<p>We will look at an example of this situation, involving the functions <code>@</code>
-(append) and <code>rev</code>. The definition of <code>@</code> is as follows:</p>
+<p>Recall from the previous article that SML uses eager evaluation. In other words, the parameters of a function are evaluated before stepping into the function.</p>
+<p>When proving extensional equivalence theorems about SML code, though, we often end up in a situation where we want to step into a function, but the function is being applied to an expression that isn't a value.</p>
+<p>We will look at an example of this situation, involving the functions <code>@</code> (append) and <code>rev</code>. The definition of <code>@</code> is as follows:</p>
 <pre><code class="language-sml">fun [] @ L = L
   | (x::xs) @ L = x::(xs@L)
 </code></pre>
 <p>Now, suppose we want to show the following theorem:</p>
 <p><code>(x::xs) @ (rev A)</code> \( \cong \) <code>x::(xs @ (rev A))</code></p>
-<p>where <code>x : int</code>, <code>xs : int list</code>, and <code>A : int list</code> are all values. First, make
-sure this &quot;feels right&quot; -- the left side of our theorem matches the second
-clause of <code>@</code> with <code>rev A</code> bound to <code>L</code>.</p>
-<p>However, notice that <code>rev A</code> is not a value. Since SML is eager, we cannot step
-into the function <code>@</code> until we evaluate the expression <code>rev A</code>. In other words,</p>
+<p>where <code>x : int</code>, <code>xs : int list</code>, and <code>A : int list</code> are all values. First, make sure this &quot;feels right&quot; -- the left side of our theorem matches the second clause of <code>@</code> with <code>rev A</code> bound to <code>L</code>.</p>
+<p>However, notice that <code>rev A</code> is not a value. Since SML is eager, we cannot step into the function <code>@</code> until we evaluate the expression <code>rev A</code>. In other words,</p>
 <p>\[ <code>(x::xs) @ (rev A)</code> \not\Longrightarrow <code>x::(xs @ (rev A))</code> \]</p>
 <p>So, we're stuck! D:</p>
 <p>... or are we?</p>
-<p>Let's assume that <code>rev A</code> is valuable, i.e. it evaluates to a value, and let's
-give that value a name-- say, <code>v : int list</code>: \[ <code>rev A</code> \Longrightarrow <code>v</code> \]
-With this value in hand, we can do what we wanted to do!</p>
-<p>\[ <code>(x::xs) @ (rev A)</code> \Longrightarrow <code>(x::xs) @ v</code> \Longrightarrow <code>x::(xs @ v)</code>
-\]</p>
-<p>Notice that this complies with SML's eager evaluation, since we are fully
-evaluating the parameters of <code>@</code> before stepping into the function.</p>
-<p>And here's the kicker: we can also use <code>v</code> to evaluate the right hand side of
-our theorem!</p>
-<p>\[ <code>x::(xs @ (rev A))</code> \Longrightarrow <code>x::(xs @ v)</code>
-\]</p>
-<p>Again, this complies with SML's eager evaluation-- in this case, we never even
-step into the definition of <code>@</code>. But, we've actually proven our theorem! We
-showed that the LHS and the RHS both evaluate to the same expression, so by rule
-1 of the definition of \( \cong \), the LHS and RHS must be extensionally
-equivalent. We are done!</p>
-<p>In this example, we got around SML's eager evaluation by assuming that our
-parameter <code>rev A</code> is valuable, and as it turns out, this concept holds in the
-general case. If we know the parameter of a function is <em>valuable</em>, then we can
-step into the function <em>without</em> first evaluating that parameter. This
-principle, which we will call (for lack of a better term) &quot;stepping with
-valuable expressions,&quot; is one reason why valuable expressions are so important.</p>
+<p>Let's assume that <code>rev A</code> is valuable, i.e. it evaluates to a value, and let's give that value a name-- say, <code>v : int list</code>: \[ <code>rev A</code> \Longrightarrow <code>v</code> \] With this value in hand, we can do what we wanted to do!</p>
+<p>\[ <code>(x::xs) @ (rev A)</code> \Longrightarrow <code>(x::xs) @ v</code> \Longrightarrow <code>x::(xs @ v)</code> \]</p>
+<p>Notice that this complies with SML's eager evaluation, since we are fully evaluating the parameters of <code>@</code> before stepping into the function.</p>
+<p>And here's the kicker: we can also use <code>v</code> to evaluate the right hand side of our theorem!</p>
+<p>\[ <code>x::(xs @ (rev A))</code> \Longrightarrow <code>x::(xs @ v)</code> \]</p>
+<p>Again, this complies with SML's eager evaluation-- in this case, we never even step into the definition of <code>@</code>. But, we've actually proven our theorem! We showed that the LHS and the RHS both evaluate to the same expression, so by rule 1 of the definition of \( \cong \), the LHS and RHS must be extensionally equivalent. We are done!</p>
+<p>In this example, we got around SML's eager evaluation by assuming that our parameter <code>rev A</code> is valuable, and as it turns out, this concept holds in the general case. If we know the parameter of a function is <em>valuable</em>, then we can step into the function <em>without</em> first evaluating that parameter. This principle, which we will call (for lack of a better term) &quot;stepping with valuable expressions,&quot; is one reason why valuable expressions are so important.</p>
 <blockquote>
-<p><strong>[Caution!]</strong> When stepping with <em>values</em>, we can use the reduction relation
-\( \Longrightarrow \). When stepping with <em>valuable expressions</em>, this is not
-always true (it certainly is not true in the example above). Stepping with
-valuable expressions only preserves extensional equivalence \( \cong \).</p>
+<p><strong>[Caution!]</strong> When stepping with <em>values</em>, we can use the reduction relation \( \Longrightarrow \). When stepping with <em>valuable expressions</em>, this is not always true (it certainly is not true in the example above). Stepping with valuable expressions only preserves extensional equivalence \( \cong \).</p>
 </blockquote>
 <h2 id="totality"><a class="header" href="#totality">Totality</a></h2>
-<p>As stated previously, frequently we will write proofs demonstrating the
-extensional equivalence of two expressions. In order to do so, we often will
-have to expand definitions, stepping through function bodies and applying
-lemmas. In doing so, we will frequently need to do a <em>totality citation</em>, to
-justify that making such steps is truly valid. While the name may seem
-unfamiliar, it ultimately belies a concept that you already know - valuability.</p>
+<p>As stated previously, frequently we will write proofs demonstrating the extensional equivalence of two expressions. In order to do so, we often will have to expand definitions, stepping through function bodies and applying lemmas. In doing so, we will frequently need to do a <em>totality citation</em>, to justify that making such steps is truly valid. While the name may seem unfamiliar, it ultimately belies a concept that you already know - valuability.</p>
 <blockquote>
-<p><strong>[Total]</strong> We say that a function <code>f : t1 -&gt; t2</code> for some types <code>t1</code> and <code>t2</code>
-is <em>total</em> if for all valuable expressions <code>x : t1</code>, <code>f x</code> is valuable. In
-other words, for all valuable inputs to <code>f</code>, we get a valuable output.</p>
+<p><strong>[Total]</strong> We say that a function <code>f : t1 -&gt; t2</code> for some types <code>t1</code> and <code>t2</code> is <em>total</em> if for all valuable expressions <code>x : t1</code>, <code>f x</code> is valuable. In other words, for all valuable inputs to <code>f</code>, we get a valuable output.</p>
 </blockquote>
-<p>Examples of total functions include <code>fn x =&gt; x + 1</code>, <code>fn x =&gt; &quot;foo&quot;</code>, and the
-length function for lists. Notably, however, the factorial function is <em>not</em>
-total:</p>
+<p>Examples of total functions include <code>fn x =&gt; x + 1</code>, <code>fn x =&gt; &quot;foo&quot;</code>, and the length function for lists. Notably, however, the factorial function is <em>not</em> total:</p>
 <pre><code class="language-sml">fun fact (0 : int) : int = 1
   | fact (n : int) : int = n * fact (n - 1)
 </code></pre>
-<p>This function is not total because, while <code>fact n</code> is valuable for all
-non-negative <code>n</code>, <code>fact n</code> for a negative <code>n</code> loops forever, as it decrements
-infinitely, never finding a base case. Thus, <code>fact</code> is not total. Sometimes if a
-function is valuable only on certain inputs, then we will say that a function is
-&quot;total over&quot; some domain, even if it is not total in general. We may say that
-<code>fact</code> is thus total over the non-negative integers, though this is not a common
-practice.</p>
-<p>We will now digress slightly to consider an example. What can we say of the
-behavior of a function <code>fn x =&gt; 15150</code>? Well, we can characterize its behavior
-in words - it returns <code>15150</code> on all inputs. We must be careful when linking our
-intuition regarding this function to the actual evaluational semantics of SML -
-however. Consider the expression <code>(fn x =&gt; 15150) (1 div 0)</code>. If we went along
-with our previous conclusion, we might say that this is <code>15150</code>. This
-contradicts what we learned in the previous section, however. Since SML is
-eagerly evaluated, this expression should raise an exception and never reach the
-function body at all. </p>
-<p>This is an easy mistake to catch when considering an explicit, definite input
-like <code>1 div 0</code>, but oftentimes we will be considering inputs that might be
-&quot;unspecified&quot; in some sense. They may be the result of computations that we are
-not fully convinced of, which could return an expression with any kind of
-behavior. Suppose we were wondering the behavior of <code>(fn x =&gt; 15150) (f y)</code>, for
-some function <code>f</code> and value <code>y</code>. Now, we aren't sure at all if this expression
-does what we think it might do, which is return <code>15150</code> - that depends entirely
-on the definition of <code>f</code> and the value of <code>y</code>.</p>
-<p>This is where totality comes in. Totality is oftentimes like a sledgehammer,
-being far more brutish and exhaustive than its use cases necessitate. It is
-undeniably useful, however. With totality, we do not have to reason about the
-behavior of a function on any specific inputs - we can just handwave them all
-and say that no matter what, it must return a valuable output, which is what we
-really care about. If we revisit the expression <code>(fn x =&gt; 15150) (f y)</code> with the
-totality of <code>f</code> in hand, now reasoning about it is very simple. We know that <code>y</code>
-is a value, and that <code>f</code> is total, so by definition <code>f y</code> is valuable. This
-means that, regardless of what value <code>f y</code> <em>actually</em> evaluates to, we can step
-into the body of <code>(fn x =&gt; 15150)</code>, and thus conclude that the expression
-reduces to <code>15150</code>.</p>
+<p>This function is not total because, while <code>fact n</code> is valuable for all non-negative <code>n</code>, <code>fact n</code> for a negative <code>n</code> loops forever, as it decrements infinitely, never finding a base case. Thus, <code>fact</code> is not total. Sometimes if a function is valuable only on certain inputs, then we will say that a function is &quot;total over&quot; some domain, even if it is not total in general. We may say that <code>fact</code> is thus total over the non-negative integers, though this is not a common practice.</p>
+<p>We will now digress slightly to consider an example. What can we say of the behavior of a function <code>fn x =&gt; 15150</code>? Well, we can characterize its behavior in words - it returns <code>15150</code> on all inputs. We must be careful when linking our intuition regarding this function to the actual evaluational semantics of SML - however. Consider the expression <code>(fn x =&gt; 15150) (1 div 0)</code>. If we went along with our previous conclusion, we might say that this is <code>15150</code>. This contradicts what we learned in the previous section, however. Since SML is eagerly evaluated, this expression should raise an exception and never reach the function body at all.</p>
+<p>This is an easy mistake to catch when considering an explicit, definite input like <code>1 div 0</code>, but oftentimes we will be considering inputs that might be &quot;unspecified&quot; in some sense. They may be the result of computations that we are not fully convinced of, which could return an expression with any kind of behavior. Suppose we were wondering the behavior of <code>(fn x =&gt; 15150) (f y)</code>, for some function <code>f</code> and value <code>y</code>. Now, we aren't sure at all if this expression does what we think it might do, which is return <code>15150</code> - that depends entirely on the definition of <code>f</code> and the value of <code>y</code>.</p>
+<p>This is where totality comes in. Totality is oftentimes like a sledgehammer, being far more brutish and exhaustive than its use cases necessitate. It is undeniably useful, however. With totality, we do not have to reason about the behavior of a function on any specific inputs - we can just handwave them all and say that no matter what, it must return a valuable output, which is what we really care about. If we revisit the expression <code>(fn x =&gt; 15150) (f y)</code> with the totality of <code>f</code> in hand, now reasoning about it is very simple. We know that <code>y</code> is a value, and that <code>f</code> is total, so by definition <code>f y</code> is valuable. This means that, regardless of what value <code>f y</code> <em>actually</em> evaluates to, we can step into the body of <code>(fn x =&gt; 15150)</code>, and thus conclude that the expression reduces to <code>15150</code>.</p>
 <p>More generally, suppose we have the following definition:</p>
 <pre><code class="language-sml">fun f (x : int) : int = e
 </code></pre>
-<p>where <code>e</code> denotes some expression that we will leave unspecified for the moment.
-Thus, <code>f</code> is a function that takes in some input of type <code>int</code>, and produces a
-val binding to bind it to the identifier <code>x</code>, and then evaluates the expression
-of <code>e</code> in the scope of that binding. Note that such a binding is truly a <em>val</em>
-binding - since we have eager evaluation, the input must first be evaluated to a
-value, and then bound to the identifier <code>x</code>.</p>
-<p>Then, consider the expression <code>f (g y)</code>, where <code>g</code> is some other function and
-<code>y</code> is some value. Oftentimes, we would like to just step through the definition
-of <code>f</code> in some proof, and say that <code>f (g y)</code> reduces to the expression <code>e</code> in
-the scope of the binding <code>[(g y)/x]</code> (recall that this is our notation for
-&quot;binding the value of <code>g y </code> to the identifier <code>x</code>). This is not always possible
-in general, however. Recall that a well-typed expression either reduces to a
-value, loops forever, or raises an exception. If <code>g y</code> were to loop forever,
-would we be able to enter the function body of <code>f</code>, and evaluate <code>e</code>? </p>
-<p>Of course we would not - this is just another consequence of eager evaluation.
-Evaluation of <code>f (g y)</code> would get &quot;stopped at the door&quot;, so to speak. We would
-not be able to enter <code>f</code> because <code>g y</code> does not reduce to a value. Since the
-input to <code>g</code> is arbitrary, in this case, to be able to claim that <code>f (g y)</code>
-enters the function body of <code>f</code> requires that we know the totality of <code>g</code>. We
-thus use totality as a <em>tool</em> to get at what is really important - the
-valuability of the arguments to <code>f</code>, which in this case is <code>g y</code>. As such, while
-we may refer to such citations as &quot;totality citations&quot;, and name this idea of
-totality, do not forget that this is all just a consequence of eager evaluation.
-We are really looking for <em>valuability of arguments</em>.</p>
+<p>where <code>e</code> denotes some expression that we will leave unspecified for the moment. Thus, <code>f</code> is a function that takes in some input of type <code>int</code>, and produces a val binding to bind it to the identifier <code>x</code>, and then evaluates the expression of <code>e</code> in the scope of that binding. Note that such a binding is truly a <em>val</em> binding - since we have eager evaluation, the input must first be evaluated to a value, and then bound to the identifier <code>x</code>.</p>
+<p>Then, consider the expression <code>f (g y)</code>, where <code>g</code> is some other function and <code>y</code> is some value. Oftentimes, we would like to just step through the definition of <code>f</code> in some proof, and say that <code>f (g y)</code> reduces to the expression <code>e</code> in the scope of the binding <code>[(g y)/x]</code> (recall that this is our notation for &quot;binding the value of <code>g y </code> to the identifier <code>x</code>). This is not always possible in general, however. Recall that a well-typed expression either reduces to a value, loops forever, or raises an exception. If <code>g y</code> were to loop forever, would we be able to enter the function body of <code>f</code>, and evaluate <code>e</code>?</p>
+<p>Of course we would not - this is just another consequence of eager evaluation. Evaluation of <code>f (g y)</code> would get &quot;stopped at the door&quot;, so to speak. We would not be able to enter <code>f</code> because <code>g y</code> does not reduce to a value. Since the input to <code>g</code> is arbitrary, in this case, to be able to claim that <code>f (g y)</code> enters the function body of <code>f</code> requires that we know the totality of <code>g</code>. We thus use totality as a <em>tool</em> to get at what is really important - the valuability of the arguments to <code>f</code>, which in this case is <code>g y</code>. As such, while we may refer to such citations as &quot;totality citations&quot;, and name this idea of totality, do not forget that this is all just a consequence of eager evaluation. We are really looking for <em>valuability of arguments</em>.</p>
 
                     </main>
 

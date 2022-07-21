@@ -142,17 +142,17 @@
 <p>Unless otherwise stated, the documentation assumes SMLNJ v110.99. Some features (e.g. modifications of the pretty printer) might not work in other versions of SMLNJ.</p>
 <p>All the documents &amp; code here should be considered &quot;work-in-progress&quot;. If you spot an error in either, you can report it <a href="https://forms.gle/yuyc17oBnT4JvG5h9">here</a>.</p>
 <h2 id="trees"><a class="header" href="#trees">Trees</a></h2>
-<p>Provides polymorphic binary trees in a structure <code>Tree</code>, with a couple basic methods for working with them. </p>
+<p>Provides polymorphic binary trees in a structure <code>Tree</code>, with a couple basic methods for working with them.</p>
 <p>In particular, this includes the functions <code>inord</code> and <code>foldr</code>, which are used in the <code>OrdTreeSet</code> functor (see <strong>Sets</strong> below) and critical to the associated representation independence result.</p>
 <p><a href="https://raw.githubusercontent.com/smlhelp/aux-library/main/Tree.sml">Code</a></p>
 <h2 id="timing"><a class="header" href="#timing">Timing</a></h2>
-<p>The <code>Timing</code> module includes types for encoding years, months, days, times, time zones, etc., as well as numerous utilities for working with them. This module primarily serves as an extended example of how to use custom SML <code>datatypes</code> to encode data, and how to take advantage of pattern matching to write elegant code. This module includes some imperative features (achieved utilizing basis modules unique to SMLNJ), such as stopwatches, countdown timers, and functions which obtain the current time. </p>
+<p>The <code>Timing</code> module includes types for encoding years, months, days, times, time zones, etc., as well as numerous utilities for working with them. This module primarily serves as an extended example of how to use custom SML <code>datatypes</code> to encode data, and how to take advantage of pattern matching to write elegant code. This module includes some imperative features (achieved utilizing basis modules unique to SMLNJ), such as stopwatches, countdown timers, and functions which obtain the current time.</p>
 <p><a href="https://raw.githubusercontent.com/smlhelp/aux-library/main/Timing.sml">Code</a></p>
 <h2 id="permute"><a class="header" href="#permute">Permute</a></h2>
-<p>The <code>Permute</code> module contains utilities for permutating and sorting lists. The functions in this module are polymorphic, and some of the sorting functions furthermore serve as examples of <em>currying</em>. </p>
+<p>The <code>Permute</code> module contains utilities for permutating and sorting lists. The functions in this module are polymorphic, and some of the sorting functions furthermore serve as examples of <em>currying</em>.</p>
 <p><a href="https://github.com/smlhelp/aux-library/blob/main/documentation/permute.pdf">Documentation</a> -- <a href="https://raw.githubusercontent.com/smlhelp/aux-library/main/Permute.sml">Code</a></p>
 <h2 id="cps-iterate"><a class="header" href="#cps-iterate">CPS Iterate</a></h2>
-<p>The <code>CPSIterate</code> module allows for imperative-programming-esque loops, but defined entirely functionally and entirely in continuation passing style. </p>
+<p>The <code>CPSIterate</code> module allows for imperative-programming-esque loops, but defined entirely functionally and entirely in continuation passing style.</p>
 <p><a href="https://github.com/smlhelp/aux-library/blob/main/documentation/cpsIterate.pdf">Documentation</a> -- <a href="https://raw.githubusercontent.com/smlhelp/aux-library/main/CPSIterate.sml">Code</a></p>
 <h2 id="language"><a class="header" href="#language">Language</a></h2>
 <p>The <code>Language</code> module provides combinators for working with &quot;languages&quot;: lists of values of some equality type <code>Sigma</code>. Connects to some of the classic theory of computation, as well as providing sufficient combinators to capture a fragment of the logic of regular expressions. Good showcase of Higher-Order Functions &amp; Combinators.</p>

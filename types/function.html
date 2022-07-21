@@ -140,7 +140,7 @@
 <p><em>By Brandon Wu, May 2020</em></p>
 <p>Functions are a familiar concept in programming. In most languages, functions seem to capture a notion of a list of instructions to be carried out, with each invocation of the function resulting in another round of executing its instructions. In this class, however, we will take another perspective on functions - one that identifies the function more with the values that it outputs than the instructions that it executes.</p>
 <h2 id="what-is-a-function"><a class="header" href="#what-is-a-function">What is a Function?</a></h2>
-<p>What is a function? To most seasoned programmers, the definition given in the above section seems to be the most obvious. A function (or subroutine) is simply identified with the instructions that it executes, which have some <em>effect</em> on the state of the program as a whole, such as incrementing some variable, or setting some flag. </p>
+<p>What is a function? To most seasoned programmers, the definition given in the above section seems to be the most obvious. A function (or subroutine) is simply identified with the instructions that it executes, which have some <em>effect</em> on the state of the program as a whole, such as incrementing some variable, or setting some flag.</p>
 <p>Before most programmers were programmers, however, they had a different notion of a function. To a mathematician, a function is something else entirely. Instead of being an algorithmic sequence of instructions, a function is simply an entity that maps inputs to outputs - for example, (f(x) = x + 1). Something rather notable is that mathematical functions are <em>pure</em> - given the same input, they always return the same output. So while it is a valid question in programming to ask how a function's behavior changes over time, this is a nonsensical question in terms of mathematical functions.</p>
 <p>To be more concrete, let us consider a Python program.</p>
 <pre><code class="language-python">x = 0
@@ -156,7 +156,7 @@ def f(y):
 <blockquote>
 <p><strong>[APP]</strong> An expression <code>e1 e2</code> has type <code>t2</code> if and only if <code>e1 : t1 -&gt; t2</code> and <code>e2 : t1</code>.</p>
 </blockquote>
-<p>We call the above rule [APP] since it concerns the types of expressions during <em>function application</em>, or the process of applying a function to an argument. </p>
+<p>We call the above rule [APP] since it concerns the types of expressions during <em>function application</em>, or the process of applying a function to an argument.</p>
 <p>Note that a function must always have type <code>t1 -&gt; t2</code> (for some types <code>t1</code> and <code>t2</code>, though <code>t1</code> and <code>t2</code> may be complicated types in their own right). As such, all functions in SML can only take in <em>one</em> input - though the input type <code>t1</code> may be one that &quot;contains&quot; multiple values. For instance, a function may have type <code>int * int -&gt; bool</code>. For such a function, it takes in only <em>one</em> argument (a tuple containing two integers).</p>
 <h2 id="functions-in-sml"><a class="header" href="#functions-in-sml">Functions in SML</a></h2>
 <p>We can declare a function with the <code>fun</code> keyword.</p>
@@ -178,7 +178,7 @@ val x = 2
 <p>Note that the right hand side of this declaration is an expression in its own right, and can be used independently of just being bound. The above binding simply binds the anonymous lambda expression (which simply increments an integer) to the identifier <code>addOne</code>. We could also do the following binding:</p>
 <pre><code class="language-sml">val two : int = (fn x =&gt; x + 1) 1
 </code></pre>
-<p>where we bind the result of evaluating the expression <code>(fn x =&gt; x + 1) 1</code> to the identifier <code>two</code>. Clearly, this expression evaluates to <code>2</code>, as <code>1</code> is substituted in for the local variable <code>x</code>, and then simply summed with <code>1</code>. </p>
+<p>where we bind the result of evaluating the expression <code>(fn x =&gt; x + 1) 1</code> to the identifier <code>two</code>. Clearly, this expression evaluates to <code>2</code>, as <code>1</code> is substituted in for the local variable <code>x</code>, and then simply summed with <code>1</code>.</p>
 <p><strong>NOTE:</strong> <code>fun</code> and <code>fn</code> differ in that functions declared with <code>fun</code> can be recursive, whereas val bindings using <code>fn</code> <em>cannot</em>. As such, while we can define the function <code>fact</code> as we did above, using <code>fun</code>, the following code <em>does not</em> work:</p>
 <pre><code class="language-sml">(* DOES NOT WORK *)
 val fact : int -&gt; int = fn 0 =&gt; 1 | n =&gt; n * fact (n - 1)

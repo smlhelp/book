@@ -138,25 +138,25 @@
                     <main>
                         <h1 id="evaluation"><a class="header" href="#evaluation">Evaluation</a></h1>
 <p><em>By Brandon Wu, May 2020</em></p>
-<p>Evaluation is a commonplace idea. No matter what programming language you are in, it is a customary concept to invoke subroutines in order to obtain some kind of <em>final result</em>, which can be further used in order to achieve some later goal. To obtain such a result, however, programs must perform certain computations and carry out certain steps - in other words, they must <em>evaluate</em>. Ultimately, programs are complicated constructs whose main goal is to compute some value or achieve some effect - we will focus mainly on the first case here. </p>
+<p>Evaluation is a commonplace idea. No matter what programming language you are in, it is a customary concept to invoke subroutines in order to obtain some kind of <em>final result</em>, which can be further used in order to achieve some later goal. To obtain such a result, however, programs must perform certain computations and carry out certain steps - in other words, they must <em>evaluate</em>. Ultimately, programs are complicated constructs whose main goal is to compute some value or achieve some effect - we will focus mainly on the first case here.</p>
 <h2 id="expressions-and-values"><a class="header" href="#expressions-and-values">Expressions and Values</a></h2>
 <p>Expressions in Standard ML are akin to mathematical expressions. They are built up from applications of certain operations, being subject to certain simplification rules that can be used to obtain a final answer. For instance, we would consider <code>2 + 2</code> an expression, similarly to other examples such as <code>1 div 0</code> and <code>Int.toString 2</code>.</p>
 <p>The most fundamental building blocks in Standard ML are <em>values</em>. Values are the primordial units of a given type, being irreducible to any further simplified form. When trying to answer some computational problem, it is usually the case that we are looking for some kind of &quot;answer&quot;. As such, values are important to obtain, as we are usually looking for some kind of answer in &quot;simplest terms&quot;. Values in SML emcompass examples such as <code>2</code>, <code>true</code>, <code>&quot;foo&quot;</code>, <code>[1, 2, 3]</code> and <code>fn x =&gt; x + 1</code>.</p>
 <blockquote>
 <p><strong>[Value]</strong> A value is an expression <code>e</code> such that, for all <code>e'</code> such that <code>e ==&gt; e'</code>, <code>e' = e</code>. In other words, a value is an expression that only reduces to itself - there is no pending computation left to be done.</p>
 </blockquote>
-<p><strong>NOTE:</strong> The meaning of <code>==&gt;</code> in the above definition is <em>reduction</em>, which is further explained below. </p>
+<p><strong>NOTE:</strong> The meaning of <code>==&gt;</code> in the above definition is <em>reduction</em>, which is further explained below.</p>
 <p>A noteworthy distinction to make is that certain language constructs, such as an if-then-else expression, let-in-end expression, or case expression, are in fact <em>expressions</em>. This means that they can be passed around and evaluated just like any other expression. So for instance, the following code is a valid expression:</p>
 <pre><code class="language-sml">(let
     val x = 5
-in 
+in
     x
 end) + 2
 </code></pre>
 <p>and has the value of <code>7</code>. Similarly, the following code is also an expression:</p>
 <pre><code class="language-sml">(if true then 15 else 150) * 2
 </code></pre>
-<p>and has a value of <code>30</code>. </p>
+<p>and has a value of <code>30</code>.</p>
 <h2 id="reduction"><a class="header" href="#reduction">Reduction</a></h2>
 <p>We now define a notion of <em>reduction</em>, which corresponds to our notion of simplification. We write that <code>e ==&gt; e'</code> if the expression <code>e</code> <em>reduces to</em> the expression <code>e'</code>, which means that <code>e</code> produces <code>e'</code> from zero or more applications of some simplifying rule. For instance, we may say that <code>2 + 2 ==&gt; 4</code>, since by applying the function <code>(op +)</code>, we obtain <code>4</code>. Furthermore, we may say that <code>if true then &quot;good&quot; else &quot;bad&quot; ==&gt; &quot;good&quot;</code> by evaluation of the if-then-else expression, since the predicate (in this case <code>true</code>) is true.</p>
 <p><strong>NOTE:</strong> <code>==&gt;</code> is <em>not</em> valid SML code, it is simply our shorthand for the idea of reduction.</p>
@@ -166,7 +166,7 @@ end) + 2
 <p>So valuable expressions include <code>2 + 2</code>, <code>4</code>, and <code>if true then 4 else 2</code> (and in fact all reduce to the same value!). An example of a <em>non</em>-valuable expression is <code>1 div 0</code>, which raises an exception <code>Div</code> when evaluated (since division by zero is undefined). Additionally, if we consider the following code fragment:</p>
 <pre><code class="language-sml">fun loop (x : int) : int = loop x
 </code></pre>
-<p>This defines a function <code>loop : int -&gt; int</code> that loops forever, since it continuously calls itself forever. Thus, <code>loop x</code> for any <code>x : int</code> is also a non-valuable expression, since it never reduces down to a value. </p>
+<p>This defines a function <code>loop : int -&gt; int</code> that loops forever, since it continuously calls itself forever. Thus, <code>loop x</code> for any <code>x : int</code> is also a non-valuable expression, since it never reduces down to a value.</p>
 <p>In fact, what we will see is that this behavior is sufficient to characterize <em>all</em> well-typed expressions. We summarize it in the following:</p>
 <blockquote>
 <p><strong>[Behavior of Well-Typed Expressions]</strong> For any well-typed expression <code>e</code>, it either:</p>
@@ -188,7 +188,7 @@ end) + 2
 <p><strong>[Eager Evaluation]</strong> In an eagerly evaluated language, arguments of functions are evaluated <em>before</em> stepping into the body of a function. For a function <code>f</code> and valuable expression <code>e</code>, when evaluating the expression <code>f e</code>, first <code>e</code> is evaluated to obtain the value <code>v</code> such that <code>e ==&gt; v</code>, then <code>f v</code> is evaluated.</p>
 </blockquote>
 <p>As an example of this, consider the function <code>fn x =&gt; x + 1</code>. If we were to try and evaluate <code>(fn x =&gt; x + 1) (2 * 3)</code>, first we would need to evaluate the function's arguments, that being <code>2 * 3</code>. As such, this entire expression would reduce to <code>(fn x =&gt; x + 1) 6</code>, which is <code>7</code>.</p>
-<p>In an example like the previous one, it doesn't particularly matter where we evaluated <code>2 * 3</code> - we would have gotten the same result either way. This is not always the case. Consider the expression <code>(fn x =&gt; 2) (1 div 0)</code>. By eager evaluation, we should evaluate the argument first, which means that this entire expression should raise an exception. Raising an exception thus happens <em>before we even look at the body of the function</em>. For all intents and purposes, the body of the function does not exist to us until we actually enter it - which necessitates that the argument to the function is valuable. It is a black box that is &quot;locked&quot; behind the argument. </p>
+<p>In an example like the previous one, it doesn't particularly matter where we evaluated <code>2 * 3</code> - we would have gotten the same result either way. This is not always the case. Consider the expression <code>(fn x =&gt; 2) (1 div 0)</code>. By eager evaluation, we should evaluate the argument first, which means that this entire expression should raise an exception. Raising an exception thus happens <em>before we even look at the body of the function</em>. For all intents and purposes, the body of the function does not exist to us until we actually enter it - which necessitates that the argument to the function is valuable. It is a black box that is &quot;locked&quot; behind the argument.</p>
 <h4 id="footnotes"><a class="header" href="#footnotes">Footnotes</a></h4>
 <p>[1]: In other languages, we may instead say <em>call-by-value</em>, which is a separate but closely related concept.</p>
 

@@ -140,37 +140,24 @@
 <p><em>By Brandon Wu, May 2020</em>, <em>updated by Zach Battleman, April 2022</em></p>
 <h2 id="installing-smlnj-on-afs"><a class="header" href="#installing-smlnj-on-afs">Installing SML/NJ on AFS</a></h2>
 <p>To set up your SML/NJ environment on the Andrew File System (AFS), first you will need to log in to AFS.</p>
-<p>You can do this by executing the command
-<code>ssh &lt;andrew_id&gt;@unix.andrew.cmu.edu</code></p>
+<p>You can do this by executing the command <code>ssh &lt;andrew_id&gt;@unix.andrew.cmu.edu</code></p>
 <p>You can do this from a terminal very straightforwardly on a Mac. If you are on a Windows machine, you may need to use an application such as Visual Studio Code or MobaXTerm to access a terminal.</p>
-<p>Once you are in AFS, execute the command 
-<code>/afs/andrew/course/15/150/bin/setup-path</code></p>
-<p>Once the script has finished running, type in the command that it tells you to. It should look something like
-<code>. '/afs/andrew.cmu.edu/usrc/&lt;andrew_id&gt;/.bashrc</code></p>
-<p><strong>IMPORTANT:</strong> <em>Do not forget the . at the beginning!</em> This will cause the script to not work. </p>
+<p>Once you are in AFS, execute the command <code>/afs/andrew/course/15/150/bin/setup-path</code></p>
+<p>Once the script has finished running, type in the command that it tells you to. It should look something like <code>. '/afs/andrew.cmu.edu/usrc/&lt;andrew_id&gt;/.bashrc</code></p>
+<p><strong>IMPORTANT:</strong> <em>Do not forget the . at the beginning!</em> This will cause the script to not work.</p>
 <p>After finishing this, you should be able to type in <code>smlnj</code> from the command line and access the SML/NJ REPL.</p>
 <h2 id="making-smlnj-a-bit-prettier"><a class="header" href="#making-smlnj-a-bit-prettier">Making SML/NJ a bit prettier</a></h2>
 <p>Now that you've set up SML/NJ, you might want to make it a bit nicer to work with.</p>
 <h3 id="vscode"><a class="header" href="#vscode">VSCode</a></h3>
-<p>Simply install the Standard ML plugin. From the extensions window in VS Code, just type &quot;Standard ML&quot;
-in the search and it should come up. If it does not, you can manually download the extension <a href="https://marketplace.visualstudio.com/items?itemName=freebroccolo.sml">here</a>
-and install from the <code>.vsix</code> file. This can be done by clicking the three dots in the top right of the extensions menu
-and clicking &quot;install from vsix&quot;. From there, simply provide the <code>.vsix</code> file you downloaded and now you're all set up!</p>
+<p>Simply install the Standard ML plugin. From the extensions window in VS Code, just type &quot;Standard ML&quot; in the search and it should come up. If it does not, you can manually download the extension <a href="https://marketplace.visualstudio.com/items?itemName=freebroccolo.sml">here</a> and install from the <code>.vsix</code> file. This can be done by clicking the three dots in the top right of the extensions menu and clicking &quot;install from vsix&quot;. From there, simply provide the <code>.vsix</code> file you downloaded and now you're all set up!</p>
 <h3 id="vim"><a class="header" href="#vim">Vim</a></h3>
-<p>For the purposes of this document, I will provide instructions as if you 
-are using regular Vim. If you are using neovim or some other vim derivative,
-I'll provide links to the repositories I use, but <em>don't</em> run the exact commands -
-they are for vim users specifically. Furthermore, this guide is for unix based machines -
-not Windows. If you are on Windows, please check the associated repositories for instructions.
-(Note, this will Work on WSL if you are using that, just not pure Windows)</p>
+<p>For the purposes of this document, I will provide instructions as if you are using regular Vim. If you are using neovim or some other vim derivative, I'll provide links to the repositories I use, but <em>don't</em> run the exact commands - they are for vim users specifically. Furthermore, this guide is for unix based machines - not Windows. If you are on Windows, please check the associated repositories for instructions. (Note, this will Work on WSL if you are using that, just not pure Windows)</p>
 <h3 id="the-quick-and-easy-version"><a class="header" href="#the-quick-and-easy-version">The quick and easy version</a></h3>
-<p>If all you care about is syntax highlighting outside of what the 15150 setup script
-provides, simply add</p>
+<p>If all you care about is syntax highlighting outside of what the 15150 setup script provides, simply add</p>
 <pre><code>autocmd BufNewFile,BufRead *.fun set ft=sml
 autocmd BufNewFile,BufRead *.sig set ft=sml
 </code></pre>
-<p>to your <code>.vimrc</code> file. You can find this file at <code>~/.vimrc</code>. You should now have syntax
-highlighting on your <code>.sig</code> and <code>.fun</code> files!</p>
+<p>to your <code>.vimrc</code> file. You can find this file at <code>~/.vimrc</code>. You should now have syntax highlighting on your <code>.sig</code> and <code>.fun</code> files!</p>
 <h3 id="the-nitty-gritty-but-totally-worth-it-version"><a class="header" href="#the-nitty-gritty-but-totally-worth-it-version">The nitty gritty (but totally worth it) version</a></h3>
 <h4 id="step-1-installing-a-plug-in-manager"><a class="header" href="#step-1-installing-a-plug-in-manager">Step 1) Installing a Plug-In manager</a></h4>
 <p>If you already have one, feel free to skip this step!</p>
@@ -217,18 +204,12 @@ augroup END
 </code></pre>
 <p>This configuration will setup a plugin called <a href="https://github.com/jez/vim-better-sml">vim-better-sml</a> with default keybindings (I’ll put notes on this at the bottom)</p>
 <h4 id="step-3-open-vim-and-actually-install"><a class="header" href="#step-3-open-vim-and-actually-install">Step 3) Open vim and actually install</a></h4>
-<p>When you open vim, type <code>:PlugInstall</code> and it should pop up a window where you see the plugin install. If so, congrats! 
-You have syntax highlighting (and other cool features)</p>
+<p>When you open vim, type <code>:PlugInstall</code> and it should pop up a window where you see the plugin install. If so, congrats! You have syntax highlighting (and other cool features)</p>
 <h4 id="step-4-optional-cool-stuff"><a class="header" href="#step-4-optional-cool-stuff">Step 4) Optional Cool stuff</a></h4>
-<p>Conceal characters allow you to replace <code>fn</code> and <code>'a</code> with actual lambdas an alphas! It’s kind of hard to explain, but it's a really cool feature so try it!
-Just uncomment the line (remove the quote at the front):</p>
+<p>Conceal characters allow you to replace <code>fn</code> and <code>'a</code> with actual lambdas an alphas! It’s kind of hard to explain, but it's a really cool feature so try it! Just uncomment the line (remove the quote at the front):</p>
 <p><code>&quot;au FileType sml setlocal conceallevel=2</code></p>
 <h4 id="step-5-keybindings"><a class="header" href="#step-5-keybindings">Step 5) Keybindings</a></h4>
-<p>If you want to use some of the other features, just look at the keybind config. 
-The most useful, in my opinion, 
-is opening the REPL within vim which is by default <code>&lt;leader&gt; is</code>. I believe <code>&lt;leader&gt;</code> is <code>\</code> by default, so in order to open the REPL type <code>\is</code>. 
-If this doesn’t work, you probably have a custom leader key which you can check with <code>:let mapleader</code>. Likewise,
-to close the REPL is <code>&lt;leader&gt; ik</code>. </p>
+<p>If you want to use some of the other features, just look at the keybind config. The most useful, in my opinion, is opening the REPL within vim which is by default <code>&lt;leader&gt; is</code>. I believe <code>&lt;leader&gt;</code> is <code>\</code> by default, so in order to open the REPL type <code>\is</code>. If this doesn’t work, you probably have a custom leader key which you can check with <code>:let mapleader</code>. Likewise, to close the REPL is <code>&lt;leader&gt; ik</code>.</p>
 
                     </main>
 

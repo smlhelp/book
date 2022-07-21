@@ -138,107 +138,58 @@
                     <main>
                         <h1 id="imperative-programming"><a class="header" href="#imperative-programming">Imperative Programming</a></h1>
 <p><em>By Len Huang and Cooper Pierce, February 2021</em></p>
-<p>A fun thing we can do with functional programming in SML is imperative
-programming! Does it seem counterintuitive? Perhaps. Is it cool? OF COURSE!
-Background knowledge with languages like C, C++, Java, and Python will be
-helpful but is not required.</p>
+<p>A fun thing we can do with functional programming in SML is imperative programming! Does it seem counterintuitive? Perhaps. Is it cool? OF COURSE! Background knowledge with languages like C, C++, Java, and Python will be helpful but is not required.</p>
 <h2 id="reference-cells"><a class="header" href="#reference-cells">Reference Cells</a></h2>
-<p>The way SML goes about implementing imperative features is by using something
-called <strong><em>reference types</em></strong>. These are <strong><em>references</em></strong> to a value of a
-certain type. This is very similar to how a pointer might point to a certain
-place in memory. More formally:</p>
+<p>The way SML goes about implementing imperative features is by using something called <strong><em>reference types</em></strong>. These are <strong><em>references</em></strong> to a value of a certain type. This is very similar to how a pointer might point to a certain place in memory. More formally:</p>
 <blockquote>
-<p>A value of type <code>t ref</code> is a mutable cell capable of holding a value of type
-<code>t</code>. For example, an <code>int ref</code> is a reference to an <code>int</code>.</p>
+<p>A value of type <code>t ref</code> is a mutable cell capable of holding a value of type <code>t</code>. For example, an <code>int ref</code> is a reference to an <code>int</code>.</p>
 </blockquote>
-<p><em>Reference Cells, Ref Cells, and Mutable Cells all refer to the same thing in</em>
-<em>this article.</em></p>
+<p><em>Reference Cells, Ref Cells, and Mutable Cells all refer to the same thing in</em> <em>this article.</em></p>
 <h2 id="functions--expressions-to-know"><a class="header" href="#functions--expressions-to-know">Functions / Expressions to Know</a></h2>
-<p>There's a few different expressions and functions we can leverage to help us
-interface with these <strong><em>reference types</em></strong>.</p>
+<p>There's a few different expressions and functions we can leverage to help us interface with these <strong><em>reference types</em></strong>.</p>
 <h3 id="ref-cells-ref"><a class="header" href="#ref-cells-ref">Ref Cells <code>ref</code></a></h3>
-<p>First, we need to make something of this reference type. In other words, we
-need a way to initialize our pointers. <code>ref</code> is also a constructor that helps
-us initializes references (not to be confused with the <code>'a ref</code> type.) Below is
-how we would make a reference to an <code>int value</code>, or, an <code>int ref</code>.</p>
+<p>First, we need to make something of this reference type. In other words, we need a way to initialize our pointers. <code>ref</code> is also a constructor that helps us initializes references (not to be confused with the <code>'a ref</code> type.) Below is how we would make a reference to an <code>int value</code>, or, an <code>int ref</code>.</p>
 <pre><code class="language-sml">(* ref : 'a -&gt; 'a ref *)
 val pointer : int ref = ref 7
 </code></pre>
 <h3 id="bang-"><a class="header" href="#bang-">Bang <code>!</code></a></h3>
-<p>Next, we need a way to get our values from these references. In other words, we
-need a way to dereference our pointers. <code>!</code> (called bang) can be used
-on an <code>'a ref</code> to retrieve the value being referenced.</p>
+<p>Next, we need a way to get our values from these references. In other words, we need a way to dereference our pointers. <code>!</code> (called bang) can be used on an <code>'a ref</code> to retrieve the value being referenced.</p>
 <pre><code class="language-sml">(* ! : 'a ref -&gt; 'a *)
 val pointer : int ref = ref 7
 val x : int = !pointer
 </code></pre>
 <p>Here, the value <code>7 : int</code> would be bound to <code>x</code>.</p>
 <h3 id="assignment-"><a class="header" href="#assignment-">Assignment <code>:=</code></a></h3>
-<p>After that, we need a way to update the data in our mutable cells. <code>:=</code>
-(called the assignment operator) can be used to update the values of reference
-types. Technically, it's an infix function that takes in the <code>'a ref</code> to
-update and the <code>'a</code> value to update it to.</p>
+<p>After that, we need a way to update the data in our mutable cells. <code>:=</code> (called the assignment operator) can be used to update the values of reference types. Technically, it's an infix function that takes in the <code>'a ref</code> to update and the <code>'a</code> value to update it to.</p>
 <pre><code class="language-sml">(* := : 'a ref * 'a -&gt; unit *)
 val pointer : int ref = ref 7
 val x : int = !pointer
 val () : unit = pointer := 21
 val y : int = !pointer
 </code></pre>
-<p>Here, the value <code>7 : int</code> would be bound to <code>x</code>. However, the value <code>21 : int</code>
-would be bound to <code>y</code>. When we dereference our ref-cell the first time, the
-value is whatever we initialized it to (<code>7</code>). However, after we change what's
-inside the ref-cell, we dereference the updated value (<code>21</code>). Even though
-<code>x</code> and <code>y</code> are both bound to <code>!pointer</code>, they have different values!</p>
+<p>Here, the value <code>7 : int</code> would be bound to <code>x</code>. However, the value <code>21 : int</code> would be bound to <code>y</code>. When we dereference our ref-cell the first time, the value is whatever we initialized it to (<code>7</code>). However, after we change what's inside the ref-cell, we dereference the updated value (<code>21</code>). Even though <code>x</code> and <code>y</code> are both bound to <code>!pointer</code>, they have different values!</p>
 <blockquote>
 <p>💡 Comparison to <code>void</code> methods!</p>
-<p>Remember that SML is a functional programming language. This means that
-anything that's not an exception or infinite loop must be a value! As
-such, when we do things with side effects (like assignment), we can't
-really have <em>no value</em> being returned. As such, SML implements this by
-having these side effect functions and operations return <code>() : unit</code>.
-Theoretically, <code>:=</code> could return something crazy, like an <code>'a tree list option</code>
-if we really wanted to. It's just that <code>() : unit</code> is convenient.
-So when you see <code>:= : 'a * 'a ref -&gt; unit</code>, you can think of it as a
-<code>void</code> method or function in Java, C, and C++.</p>
-<p>In other words, returning <code>() : unit</code> for the assignment operator is
-SML's way of implementing <code>void</code> methods.</p>
+<p>Remember that SML is a functional programming language. This means that anything that's not an exception or infinite loop must be a value! As such, when we do things with side effects (like assignment), we can't really have <em>no value</em> being returned. As such, SML implements this by having these side effect functions and operations return <code>() : unit</code>. Theoretically, <code>:=</code> could return something crazy, like an <code>'a tree list option</code> if we really wanted to. It's just that <code>() : unit</code> is convenient. So when you see <code>:= : 'a * 'a ref -&gt; unit</code>, you can think of it as a <code>void</code> method or function in Java, C, and C++.</p>
+<p>In other words, returning <code>() : unit</code> for the assignment operator is SML's way of implementing <code>void</code> methods.</p>
 </blockquote>
-<p>Introducing imperative logic causes difficulties like these. It takes away the
-confidence we have in our values instilled in us by referential transparency.
-It often makes doing formal proofs about imperative code a bit more difficult.</p>
+<p>Introducing imperative logic causes difficulties like these. It takes away the confidence we have in our values instilled in us by referential transparency. It often makes doing formal proofs about imperative code a bit more difficult.</p>
 <h3 id="sequential-evaluation-"><a class="header" href="#sequential-evaluation-">Sequential Evaluation <code>;</code></a></h3>
-<p>Finally, having a way to execute side effects but still return something
-meaningful will be useful to use. Generally, <code>;</code> (yes this is just a
-semicolon lol) lets us &quot;execute&quot; two &quot;programs&quot; in sequential order.
-You see this used in the REPL:</p>
+<p>Finally, having a way to execute side effects but still return something meaningful will be useful to use. Generally, <code>;</code> (yes this is just a semicolon lol) lets us &quot;execute&quot; two &quot;programs&quot; in sequential order. You see this used in the REPL:</p>
 <pre><code>val x = 2 + 2;
 val y = 8 - 4;
 </code></pre>
-<p>Where we execute one &quot;program&quot; with the side effect of binding <code>2 + 2</code>
-to <code>x</code>, and then execute the next &quot;program&quot; with the side effect of
-binding <code>8 - 4</code> to <code>y</code>, and continue to wait for the next &quot;program&quot;.
-If you're familiar with languages like Java and C, this can also be
-used to explain why semicolons are required at the end of each line.</p>
-<p>The semicolon <code>;</code> is used to mark the end of one program and set up
-the next program to sequentially follow. In SML (not just the REPL),
-this is also valid syntax.</p>
+<p>Where we execute one &quot;program&quot; with the side effect of binding <code>2 + 2</code> to <code>x</code>, and then execute the next &quot;program&quot; with the side effect of binding <code>8 - 4</code> to <code>y</code>, and continue to wait for the next &quot;program&quot;. If you're familiar with languages like Java and C, this can also be used to explain why semicolons are required at the end of each line.</p>
+<p>The semicolon <code>;</code> is used to mark the end of one program and set up the next program to sequentially follow. In SML (not just the REPL), this is also valid syntax.</p>
 <blockquote>
-<p>For some expressions <code>exp1 : t1</code>, <code>exp2 : t2</code>, we have that <code>exp1;exp2 : t2</code>
-where <code>exp1</code> is evaluated first, and then <code>exp2</code> is evaluated thereafter.</p>
+<p>For some expressions <code>exp1 : t1</code>, <code>exp2 : t2</code>, we have that <code>exp1;exp2 : t2</code> where <code>exp1</code> is evaluated first, and then <code>exp2</code> is evaluated thereafter.</p>
 </blockquote>
-<p>One thing to note is that in SML, only the value of the second expression
-is returned, and the type of the whole expression is the type of the last
-expression.</p>
+<p>One thing to note is that in SML, only the value of the second expression is returned, and the type of the whole expression is the type of the last expression.</p>
 <pre><code class="language-sml">val pointer : int ref = ref 0
 val x : int = (pointer := 7; !pointer)
 val y : int = (pointer := 21; !pointer)
 </code></pre>
-<p>Here, we first initialize <code>pointer</code> to a dummy value. After that, we run
-the program <code>pointer := 7</code>, and then right after, return <code>!pointer</code>. This
-would mean that the value <code>7 : int</code> is bound to <code>x</code>, just like in the above
-examples. Similarly, we run The program <code>pointer := 21</code>, and then right
-after, return <code>!pointer</code>. This would mean that the value <code>21 : int</code> is
-bound to <code>y</code>, just like in the above examples.</p>
+<p>Here, we first initialize <code>pointer</code> to a dummy value. After that, we run the program <code>pointer := 7</code>, and then right after, return <code>!pointer</code>. This would mean that the value <code>7 : int</code> is bound to <code>x</code>, just like in the above examples. Similarly, we run The program <code>pointer := 21</code>, and then right after, return <code>!pointer</code>. This would mean that the value <code>21 : int</code> is bound to <code>y</code>, just like in the above examples.</p>
 <h2 id="putting-it-all-together"><a class="header" href="#putting-it-all-together">Putting it All Together</a></h2>
 <p>Here's an example that uses all of the above operations in a meaningful way.</p>
 <pre><code class="language-sml">local
@@ -248,28 +199,16 @@ in
       | fact n = a := n * !a; fact (n - 1)
 end
 </code></pre>
-<p>The way this <code>fact</code> function works is by continuously updating a reference
-<code>a</code> we <strong>initialize</strong> with <code>ref a</code>. In the recursive case, for some number <code>n</code>,
-we <strong>assign</strong> <code>a</code> to be <code>n * !a</code>. In other words, <code>n * current value of a</code>
-(because we use the <strong>bang</strong> <code>!</code> to dereference <code>a</code>). After we run that
-program (<code>a := n * !a</code>), the <strong>semicolon</strong> then brings us to the next program:
-<code>fact (n - 1)</code>. Since only value of the second expression is returned, we
-essentially are saying that <code>fact n = fact (n - 1)</code> with the side effect of
-<code>a := n * !a</code> being run. Finally, once we reach the base case, we use the
-<strong>bang</strong> <code>!</code> to dereference our ref cell which has accumulated all of
-the side effects up until now.</p>
+<p>The way this <code>fact</code> function works is by continuously updating a reference <code>a</code> we <strong>initialize</strong> with <code>ref a</code>. In the recursive case, for some number <code>n</code>, we <strong>assign</strong> <code>a</code> to be <code>n * !a</code>. In other words, <code>n * current value of a</code> (because we use the <strong>bang</strong> <code>!</code> to dereference <code>a</code>). After we run that program (<code>a := n * !a</code>), the <strong>semicolon</strong> then brings us to the next program: <code>fact (n - 1)</code>. Since only value of the second expression is returned, we essentially are saying that <code>fact n = fact (n - 1)</code> with the side effect of <code>a := n * !a</code> being run. Finally, once we reach the base case, we use the <strong>bang</strong> <code>!</code> to dereference our ref cell which has accumulated all of the side effects up until now.</p>
 <blockquote>
-<p>😰 If you try to call this implementation of <code>fact</code> more than once, something
-unexpected might happen. Can you figure out what it is, and why that is?</p>
+<p>😰 If you try to call this implementation of <code>fact</code> more than once, something unexpected might happen. Can you figure out what it is, and why that is?</p>
 </blockquote>
 <h1 id="operations"><a class="header" href="#operations">Operations</a></h1>
 <ul>
 <li><code>ref : 'a -&gt; 'a ref</code> initializes a new reference cell.</li>
 <li><code>! : 'a ref -&gt; 'a</code> dereferences a reference cell.</li>
-<li><code>:= : 'a ref * 'a -&gt; unit</code> assigns a reference cell a new value.
-&quot;<code>void</code>&quot; method.</li>
-<li><code>exp1;exp2</code> first runs <code>exp1</code> and then returns <code>exp2</code>, which is
-useful for side effects.</li>
+<li><code>:= : 'a ref * 'a -&gt; unit</code> assigns a reference cell a new value. &quot;<code>void</code>&quot; method.</li>
+<li><code>exp1;exp2</code> first runs <code>exp1</code> and then returns <code>exp2</code>, which is useful for side effects.</li>
 </ul>
 
                     </main>
