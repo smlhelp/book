@@ -1,12 +1,15 @@
 # SML Basics Examples
+
 _By Eunice Chen, May 2020_
 
 ## Types
+
 For each of the following declarations, state the type and value of `x`.
 
 ```sml
 val x = 1 > 5
 ```
+
 ```rust,ignore
 Click the eyeball icon to see the answer --->
 # Type:  bool
@@ -16,6 +19,7 @@ Click the eyeball icon to see the answer --->
 ```sml
 val x = 15 div 0
 ```
+
 ```rust,ignore
 Click the eyeball icon to see the answer --->
 # Type:  int
@@ -25,6 +29,7 @@ Click the eyeball icon to see the answer --->
 ```sml
 val x = 15.0 div 0.0
 ```
+
 ```rust,ignore
 Click the eyeball icon to see the answer --->
 # Type:  not well-typed (`div` is a function of type `int * int -> int`)
@@ -34,6 +39,7 @@ Click the eyeball icon to see the answer --->
 ```sml
 val x = fn (n : int) => Int.toString n
 ```
+
 ```rust,ignore
 Click the eyeball icon to see the answer --->
 # Type:  int -> string
@@ -43,6 +49,7 @@ Click the eyeball icon to see the answer --->
 ```sml
 val x = fn n => ("1" ^ "5") ^ (Int.toString n)
 ```
+
 ```rust,ignore
 Click the eyeball icon to see the answer --->
 # Type:  int -> string
@@ -50,7 +57,9 @@ Click the eyeball icon to see the answer --->
 ```
 
 ## Scope
+
 ### Example 0
+
 ```sml
 let
   val y : int = 2
@@ -58,6 +67,7 @@ in
   fn (x : int) => z*z
 end
 ```
+
 What is the value of the let-in-end expression?
 
 ```rust,ignore
@@ -66,6 +76,7 @@ Click the eyeball icon to see the answer --->
 ```
 
 ### Example 1
+
 ```sml
 val y = 0
 val z =
@@ -108,8 +119,9 @@ Click the eyeball icon to see the answer --->
 ```
 
 ### Example 2
+
 ```sml
-val x : int = 1 
+val x : int = 1
 fun f (x : int) = x + 1
 val y : int = 2
 val z : int = f y
@@ -127,6 +139,7 @@ Click the eyeball icon to see the answer --->
 ```
 
 ### Example 3
+
 ```sml
 val x = 1
 val y = 2

@@ -17,4 +17,3 @@ mathjax-support = true
 
 [output.html.search]
 limit-results = 15
-

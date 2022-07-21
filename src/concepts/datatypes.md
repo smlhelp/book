@@ -13,4 +13,3 @@ _Main Articles_: [Recursion & Induction](recind.md), [Tree Induction](treeinduct
 ## Syntax and Examples
 
 ## Recursion and Induction on Datatypes
-
