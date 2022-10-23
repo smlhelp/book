@@ -45,12 +45,6 @@ const config = {
         title,
         items: [
           {
-            type: "doc",
-            docId: "intro",
-            position: "left",
-            label: "Tutorial",
-          },
-          {
             href: github,
             label: "GitHub",
             position: "right",
