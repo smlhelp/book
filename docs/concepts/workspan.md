@@ -1,3 +1,5 @@
+# Work and Span
+
 <!-- TODO fix
 <style>
 .aligncenter {
@@ -5,8 +7,6 @@
 }
 </style>
  -->
-
-# Work and Span
 
 _By Aditi Gupta and Brandon Wu, May 2020_. _Revised September 2020_
 

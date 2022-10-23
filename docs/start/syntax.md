@@ -165,6 +165,7 @@ val L : int list = [3,4]
 
 Create local bindings (local variables) to compute a `let`-expression. Place declarations and bindings between the `let`-`in`; the `let`-expression between the `in`-`end`. Can be nested. The scope of the `let`-`in` declaration is that `let`-expression's expression.
 
+<!--
 <head>
 <style>
 
@@ -176,6 +177,7 @@ td { border: 1px solid #dddddd; }
 
 </style>
 </head>
+ -->
 
 <table>
 <tr>

@@ -1,3 +1,5 @@
+# Continuation Passing Style
+
 <!-- TODO fix
 <style>
 .center{
@@ -10,8 +12,6 @@ figure figcaption {
 }
 </style>
  -->
-
-# Continuation Passing Style
 
 _By Brandon Wu, June 2020. Revised March 2022_
 
