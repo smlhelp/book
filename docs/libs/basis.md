@@ -1,4 +1,4 @@
-# SMLNJ Basis Documentation
+# SML/NJ Basis
 
 _By Jacob Neumann, June 2021_
 

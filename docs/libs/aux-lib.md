@@ -1,4 +1,4 @@
-# Auxiliary Library Documentation
+# Auxiliary Library
 
 _By Jacob Neumann, June 2021_
 
