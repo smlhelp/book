@@ -12,10 +12,12 @@ Syntax highlighting is tremendously helpful from both a debugging and readabilit
 
 ### 2. Anatomy of an error message
 
+<!--
 <figure class="aligncenter">
     <img src="../assets/errors.png" alt="Instructions" width="1500"/>
     <figcaption><b>Fig 1.</b> Sample error message with a brief explanation of each component of the message. </figcaption>
 </figure>
+ -->
 
 For more specific error messages, it may help to consult the errors page of this website.
 

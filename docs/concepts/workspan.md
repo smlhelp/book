@@ -216,10 +216,12 @@ In these past two examples, we have only seen examples that did a constant amoun
 
 > Tree traversals can also come in handy when generating different notations for mathematical expressions when represented in the form of an _binary expression tree_, which has nodes that consist of either a _numeric constant_, which has no children, a _unary operation_ with a single child, or a _binary operation_ with two children. For instance, a binary expression tree for the mathematical expression \\( (4-1) \* 2 \\) is shown below.
 
+<!--
 <figure class="aligncenter">
     <img src="../assets/optree.png" alt="optree" width="500"/>
     <figcaption><b>Fig 4.</b> A binary expression tree for the expression \( (4-1) * 2 \)</figcaption>
 </figure>
+ -->
 
 > With inorder traversal of this expression tree, we can generate the constants and symbols in exactly the same order as \\( (4-1) \* 2 \\), which is how we would normally interpret it. Preorder and postorder traversal, however, result in an interesting interpretation - what is known as _prefix_ (or _Polish_) and _postfix_ (or _Reverse Polish_) notation.
 >
@@ -249,10 +251,12 @@ We will make use of a new method to solve this recurrence - the Tree Method.
 
 The below diagram illustrates the Tree Method.
 
+<!--
 <figure class="aligncenter">
     <img src="../assets/treemethodTrans.png" alt="Tree method" width="1200"/>
     <figcaption><b>Fig 5.</b> An illustration of the Tree Method for the recurrence of preord.</figcaption>
 </figure>
+ -->
 
 We will now explore exactly how we arrived at this conclusion.
 

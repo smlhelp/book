@@ -86,11 +86,13 @@ For the span analysis, note that the function `(fn i => Seq.tabulate (fn j => i*
 
 In general, the cost graph for `Seq.tabulate` looks like this.
 
+<!--
 <figure class="aligncenter">
     <img src="../assets/tabulatecost.png"
     width="600" class="center"/>
     <figcaption>The cost graph for Seq.tabulate. Each branch at the top represents a different independent task for the processor(s) to perform.  </figcaption>
 </figure>
+ -->
 
 The work of `Seq.tabulate f S` is the sum of all costs in the graph above. The span is the maximum cost of any one of the branches, because the function is called on 0, 1, ..., n-1 in parallel.
 
@@ -112,11 +114,13 @@ The neat part is, `Seq.reduce` also supports parallelism. In particular, when a 
 
 To analyze the work and span, let's consider how SML actually evaluates `Seq.reduce g z S`. It first calls the combining function `g` on each pair of elements: `x_0` and `x_1`, `x_2` and `x_3`, and so on. All of these calls can be made in parallel. Then, we combine the intermediate results together. At the very end, all of the elements of `S` will be combined together.
 
+<!--
 <figure class="aligncenter">
     <img src="../assets/reducecost.png"
     width="600" class="center"/>
     <figcaption>The cost graph for Seq.reduce. Each branch at the top represents a different independent task for the processor(s) to perform.  </figcaption>
 </figure>
+ -->
 
 The work is the sum of doing all the work shown in the cost graph, while the span is the longest path through the cost graph. Therefore, for constant `g`, the work of `Seq.reduce g z S` is O(|S|), and the span is O(log |S|).
 
