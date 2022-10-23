@@ -1,46 +1,25 @@
-import React from "react";
 import clsx from "clsx";
+import React from "react";
 import styles from "./styles.module.css";
 
 const FeatureList = [
   {
-    title: "Easy to Use",
-    Svg: require("@site/static/img/undraw_docusaurus_mountain.svg").default,
-    description: (
-      <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
-      </>
-    ),
+    title: "SML",
+    description: <>Standard ML is a functional programming language.</>,
   },
   {
-    title: "Focus on What Matters",
-    Svg: require("@site/static/img/undraw_docusaurus_tree.svg").default,
-    description: (
-      <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
-      </>
-    ),
+    title: "Types",
+    description: <>Use types to reason about your code.</>,
   },
   {
-    title: "Powered by React",
-    Svg: require("@site/static/img/undraw_docusaurus_react.svg").default,
-    description: (
-      <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
-      </>
-    ),
+    title: "Recursion",
+    description: <>Express complex algorithms with mathematical precision.</>,
   },
 ];
 
-function Feature({ Svg, title, description }) {
+function Feature({ title, description }) {
   return (
     <div className={clsx("col col--4")}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
-      </div>
       <div className="text--center padding-horiz--md">
         <h3>{title}</h3>
         <p>{description}</p>
