@@ -1,3 +1,4 @@
+<!-- TODO fix
 <style>
 .center{
     display: block;
@@ -8,6 +9,7 @@ figure figcaption {
     text-align: center;
 }
 </style>
+ -->
 
 # Continuation Passing Style
 
@@ -51,10 +53,12 @@ Here, `factCPS` takes in two arguments - one is the counter for the factorial fu
 
 We will now consider a trace of `factCPS 3 Int.toString` to fully understand the mechanism by which it works.
 
+<!-- TODO fix
 <figure class="aligncenter">
     <img src="../assets/cps.png" alt="CPS Trace" width="1500"/>
     <figcaption><b>Fig 1.</b> Code trace of the evaluation of `factCPS 3 Int.toString` </figcaption>
 </figure>
+ -->
 
 As we can see, this code trace does correctly result in `Int.toString 6`, which is our desired result. Of particular interest to our analysis is the _continuation_ of the function, which seems to grow with every line through `factCPS`'s recursion, until ultimately being reduced down step-wise until it yields our final result.
 
@@ -66,10 +70,12 @@ So hopefully now we are convinced of `factCPS`'s correctness<a href="#footnote2"
 
 Recall our previous metaphor with regards to writing down instructions. It is hopefully not too difficult to see that this large lambda expression that we are constructing is akin to writing down instructions - we specify the operations that should occur when it is ultimately "collapsed" (by being given an input value), but nothing actually occurs until then. It merely encodes that information in the meantime. The next diagram will attempt to more specifically show this relationship between the "instructions" and how it arises from the definition of `factCPS`:
 
+<!-- TODO fix
 <figure class="aligncenter">
     <img src="../assets/updown.png" alt="Instructions" width="1500"/>
     <figcaption><b>Fig 2.</b> Relationship between an arbitrary recursive call of `factCPS` and the "instructions" that it writes down. </figcaption>
 </figure>
+ -->
 
 The middle of this image is supposed to denote the "instructions" that you might write if you were to codify the algorithm to determine the factorial of \\( n \\). Note that these instructions are actually read from bottom to top - thus, we start with 1 and then work out way up multiplying until we reach \\( n \\), which presumably should give us the actual factorial.
 
@@ -85,19 +91,24 @@ So now, we can sort of inductively see how `factCPS` writes down the entire page
 
 An additional way to think about CPS functions is that they behave similarly to a _stack_. This is because, as we have seen, we are continuously wrapping lambda expressions with other lambda expressions - we can only "pop" off a lambda expression by evaluating it with an argument, or "push" on more instructions by wrapping our continuation in more lambda expressions. We cannot access the ones inside. As such, we could visualize the evaluation of `factCPS 3 k` as the following diagram:
 
+<!-- TODO fix
 <figure class="aligncenter">
     <img src="../assets/stack.png" alt="CPS Stack" width="1500"/>
     <figcaption><b>Fig 3.</b> A visualization of the "stack" of instructions created by evaluating `factCPS 3 k`. </figcaption>
 </figure>
+ -->
 
 We would build this stack up from the bottom by first putting our `k` on (as our "original" `k`), then wrapping it in more lambda expressions as we go along the recursive calls (so, for instance, the orange brick is added by `factCPS 3 k'`, and the red brick is added by `factCPS 2 k''`, for their own respective continuations `k'` and `k''`). Then, once we are at the end, our "instruction stack" looks like the one currently pictured. At that point, we have nothing left to do but execute the stack of instructions with an initial value of `1`, which will cause the bricks to start being popped off one by one, and then ultimately result in the value of `6` being applied to `k`.
 
 Another, equivalent way to view continuations is as _donuts_.
 
+<!-- TODO fix
 <figure class="aligncenter">
     <img src="../assets/donut.png" alt="CPS Donut" width="1500"/>
     <figcaption><b>Fig 4.</b> An artist's rendition of the "CPS Donut" of instructions created by evaluating `factCPS 3 k` (colorized, 2020). </figcaption>
 </figure>
+
+-->
 
 As you can see, we cannot access the inner layers of the CPS Donut without first biting through the outer layers (corresponding to our evaluation of the outer layers first). One can only imagine what it would taste like in real life.
 
@@ -140,7 +151,7 @@ A somewhat interesting note is that every direct-style (which is how we will ter
 
 ### Footnotes
 
-<a id="footnote3"> [3]: Otherwise, you should be quite concerned about the competency of the author, and you would probably be better off reading a different help site.
+<a id="footnote3"> [3]: Otherwise, you should be quite concerned about the competency of the author, and you would probably be better off reading a different help site.</a>
 
 ## Continuation Passing Style: A Case Study v2.0
 
@@ -158,55 +169,67 @@ Consider how we would normally want to approach this problem. In a typical `tree
 
 To visualize what is happening, consider the following tree.
 
+<!-- TODO fix
 <figure class="aligncenter">
     <img src="../assets/cpsTree.png" alt="Tree to be summed"
     width="200" class="center"/>
     <figcaption><b>Fig 5.</b> A tree of ints to be summed, whose node contents are conveniently enumerated according to visit order. </figcaption>
 </figure>
+ -->
 
 We will run through a mock simulation of the evaluation of `treeSumCPS T k`, where `T` is the tree pictured, and `k` is some arbitrary continuation. First, note that we will take the convention that "Tn" for some number n will denote the subtree rooted at the vertex n, and "Sn" will denote the sum of that subtree.
 
 Firstly, we know that from `treeSumCPS T k` we should obtain `treeSumCPS T2 (fn S2 => treeSumCPS T4 (fn S4 => k (S2 + 1 + S4))`.
 
+<!-- TODO fix
 <figure class="aligncenter">
     <img src="../assets/phase1.png" alt="Phase 1"
     width="3000" class="center">
     <figcaption class="center"><b>Fig 6.</b> Phase 1 of evaluation of the tree T. </figcaption>
 </figure>
+ -->
 
 We can think of the individual calls to `treeSumCPS` on `T2` and `T4` as leaving "flags" on each arm of the edges coming from vertex 1 - denoting which node that we should visit next. Clearly, we visit `T2` first, so the red brick corresponding to `T2` is on top.
 
 Our next move is to pop it off first, which will cause our expression to now have three bricks - two corresponding to the children of `T2`, and one corresponding to `T4`. We can visualize the next phase as the following:
 
+<!-- TODO fix
 <figure class="aligncenter">
     <img src="../assets/phase2.png" alt="Phase 2"
     width="3000" class="center">
     <figcaption class="center"><b>Fig 7.</b> Phase 2 of evaluation of the tree T. Note that two extra "bricks" have been added due to evaluation of treeSumCPS T2. </figcaption>
 </figure>
+ -->
 
 where the brick labelled `treeSumCPS E` corresponds to the empty child of `T2`. Note that we have retained the blue flag at `T4` and left its brick alone, since for all intents and purposes we have not yet "touched" it - we have not evaluated our stack to that point. Note that due to corresponding to the `Empty` case, the purple brick will not add any new bricks, but merely defer to the next brick on the stack - the orange brick. Thus, the next step looks like the following:
 
+<!-- TODO fix
 <figure class="aligncenter">
     <img src="../assets/phase3.png" alt="Phase 3"
     width="3000" class="center">
     <figcaption class="center"><b>Fig 8.</b> Phase 3 of evaluation of the tree T. Note that this follows from evaluating both of the top bricks from the previous step. </figcaption>
 </figure>
+ -->
 
 In this step, the green and light blue bricks again correspond to empty trees, so they simply dissolve without generating more instructions. As such, we reduce to the following diagram:
 
+<!-- TODO fix
 <figure class="aligncenter">
     <img src="../assets/phase4.png" alt="Phase 4"
     width="3000" class="center">
     <figcaption class="center"><b>Fig 9.</b> Phase 4 of evaluation of the tree T. Note that, after finishing our evaluation of all of the bricks of the left side, we return to our long-neglected "checkpoint" on the right side of the tree.. </figcaption>
 </figure>
+-->
 
 We see in this step that, as the figure caption says, we have returned to the right hand side after finishing all evaluation on the left hand side of the tree. Thus, our construction was correct - we placed the blue brick onto the stack at the very beginning, then proceeded to forget about it until now. This works in our favor, however, as we only return to it once we have finished with everything on the left. One more step of evaluation yields:
 
+<!-- TODO fix
 <figure class="aligncenter">
     <img src="../assets/phase5.png" alt="Phase 5"
     width="3000" class="center">
     <figcaption class="center"><b>Fig 10.</b> Phase 5 of evaluation of the tree T. </figcaption>
 </figure>
+-->
 
 Thus, all we have left are empty bricks, so we are very close to termination.
 
@@ -309,4 +332,4 @@ This, in only a few lines (and generous whitespace), we have written an algorith
 
 ## Conclusions
 
-In this section, we explored the idea of continuation passing style, which lets us phrase the control flow of our functions in a more explicit manner, granting us more versatility in our implementation. We saw how CPS functions can be viewed as simply a more advanced form of accumulation, as well as how having multiple continuations (corresponding to success and failure cases) allows us to explore expansive trees of binary choices to find solutions.
+In this section, we explored the idea of continuation passing style, which lets us phrase the control flow of our functions in a more explicit manner, granting us more versatility in our implementation. We saw how CPS functions can be viewed as simply a more advanced form of accumulation, as well as how having multiple continuations (corresponding to success and failure cases) allows us to explore expansive trees of binary choices to find solutions. -->

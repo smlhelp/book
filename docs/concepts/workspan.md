@@ -1,8 +1,10 @@
+<!-- TODO fix
 <style>
 .aligncenter {
     text-align: center;
 }
 </style>
+ -->
 
 # Work and Span
 
@@ -36,10 +38,12 @@ What we find is that work directly corresponds to our previous intuition of the 
 
 We illustrate these concepts with the following graph.
 
+<!-- TODO fix
 <figure class="aligncenter">
     <img src="../assets/graphTransCropped.png" alt="Process Graph" width="1000"/>
     <figcaption><b>Fig 1.</b> Task dependency graph illustrating dependencies between tasks and task durations</figcaption>
 </figure>
+ -->
 
 So in this example, the work of our graph would be \\( 1+3+6+2+5+9+3+3+10 = 42 \\), since with a single processor, the dependencies don't really matter to us. We have no choice but to complete every task, and the precise order doesn't matter. That isn't to say that we can execute the tasks in any order, that plainly isn't true - we simply mean that there is no order that can change what our runtime is.
 
@@ -107,10 +111,12 @@ datatype tree = Empty
 
 This denotes that a tree is either the constant constructor `Empty` denoting the empty tree, or a `Node` that contains an integer value, as well as two `tree` children, that can themselves be `Node`s or `Empty`.
 
+<!-- TODO fix
 <figure class="aligncenter">
     <img src="../assets/treeTrans.png" alt="Tree" width="500"/>
     <figcaption><b>Fig 2.</b> Sample binary tree</figcaption>
 </figure>
+-->
 
 So for instance, we may represent the above tree with `Node(Node(Node(Empty, 4, Empty), 3, Empty), 1, Node(Empty, 2, Empty))`. Put more fancily:
 
@@ -201,10 +207,12 @@ In these past two examples, we have only seen examples that did a constant amoun
 >
 > Each traversal is characterized by a certain "strategy" of traversal, depending on how it ranks the three possible directions that it can go - root, left, and right. Inorder traversal, for instance, is characterized by left-root-right prioritization - this means that it goes left first, and if it can't go left, then it visits the root node, and otherwise it goes right. Note that this does not mean that it visits the root of the left subtree first - it simply reruns the same process on the entire left subtree. No matter what the traversal strategy is, a node is never actually visited until the "root" action is taken. Preorder traversal is root-left-right, and postorder is left-right-root. Examples of preorder and inorder traversals (the most common you will see in this book) are below.
 
+<!-- TODO fix
 <figure class="aligncenter">
     <img src="../assets/traversals.png" alt="traversal" width="650"/>
     <figcaption><b>Fig 3.</b> An example of a preorder traversal (left) and inorder traversal (right) of a binary tree, with visited nodes labeled in ascending order </figcaption>
 </figure>
+ -->
 
 > Tree traversals can also come in handy when generating different notations for mathematical expressions when represented in the form of an _binary expression tree_, which has nodes that consist of either a _numeric constant_, which has no children, a _unary operation_ with a single child, or a _binary operation_ with two children. For instance, a binary expression tree for the mathematical expression \\( (4-1) \* 2 \\) is shown below.
 

@@ -188,7 +188,7 @@ This is not the most committed that we could have made `knapsackEHS`, when conve
 
 ### Footnotes
 
-<a id="footnote1"> [1]: We're funny. <a id="footnote2"> [2]: Say that five times fast.
+<a id="footnote1"> [1]: We're funny.</a> <a id="footnote2"> [2]: Say that five times fast.</a>
 
 ## Conclusions
 

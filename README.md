@@ -1,35 +1,41 @@
-# smlhelp.github.io
+# Website
 
-Thanks for checking out `smlhelp.github.io`!
+This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
 
-## How to contribute
+### Installation
 
-0. Clone the repo to your local machine (or pull), and checkout to a new branch based on master
-1. Decide what kind of resource you'd like to create, and check out what already exists
-   - "Getting Started" written tutorial (look in `src/start`)
-   - Specification of a type or structure (`src/types`)
-   - Debugging Guide (`src/debugging`)
-   - Conceptual Notes (`srcj/concepts`)
-   - Worked example, video or written (`src/examples/written`)
-   - Something else (talk to Jacob if your idea doesn't fit these categories)
-2. If a page already exists (probably at `src/MMMMMM/NNNNNN.md`, for some `MMMMMM` and `NNNNNN`) where you can add your content, add it there. Make sure to update the author attribution:
-   - If you fixed typos and made minor edits, add "_Revised &lt;current month&gt;_" to attribution
-   - If you wrote a new section or performed significant rewrites, add "_Rewritten by &lt;your name&gt;, &lt;current month&gt;_"
-3. If no such page exists:
-   - Create the file in the appropriate `src/MMMMMM` directory. Give it a short, descriptive, lowercase-alphabetical name, like `minimax.md`
-   - Write your content (in markdown) to the file
-   - Open up `src/SUMMARY.md` and add a link to your content (follow the format of the other links). The url should be `MMMMMM/NNNNNN.md`, where your new file is located at `src/MMMMMM/NNNNNN.md`
-   - Write "_By &lt;your name&gt;, &lt;current month&gt;_" (with a line break afterwards) beneath the page title
-4. Add, commit, push, and pull-request your changes.
-5. If your changes get approved and merged, add a separate pull request to add yourself to the list of contributors on the "About" page (if you're not on it).
+```
+$ yarn
+```
 
-I'm hoping to automate or streamline some of these processes (so check back here occasionally). Also, if you have feedback on the design of the website (technical or aesthetic), I'm happy to hear; also let me know if you can think of any possible changes.
+### Local Development
 
-### Gotchas and tips
+```
+$ yarn start
+```
 
-- Math mode dollar signs are not currently supported. Use `\(`+`\)` or `\[`+`\]` instead.
-- You can preview your book by installing mdbook, then running `mdbook serve` and going to the specified localhost in your browser.
+This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
 
-## Technical stuff
+### Build
 
-The website is built using the [mdbook](https://rust-lang.github.io/mdBook/) static site builder, which is written in Rust. Talk to Cam if you are interested in contributing to the backend.
+```
+$ yarn build
+```
+
+This command generates static content into the `build` directory and can be served using any static contents hosting service.
+
+### Deployment
+
+Using SSH:
+
+```
+$ USE_SSH=true yarn deploy
+```
+
+Not using SSH:
+
+```
+$ GIT_USER=<Your GitHub username> yarn deploy
+```
+
+If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
