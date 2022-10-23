@@ -1,7 +1,7 @@
 // @ts-check
 
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+const theme = require("prism-react-renderer/themes/github");
+const darkTheme = require("prism-react-renderer/themes/dracula");
 
 const title = "SML Help";
 const org = "smlhelp";
@@ -62,9 +62,9 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} The SML Help Authors.`,
       },
       prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
-        additionalLanguages: ["sml"],
+        theme,
+        darkTheme,
+        additionalLanguages: ["sml", "vim"],
       },
     }),
 };

@@ -55,7 +55,7 @@ There are many many choices for a Vim plugin manager, but I recommend using [Vim
 
 Just slap this mess into your `.vimrc` (which can be found at `~/.vimrc`)
 
-```
+```vim
 call plug#begin()
 Plug 'jez/vim-better-sml'
 
