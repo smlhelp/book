@@ -56,7 +56,7 @@ In previous chapters, we have explored the idea of extensional equivalence, and 
 
 We seemed to agree on a meaning that said that, for non-function values, two values are extensionally equivalent if they are the _same value_, which is an perhaps an ill-justified definition that may leave a bad taste in one's mouth, but ultimately boils down to our intuitive notion that, yes, some values are just the _same_ and we can't really do much more than question that. For instance, we can see that `(1, 2, "hi")` and `(1, 2, "hi")` are the "same", and neither are the same as `(2, 1, "hello")`. For functions, however, we decided on a slightly more appeasing definition that defined a function by its _input-output_ behavior. We restate the definition below:
 
-> **[Extensional Equivalence (Functions)]** We say two expressions `e : t1 -> t2` and `e' : t1 -> t2` for some types `t1` and `t2` are extensionally equivalent if for all values `x : t1`, `e x` \\( \cong \\)`e' x`.
+> **[Extensional Equivalence (Functions)]** We say two expressions `e : t1 -> t2` and `e' : t1 -> t2` for some types `t1` and `t2` are extensionally equivalent if for all values `x : t1`, `e x` $\cong$`e' x`.
 
 It is our hope that we are now in a place to properly appreciate this definition. For functions that have type `int -> int`, this is a fairly straightforward definition - these functions are extensionally equivalent if, for every integer that we give them, they return the same int. However, what about curried functions? Our definition, in light of this new concept, is that curried functions are extensionally equivalent if _the functions that they return are extensionally equivalent_.
 

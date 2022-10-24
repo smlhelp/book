@@ -307,7 +307,7 @@ sig
 end
 ```
 
-It is a well-known fact that, utilizing a kind of _balanced binary tree_ data structure, dictionaries can be implemented with an \\( O(\log n) \\) `insert` and `lookup` operation, as opposed to \\( O(n) \\) for other data structures such as lists. While there are many different implementations of balanced binary trees, we will consider a particular variant known as _red-black trees_.
+It is a well-known fact that, utilizing a kind of _balanced binary tree_ data structure, dictionaries can be implemented with an $O(\log n)$ `insert` and `lookup` operation, as opposed to $O(n)$ for other data structures such as lists. While there are many different implementations of balanced binary trees, we will consider a particular variant known as _red-black trees_.
 
 > **[Red-black tree]**: A variant of self-balancing binary tree that ensures logarithmic search and insert time. It is named because of its nodes, which are marked as either _red_ or _black_. Furthermore, it obeys the following properties:
 >

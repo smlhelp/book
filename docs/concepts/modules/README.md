@@ -12,9 +12,9 @@ In this chapter, we will discuss SML's _module system_, which allows for safe, p
 
 ## Motivation
 
-Oftentimes as programmers, we are tasked with writing code that matches a specification. This specification can vary in rigor and mathematical formality, but the general idea is that oftentimes it _exists_. When we are asked to write a function to compute the first \\( n \\) Fibonacci numbers, it does not necessarily matter _how_ we go about implementing this function, so long as it exhibits the proper input-output behavior. In other words, we would like it so that all functions implementing a given specification have _extensionally equivalent_ behavior to what we should expect them to do.
+Oftentimes as programmers, we are tasked with writing code that matches a specification. This specification can vary in rigor and mathematical formality, but the general idea is that oftentimes it _exists_. When we are asked to write a function to compute the first $n$ Fibonacci numbers, it does not necessarily matter _how_ we go about implementing this function, so long as it exhibits the proper input-output behavior. In other words, we would like it so that all functions implementing a given specification have _extensionally equivalent_ behavior to what we should expect them to do.
 
-**NOTE**: Sometimes, there are constraints beyond simply being the same "mathematical function" - that is, defining the same outputs on the same inputs. Sometimes we are asked for the implementation of a function, running in only less than \\( O(n^2) \\) asymptotic time. Even in cases like these, however, there are always still _superficial_ differences that our implementation allows for - for instance, when writing the Fibonacci function, it is unlikely that it should matter whether we calculate the value of \\( f(n-1) \\) or \\( f(n-2) \\) first.
+**NOTE**: Sometimes, there are constraints beyond simply being the same "mathematical function" - that is, defining the same outputs on the same inputs. Sometimes we are asked for the implementation of a function, running in only less than $O(n^2)$ asymptotic time. Even in cases like these, however, there are always still _superficial_ differences that our implementation allows for - for instance, when writing the Fibonacci function, it is unlikely that it should matter whether we calculate the value of $f(n-1)$ or $f(n-2)$ first.
 
 This should not be an unfamiliar idea - this is exactly the concept of referential transparency, which says that we can swap "equals-for-equals" whenever discussion the equality of expressions. Under the eyes of the language, equal expressions are just that - equal, and there is no need to disambiguate them.
 
@@ -24,7 +24,7 @@ We don't want to outlaw such practices, however - we simply need to make our _ab
 
 ## Modules: Basics
 
-SML takes both the ideas of the _specification_ and the _implementation_ and provides a way of codifying both within the language itself. Of course, it is rather difficult to say "implement the list reversal function in \\( O(n) \\) asymptotic time in \\( n \\), the length of the list" in code<a
+SML takes both the ideas of the _specification_ and the _implementation_ and provides a way of codifying both within the language itself. Of course, it is rather difficult to say "implement the list reversal function in $O(n)$ asymptotic time in $n$, the length of the list" in code<a
 href="#footnote1">_<sup>[1]</sup>_</a>, so SML will only deal with specifications at the _type-level_. That is, within SML itself, a specification for a function is simply a type for that function.
 
 The term for a specification in SML is called a _signature_. Consider the following specification and implementation of a package for modular arithmetic. Note that the comments are optional.

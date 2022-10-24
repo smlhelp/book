@@ -44,13 +44,13 @@ fun exp 0 = 1
   | exp n = 2 * exp(n-1)
 ```
 
-In the above code, we specify the **_base case_** that \\( 2^0 = 1 \\). Then, for inputs greater than 0, we first compute \\(2^{n-1} \\) recursively, and then multiply 2 to it. By "recursively", we are assuming our code works for smaller inputs. You can trace through a few test cases to convince yourself that these elegant two lines of code indeed implement `exp`.
+In the above code, we specify the **_base case_** that $2^0 = 1$. Then, for inputs greater than 0, we first compute $2^{n-1}$ recursively, and then multiply 2 to it. By "recursively", we are assuming our code works for smaller inputs. You can trace through a few test cases to convince yourself that these elegant two lines of code indeed implement `exp`.
 
 ## Proof by Induction
 
 Perhaps test cases are not enough for you, or you would like to see the deep connection between induction and recursion. We can use the principle of mathematical induction to **_prove_** that our `exp` code works. Here is the theorem we want to show. Recall that we use `==` to denote two expressions being extensionally equivalent.
 
-**Theorem:** `exp n ==` \\(2^n\\) for all integer values \\( n \geq 0 \\).
+**Theorem:** `exp n ==` $2^n$ for all integer values $n \geq 0$.
 
 **Proof:** We use the principle of mathematical induction on `n`.
 
@@ -58,41 +58,41 @@ Perhaps test cases are not enough for you, or you would like to see the deep con
 
 `exp 0 == 1` (by clause 1 of `exp`)
 
-`1 ==` \\(2^0\\) (math)
+`1 ==` $2^0$ (math)
 
 When dealing with arithmetic, we may justify proof steps by "math". Also, unless stated otherwise, we may assume SML implements basic mathematical operations correctly, such as `+` and `*`.
 
-**Inductive step:** Let \\( k \geq 0 \\) be fixed.
+**Inductive step:** Let $k \geq 0$ be fixed.
 
-Induction hypothesis: Assume that `exp k ==` \\( 2^k \\).
+Induction hypothesis: Assume that `exp k ==` $2^k$.
 
 We want to show the theorem for `k+1`.
 
 `exp (k+1) == 2 * exp (k+1-1)` (by clause 2 of `exp`)
 
-`== 2 * exp k` (by math, \\(k+1-1 \\) `==` \\(k \\) )
+`== 2 * exp k` (by math, $k+1-1$ `==` $k$ )
 
-`== 2 *` \\(2^k \\) (by IH)
+`== 2 *` $2^k$ (by IH)
 
-`==` \\(2^{k+1} \\) (math)
+`==` $2^{k+1}$ (math)
 
 This concludes the inductive step.
 
 There are some things to note about this proof. First, every time we are evaluating SML code, we justify which line of code allows us to make a particular step. For example, when evaluating `exp (k+1)`, clause 2 of `exp` tells us that expression is extensionally equivalent to `2 * exp (k+1-1)`. In fact, we can say `exp (k+1)` **_steps to_** `2 * exp (k+1-1)`.
 
-Second, we've abbreviated the induction hypothesis citation as "IH". Furthermore, note how we quantified the induction hypothesis: we are not assuming the theorem is true for all natural numbers. Rather, we assume the theorem is true for some fixed `k` (which is \\( \geq 0 \\) ).
+Second, we've abbreviated the induction hypothesis citation as "IH". Furthermore, note how we quantified the induction hypothesis: we are not assuming the theorem is true for all natural numbers. Rather, we assume the theorem is true for some fixed `k` (which is $\geq 0$ ).
 
-The principle of mathematical induction works due to a sort of domino effect. Let's notate that the theorem is true for an integer \\( n \\) with \\( P(n) \\). In the above proof, we've shown \\( P(0) \\), and that \\( P(k) \implies P(k+1) \\) for all \\(k \geq 0 \\).
+The principle of mathematical induction works due to a sort of domino effect. Let's notate that the theorem is true for an integer $n$ with $P(n)$. In the above proof, we've shown $P(0)$, and that $P(k) \implies P(k+1)$ for all $k \geq 0$.
 
-For example, suppose we wanted to show \\( P(2) \\). We begin with \\( P(0) \\), and from the inductive step get \\( P(1) \\). Then we apply the inductive step again to get \\( P(2) \\).
+For example, suppose we wanted to show $P(2)$. We begin with $P(0)$, and from the inductive step get $P(1)$. Then we apply the inductive step again to get $P(2)$.
 
 ## The "Type" of Natural Numbers
 
 We can _inductively_ define the natural numbers using Peano's axioms:
 
-\\( 0 \\) is a natural number. For every natural number \\( n \\), \\( S(n) \\) is a natural number.
+$0$ is a natural number. For every natural number $n$, $S(n)$ is a natural number.
 
-We call \\( S(n) \\) the successor of \\( n \\). It's just a fancy term for saying "add 1". Using these axioms, we can create a datatype that encapsulates natural numbers:
+We call $S(n)$ the successor of $n$. It's just a fancy term for saying "add 1". Using these axioms, we can create a datatype that encapsulates natural numbers:
 
 `datatype nat = Zero | Succ of nat`
 
@@ -109,13 +109,13 @@ fun exp' Zero = 1
   | exp' (Succ n) = 2 * exp' n
 ```
 
-The `ENSURES` is a bit sloppy because we haven't defined taking exponents of values of type `nat`, but hopefully it has meaning for the code's reader. Now, if we wanted to prove the correctness of this version of `exp'`, our base case would be showing `exp' Zero == ` \\( 2^0 \\). The inductive step would be showing that if `exp' n == ` \\( 2^n \\), then `exp' (Succ n) == ` \\( 2^{n+1} \\). We'll omit the proof's details.
+The `ENSURES` is a bit sloppy because we haven't defined taking exponents of values of type `nat`, but hopefully it has meaning for the code's reader. Now, if we wanted to prove the correctness of this version of `exp'`, our base case would be showing `exp' Zero == ` $2^0$. The inductive step would be showing that if `exp' n == ` $2^n$, then `exp' (Succ n) == ` $2^{n+1}$. We'll omit the proof's details.
 
 It may seem pointless to write the above code (indeed, it is not that practical). But, there are two advantages: we don't need to restrict the inputs to `exp'` anymore, because negative numbers are not natural numbers! So, we won't need to worry about looping forever, which would happen in the earlier version of `exp` if we tried evaluating `exp ~1`. Also, the code portrays how **_structural induction_** is basically an overpowered version of the principle of mathematical induction.
 
 ## Strong induction
 
-For proofs on natural numbers, we can also make use of **_strong induction_**. With strong induction, the inductive step is showing that for an arbitrary \\( k > 0 \\), \\( P(0), P(1), \cdots, P(k-1) \\) all together imply \\( P(k) \\). In other words, we can make use of the theorem being true on all previous natural numbers, as our induction hypothesis.
+For proofs on natural numbers, we can also make use of **_strong induction_**. With strong induction, the inductive step is showing that for an arbitrary $k > 0$, $P(0), P(1), \cdots, P(k-1)$ all together imply $P(k)$. In other words, we can make use of the theorem being true on all previous natural numbers, as our induction hypothesis.
 
 With `exp`, the recursive case only references `exp (n-1)`, so the principle of mathematical induction (also known as simple induction) is sufficient. But for code which references not just the previous number, strong induction will be useful in proofs. For example, let us rewrite `exp` one last time:
 
@@ -192,13 +192,13 @@ Our `@` function recurses on the left list. If it's empty, we just return the ri
 
 ## List Induction
 
-Let's consider proofs by structural induction on lists. Let's say we want to show that some property \\( P \\) is true for all values of type `t list`. It suffices to show the following:
+Let's consider proofs by structural induction on lists. Let's say we want to show that some property $P$ is true for all values of type `t list`. It suffices to show the following:
 
-**Base case:** \\( P( \\) `[]` \\() \\). In other words, we show the theorem holds for the empty list.
+**Base case:** $P($ `[]` $)$. In other words, we show the theorem holds for the empty list.
 
-**Inductive step:** For any value `xs : t list`, and any value `x : t`, \\( P( \\) `xs` \\() \implies P( \\) `x::xs` \\() \\).
+**Inductive step:** For any value `xs : t list`, and any value `x : t`, $P($ `xs` $) \implies P($ `x::xs` $)$.
 
-For example, if the type `t` is `int`, then \\( P( \\) `[1,2]` \\( ) \\) is true because the base case tells us \\( P( \\) `[]` \\( ) \\), and then one application of the inductive step gets us \\( P( \\) `2::[]` \\( ) \\), and one more application of the inductive step gets us \\( P( \\) `1::2::[]` \\( ) \\). Remember that `1::2::[]` is the same thing as `[1,2]`.
+For example, if the type `t` is `int`, then $P($ `[1,2]` $)$ is true because the base case tells us $P($ `[]` $)$, and then one application of the inductive step gets us $P($ `2::[]` $)$, and one more application of the inductive step gets us $P($ `1::2::[]` $)$. Remember that `1::2::[]` is the same thing as `[1,2]`.
 
 ### Proving the totality of `length`
 
@@ -215,7 +215,7 @@ In other words, the theorem states that the function `length` is **_total_**. We
 
 > Be careful not to mix up `==>` and `==`. For example, `4 == 2+2` is true because the expressions are extensionally equivalent, but no compiler in their right mind would step `4` to `2+2`. Therefore `4 ==> 2+2` is nonsense.)
 
-> Furthermore, "steps to", or `==>`, is very different from \\( \implies \\). `==>` is used when talking about expressions in SML. \\( \implies \\) is not particular to SML, since it's the symbol for logical implication.
+> Furthermore, "steps to", or `==>`, is very different from $\implies$. `==>` is used when talking about expressions in SML. $\implies$ is not particular to SML, since it's the symbol for logical implication.
 
 **Proof:** We'll use structural induction on `L`.
 

@@ -40,7 +40,7 @@ We will declare this definition of extensional equivalence for non-function expr
 
 **NOTE:** `==` is not valid SML code.
 
-As such, clearly expressions such as `2 + 2` and `3 + 1` should be extensionally equivalent, since they reduce to the same value, that being `4`. It is important to note that reduction is a _stronger_ relation than extensional equivalence - if one expression reduces to another, then they must by definition be extensionally equivalent. However, extensional equivalence does not imply reduction. For instance, `4` does not reduce to `2 + 2`, since clearly `4` is already in its most simplified form. This corresponds to our intuition about traditional mathematical expressions, as we would expect that we could say that \\( -1 \\) and \\( \cos(\pi) \\) are equal, since they have the same value.
+As such, clearly expressions such as `2 + 2` and `3 + 1` should be extensionally equivalent, since they reduce to the same value, that being `4`. It is important to note that reduction is a _stronger_ relation than extensional equivalence - if one expression reduces to another, then they must by definition be extensionally equivalent. However, extensional equivalence does not imply reduction. For instance, `4` does not reduce to `2 + 2`, since clearly `4` is already in its most simplified form. This corresponds to our intuition about traditional mathematical expressions, as we would expect that we could say that $-1$ and $\cos(\pi)$ are equal, since they have the same value.
 
 With the second point, however, we depart from our normal mathematical reasoning. It is generally the case that, given a mathematical expression, we expect to be able to generate a result from it. That result may be undefined, and it may take some time, but in many cases we don't expect to have to account for a nonterminating computation. This is not the case in Standard ML. Now, any given function call may loop forever, which plainly is problematic for equivalence.
 
@@ -58,7 +58,7 @@ For many cases, our intuition will suffice. It is clear to say that `2` is the s
 
 This definition will suffice for most types. For functions, however, we will have to take a different approach.
 
-> **[Extensional Equivalence (Functions)]** We say two expressions `e : t1 -> t2` and `e' : t1 -> t2` for some types `t1` and `t2` are extensionally equivalent if for all values `x : t1`, `e x`\\( \cong \\)`e' x`.
+> **[Extensional Equivalence (Functions)]** We say two expressions `e : t1 -> t2` and `e' : t1 -> t2` for some types `t1` and `t2` are extensionally equivalent if for all values `x : t1`, `e x`$\cong$`e' x`.
 
 We see that this definition simply takes our previous definition and moves it one step up. There is an interesting aspect of this rule that depends on a concept that we have yet to learn, but we will cover that when we get there. Seen in this way, we can say that two function values that are not the same literal value may be extensionally equivalent, as their _extensional_ behavior (that is, their behavior when interacting with other objects) may be the same.
 
@@ -70,11 +70,11 @@ As discussed before, our definition of "equivalence" identifies functions with t
 
 In this section we will introduce a powerful idea called _referential transparency_, which follows as a direct consequence of our definition of extensional equivalence.
 
-> **[Referential Transparency]** Consider an expression `e` that contains the expression `e1` as a sub-expression. For any expression `e2`\\( \cong \\)`e1`, we can produce the expression `e'` as the same expression as `e`, but with each sub-expression `e1` replaced with `e2`, and we will have `e`\\( \cong \\)`e'`. In words, for an expression `e` that contains `e1`, we can swap out `e1` for an extensionally equivalent `e2` to obtain an expression extensionally equivalent to `e`.
+> **[Referential Transparency]** Consider an expression `e` that contains the expression `e1` as a sub-expression. For any expression `e2`$\cong$`e1`, we can produce the expression `e'` as the same expression as `e`, but with each sub-expression `e1` replaced with `e2`, and we will have `e`$\cong$`e'`. In words, for an expression `e` that contains `e1`, we can swap out `e1` for an extensionally equivalent `e2` to obtain an expression extensionally equivalent to `e`.
 
 **NOTE:** The notion of a "sub-expression" here is not very well defined - we will use our intuition here, similarly with what it means to be the "same expression". Gaining an intuition through examples will suffice.
 
-To illustrate this, we might say that the expression `4 * (2 + 2)` has the sub-expression `2 + 2`, and that `let val x = f (1 div 0) in x end` has `(1 div 0)` as a sub-expression. In the former case, we can use referential transparency to say that `4 * (2 + 2)`\\( \cong \\)`4 * 4` and `let val x = f (1 div 0) in x end`\\( \cong \\)`let val x = f (2 div 0) in x end`, by replacing the aforementioned sub-expressions with `4` and `2 div 0`, respectively.
+To illustrate this, we might say that the expression `4 * (2 + 2)` has the sub-expression `2 + 2`, and that `let val x = f (1 div 0) in x end` has `(1 div 0)` as a sub-expression. In the former case, we can use referential transparency to say that `4 * (2 + 2)`$\cong$`4 * 4` and `let val x = f (1 div 0) in x end`$\cong$`let val x = f (2 div 0) in x end`, by replacing the aforementioned sub-expressions with `4` and `2 div 0`, respectively.
 
 Referential transparency will let us abstract away from the specific makeup of a certain implementation or expression, instead replacing it as we see fit with something known to be extensionally equivalent, while still allowing us to maintain extensional equivalence. This comes in handy when proving that an implementation of a particular function is correct, as we can simply prove that it is extensionally equivalent to an existing, simpler implementation that is already known to be correct. This has consequences for simplifying and optimizing implementations.
 
@@ -95,7 +95,7 @@ fun [] @ L = L
 
 Now, suppose we want to show the following theorem:
 
-`(x::xs) @ (rev A)` \\( \cong \\) `x::(xs @ (rev A))`
+`(x::xs) @ (rev A)` $\cong$ `x::(xs @ (rev A))`
 
 where `x : int`, `xs : int list`, and `A : int list` are all values. First, make sure this "feels right" -- the left side of our theorem matches the second clause of `@` with `rev A` bound to `L`.
 
@@ -117,11 +117,11 @@ And here's the kicker: we can also use `v` to evaluate the right hand side of ou
 
 \\[ `x::(xs @ (rev A))` \Longrightarrow `x::(xs @ v)` \\]
 
-Again, this complies with SML's eager evaluation-- in this case, we never even step into the definition of `@`. But, we've actually proven our theorem! We showed that the LHS and the RHS both evaluate to the same expression, so by rule 1 of the definition of \\( \cong \\), the LHS and RHS must be extensionally equivalent. We are done!
+Again, this complies with SML's eager evaluation-- in this case, we never even step into the definition of `@`. But, we've actually proven our theorem! We showed that the LHS and the RHS both evaluate to the same expression, so by rule 1 of the definition of $\cong$, the LHS and RHS must be extensionally equivalent. We are done!
 
 In this example, we got around SML's eager evaluation by assuming that our parameter `rev A` is valuable, and as it turns out, this concept holds in the general case. If we know the parameter of a function is _valuable_, then we can step into the function _without_ first evaluating that parameter. This principle, which we will call (for lack of a better term) "stepping with valuable expressions," is one reason why valuable expressions are so important.
 
-> **[Caution!]** When stepping with _values_, we can use the reduction relation \\( \Longrightarrow \\). When stepping with _valuable expressions_, this is not always true (it certainly is not true in the example above). Stepping with valuable expressions only preserves extensional equivalence \\( \cong \\).
+> **[Caution!]** When stepping with _values_, we can use the reduction relation $\Longrightarrow$. When stepping with _valuable expressions_, this is not always true (it certainly is not true in the example above). Stepping with valuable expressions only preserves extensional equivalence $\cong$.
 
 ## Totality
 
