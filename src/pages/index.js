@@ -31,9 +31,7 @@ export default function Home() {
       description="Description will go into a meta tag in <head />"
     >
       <Header />
-      <main>
-        <Features />
-      </main>
+      <Features />
     </Layout>
   );
 }
