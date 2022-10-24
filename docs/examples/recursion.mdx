@@ -87,7 +87,7 @@ Given the following function:
 ```sml
 (* length: int list -> int *)
 fun length [] = 0
-  | length x::xs = 1 + length(xs)
+  | length (x::xs) = 1 + length(xs)
 
 (* append: int list * int list -> int list *)
 fun append ([], L) = L
