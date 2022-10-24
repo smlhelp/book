@@ -12,6 +12,8 @@
     "Functors",
     "horiz",
     "Infima",
+    "katex",
+    "rehype",
     "smlhelp"
   ]
 }

@@ -2,6 +2,8 @@
 
 const theme = require("prism-react-renderer/themes/github");
 const darkTheme = require("prism-react-renderer/themes/dracula");
+const math = require("remark-math");
+const katex = require("rehype-katex");
 
 const title = "SML Help";
 const org = "smlhelp";
@@ -30,10 +32,10 @@ const config = {
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
+        docs: { remarkPlugins: [math], rehypePlugins: [katex] },
       }),
     ],
   ],
-
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -53,6 +55,17 @@ const config = {
         additionalLanguages: ["sml", "vim"],
       },
     }),
+  // TODO figure out how to get the katex css without CDN (should already be
+  // in node_modules)
+  stylesheets: [
+    {
+      href: "https://cdn.jsdelivr.net/npm/katex@0.16.3/dist/katex.min.css",
+      type: "text/css",
+      integrity:
+        "sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM",
+      crossorigin: "anonymous",
+    },
+  ],
 };
 
 module.exports = config;
