@@ -18,13 +18,17 @@ Patterns take on many appearances, such as:
 
 Patterns can be matched against values to form bindings. Consider the following declaration:
 
-`val (x,y) = (1,2)`
+```sml
+val (x,y) = (1,2)
+```
 
 The result is that `1` gets bound to `x`, and `2` gets bound to `y`.
 
 Pattern matching may fail. For example, the following raises exception `Bind`.
 
-`val 10 = 9`
+```sml
+val 10 = 9
+```
 
 Besides `val` declarations, pattern matching is also used in function declarations, lambda expressions, and case expressions.
 
@@ -60,13 +64,17 @@ The second clause of `factloop` never gets executed! When evaluating `factloop 0
 
 ## Lambda expressions
 
-`(fn [] => false | x::xs => true) [1,2,3]`
+```sml
+(fn [] => false | x::xs => true) [1,2,3]
+```
 
 The lambda expression is similar to a function, as it turns an input into an output. In the example above, `[1,2,3]` is the input. It doesn't match with `[]`, but it does match with `x::xs`. Namely, `1` gets bound to `x`, and the list `[2,3]` gets bound to `xs`. As a result of this successful pattern matching, the lambda expression returns `true`.
 
 You should still make sure your patterns are exhaustive. For example, the following expression raises exception `Match`:
 
-`(fn [] => false) [1,2,3]`
+```sml
+(fn [] => false) [1,2,3]
+```
 
 ## Case expressions
 
