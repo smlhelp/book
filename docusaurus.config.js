@@ -20,6 +20,7 @@ const config = {
   onBrokenMarkdownLinks: "throw",
   organizationName: "smlhelp",
   projectName: "book",
+  trailingSlash: true,
   i18n: {
     defaultLocale: "en",
     locales: ["en"],
