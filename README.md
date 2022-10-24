@@ -39,11 +39,3 @@ This command starts a local development server and opens up a browser window. Mo
    - Write "_By &lt;your name&gt;, &lt;current month&gt;_" (with a line break afterwards) beneath the page title
 4. Add, commit, push, and pull-request your changes.
 5. If your changes get approved and merged, add a separate pull request to add yourself to the list of contributors on the "About" page (if you're not on it).
-
-## Build
-
-```sh
-$ npm run build
-```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
