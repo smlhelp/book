@@ -1,13 +1,12 @@
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
-import HomepageFeatures from "@site/src/components/HomepageFeatures";
+import { Features } from "@site/src/components/Features";
 import Layout from "@theme/Layout";
 import clsx from "clsx";
 import React from "react";
-
 import styles from "./index.module.css";
 
-function HomepageHeader() {
+function Header() {
   const { siteConfig } = useDocusaurusContext();
   return (
     <header className={clsx("hero hero--primary", styles.heroBanner)}>
@@ -31,9 +30,9 @@ export default function Home() {
       title={`Hello from ${siteConfig.title}`}
       description="Description will go into a meta tag in <head />"
     >
-      <HomepageHeader />
+      <Header />
       <main>
-        <HomepageFeatures />
+        <Features />
       </main>
     </Layout>
   );
