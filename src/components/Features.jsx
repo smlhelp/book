@@ -7,8 +7,8 @@ const FeatureList = [
     title: "Functions",
     description: (
       <>
-        Standard ML (SML) is a functional programming language. Functions are
-        the unit of abstraction.
+        Standard ML (SML) is a functional programming language. It emphasizes
+        modularity, purity, and formal reasoning about programs.
       </>
     ),
   },
@@ -16,7 +16,8 @@ const FeatureList = [
     title: "Types",
     description: (
       <>
-        SML has rich static types and type inference. Type errors never occur at
+        SML has rich built-in types, static type inference, first-class
+        functions, and user-definable datatypes. Type errors never occur at
         runtime.
       </>
     ),
@@ -25,8 +26,8 @@ const FeatureList = [
     title: "Recursion",
     description: (
       <>
-        Express complex algorithms with concise recursive formulations. Then
-        prove them correct with induction.
+        Express algorithms with concise recursive formulations. Then prove them
+        correct with induction.
       </>
     ),
   },
