@@ -14,7 +14,7 @@ Going hand-in-hand with recursion is the proof technique of **_induction_**. Ind
 
 ## Iterative versus Recursive Thinking
 
-Here's a simple programming problem: write a function `exp` which takes in a natural number (an integer greater than or equal to zero) and returns the quantity 2<sup>n</sup>. Of course, 2<sup>n</sup> is just the quantity 2 multiplied by itself n times (e.g. 2<sup>3</sup> is 2 times 2 times 2), with the edge case of 2<sup>0</sup>=1. Now, if we were asked to solve this problem in an _imperative programming language_ (like Python or C), our first instinct might be to do something like this:
+Here's a simple programming problem: write a function `exp` which takes in a natural number $n$ (an integer greater than or equal to zero) and returns the quantity $2^n$. Of course, $2^n$ is just the quantity 2 multiplied by itself $n$ times (e.g. $2^3 = 2 \times 2 \times 2$), with the edge case of $2^0 = 1$. Now, if we were asked to solve this problem in an _imperative programming language_ (like Python or C), our first instinct might be to do something like this:
 
 ```
 int exp (int n) {
@@ -29,7 +29,7 @@ int exp (int n) {
 }
 ```
 
-This code directly solves the problem by "multiplying by 2, n times": it establishes a "result" `res`, and then repeatedly mutates `res` by multiplying by 2. The counter `i` and the loop guard are there to make sure that we do this exactly n times, giving 2<sup>n</sup>. This is what's called an **_iterative solution_**: it consists of initializing our data (in this case, the values stored in `res` and `i`), performing a carefully-chosen sequence of mutations to it (doubling `res` and incrementing `i`), and then reading off the result (the value in `res`). It is this style of thinking which plays a central role in imperative programming.
+This code directly solves the problem by "multiplying by 2, n times": it establishes a "result" `res`, and then repeatedly mutates `res` by multiplying by 2. The counter `i` and the loop guard are there to make sure that we do this exactly n times, giving $2^n$. This is what's called an **_iterative solution_**: it consists of initializing our data (in this case, the values stored in `res` and `i`), performing a carefully-chosen sequence of mutations to it (doubling `res` and incrementing `i`), and then reading off the result (the value in `res`). It is this style of thinking which plays a central role in imperative programming.
 
 Such a solution is not possible when doing functional programming. Indeed, pure functional programming languages (by definition[^1]) do not have data "cells" which can be repeatedly modified (as `i` and `res` are in the preceding example): everything in a functional programming language is **_immutable_**. If `i` is a "variable" in a functional programming language, `i` has just one value and will never have a different value. So we must find a different way to solve this problem. Our solution will be to use **_recursion_**.
 
