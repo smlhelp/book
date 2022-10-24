@@ -1,12 +1,6 @@
 # Work and Span
 
-<!-- TODO fix
-<style>
-.aligncenter {
-    text-align: center;
-}
-</style>
- -->
+import { Figure } from "@site/src/components/Figure";
 
 _By Aditi Gupta and Brandon Wu, May 2020_. _Revised September 2020_
 
@@ -38,12 +32,12 @@ What we find is that work directly corresponds to our previous intuition of the 
 
 We illustrate these concepts with the following graph.
 
-<!-- TODO fix
-<figure class="aligncenter">
-    <img src="../assets/graphTransCropped.png" alt="Process Graph" width="1000"/>
-    <figcaption><b>Fig 1.</b> Task dependency graph illustrating dependencies between tasks and task durations</figcaption>
-</figure>
- -->
+import graphTransCropped from "@site/static/graphTransCropped.png";
+
+<Figure img={graphTransCropped} alt="Process Graph" idx={1}>
+  Task dependency graph illustrating dependencies between tasks and task
+  durations
+</Figure>
 
 So in this example, the work of our graph would be $1+3+6+2+5+9+3+3+10 = 42$, since with a single processor, the dependencies don't really matter to us. We have no choice but to complete every task, and the precise order doesn't matter. That isn't to say that we can execute the tasks in any order, that plainly isn't true - we simply mean that there is no order that can change what our runtime is.
 
@@ -70,8 +64,12 @@ First, we should fix some notion of input size. This will differ based on what o
 
 So we can write the following recurrence for work. We will explain soon what exactly it means, and how to arrive at it:
 
-<center> \( W_{length}(n) = c_0 + W_{length}(n-1) \) </center>
-<center> \( W_{length}(0) = c_1 \) </center>
+$$
+\begin{align*}
+W_{length}(0) &= c_1 \\
+W_{length}(n) &= c_0 + W_{length}(n-1)
+\end{align*}
+$$
 
 This recurrence is made of two parts - the recursive case and the base case. The first equation for $W*{length}(n)$ simply denotes what the work for an input size of $n$ should be - defined recursively. The second equation for $W*{length}(0)$ defines what the work for an input size of $0$ should be. This directly corresponds to our code, which has two clauses for a list of length $0$ (that being `[]`), and for the general case. This is an important observation to make, that the recurrence follows directly from the code.
 
@@ -85,8 +83,12 @@ For the base case, we have that $W\_{length}(0) = c_1$, since in the base case w
 
 So this is how we arrive at the work recurrence for `length`. We will now turn to the span recurrence, which we obtain as:
 
-<center> \( S_{length}(n) = c_0 + S_{length}(n-1) \) </center>
-<center> \( S_{length}(0) = c_1 \) </center>
+$$
+\begin{align*}
+S_{length}(0) &= c_1 \\
+S_{length}(n) &= c_0 + S_{length}(n-1)
+\end{align*}
+$$
 
 Note that the span recurrence is exactly the same as the work recurrence. This should make sense, because there is no opportunity for parallelism in the `length` function - we can only pop off elements one by one from the list. In the recursive case, we must wait for the result of the recursive call on `xs`, which means we unavoidably must expend the span of $S*{length}(n-1)$ - additionally, we have a data dependency. We cannot execute the addition in `1 + length xs` until we obtain the result for `length xs`, which means that we must sum the time it takes to compute `length xs` (that being $S*{length}(n-1)$) and the time it takes to carry out the addition operation (that being $c_1$).
 
@@ -96,7 +98,9 @@ We know that it has the form of $W*{length}(n) = c_0 + W*{length}(n-1)$, and eve
 
 So we start out with $W*{length}(n) = c_0 + W*{length}(n-1)$, but if we invoke the definition of $W*{length}(n-1)$, we can produce $c_0 + c_0 + W*{length}(n-2)$, since $W*{length}(n-1) = c_0 + W*{length}(n-2)$. By doing the same for $W*{length}(n-2)$, we get $c_0 + c_0 + c_0 + W*{length}(n-3)$. It seems we've hit upon a pattern - each time we "unroll" the definition of $W\_{length}(n)$, for progressively lower $n$, we get another $c_0$ term back out. Then, we know that the recurrence should eventually solve to:
 
-<center> \( W_{length}(n) = (\sum_{i=1}^n c_0) + c_1 \) </center>
+$$
+W_{length}(n) = (\sum_{(i = 1)}^n c_0) + c_1
+$$
 
 We will usually omit the $c_1$, since it does not matter asymptotically. Then, clearly this is equivalent to $nc_0 + c_1$. We see that this closed-form solution is linear in $n$ - so then we have that the work and span of this function is in $O(n)$, which is consistent with what we would expect if we had "eyeballed" it.
 
@@ -111,12 +115,11 @@ datatype tree = Empty
 
 This denotes that a tree is either the constant constructor `Empty` denoting the empty tree, or a `Node` that contains an integer value, as well as two `tree` children, that can themselves be `Node`s or `Empty`.
 
-<!-- TODO fix
-<figure class="aligncenter">
-    <img src="../assets/treeTrans.png" alt="Tree" width="500"/>
-    <figcaption><b>Fig 2.</b> Sample binary tree</figcaption>
-</figure>
--->
+import treeTrans from "@site/static/treeTrans.png";
+
+<Figure img={treeTrans} alt="Tree" idx={2}>
+  Sample binary tree
+</Figure>
 
 So for instance, we may represent the above tree with `Node(Node(Node(Empty, 4, Empty), 3, Empty), 1, Node(Empty, 2, Empty))`. Put more fancily:
 
@@ -153,8 +156,12 @@ The major difference between this function and the previous `length` function wa
 
 We will obtain the following work recurrence:
 
-<center> \( W_{size}(n) = c_0 + W_{size}(n_l) + W_{size}(n_r) \) </center>
-<center> \( W_{size}(0) = c_1 \) </center>
+$$
+\begin{align*}
+W_{size}(0) &= c_1 \\
+W_{size}(n) &= c_0 + W_{size}(n_l) + W_{size}(n_r)
+\end{align*}
+$$
 
 where we define the number of nodes in the tree $n = 1 + n*l + n_r$, and $n_l$ and $n_r$ denote the number of nodes in the left and right subtree, respectively. This follows similarly to our recurrence for `length` in the previous part, where `c_0` is just some constant amount of work that we necessarily have to do, and the two $W*{size}$ calls are from the two recursive calls we make to `L` and `R`.
 
@@ -168,8 +175,12 @@ The important point to note is that, now, we have two separate recursive calls t
 
 So we will write the span recurrence as follows:
 
-<center> \( S_{size}(n) = c_0 + max(S_{size}(n_l), S_{size}(n_r)) \) </center>
-<center> \( S_{size}(0) = c_1 \) </center>
+$$
+\begin{align*}
+S_{size}(0) &= c_1 \\
+S_{size}(n) &= c_0 + max(S_{size}(n_l), S_{size}(n_r))
+\end{align*}
+$$
 
 Now note that we are taking the max over the two recursive calls. Now, we cannot handwave the structure of the tree like we did in the previous part - if one path is significantly longer than the other, then it will stall the computation for longer. We still must visit every node, but some of them can occur in parallel.
 
@@ -177,8 +188,12 @@ We will consider the first case - if we have an unbalanced tree. Suppose that th
 
 So we can update our recurrence and obtain:
 
-<center> \( S_{size}(n) = c_0 + S_{size}(n-1) \) </center>
-<center> \( S_{size}(0) = c_1 \) </center>
+$$
+\begin{align*}
+S_{size}(0) &= c_1 \\
+S_{size}(n) &= c_0 + S_{size}(n-1)
+\end{align*}
+$$
 
 This recurrence is exactly the same as that of `length`, so we know that we will get that $S(n) \in O(n)$. This should make sense intuitively, since the depth of the tree is $n$, and there are dependencies between each level - we cannot go to the next level until we are done with the current one. So we cannot avoid having to visit every level sequentially, which results in $O(n)$ span.
 
@@ -186,8 +201,12 @@ Now, what if we consider a balanced tree? Well, the balanced case would be if th
 
 So we can update our recurrence and obtain:
 
-<center> \( S_{size}(n) = c_0 + S_{size}(\frac{n}{2}) \) </center>
-<center> \( S_{size}(0) = c_1 \) </center>
+$$
+\begin{align*}
+S_{size}(0) &= c_1 \\
+S_{size}(n) &= c_0 + S_{size}(\frac{n}{2})
+\end{align*}
+$$
 
 This is slightly different than our `length` recurrence. We will try unrolling to make sense of this recurrence.
 
@@ -207,21 +226,20 @@ In these past two examples, we have only seen examples that did a constant amoun
 >
 > Each traversal is characterized by a certain "strategy" of traversal, depending on how it ranks the three possible directions that it can go - root, left, and right. Inorder traversal, for instance, is characterized by left-root-right prioritization - this means that it goes left first, and if it can't go left, then it visits the root node, and otherwise it goes right. Note that this does not mean that it visits the root of the left subtree first - it simply reruns the same process on the entire left subtree. No matter what the traversal strategy is, a node is never actually visited until the "root" action is taken. Preorder traversal is root-left-right, and postorder is left-right-root. Examples of preorder and inorder traversals (the most common you will see in this book) are below.
 
-<!-- TODO fix
-<figure class="aligncenter">
-    <img src="../assets/traversals.png" alt="traversal" width="650"/>
-    <figcaption><b>Fig 3.</b> An example of a preorder traversal (left) and inorder traversal (right) of a binary tree, with visited nodes labeled in ascending order </figcaption>
-</figure>
- -->
+import traversals from "@site/static/traversals.png";
+
+<Figure img={traversals} alt="Tree" idx={3}>
+  An example of a preorder traversal (left) and inorder traversal (right) of a
+  binary tree, with visited nodes labeled in ascending order
+</Figure>
 
 > Tree traversals can also come in handy when generating different notations for mathematical expressions when represented in the form of an _binary expression tree_, which has nodes that consist of either a _numeric constant_, which has no children, a _unary operation_ with a single child, or a _binary operation_ with two children. For instance, a binary expression tree for the mathematical expression $(4-1) \* 2$ is shown below.
 
-<!--
-<figure class="aligncenter">
-    <img src="../assets/optree.png" alt="optree" width="500"/>
-    <figcaption><b>Fig 4.</b> A binary expression tree for the expression \( (4-1) * 2 \)</figcaption>
-</figure>
- -->
+import optree from "@site/static/optree.png";
+
+<Figure img={optree} alt="Tree" idx={4}>
+  A binary expression tree for the expression (4 - 1) * 2
+</Figure>
 
 > With inorder traversal of this expression tree, we can generate the constants and symbols in exactly the same order as $(4-1) \* 2$, which is how we would normally interpret it. Preorder and postorder traversal, however, result in an interesting interpretation - what is known as _prefix_ (or _Polish_) and _postfix_ (or _Reverse Polish_) notation.
 >
@@ -240,8 +258,12 @@ We will analyze only the balanced case for this function. We invite the reader t
 
 For the recursive case, we know that $W*{preord}(n)$ will take the form of $c_0 + W*@(n*l) + W*{preord}(n*l) + W*{preord}(n_r)$. By our balanced assumption, we know $n_l = n_r = \frac{n}{2}$, so we can write our work recurrence as:
 
-<center> \( W_{preord}(n) = c_0 + \frac{n}{2}c_1 + 2W_{preord}(\frac{n}{2}) \) </center>
-<center> \( W_{preord}(0) = c_2 \) </center>
+$$
+\begin{align*}
+W_{preord}(0) &= c_2 \\
+W_{preord}(n) &= c_0 + \frac{n}{2}c_1 + 2W_{preord}(\frac{n}{2})
+\end{align*}
+$$
 
 Note that the term $W*@(n_l)$ is a recurrence in terms of $n$, the size of the left list given as input to `@`. Since we know that the work complexity of `@` is $O(n)$, we can replace $W*@(\frac{n}{2})$ with $\frac{n}{2}c_1$, which is simply some constant $c_1$, scaled by a linear factor of the input $\frac{n}{2}$. This is how we will generally deal with analyzing the complexity of functions that make use of helper functions.
 
@@ -251,12 +273,11 @@ We will make use of a new method to solve this recurrence - the Tree Method.
 
 The below diagram illustrates the Tree Method.
 
-<!--
-<figure class="aligncenter">
-    <img src="../assets/treemethodTrans.png" alt="Tree method" width="1200"/>
-    <figcaption><b>Fig 5.</b> An illustration of the Tree Method for the recurrence of preord.</figcaption>
-</figure>
- -->
+import treeMethodTrans from "@site/static/treeMethodTrans.png";
+
+<Figure img={treeMethodTrans} alt="Tree" idx={5}>
+  An illustration of the Tree Method for the recurrence of preord.
+</Figure>
 
 We will now explore exactly how we arrived at this conclusion.
 

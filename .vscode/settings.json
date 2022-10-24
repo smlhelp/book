@@ -6,6 +6,7 @@
     ".docusaurus": true
   },
   "cSpell.words": [
+    "andalso",
     "Cheatsheet",
     "clsx",
     "Datatypes",
@@ -13,7 +14,10 @@
     "horiz",
     "Infima",
     "katex",
+    "orelse",
     "rehype",
-    "smlhelp"
+    "shortcircuiting",
+    "smlhelp",
+    "typechecker"
   ]
 }

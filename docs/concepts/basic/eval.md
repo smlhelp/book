@@ -64,7 +64,7 @@ In fact, what we will see is that this behavior is sufficient to characterize _a
 
 ## Eager Evaluation
 
-SML is an _eagerly evaluated_<sup>[1]</sup> language. This stands opposed to other paradigms such as _lazy_ evaluation, which is exhibited in languages such as Haskell. In an eagerly evaluated language, we evaluate arguments of functions even if we may not need them. While this arguably may be "wasteful" in some cases, we will find that this greatly simplifies work/span analysis, among other benefits.
+SML is an _eagerly evaluated_[^1] language. This stands opposed to other paradigms such as _lazy_ evaluation, which is exhibited in languages such as Haskell. In an eagerly evaluated language, we evaluate arguments of functions even if we may not need them. While this arguably may be "wasteful" in some cases, we will find that this greatly simplifies work/span analysis, among other benefits.
 
 > **[Eager Evaluation]** In an eagerly evaluated language, arguments of functions are evaluated _before_ stepping into the body of a function. For a function `f` and valuable expression `e`, when evaluating the expression `f e`, first `e` is evaluated to obtain the value `v` such that `e ==> v`, then `f v` is evaluated.
 
@@ -72,6 +72,4 @@ As an example of this, consider the function `fn x => x + 1`. If we were to try 
 
 In an example like the previous one, it doesn't particularly matter where we evaluated `2 * 3` - we would have gotten the same result either way. This is not always the case. Consider the expression `(fn x => 2) (1 div 0)`. By eager evaluation, we should evaluate the argument first, which means that this entire expression should raise an exception. Raising an exception thus happens _before we even look at the body of the function_. For all intents and purposes, the body of the function does not exist to us until we actually enter it - which necessitates that the argument to the function is valuable. It is a black box that is "locked" behind the argument.
 
-#### Footnotes
-
-[1]: In other languages, we may instead say _call-by-value_, which is a separate but closely related concept.
+[^1]: In other languages, we may instead say _call-by-value_, which is a separate but closely related concept.

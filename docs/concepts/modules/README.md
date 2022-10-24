@@ -20,12 +20,11 @@ This should not be an unfamiliar idea - this is exactly the concept of referenti
 
 This idea, however, is rather limited in scope. What if we would like to deal with a function that depends upon another function? Then we cannot freely make the swap between functions, and substitute a function into a context where its dependencies do not exist. Indeed, we cannot perform such a substitution at all in the case where a function is in any way defined beyond its own function body itself.
 
-We don't want to outlaw such practices, however - we simply need to make our _abstraction boundaries_ more explicit. When we have a package or otherwise standalone bundle of software, we should be able to use all of its components that are muutally dependent on each other - not just make our distinctions at the function level. We will do so using SML's module system.
+We don't want to outlaw such practices, however - we simply need to make our _abstraction boundaries_ more explicit. When we have a package or otherwise standalone bundle of software, we should be able to use all of its components that are mutually dependent on each other - not just make our distinctions at the function level. We will do so using SML's module system.
 
 ## Modules: Basics
 
-SML takes both the ideas of the _specification_ and the _implementation_ and provides a way of codifying both within the language itself. Of course, it is rather difficult to say "implement the list reversal function in $O(n)$ asymptotic time in $n$, the length of the list" in code<a
-href="#footnote1">_<sup>[1]</sup>_</a>, so SML will only deal with specifications at the _type-level_. That is, within SML itself, a specification for a function is simply a type for that function.
+SML takes both the ideas of the _specification_ and the _implementation_ and provides a way of codifying both within the language itself. Of course, it is rather difficult to say "implement the list reversal function in $O(n)$ asymptotic time in $n$, the length of the list" in code, so SML will only deal with specifications at the _type-level_. That is, within SML itself, a specification for a function is simply a type for that function.
 
 The term for a specification in SML is called a _signature_. Consider the following specification and implementation of a package for modular arithmetic. Note that the comments are optional.
 

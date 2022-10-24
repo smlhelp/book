@@ -31,7 +31,7 @@ int exp (int n) {
 
 This code directly solves the problem by "multiplying by 2, n times": it establishes a "result" `res`, and then repeatedly mutates `res` by multiplying by 2. The counter `i` and the loop guard are there to make sure that we do this exactly n times, giving 2<sup>n</sup>. This is what's called an **_iterative solution_**: it consists of initializing our data (in this case, the values stored in `res` and `i`), performing a carefully-chosen sequence of mutations to it (doubling `res` and incrementing `i`), and then reading off the result (the value in `res`). It is this style of thinking which plays a central role in imperative programming.
 
-Such a solution is not possible when doing functional programming. Indeed, pure functional programming languages (by definition[1]) do not have data "cells" which can be repeatedly modified (as `i` and `res` are in the preceding example): everything in a functional programming language is **_immutable_**. If `i` is a "variable" in a functional programming language, `i` has just one value and will never have a different value. So we must find a different way to solve this problem. Our solution will be to use **_recursion_**.
+Such a solution is not possible when doing functional programming. Indeed, pure functional programming languages (by definition[^1]) do not have data "cells" which can be repeatedly modified (as `i` and `res` are in the preceding example): everything in a functional programming language is **_immutable_**. If `i` is a "variable" in a functional programming language, `i` has just one value and will never have a different value. So we must find a different way to solve this problem. Our solution will be to use **_recursion_**.
 
 The following is a correct SML implementation of `exp`. Type annotations have been omitted, for clarity.
 
@@ -260,6 +260,4 @@ Functional programming lends itself very nicely to recursive code, rather than i
 
 We also saw how **proofs mirror the code**. Non-recursive clauses in functions (that is, where the function does not call itself) correspond to base cases in proofs. Recursive clauses in functions correspond to inductive steps. (When we move into more complex datatypes than lists, which may have multiple inductive cases, there may be multiple inductive steps!) The deep connection between recursion and induction is just another example of how the fields of computer science and mathematics are closely tied.
 
-### Footnotes
-
-- [1] SML actually does have mutable data cells called `ref`s. For this reason, SML is not (strictly speaking) a _pure_ functional programming language. But we primarily program with the parts of SML which are pure, and therefore don't have to worry about _side effects_.
+[^1]: SML actually does have mutable data cells called `ref`s. For this reason, SML is not (strictly speaking) a _pure_ functional programming language. But we primarily program with the parts of SML which are pure, and therefore don't have to worry about _side effects_.

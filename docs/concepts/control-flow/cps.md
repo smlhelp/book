@@ -68,9 +68,9 @@ As we can see, this code trace does correctly result in `Int.toString 6`, which 
 
 The colors in the image denote the difference between the _current_ value of `k` and the new, _constructed_ k. For instance, `k` is originally `Int.toString` (which is the blue-colored text), however it is eventually wrapped in `(fn res => ... (3 * res))`, which is the RHS of the call to `factCPS 3 Int.toString`. Thus, the "inner" `k` in the third line is in orange, to signify that it is in fact the same as the entire continuation from the previous line (also in orange), which is the "previous" `k`. Seen in this way, all that each recursive call seems to be doing is appending a layer to the continuation, while the inside remains the same.
 
-**NOTE:** The definition of `factCPS` says that the input to each lambda expression should be named `res`. In order to make understanding clearer and avoid namespace collisions, we have opted to name it `res`, `res2`, and `res3`, on each recursive call to `factCPS`. Note that this renaming does not affect the evaluation of `factCPS 3 Int.toString` and does keep it exactly equivalent to how it is actually evaluated<a href="#footnote1"> <sup> [1] </sup> </a>.
+**NOTE:** The definition of `factCPS` says that the input to each lambda expression should be named `res`. In order to make understanding clearer and avoid namespace collisions, we have opted to name it `res`, `res2`, and `res3`, on each recursive call to `factCPS`. Note that this renaming does not affect the evaluation of `factCPS 3 Int.toString` and does keep it exactly equivalent to how it is actually evaluated.[^1]
 
-So hopefully now we are convinced of `factCPS`'s correctness<a href="#footnote2"> <sup>[2]</sup> </a>. What might not be evident, however, is _why_.
+So hopefully now we are convinced of `factCPS`'s correctness.[^2] What might not be evident, however, is _why_.
 
 Recall our previous metaphor with regards to writing down instructions. It is hopefully not too difficult to see that this large lambda expression that we are constructing is akin to writing down instructions - we specify the operations that should occur when it is ultimately "collapsed" (by being given an input value), but nothing actually occurs until then. It merely encodes that information in the meantime. The next diagram will attempt to more specifically show this relationship between the "instructions" and how it arises from the definition of `factCPS`:
 
@@ -118,12 +118,6 @@ As you can see, we cannot access the inner layers of the CPS Donut without first
 
 **NOTE:** It is not important to be able to draw these examples, or parrot them verbatim. They are merely here to try and provide some intuition as to what is happening with CPS. It is very important to be able to understand _why_ it is that CPS functions work, which may be rather daunting and hard-to-grasp at first.
 
-### Footnotes
-
-<a id="footnote1"> [1]: In fact, it is <a href="https://en.wikipedia.org/wiki/Lambda_calculus#Alpha_equivalence">_alpha equivalent!_</a> </a>
-
-<a id="footnote2"> [2]: Though perhaps we should not be, until we write a full inductive proof of correctness! </a>
-
 ## Continuation Passing Style: The Definition
 
 We are now ready to attempt a definition of continuation passing style.
@@ -140,7 +134,7 @@ We are now ready to attempt a definition of continuation passing style.
 >
 > The key characteristic of CPS functions is that they are generally written with the goal of _passing their results to their continuations_. These continuations specify what computations should occur next.
 
-First, take a moment to assure yourself that the implementation of `factCPS` that we have so deeply studied _is_, in fact, in continuation passing style<a href="#footnote3"> <sup> [3] </sup></a>.
+First, take a moment to assure yourself that the implementation of `factCPS` that we have so deeply studied _is_, in fact, in continuation passing style.[^3]
 
 ```sml
 fun factCPS 0 k = k 1
@@ -152,10 +146,6 @@ As we have seen, clearly `k` is `factCPS`'s continuation, and it does call it in
 An important corollary of this definition is that a CPS function _cannot case on a recursive call to itself_. So, for instance, making a recursive call to a CPS function to see if it succeeds, then taking some action based on that premise is illegal. You may not fully understand what that means at the present, but we will explore this idea more in the future.
 
 A somewhat interesting note is that every direct-style (which is how we will term the kinds of functions that we have written until now) function admits a continuation passing style implementation. This means that continuation passing style is nothing arcane, but it is merely a _different way of viewing computation_. Functions written in continuation passing style can have significant performance benefits when compared to their direct style counterparts, so there are reasons to use continuation passing style other than just for the sake of it.
-
-### Footnotes
-
-<a id="footnote3"> [3]: Otherwise, you should be quite concerned about the competency of the author, and you would probably be better off reading a different help site.</a>
 
 ## Continuation Passing Style: A Case Study v2.0
 
@@ -337,3 +327,7 @@ This, in only a few lines (and generous whitespace), we have written an algorith
 ## Conclusions
 
 In this section, we explored the idea of continuation passing style, which lets us phrase the control flow of our functions in a more explicit manner, granting us more versatility in our implementation. We saw how CPS functions can be viewed as simply a more advanced form of accumulation, as well as how having multiple continuations (corresponding to success and failure cases) allows us to explore expansive trees of binary choices to find solutions. -->
+
+[^1]: In fact, it is [_alpha equivalent!_](https://en.wikipedia.org/wiki/Lambda_calculus#Alpha_equivalence)
+[^2]: Though perhaps we should not be, until we write a full inductive proof of correctness!
+[^3]: Otherwise, you should be quite concerned about the competency of the author, and you would probably be better off reading a different help site.
