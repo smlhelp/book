@@ -16,14 +16,14 @@ Going hand-in-hand with recursion is the proof technique of **_induction_**. Ind
 
 Here's a simple programming problem: write a function `exp` which takes in a natural number $n$ (an integer greater than or equal to zero) and returns the quantity $2^n$. Of course, $2^n$ is just the quantity 2 multiplied by itself $n$ times (e.g. $2^3 = 2 \times 2 \times 2$), with the edge case of $2^0 = 1$. Now, if we were asked to solve this problem in an _imperative programming language_ (like Python or C), our first instinct might be to do something like this:
 
-```
+```c
+// requires: n >= 0
 int exp (int n) {
-    // requires: n>=0
-    i = 0;
-    res = 1;
-    while (i<n) {
-        res = res * 2;
-        i = i+1;
+    int i = 0;
+    int res = 1;
+    while (i < n) {
+        res *= 2;
+        i++;
     }
     return res;
 }
@@ -239,7 +239,7 @@ Note how powerful structural induction is! We've proven a fact about _all_ value
 
 Let's now sketch out a proof that `@` is total (that is, for all values `A : int list` and `B : int list`, `A @ B` evaluates to a value). Recall the code of `@`:
 
-```
+```sml
 fun [] @ B = B
   | (x::xs) @ B = x::(xs @ B)
 ```

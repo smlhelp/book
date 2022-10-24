@@ -109,8 +109,7 @@ We will usually omit the $c_1$, since it does not matter asymptotically. Then, c
 First, we will discuss the definition of a binary tree in SML:
 
 ```sml
-datatype tree = Empty
-              | Node of tree * int * tree
+datatype tree = Empty | Node of tree * int * tree
 ```
 
 This denotes that a tree is either the constant constructor `Empty` denoting the empty tree, or a `Node` that contains an integer value, as well as two `tree` children, that can themselves be `Node`s or `Empty`.

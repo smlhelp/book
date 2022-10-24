@@ -38,7 +38,7 @@ For the purposes of this document, I will provide instructions as if you are usi
 
 If all you care about is syntax highlighting outside of what the 15150 setup script provides, simply add
 
-```
+```vim
 autocmd BufNewFile,BufRead *.fun set ft=sml
 autocmd BufNewFile,BufRead *.sig set ft=sml
 ```

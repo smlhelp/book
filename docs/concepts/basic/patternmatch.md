@@ -28,9 +28,9 @@ Pattern matching may fail. For example, the following raises exception `Bind`.
 
 Besides `val` declarations, pattern matching is also used in function declarations, lambda expressions, and case expressions.
 
-## Function declarations:
+## Function declarations
 
-```
+```sml
 fun fact 0 = 1
   | fact n = n * fact(n-1)
 ```
@@ -41,7 +41,7 @@ Each clause of the function declaration tells `fact` what it should do, dependin
 
 Note that it's important for your patterns to be _exhaustive_. The above function is fine, because all values of type `int` can match with either `0` or `n`. However, suppose we had the following function:
 
-```
+```sml
 fun fiction 1 = 1
   | fiction 2 = 2
   | fiction 3 = 6
@@ -51,14 +51,14 @@ There are many inputs which do not match with either `1`, `2`, or `3`. For examp
 
 A more subtle bug is when patterns are redundant. The following example has the clauses of `fact` swapped.
 
-```
+```sml
 fun factloop n = n * factloop(n-1)
   | factloop 0 = 1
 ```
 
 The second clause of `factloop` never gets executed! When evaluating `factloop 0`, SML will try to match `0` to each pattern, _in order_. Therefore, `factloop 0` steps to `0 * factloop(-1)`, because `0` can match to `n`. Convince yourself that `factloop k` will loop forever for any `k` of type `int`!
 
-## Lambda expressions:
+## Lambda expressions
 
 `(fn [] => false | x::xs => true) [1,2,3]`
 
@@ -68,9 +68,9 @@ You should still make sure your patterns are exhaustive. For example, the follow
 
 `(fn [] => false) [1,2,3]`
 
-## Case expressions:
+## Case expressions
 
-```
+```sml
 fun fact' x =
     case x of
         0 => 1

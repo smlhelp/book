@@ -56,7 +56,7 @@ Let's try writing a function that reverses a sequence. For example,
 
 This function `reverse` would have type `'a seq -> 'a seq`. In the above example, we have a sequence of length 5. The element at index 0 moves to index 4, the element at index 1 moves to index 3, ..., the element at index 4 moves to index 0. Generally, if the sequence has length `n`, the element at index `i` should move to `n - i - 1`. It's pretty easy to make off-by-one errors here, so be careful and test sequence functions thoroughly! The implementation of `reverse` is as follows:
 
-```
+```sml
 fun reverse S =
   let
     val n = Seq.length S
@@ -67,7 +67,7 @@ fun reverse S =
 
 It's also possible to write functions that deal with nested sequences. Let's write a function `multtable : int -> int seq seq` that, when given a positive integer `n`, makes an `n` by `n` multiplication table. For example,
 
-```
+```text
 multtable 5 ==>
 <<0,0,0,0,0>,
  <0,1,2,3,4>,
@@ -80,7 +80,7 @@ This time, the function that we're tabulating with needs to output a sequence, l
 
 Here is the implementation:
 
-```
+```sml
 fun multtable n =
   Seq.tabulate (fn i =>
     Seq.tabulate (fn j => i*j) n) n
@@ -105,7 +105,7 @@ The work of `Seq.tabulate f S` is the sum of all costs in the graph above. The s
 
 `Seq.map` is similar to `List.map`. The type of `Seq.map` is `('a -> 'b) -> 'a seq -> 'b seq`. Given a function `f : 'a -> 'b` and a sequence `<x_1, x_2, x_3, ..., x_n> : 'a seq`, we have:
 
-```
+```text
 Seq.map f <x_1, x_2, x_3, ..., x_n> = <f x_1, f x_2, f x_3, ..., f x_n>
 ```
 
@@ -144,7 +144,7 @@ Just like `@`, the function `Seq.append : 'a seq * 'a seq -> 'a seq` puts two se
 
 Our task is to write a function `pascal : int -> int seq seq`. Given a nonnegative integer `n`, `pascal n` evaluates to the first `n+1` rows of Pascal's triangle. For example:
 
-```
+```text
 pascal 5 =
 <<1>,
  <1,1>,
@@ -158,7 +158,7 @@ Let's try to do this task without using the formula for entries of Pascal's tria
 
 This problem has a bit of a dynamic programming flavor, in that we should remember the previous row to help calculate new rows. One issue is that using `Seq.append` or `Seq.cons` to add a row to a sequence is expensive. However, remember the pros and cons of sequences vs. lists! Adding on a row to a list requires just O(1) work. Therefore, our approach for this problem will use both sequences and lists. The solution is below. Note that it uses the function `reverse` from the `Seq.tabulate` section of this article.
 
-```
+```sml
 fun pascalH 0 = [Seq.singleton 1]
   | pascalH n =
     let

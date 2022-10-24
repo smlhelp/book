@@ -26,7 +26,6 @@ sig
     val size : 'a t -> int
     val empty : 'a t
 end
-
 ```
 
 Suppose that we would like to _extend_ the definition of a stack such that it has a limit on how many elements that it contains. However, we don't necessarily know which implementation of a stack to use - there could be several such existing implementations, so we would like to instead make our `BoundedStack` structure a _parameter of_ an existing structure ascribing to `STACK`.

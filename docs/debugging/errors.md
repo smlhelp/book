@@ -55,7 +55,7 @@ When you nest case expressions within case expressions, it's good to wrap your c
 
 For example, the following code will compile without warnings:
 
-```
+```sml
 case 0 of
   0 => (case "x" of _ => 3)
 | _ => 5
@@ -63,7 +63,7 @@ case 0 of
 
 but this code will have a match redundant error and a match nonexhaustive error:
 
-```
+```sml
 case 0 of
   0 => case "x" of _ => 3
 | _ => 5
@@ -77,14 +77,14 @@ Since function application is left associative, making sure you have correct par
 
 For example, the following code will not compile:
 
-```
+```sml
 fun f [] = 0
   | f x::xs = 1
 ```
 
 This fails to compile because function application is left-associative, so the SML compiler thinks that `x` is the only argument to the function `f`, and does not know how to parse the extra `::xs`. A fix for this issue would just to put parens around the `x::xs`, like so:
 
-```
+```sml
 fun f [] = 0
   | f (x::xs) = 1
 ```
@@ -97,7 +97,7 @@ Sometimes, code will fail to typecheck because it expects something of type `'a`
 
 For example, the following function has type `''a list * 'a -> bool`:
 
-```
+```sml
 fun contains (x, []) = false
   | contains (x, y::ys) = x = y orelse contains (x, ys)
 ```
@@ -106,7 +106,7 @@ Because `x` and `y` are compared by `=` in the function, then any inputs into th
 
 However, we might want a function that takes in an `'a list` instead because it is more general. We still need some way of comparing whether two elements are equal or not, so we will pass in an extra parameter to compare two elements. We can rewrite the function as follows:
 
-```
+```sml
 fun contains (cmp, x, []) = false
   | contains (cmp, x, y::ys) =
     case cmp (x, y) of
@@ -120,7 +120,7 @@ In general, it's preferable to use `case` expressions instead of `if-then-else` 
 
 ## ?.t Type Errors
 
-```
+```text
 errors.sml:9.7-10.18 Error: right-hand-side of clause does not agree with function result type [tycon mismatch]
   expression:  ?.t
   result type:  ?.t
@@ -160,7 +160,7 @@ fun wrap_again (x : int) : int option = opt_wrap x
 
 Although it looks innocuous, we will run into the following type error:
 
-```
+```text
 errors.sml:5.5-5.51 Error: right-hand-side of clause does not agree with function result type [tycon mismatch]
   expression:  int ?.Assembly.option
   result type:  int option
@@ -181,7 +181,7 @@ fun fact (0 : int) : int = 1
 
 Compiling this will result in the error:
 
-```
+```text
 errors.sml:2.24 Error: unbound variable or constructor: n
 errors.sml:2.14 Error: unbound variable or constructor: n
 errors.sml:2.10 Error: unbound variable or constructor: n
@@ -218,7 +218,7 @@ fun foo x =
 
 Compiling this will result in the error:
 
-```
+```text
 errors.sml:6.7-6.9 Error: syntax error: replacing  IN with  SEMICOLON
 errors.sml:11.1 Error: syntax error found at EOF
 

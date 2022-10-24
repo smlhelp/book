@@ -91,7 +91,7 @@ At this point, we have seen how exceptions let us implement a very limited form 
 
 > **[handle]** For expressions `e : t`, `e1 : t` ... `en : t`, and different values `Exn1 : exn` ... `ExnN : exn`, if the expression `e` raises the exception `ExnI`, then the expression
 >
-> ```
+> ```sml
 > e handle Exn2 => e1
 >        | Exn2 => e3
 >        ...

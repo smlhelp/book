@@ -67,7 +67,7 @@ Introducing imperative logic causes difficulties like these. It takes away the c
 
 Finally, having a way to execute side effects but still return something meaningful will be useful to use. Generally, `;` (yes this is just a semicolon lol) lets us "execute" two "programs" in sequential order. You see this used in the REPL:
 
-```
+```sml
 val x = 2 + 2;
 val y = 8 - 4;
 ```

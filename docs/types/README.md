@@ -14,7 +14,7 @@ Oftentimes, data is separated into types so that we can differentiate different 
 
 Consider the following code fragment in Python:
 
-```python
+```py
 def foo(x):
     if x == 2:
         return 1

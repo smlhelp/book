@@ -41,7 +41,7 @@ The basic structure of a test is as follows:
 
 Suppose we are trying to debug function `f : int -> int`, and we expect `f 1` to evaluate to `0`. Then, we would write our test case as
 
-```
+```sml
 val 0 = f 1
 ```
 
@@ -61,7 +61,7 @@ Often, simply just walking through each step in the code to ensure it evaluates 
 
 Suppose we want to see what some function `f : int -> int` evaluates to on the input `1`. Then, we would write the following code:
 
-```
+```sml
 val () = print (Int.toString (f 1))
 ```
 

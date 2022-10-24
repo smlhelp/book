@@ -8,13 +8,13 @@ This website is built using [Docusaurus 2](https://docusaurus.io/), a modern sta
 
 Clone the repo, then:
 
-```
+```sh
 $ npm install
 ```
 
 ## Local Development
 
-```
+```sh
 $ npm start
 ```
 
@@ -42,7 +42,7 @@ This command starts a local development server and opens up a browser window. Mo
 
 ## Build
 
-```
+```sh
 $ npm run build
 ```
 
