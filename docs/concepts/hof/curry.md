@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Currying and Staging
 
 _By Brandon Wu, June 2020_

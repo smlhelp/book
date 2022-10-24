@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Bool
 
 _By Jacob Neumann, May 2020_

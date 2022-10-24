@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Installing SML/NJ
 
 _By Brandon Wu, May 2020_, _updated by Zach Battleman, April 2022_

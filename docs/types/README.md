@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Types
 
 _By Brandon Wu, May 2020_

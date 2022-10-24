@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Pattern Matching
 
 _By Kaz Zhou, September 2020_. _Revised May 2021_

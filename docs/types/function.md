@@ -1,3 +1,7 @@
+---
+sidebar_position: 5
+---
+
 # Functions
 
 _By Brandon Wu, May 2020_

@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # SML Basics Examples
 
 _By Eunice Chen, May 2020_

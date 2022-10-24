@@ -1,3 +1,7 @@
+---
+sidebar_position: 8
+---
+
 # Sequences
 
 _By Kaz Zhou, January 2021_. _Revised April 2021_

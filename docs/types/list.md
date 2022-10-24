@@ -1,3 +1,7 @@
+---
+sidebar_position: 6
+---
+
 # List
 
 _By Brandon Wu, May 2020_

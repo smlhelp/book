@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # SML Syntax Cheatsheet
 
 _By David Sun, February 2021_

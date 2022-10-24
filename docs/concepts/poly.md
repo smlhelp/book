@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # Parametric Polymorphism
 
 _By Brandon Wu, September 2020_

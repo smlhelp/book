@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Continuation Passing Style
 
 <!-- TODO fix

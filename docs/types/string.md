@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # String
 
 _By Brandon Wu, May 2020_

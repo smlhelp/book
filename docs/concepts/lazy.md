@@ -1,3 +1,7 @@
+---
+sidebar_position: 9
+---
+
 # Lazy Evaluation
 
 _By Len Huang, Cooper Pierce, and Brandon Wu, January 2021. Rewritten by Thea Brick, April 2022._

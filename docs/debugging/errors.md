@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Common Errors
 
 _By Eunice Chen, January 2021_. _Revised April 2022_

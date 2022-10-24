@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Functors
 
 _By Cooper Pierce and Brandon Wu, February 2021_

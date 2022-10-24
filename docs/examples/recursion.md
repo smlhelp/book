@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Recursion & Induction
 
 _By Eunice Chen, June 2020_

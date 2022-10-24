@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Debugging Hints and Strategies
 
 _By Eunice Chen, January 2021_

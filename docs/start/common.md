@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Common Tasks in SML
 
 _By Thea Brick, December 2021_

@@ -1,3 +1,7 @@
+---
+sidebar_position: 10
+---
+
 # Imperative Programming
 
 _By Len Huang and Cooper Pierce, February 2021_

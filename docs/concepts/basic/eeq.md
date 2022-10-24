@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Extensional Equivalence
 
 _By Brandon Wu, June 2020_

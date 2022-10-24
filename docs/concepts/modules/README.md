@@ -1,3 +1,7 @@
+---
+sidebar_position: 7
+---
+
 # Modules
 
 _By Eunice Chen and Brandon Wu, December 2020_

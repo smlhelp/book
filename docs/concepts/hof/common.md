@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Common HOFs and Partial Evaluation
 
 _By Brandon Wu, June 2020. Revised March 2022_

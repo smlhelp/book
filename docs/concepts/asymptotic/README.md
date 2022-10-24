@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Asymptotic Analysis
 
 _By Brandon Wu, May 2020_

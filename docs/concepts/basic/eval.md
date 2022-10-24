@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Evaluation
 
 _By Brandon Wu, May 2020_

@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Exceptions
 
 _By Brandon Wu, June 2020. Revised June 2022_

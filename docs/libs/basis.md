@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # SML/NJ Basis
 
 _By Jacob Neumann, June 2021_
