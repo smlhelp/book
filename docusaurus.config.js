@@ -27,10 +27,6 @@ const config = {
       "classic",
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
-        docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
-          editUrl: github,
-        },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
