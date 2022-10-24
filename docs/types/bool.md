@@ -66,15 +66,15 @@ Note that the expression between `then` and `else` (the "then branch") has the s
 It is worth noting that `if b then e1 else e2` is equivalent to the following expression, written using SML's `case` syntax.
 
 ```sml
-    case b of
-      true => e1
-    | false => e2
+case b of
+  true => e1
+| false => e2
 ```
 
 Which is also equivalent to
 
 ```sml
-    (fn true => e1 | false => e2) b
+(fn true => e1 | false => e2) b
 ```
 
 **NOTE:** It's important to note that, in the evaluation of the expression `if true then e1 else e2`, the expression `e2` is _never_ evaluated (and, analogously, `e1` never is evaluated in `if false then e1 else e2`). This is most evident when we look at the third syntax (with the lambda function): SML does not evaluate the body of a function _until the function is called_. So when `(fn true => e1 | false => e2)` gets applied to, say, `true`, then the evaluation steps immediately to `e1`, without ever evaluating `e2`. This point is explored more in a question below.
@@ -112,7 +112,7 @@ val false = false andalso (loop 3)
 The structure `Bool` is bound as part of the SML Basis. In addition to what's already been mentioned, it includes the utility function
 
 ```sml
-	Bool.toString : bool -> string
+Bool.toString : bool -> string
 ```
 
 This is useful (for instance) for print-debugging the value of a `bool`-valued variable.
@@ -121,18 +121,18 @@ This is useful (for instance) for print-debugging the value of a `bool`-valued v
 
 1. Why are the following expressions _not_ equivalent?
 
-```sml
-    (if b then e1 else e2)
+   ```sml
+   (if b then e1 else e2)
 
-    (fn (x,y) => if b then x else y) (e1,e2)
-```
+   (fn (x,y) => if b then x else y) (e1,e2)
+   ```
 
 2. Why are the following expressions _not_ equivalent?
 
-```sml
-    b1 andalso b2
+   ```sml
+   b1 andalso b2
 
-    (fn (v1,v2) => v1 andalso v2) (b1,b2)
-```
+   (fn (v1,v2) => v1 andalso v2) (b1,b2)
+   ```
 
 [^1]: This is why `andalso` and `orelse` are designated as _keywords_ above: they are _not_ infixed functions of type `bool*bool->bool`. Functions cannot exhibit this kind of "shortcircuiting" (evaluating one of their arguments and then deciding whether to evaluate the other): the integer addition `(op +) : int*int -> int` must have both of its arguments fully evaluated before proceeding to add them. The keywords `andalso` and `orelse` must be built-in to the SML evaluator to achieve shortcircuiting.

@@ -16,7 +16,7 @@ A Match Nonexhaustive warning occurs when your cases in a pattern matching expre
 
 ```sml
 fun addList [] = 0
-  | addList x::y::L = x + y + (addList L)
+  | addList (x::y::L) = x + y + (addList L)
 ```
 
 What would happen if we called `addList [5]`? We couldn't match on the first clause because the list is non-empty, and we couldn't match on the second clause because we only have one cons constructor (in particular `5::[]`). SML, understandably, won't know what to do and will raise a nonexhaustive match exception and crash.
@@ -25,9 +25,9 @@ This can occur in other places besides function inputs. For example, consider th
 
 ```sml
 fun example x =
-    case x of
-         5 => "yay!"
-       | 6 => "boo!"
+  case x of
+    5 => "yay!"
+  | 6 => "boo!"
 ```
 
 What would happen if we called `example 7`? Again, SML wouldn't know what to do (as 7 is not equal to 5 or 6) and would again raise a nonexhaustive match error. That is to say, nonexhaustive match errors can occur wherever you have some sort of pattern matched cases. In order to fix a match nonexhaustive error, simply add the case(s) that you are missing.
@@ -57,16 +57,16 @@ For example, the following code will compile without warnings:
 
 ```
 case 0 of
-     0 => (case "x" of _ => 3)
-   | _ => 5
+  0 => (case "x" of _ => 3)
+| _ => 5
 ```
 
 but this code will have a match redundant error and a match nonexhaustive error:
 
 ```
 case 0 of
-     0 => case "x" of _ => 3
-   | _ => 5
+  0 => case "x" of _ => 3
+| _ => 5
 ```
 
 Obviously, this example is very contrived, but adding parens may help in nested case expressions.
