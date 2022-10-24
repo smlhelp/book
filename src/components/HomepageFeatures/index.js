@@ -4,16 +4,31 @@ import styles from "./styles.module.css";
 
 const FeatureList = [
   {
-    title: "SML",
-    description: <>Standard ML is a functional programming language.</>,
+    title: "Functions",
+    description: (
+      <>
+        Standard ML (SML) is a functional programming language. Functions are
+        the unit of abstraction.
+      </>
+    ),
   },
   {
     title: "Types",
-    description: <>Use types to reason about your code.</>,
+    description: (
+      <>
+        SML has rich static types and type inference. Type errors never occur at
+        runtime.
+      </>
+    ),
   },
   {
     title: "Recursion",
-    description: <>Express complex algorithms with mathematical precision.</>,
+    description: (
+      <>
+        Express complex algorithms with concise recursive formulations. Then
+        prove them correct with induction.
+      </>
+    ),
   },
 ];
 

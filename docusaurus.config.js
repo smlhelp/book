@@ -11,7 +11,7 @@ const github = `https://github.com/${org}/${repo}`;
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title,
-  tagline: "A resource for learning SML",
+  tagline: "A resource for learning Standard ML",
   url: `https://${org}.github.io`,
   baseUrl: `/${repo}/`,
   onBrokenLinks: "throw",
