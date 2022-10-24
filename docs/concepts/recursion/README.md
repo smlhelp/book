@@ -50,15 +50,14 @@ In the above code, we specify the **_base case_** that $2^0 = 1$. Then, for inpu
 
 Perhaps test cases are not enough for you, or you would like to see the deep connection between induction and recursion. We can use the principle of mathematical induction to **_prove_** that our `exp` code works. Here is the theorem we want to show. Recall that we use `==` to denote two expressions being extensionally equivalent.
 
-**Theorem:** `exp n ==` $2^n$ for all integer values $n \geq 0$.
+**Theorem:** $\texttt{exp} \ n = 2^n$ for all integer values $n \geq 0$.
 
-**Proof:** We use the principle of mathematical induction on `n`.
+**Proof:** We use the principle of mathematical induction on $n$.
 
-**Base case:** We prove the theorem for `n = 0`.
+**Base case:** We prove the theorem for $n = 0$.
 
-`exp 0 == 1` (by clause 1 of `exp`)
-
-`1 ==` $2^0$ (math)
+- `exp 0 == 1` (by clause 1 of `exp`)
+- $1 = 2^0$ (math)
 
 When dealing with arithmetic, we may justify proof steps by "math". Also, unless stated otherwise, we may assume SML implements basic mathematical operations correctly, such as `+` and `*`.
 
