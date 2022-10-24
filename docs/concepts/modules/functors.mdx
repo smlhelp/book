@@ -2,6 +2,8 @@
 sidebar_position: 1
 ---
 
+import { Figure } from "@site/src/components/Figure";
+
 # Functors
 
 _By Cooper Pierce and Brandon Wu, February 2021_
@@ -356,24 +358,21 @@ How should we handle the `Node` case? Well, insertion really only happens at the
 
 So we only run into an issue when we insert into the tree such that the new node is the child of a red node. Furthermore, we know that, if the tree that we are inserting into is truly a red-black tree, it must respect the red-children invariant, and thus the the parent of the inserted node must itself have a black parent. Thus, there can only be four cases for the "site" of the insertion:
 
-<!-- TODO fix
-<figure class="aligncenter">
-    <img src="../assets/redblack.svg" alt="Cases" width="1000"/>
-    <figcaption><b>Fig 1.</b> Illustration of the four cases of the red-children
-    invariant being broken following insertion. The inserted nodes are marked
-    with a "plus". </figcaption>
-</figure>
- -->
+import redblack from "@site/static/redblack.svg";
+
+<Figure img={redblack} alt="Cases" idx={1}>
+  Illustration of the four cases of the red-children invariant being broken
+  following insertion. The inserted nodes are marked with a "plus".
+</Figure>
 
 Such an invariant violation is only a local concern, however. All that is needed in order to restore the invariant is to simple _rotate_ the site of violation, and do a simple recoloring. We will illustrate only the first case, and the rest follow similarly. You may verify for yourself that this continues to preserve the ordering and black-height invariants.
 
-<!-- TODO fix
-<figure class="aligncenter">
-    <img src="../assets/balance.svg" alt="Balance" width="1000"/>
-    <figcaption><b>Fig 2.</b> Illustration of the "balancing" necessary in order
-    to preserve the red-children invariant in Case 1 of Fig. 1. </figcaption>
-</figure>
- -->
+import balance from "@site/static/balance.svg";
+
+<Figure img={balance} alt="Balance" idx={2}>
+  Illustration of the "balancing" necessary in order to preserve the
+  red-children invariant in Case 1 of Fig. 1.
+</Figure>
 
 We thus write the following function which takes care of all four cases.
 
@@ -408,12 +407,16 @@ However, this code is not complete. There is a minor edge case that remains - wh
 
 Consider the case illustrated below:
 
-<!-- TODO fix
-<figure class="aligncenter">
-    <img src="../assets/insert.svg" alt="Example of inserting two nodes into an empty tree" width="1000"\>
-    <figcaption><b>Fig 3.</b> Demonstration of potential issues in inserting nodes at the root when lacking a black parent. </figcaption>
-</figure>
- -->
+import insert from "@site/static/insert.svg";
+
+<Figure
+  img={insert}
+  alt="Example of inserting two nodes into an empty tree"
+  idx={3}
+>
+  Demonstration of potential issues in inserting nodes at the root when lacking
+  a black parent.
+</Figure>
 
 As we can see here, our previous reasoning does not catch this red-children violation because it does not conform to our previous cases, by virtue of the inserted node not having a grandfather. This case can _only_ happen at the root, however, since that is the only location where that can occur. As a result, the simple solution is to simply make the root of any red-black tree black - it will preserve the black height invariant, but also result in this red-red violation being impossible. We can amend our code as follows:
 
