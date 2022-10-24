@@ -47,10 +47,6 @@ const config = {
           },
         ],
       },
-      footer: {
-        style: "dark",
-        copyright: `Copyright © ${new Date().getFullYear()} The SML Help Authors.`,
-      },
       prism: {
         theme,
         darkTheme,
