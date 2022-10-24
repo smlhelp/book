@@ -18,8 +18,8 @@ const config = {
   baseUrl: `/${repo}/`,
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
-  organizationName: "smlhelp",
-  projectName: "book",
+  organizationName: org,
+  projectName: repo,
   trailingSlash: true,
   i18n: {
     defaultLocale: "en",
