@@ -12,7 +12,7 @@ Evaluation is a commonplace idea. No matter what programming language you are in
 
 Expressions in Standard ML are akin to mathematical expressions. They are built up from applications of certain operations, being subject to certain simplification rules that can be used to obtain a final answer. For instance, we would consider `2 + 2` an expression, similarly to other examples such as `1 div 0` and `Int.toString 2`.
 
-The most fundamental building blocks in Standard ML are _values_. Values are the primordial units of a given type, being irreducible to any further simplified form. When trying to answer some computational problem, it is usually the case that we are looking for some kind of "answer". As such, values are important to obtain, as we are usually looking for some kind of answer in "simplest terms". Values in SML emcompass examples such as `2`, `true`, `"foo"`, `[1, 2, 3]` and `fn x => x + 1`.
+The most fundamental building blocks in Standard ML are _values_. Values are the primordial units of a given type, being irreducible to any further simplified form. When trying to answer some computational problem, it is usually the case that we are looking for some kind of "answer". As such, values are important to obtain, as we are usually looking for some kind of answer in "simplest terms". Values in SML encompass examples such as `2`, `true`, `"foo"`, `[1, 2, 3]` and `fn x => x + 1`.
 
 > **[Value]** A value is an expression `e` such that, for all `e'` such that `e ==> e'`, `e' = e`. In other words, a value is an expression that only reduces to itself - there is no pending computation left to be done.
 

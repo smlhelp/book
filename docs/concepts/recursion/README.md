@@ -29,7 +29,7 @@ int exp (int n) {
 }
 ```
 
-This code directly solves the problem by "multiplying by 2, n times": it establishes a "result" `res`, and then repeatedly mutates `res` by multiplying by 2. The counter `i` and the loop guard are there to make sure that we do this exactly n times, giving $2^n$. This is what's called an **_iterative solution_**: it consists of initializing our data (in this case, the values stored in `res` and `i`), performing a carefully-chosen sequence of mutations to it (doubling `res` and incrementing `i`), and then reading off the result (the value in `res`). It is this style of thinking which plays a central role in imperative programming.
+This code directly solves the problem by "multiplying by 2, n times": it establishes a "result" `res`, and then repeatedly mutates `res` by multiplying by 2. The counter `i` and the loop guard are there to make sure that we do this exactly $n$ times, giving $2^n$. This is what's called an **_iterative solution_**: it consists of initializing our data (in this case, the values stored in `res` and `i`), performing a carefully-chosen sequence of mutations to it (doubling `res` and incrementing `i`), and then reading off the result (the value in `res`). It is this style of thinking which plays a central role in imperative programming.
 
 Such a solution is not possible when doing functional programming. Indeed, pure functional programming languages (by definition[^1]) do not have data "cells" which can be repeatedly modified (as `i` and `res` are in the preceding example): everything in a functional programming language is **_immutable_**. If `i` is a "variable" in a functional programming language, `i` has just one value and will never have a different value. So we must find a different way to solve this problem. Our solution will be to use **_recursion_**.
 
@@ -79,7 +79,7 @@ This concludes the inductive step.
 
 There are some things to note about this proof. First, every time we are evaluating SML code, we justify which line of code allows us to make a particular step. For example, when evaluating `exp (k+1)`, clause 2 of `exp` tells us that expression is extensionally equivalent to `2 * exp (k+1-1)`. In fact, we can say `exp (k+1)` **_steps to_** `2 * exp (k+1-1)`.
 
-Second, we've abbreviated the induction hypothesis citation as "IH". Furthermore, note how we quantified the induction hypothesis: we are not assuming the theorem is true for all natural numbers. Rather, we assume the theorem is true for some fixed `k` (which is $\geq 0$ ).
+Second, we've abbreviated the induction hypothesis citation as "IH". Furthermore, note how we quantified the induction hypothesis: we are not assuming the theorem is true for all natural numbers. Rather, we assume the theorem is true for some fixed `k` (which is $\geq 0$).
 
 The principle of mathematical induction works due to a sort of domino effect. Let's notate that the theorem is true for an integer $n$ with $P(n)$. In the above proof, we've shown $P(0)$, and that $P(k) \implies P(k+1)$ for all $k \geq 0$.
 
