@@ -357,18 +357,18 @@ How should we handle the `Node` case? Well, insertion really only happens at the
 
 So we only run into an issue when we insert into the tree such that the new node is the child of a red node. Furthermore, we know that, if the tree that we are inserting into is truly a red-black tree, it must respect the red-children invariant, and thus the the parent of the inserted node must itself have a black parent. Thus, there can only be four cases for the "site" of the insertion:
 
-import redblack from "@site/static/redblack.svg";
+import Redblack from "@site/static/redblack.svg";
 
-<Figure img={redblack} alt="Cases" idx={1}>
+<Figure figure={<Redblack />} idx={1}>
   Illustration of the four cases of the red-children invariant being broken
   following insertion. The inserted nodes are marked with a "plus".
 </Figure>
 
 Such an invariant violation is only a local concern, however. All that is needed in order to restore the invariant is to simple _rotate_ the site of violation, and do a simple recoloring. We will illustrate only the first case, and the rest follow similarly. You may verify for yourself that this continues to preserve the ordering and black-height invariants.
 
-import balance from "@site/static/balance.svg";
+import Balance from "@site/static/balance.svg";
 
-<Figure img={balance} alt="Balance" idx={2}>
+<Figure figure={<Balance />} idx={2}>
   Illustration of the "balancing" necessary in order to preserve the
   red-children invariant in Case 1 of Fig. 1.
 </Figure>
@@ -406,13 +406,9 @@ However, this code is not complete. There is a minor edge case that remains - wh
 
 Consider the case illustrated below:
 
-import insert from "@site/static/insert.svg";
+import Insert from "@site/static/insert.svg";
 
-<Figure
-  img={insert}
-  alt="Example of inserting two nodes into an empty tree"
-  idx={3}
->
+<Figure figure={<Insert />} idx={3}>
   Demonstration of potential issues in inserting nodes at the root when lacking
   a black parent.
 </Figure>

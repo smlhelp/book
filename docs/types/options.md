@@ -117,7 +117,10 @@ Option.filter : ('a -> bool) -> 'a option -> 'a option
 Which is implemented as
 
 ```sml
-fun filter p = fn NONE => NONE | (SOME x) => if p(x) then SOME x else NONE
+fun filter p opt =
+  case opt of
+    NONE => NONE
+  | SOME x => if p x then SOME x else NONE
 ```
 
 i.e. it "filters" out the value `x` if `x` does not "satisfy" `p` (`p(x) == false`). As usual with "filter" functions, we generally require `p` to be total.

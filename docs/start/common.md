@@ -93,12 +93,12 @@ So for instance, suppose we wanted to enforce that our sortedSearch function fro
 
 ```sml
 fun isSorted ([] : int list) : bool = true
-  | isSorted (x::[]) = true
-  | isSorted (x1::x2::xs) = (x < y) andalso (isSorted (x2::xs))
+  | isSorted ([_]) = true
+  | isSorted (x::y::xs) = (x < y) andalso (isSorted (y::xs))
 
 fun sortedSearch (L, y) =
   let
-    val _ = (isSorted L) andalso (raise Fail "Unsorted List!")
+    val _ = (isSorted L) orelse (raise Fail "Unsorted List!")
     (* we define a recursive helper function so that the runtime check
      * is only checked once rather than at every step. *)
     fun helper ([] : int list) : bool = false
@@ -113,7 +113,7 @@ Importantly, we generally just assume that a function has an assumed property wh
 
 ## Print-line Debugging
 
-SMLNJ defines the function `print : string -> unit` which outputs the passed string. We can use val declarations to in let expressiosn to print out a message while we are computing some result:
+SMLNJ defines the function `print : string -> unit` which outputs the passed string. We can use val declarations in let expressions to print out a message while we are computing some result:
 
 ```sml
 let
@@ -143,4 +143,4 @@ fun search ([] : int list, y : int) : bool = false
     (print (Int.toString x); (x = y) orelse (search (xs, y)))
 ```
 
-It should be noted that `;` often doesn't ''play nice'' with many things in SML, so it is best to enclose every sequence of expressions with parentheses as we did above.
+It should be noted that `;` often doesn't "play nice" with many things in SML, so it is best to enclose every sequence of expressions with parentheses as we did above.

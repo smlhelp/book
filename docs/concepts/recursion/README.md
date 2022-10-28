@@ -57,12 +57,14 @@ Perhaps test cases are not enough for you, or you would like to see the deep con
 **Base case (BC):** We prove the theorem for $n = 0$.
 
 $$
+\begin{aligned}
 & \
   \texttt{exp} \ n
 \\ = & \
   1 && \text{clause 1 of \texttt{exp}}
 \\ = & \
   2^0 && \text{math}
+\end{aligned}
 $$
 
 When dealing with arithmetic, we may justify proof steps by "math". Also, unless stated otherwise, we may assume SML implements basic mathematical operations correctly, such as `+` and `*`.
@@ -74,6 +76,7 @@ When dealing with arithmetic, we may justify proof steps by "math". Also, unless
 We want to show the theorem holds for $k + 1$, i.e. we show $\texttt{exp} \ k = 2^k$.
 
 $$
+\begin{aligned}
 & \
   \texttt{exp} \ (k + 1)
 \\ = & \
@@ -84,6 +87,7 @@ $$
   2 \times 2^k && \text{IH}
 \\ = & \
   2^{k + 1} && \text{math}
+\end{aligned}
 $$
 
 This concludes the inductive step.

@@ -78,7 +78,7 @@ val two : int = (fn x => x + 1) 1
 
 where we bind the result of evaluating the expression `(fn x => x + 1) 1` to the identifier `two`. Clearly, this expression evaluates to `2`, as `1` is substituted in for the local variable `x`, and then simply summed with `1`.
 
-**NOTE:** `fun` and `fn` differ in that functions declared with `fun` can be recursive, whereas val bindings using `fn` _cannot_. As such, while we can define the function `fact` as we did above, using `fun`, the following code _does not_ work:
+**NOTE:** `fun` and `fn` differ in that functions declared with `fun` can be recursive, whereas val bindings using `fn` _cannot_ unless you use `rec`. As such, while we can define the function `fact` as we did above, using `fun`, the following code _does not_ work:
 
 ```sml
 (* DOES NOT WORK *)

@@ -95,13 +95,13 @@ fun [] @ L = L
 
 Now, suppose we want to show the following theorem:
 
-`(x::xs) @ (rev A)` $\cong$ `x::(xs @ (rev A))`
+$$(x::xs) @ (rev A) \cong x::(xs @ (rev A))$$
 
 where `x : int`, `xs : int list`, and `A : int list` are all values. First, make sure this "feels right" -- the left side of our theorem matches the second clause of `@` with `rev A` bound to `L`.
 
 However, notice that `rev A` is not a value. Since SML is eager, we cannot step into the function `@` until we evaluate the expression `rev A`. In other words,
 
-\\[ `(x::xs) @ (rev A)` \not\Longrightarrow `x::(xs @ (rev A))` \\]
+$$(x::xs) @ (rev A) \not\Longrightarrow x::(xs @ (rev A))$$
 
 So, we're stuck! D:
 
@@ -109,13 +109,13 @@ So, we're stuck! D:
 
 Let's assume that `rev A` is valuable, i.e. it evaluates to a value, and let's give that value a name-- say, `v : int list`: \\[ `rev A` \Longrightarrow `v` \\] With this value in hand, we can do what we wanted to do!
 
-\\[ `(x::xs) @ (rev A)` \Longrightarrow `(x::xs) @ v` \Longrightarrow `x::(xs @ v)` \\]
+$$(x::xs) @ (rev A) \Longrightarrow (x::xs) @ v \Longrightarrow x::(xs @ v)$$
 
 Notice that this complies with SML's eager evaluation, since we are fully evaluating the parameters of `@` before stepping into the function.
 
 And here's the kicker: we can also use `v` to evaluate the right hand side of our theorem!
 
-\\[ `x::(xs @ (rev A))` \Longrightarrow `x::(xs @ v)` \\]
+$$x::(xs @ (rev A)) \Longrightarrow x::(xs @ v)$$
 
 Again, this complies with SML's eager evaluation-- in this case, we never even step into the definition of `@`. But, we've actually proven our theorem! We showed that the LHS and the RHS both evaluate to the same expression, so by rule 1 of the definition of $\cong$, the LHS and RHS must be extensionally equivalent. We are done!
 
