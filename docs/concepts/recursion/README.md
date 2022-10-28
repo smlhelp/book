@@ -54,26 +54,37 @@ Perhaps test cases are not enough for you, or you would like to see the deep con
 
 **Proof:** We use the principle of mathematical induction on $n$.
 
-**Base case:** We prove the theorem for $n = 0$.
+**Base case (BC):** We prove the theorem for $n = 0$.
 
-- `exp 0 == 1` (by clause 1 of `exp`)
-- $1 = 2^0$ (math)
+$$
+& \
+  \texttt{exp} \ n
+\\ = & \
+  1 && \text{clause 1 of \texttt{exp}}
+\\ = & \
+  2^0 && \text{math}
+$$
 
 When dealing with arithmetic, we may justify proof steps by "math". Also, unless stated otherwise, we may assume SML implements basic mathematical operations correctly, such as `+` and `*`.
 
-**Inductive step:** Let $k \geq 0$ be fixed.
+**Inductive step (IS):** Let $k \geq 0$ be fixed.
 
-Induction hypothesis: Assume that `exp k ==` $2^k$.
+**Induction hypothesis (IH):** Assume the theorem holds for $k$, i.e., assume $\texttt{exp} \ k = 2^k$.
 
-We want to show the theorem for `k+1`.
+We want to show the theorem holds for $k + 1$, i.e. we show $\texttt{exp} \ k = 2^k$.
 
-`exp (k+1) == 2 * exp (k+1-1)` (by clause 2 of `exp`)
-
-`== 2 * exp k` (by math, $k+1-1$ `==` $k$ )
-
-`== 2 *` $2^k$ (by IH)
-
-`==` $2^{k+1}$ (math)
+$$
+& \
+  \texttt{exp} \ (k + 1)
+\\ = & \
+  2 \times \texttt{exp} \ (k + 1 - 1) && \text{clause 2 of \texttt{exp}}
+\\ = & \
+  2 \times \texttt{exp} \ k && \text{math}
+\\ = & \
+  2 \times 2^k && \text{IH}
+\\ = & \
+  2^{k + 1} && \text{math}
+$$
 
 This concludes the inductive step.
 
@@ -193,11 +204,11 @@ Our `@` function recurses on the left list. If it's empty, we just return the ri
 
 Let's consider proofs by structural induction on lists. Let's say we want to show that some property $P$ is true for all values of type `t list`. It suffices to show the following:
 
-**Base case:** $P($ `[]` $)$. In other words, we show the theorem holds for the empty list.
+**Base case:** $P([])$. In other words, we show the theorem holds for the empty list.
 
-**Inductive step:** For any value `xs : t list`, and any value `x : t`, $P($ `xs` $) \implies P($ `x::xs` $)$.
+**Inductive step:** For any value `xs : t list`, and any value `x : t`, $P(\texttt{xs}) \implies P(\texttt{x :: xs})$.
 
-For example, if the type `t` is `int`, then $P($ `[1,2]` $)$ is true because the base case tells us $P($ `[]` $)$, and then one application of the inductive step gets us $P($ `2::[]` $)$, and one more application of the inductive step gets us $P($ `1::2::[]` $)$. Remember that `1::2::[]` is the same thing as `[1,2]`.
+For example, if the type `t` is `int`, then $P([1, 2])$ is true because the base case tells us $P([])$, and then one application of the inductive step gets us $P(2 :: [])$, and one more application of the inductive step gets us $P(1 :: 2 :: [])$. Remember that `1::2::[]` is the same thing as `[1,2]`.
 
 ### Proving the totality of `length`
 
