@@ -10,13 +10,25 @@ _By Brandon Wu, May 2020_, _updated by Zach Battleman, April 2022_
 
 To set up your SML/NJ environment on the Andrew File System (AFS), first you will need to log in to AFS.
 
-You can do this by executing the command `ssh <andrew_id>@unix.andrew.cmu.edu`
+You can do this by executing the command
+
+```
+ssh <andrew_id>@unix.andrew.cmu.edu
+```
 
 You can do this from a terminal very straightforwardly on a Mac. If you are on a Windows machine, you may need to use an application such as Visual Studio Code or MobaXTerm to access a terminal.
 
-Once you are in AFS, execute the command `/afs/andrew/course/15/150/bin/setup-path`
+Once you are in AFS, execute the command
 
-Once the script has finished running, type in the command that it tells you to. It should look something like `. '/afs/andrew.cmu.edu/usrc/<andrew_id>/.bashrc`
+```
+/afs/andrew/course/15/150/bin/setup-path
+```
+
+Once the script has finished running, type in the command that it tells you to. It should look something like
+
+```
+. '/afs/andrew.cmu.edu/usrc/<andrew_id>/.bashrc
+```
 
 **IMPORTANT:** _Do not forget the . at the beginning!_ This will cause the script to not work.
 
@@ -53,7 +65,9 @@ If you already have one, feel free to skip this step!
 
 There are many many choices for a Vim plugin manager, but I recommend using [Vim-Plug](https://github.com/junegunn/vim-plug). You can install it with:
 
-`curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim`
+```
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+```
 
 #### Step 2) Modifying your .vimrc
 
@@ -98,7 +112,7 @@ augroup vimbettersml
 augroup END
 ```
 
-This configuration will setup a plugin called [vim-better-sml](https://github.com/jez/vim-better-sml) with default keybindings (I’ll put notes on this at the bottom)
+This configuration will setup a plugin called [vim-better-sml](https://github.com/jez/vim-better-sml) with default keybindings (I'll put notes on this at the bottom)
 
 #### Step 3) Open vim and actually install
 
@@ -106,10 +120,12 @@ When you open vim, type `:PlugInstall` and it should pop up a window where you s
 
 #### Step 4) Optional Cool stuff
 
-Conceal characters allow you to replace `fn` and `'a` with actual lambdas an alphas! It’s kind of hard to explain, but it's a really cool feature so try it! Just uncomment the line (remove the quote at the front):
+Conceal characters allow you to replace `fn` and `'a` with actual lambdas an alphas! It's kind of hard to explain, but it's a really cool feature so try it! Just uncomment the line (remove the quote at the front):
 
-`"au FileType sml setlocal conceallevel=2`
+```
+"au FileType sml setlocal conceallevel=2
+```
 
 #### Step 5) Keybindings
 
-If you want to use some of the other features, just look at the keybind config. The most useful, in my opinion, is opening the REPL within vim which is by default `<leader> is`. I believe `<leader>` is `\` by default, so in order to open the REPL type `\is`. If this doesn’t work, you probably have a custom leader key which you can check with `:let mapleader`. Likewise, to close the REPL is `<leader> ik`.
+If you want to use some of the other features, just look at the keybind config. The most useful, in my opinion, is opening the REPL within vim which is by default `<leader> is`. I believe `<leader>` is `\` by default, so in order to open the REPL type `\is`. If this doesn't work, you probably have a custom leader key which you can check with `:let mapleader`. Likewise, to close the REPL is `<leader> ik`.
