@@ -72,7 +72,7 @@ _Note, we let the type of a **thunk** be `unit -> 'a` just because it's convenie
 Now that we have established this notion of **_laziness_** in SML, we can do even fancier things, like create _infinite data structures_! Unlike regular data structures, infinite data structures have the potential to encode an _unbounded_ amount of data. Let's first look at a lazy list and compare it to a normal list.
 
 ```sml
-datatype 'a list     = [ ] |  ::  of 'a * 'a list
+datatype 'a list     = nil |  ::  of 'a * 'a list
 datatype 'a lazylist = Nil | Cons of 'a * (unit -> 'a lazylist)
 ```
 

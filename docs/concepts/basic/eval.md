@@ -57,9 +57,7 @@ In fact, what we will see is that this behavior is sufficient to characterize _a
 > **[Behavior of Well-Typed Expressions]** For any well-typed expression `e`, it either:
 >
 > 1. Reduces to a value
->
 > 2. Loops forever
->
 > 3. Raises an exception
 
 ## Eager Evaluation
