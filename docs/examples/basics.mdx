@@ -1,0 +1,173 @@
+---
+sidebar_position: 1
+---
+
+import { Hidden } from "@site/src/components/Hidden";
+
+# SML Basics Examples
+
+_By Eunice Chen, May 2020_
+
+## Types
+
+For each of the following declarations, state the type and value of `x`.
+
+```sml
+val x = 1 > 5
+```
+
+<Hidden>
+  Type: <code>bool</code> <br />
+  Value: <code>false</code>
+</Hidden>
+
+```sml
+val x = 15 div 0
+```
+
+<Hidden>
+  Type: <code>int</code> <br />
+  Value: Does not reduce to a value because it raises an exception
+</Hidden>
+
+```sml
+val x = 15.0 div 0.0
+```
+
+<Hidden>
+  Type: not well-typed (<code>div</code> is a function of type{" "}
+  <code>int * int -&gt; int</code>)<code>int</code> <br />
+  Value:No value, since it is not well-typed
+</Hidden>
+
+```sml
+val x = fn (n : int) => Int.toString n
+```
+
+<Hidden>
+  Type: <code>int -&gt; string</code> <br />
+  Value: <code>fn n =&gt; Int.toString n</code>
+</Hidden>
+
+```sml
+val x = fn n => ("1" ^ "5") ^ (Int.toString n)
+```
+
+<Hidden>
+  Type: <code>int -&gt; string</code> <br />
+  Value: <code>fn (n : int) =&gt; ("1" ^ "5") ^ (Int.toString n)</code>
+</Hidden>
+
+## Scope
+
+### Example 0
+
+```sml
+let
+  val y : int = 2
+in
+  fn (x : int) => z*z
+end
+```
+
+What is the value of the let-in-end expression?
+
+<Hidden>
+  No value, because <code>z</code> is not in scope (will cause an error).
+</Hidden>
+
+### Example 1
+
+```sml
+val y = 0
+val z =
+    (let
+      val x : int = 1
+      fun f (x : int) = x
+      val y : int = x + 1
+    in
+      fn (a : string) => x*2
+    end) "150"
+val a = y
+```
+
+What is the value of `y` before the let-in-end expression?
+
+<Hidden>0</Hidden>
+
+What is the value of `y` within the let-in-end expression?
+
+<Hidden>2</Hidden>
+
+What is the value of `a`?
+
+<Hidden>0</Hidden>
+
+What is the value of `z`?
+
+<Hidden>2</Hidden>
+
+### Example 2
+
+```sml
+val x : int = 1
+fun f (x : int) = x + 1
+val y : int = 2
+val z : int = f y
+val a : int = x
+```
+
+What are the values of `x`, `y`, `z`, and `a`?
+
+<Hidden>
+  <table>
+    <tbody>
+      <tr>
+        <td>x</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>y</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>z</td>
+        <td>3</td>
+      </tr>
+      <tr>
+        <td>a</td>
+        <td>1</td>
+      </tr>
+    </tbody>
+  </table>
+</Hidden>
+
+### Example 3
+
+```sml
+val x = 1
+val y = 2
+fun f (x, y) =
+    case x of
+      0 => 0
+    | y => y
+val a = f (y, x)
+val b = f (x, y)
+```
+
+What are the values of `a` and `b`?
+
+<Hidden>
+  <table>
+    <tbody>
+      <tr>
+        <td>a</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>b</td>
+        <td>1</td>
+      </tr>
+    </tbody>
+  </table>
+</Hidden>
