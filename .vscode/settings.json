@@ -1,0 +1,28 @@
+{
+  "files.exclude": {
+    "node_modules": true,
+    "build": true,
+    ".cache-loader": true,
+    ".docusaurus": true
+  },
+  "cSpell.words": [
+    "andalso",
+    "Cheatsheet",
+    "clsx",
+    "Datatypes",
+    "foldl",
+    "foldr",
+    "Functors",
+    "horiz",
+    "Infima",
+    "katex",
+    "nonexhaustive",
+    "orelse",
+    "peaceiris",
+    "rehype",
+    "shortcircuiting",
+    "smlhelp",
+    "texttt",
+    "typechecker"
+  ]
+}

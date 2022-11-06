@@ -1,0 +1,181 @@
+---
+sidebar_position: 2
+---
+
+import { Hidden } from "@site/src/components/Hidden";
+
+# Recursion and Induction
+
+_By Eunice Chen, June 2020_
+
+## Types
+
+For each of the following expressions, state its type and value.
+
+```sml
+fun f (x : int) : int = f x
+```
+
+<Hidden>
+  Type: <code>int -> int</code> <br />
+  Value: the function itself, <code>fn x => &lt;body&gt;</code>
+</Hidden>
+
+```sml
+val x = []::(150::[])
+```
+
+<Hidden>
+  Type: not well typed <br />
+  Value: no value, it is not well-typed
+</Hidden>
+
+```sml
+val x = [122]::([150]::[])
+```
+
+<Hidden>
+  Type: int list list <br />
+  Value: <code>[[122], [150]]</code>
+</Hidden>
+
+```sml
+fun f L =
+    case L of
+      [] => [[]]
+    | x::xs => [x + 1] @ []
+```
+
+<Hidden>
+  Type: not well-typed <br />
+  Value: no value, because it is not well-typed
+</Hidden>
+
+What is the type and value of x?
+
+```sml
+fun f (y : int) : int = f y
+val x : int = f y
+```
+
+<Hidden>
+  Type: int <br />
+  Value: No value, because it loops forever
+</Hidden>
+
+What is the type and value of y?
+
+```sml
+val x =
+    let
+      fun incr (n : int) = n + 1
+    in
+      incr
+    end
+val y = incr
+```
+
+<Hidden>
+  Type: No type, since incr is not in scope <br />
+  Value: No value, since it is not well typed
+</Hidden>
+
+## Induction
+
+Given the following function:
+
+```sml
+(* length: int list -> int *)
+fun length [] = 0
+  | length (x::xs) = 1 + length(xs)
+
+(* append: int list * int list -> int list *)
+fun append ([], L) = L
+  | append (x::xs, L) = x :: append(xs, L)
+```
+
+Prove that for all $L_1, L_2 : \texttt{int list}$,
+
+$$
+\texttt{length}(\texttt{append}(L_1, L_2)) = \texttt{length}(L_1) + \texttt{length}(L_2)
+$$
+
+Proof: By structural induction on $L_1$.
+
+### Base case
+
+Base case (BC): $L_1 = []$
+
+Proof, from left-hand side (LHS):
+
+$$
+\begin{aligned}
+& \
+  \texttt{length}(\texttt{append}(L_1, L_2))
+\\ = & \
+  \texttt{length}(\texttt{append}([], L_2))
+\\ = & \
+  \texttt{length}(L_2) && \text{Clause 1 of \texttt{append}}
+\end{aligned}
+$$
+
+From right-hand-side (RHS):
+
+$$
+\begin{aligned}
+& \
+  \texttt{length}(L_1) + \texttt{length}(L_2)
+\\ = & \
+  \texttt{length}([]) + \texttt{length}(L_2)
+\\ = & \
+  0 + \texttt{length}(L_2) && \text{Clause 1 of \texttt{length}}
+\\ = & \
+  \texttt{length}(L_2) && \text{math and totality of \texttt{length}}
+\end{aligned}
+$$
+
+LHS and RHS are both equivalent to identical expressions, and are thus equivalent by transitivity.
+
+### Inductive case
+
+Inductive step (IS): $L_1 = x :: xs$ for some $x : \texttt{int}$, $xs : \texttt{int list}$
+
+Inductive hypothesis (IH):
+
+$$\texttt{length}(\texttt{append} (xs, L_2)) = \texttt{length}(xs) + \texttt{length}(L_2)$$
+
+Want to show (WTS):
+
+$$\texttt{length}(\texttt{append} (x::xs, L_2)) = \texttt{length}(x::xs) + \texttt{length}(L_2)$$
+
+Proof, from LHS:
+
+$$
+\begin{aligned}
+& \
+  \texttt{length}(\texttt{append} (L_1, L_2))
+\\ = & \
+  \texttt{length}(\texttt{append} (x::xs, L_2)
+\\ = & \
+  \texttt{length} (x::\texttt{append}(xs, L_2)) && \text{Clause 2 of \texttt{append}}
+\\ = & \
+  1 + \texttt{length}(\texttt{append}(xs, L_2)) && \text{Clause 2 of \texttt{length}, totality of \texttt{append}}
+\\ = & \
+  1 + \texttt{length}(xs) + \texttt{length}(L_2) && \text{IH}
+\end{aligned}
+$$
+
+From RHS:
+
+$$
+\begin{aligned}
+& \
+  \texttt{length}(L_1) + \texttt{length}(L_2)
+\\ = & \
+  \texttt{length}(x::xs) + \texttt{length}(L_2)
+\\ = & \
+  1 + \texttt{length}(xs) + \texttt{length}(L_2) && \text{Clause 2 of \texttt{length}}
+\end{aligned}
+$$
+
+QED.

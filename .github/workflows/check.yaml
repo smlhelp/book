@@ -1,0 +1,17 @@
+name: check
+on:
+  pull_request: null
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v3
+      - name: Set up node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - name: Install deps
+        run: npm ci
+      - name: Build site
+        run: npm run build
