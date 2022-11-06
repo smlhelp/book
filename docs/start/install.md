@@ -40,7 +40,7 @@ Now that you've set up SML/NJ, you might want to make it a bit nicer to work wit
 
 ### VSCode
 
-Simply install the Standard ML plugin. From the extensions window in VS Code, just type "Standard ML" in the search and it should come up. If it does not, you can manually download the extension [here](https://marketplace.visualstudio.com/items?itemName=freebroccolo.sml) and install from the `.vsix` file. This can be done by clicking the three dots in the top right of the extensions menu and clicking "install from vsix". From there, simply provide the `.vsix` file you downloaded and now you're all set up!
+Simply install the Millet plugin. From the extensions window in VS Code, just type "Millet" in the search and it should come up. If it does not, you can manually download the extension [here](https://marketplace.visualstudio.com/items?itemName=azdavis.millet) and install from the `.vsix` file. This can be done by clicking the three dots in the top right of the extensions menu and clicking "install from vsix". From there, simply provide the `.vsix` file you downloaded and now you're all set up!
 
 ### Vim
 
