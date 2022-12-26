@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Common HOFs and Partial Evaluation
 
-_By Brandon Wu, June 2020. Revised March 2022_
+_By Brandon Wu, June 2020. Revised December 2022_
 
 In this section, we will explore a number of common higher-order functions that we will make use of. These higher-order functions embody _design patterns_ that are common in programming, and represent a _generalized notion_ of a large space of potential functions that can be made to solve a myriad of problems. This section focuses on understanding the importance that higher-order functions offer us through increasing _abstraction_, as well as _modularity_ in the structure of our code.
 
@@ -82,7 +82,7 @@ fun foldr g z [] = z
   | foldr g z (x::xs) = g(x, foldr g z xs)
 ```
 
-More specifically, `foldl` and `foldr` both describe two ways of combining the elements in a list, given a function `g`. The role of `z` is that of a "base case" in our accumulated value, so that we have an initial point to start from when using the function `g`. The result of `foldl g z [x_1, ..., x_n]` is to evaluate to `f(x_n, ..., f(x_2, f(x_1, z))...)`, and the result of `foldr g z [x_1, ..., x_n]` is to evaluate to `f(x_1, ..., f(x_n-1, f(x_n, z))...)`. We are thus choosing whether we want to fold from the _left_ of the list or the _right_.
+More specifically, `foldl` and `foldr` both describe two ways of combining the elements in a list, given a function `g`. The role of `z` is that of a "base case" in our accumulated value, so that we have an initial point to start from when using the function `g`. The result of `foldl g z [x_1, ..., x_n]` is to evaluate to `g(x_n, ..., g(x_2, g(x_1, z))...)`, and the result of `foldr g z [x_1, ..., x_n]` is to evaluate to `g(x_1, ..., g(x_n-1, g(x_n, z))...)`. We are thus choosing whether we want to fold from the _left_ of the list or the _right_.
 
 **NOTE:** One way to remember which way that that each respective `fold` goes is to identify the corresponding side (left or right) as being the side of the most _deeply nested_ element in the functions. As such, since `x_1` is the most leftmost element, `foldl` has `f(x_1, z)` as its innermost component, whereas since `x_n` is the most rightmost element, `foldr` has `f(x_n, z)`.
 

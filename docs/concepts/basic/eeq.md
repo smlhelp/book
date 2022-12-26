@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Extensional Equivalence
 
-_By Brandon Wu, June 2020_
+_By Brandon Wu, June 2020_. _Revised December 2022_
 
 Up to this point, we have been using terms such as "equal" and "equivalent" rather casually. Such a notion of equality seems to be rather intuitive, at first glance, not necessarily in need of more exposition. After all, it seems to be our intuition that if two things are equal, we will "know it when we see it". When working in the realm of mathematical expressions, we have some nice assumptions that lend credence to such a hypothesis - if we are evaluating the cosine of a number, we don't expect that the cosine function might wait forever before returning an answer to us. When working with SML code, this becomes a valid concern, and requires that we have a more particular definition of equivalence.
 
@@ -36,9 +36,9 @@ We will declare this definition of extensional equivalence for non-function expr
 >
 > 3.  Raise the same exception
 >
-> We will write `e == e'` to denote this.
+> We will write `e` $\cong$ `e'` to denote this.
 
-**NOTE:** `==` is not valid SML code.
+**NOTE:** When writing specification comments in code files, we often use `==` to denote extensional equivalence. `==` is not valid SML code, however.
 
 As such, clearly expressions such as `2 + 2` and `3 + 1` should be extensionally equivalent, since they reduce to the same value, that being `4`. It is important to note that reduction is a _stronger_ relation than extensional equivalence - if one expression reduces to another, then they must by definition be extensionally equivalent. However, extensional equivalence does not imply reduction. For instance, `4` does not reduce to `2 + 2`, since clearly `4` is already in its most simplified form. This corresponds to our intuition about traditional mathematical expressions, as we would expect that we could say that $-1$ and $\cos(\pi)$ are equal, since they have the same value.
 
@@ -58,7 +58,7 @@ For many cases, our intuition will suffice. It is clear to say that `2` is the s
 
 This definition will suffice for most types. For functions, however, we will have to take a different approach.
 
-> **[Extensional Equivalence (Functions)]** We say two expressions `e : t1 -> t2` and `e' : t1 -> t2` for some types `t1` and `t2` are extensionally equivalent if for all values `x : t1`, `e x`$\cong$`e' x`.
+> **[Extensional Equivalence (Functions)]** We say two expressions `e : t1 -> t2` and `e' : t1 -> t2` for some types `t1` and `t2` are extensionally equivalent if for all values `x : t1`, `e x` $\cong$ `e' x`.
 
 We see that this definition simply takes our previous definition and moves it one step up. There is an interesting aspect of this rule that depends on a concept that we have yet to learn, but we will cover that when we get there. Seen in this way, we can say that two function values that are not the same literal value may be extensionally equivalent, as their _extensional_ behavior (that is, their behavior when interacting with other objects) may be the same.
 
@@ -70,7 +70,7 @@ As discussed before, our definition of "equivalence" identifies functions with t
 
 In this section we will introduce a powerful idea called _referential transparency_, which follows as a direct consequence of our definition of extensional equivalence.
 
-> **[Referential Transparency]** Consider an expression `e` that contains the expression `e1` as a sub-expression. For any expression `e2`$\cong$`e1`, we can produce the expression `e'` as the same expression as `e`, but with each sub-expression `e1` replaced with `e2`, and we will have `e`$\cong$`e'`. In words, for an expression `e` that contains `e1`, we can swap out `e1` for an extensionally equivalent `e2` to obtain an expression extensionally equivalent to `e`.
+> **[Referential Transparency]** Consider an expression `e` that contains the expression `e1` as a sub-expression. For any expression `e2` $\cong$ `e1`, we can produce the expression `e'` as the same expression as `e`, but with each sub-expression `e1` replaced with `e2`, and we will have `e` $\cong$ `e'`. In words, for an expression `e` that contains `e1`, we can swap out `e1` for an extensionally equivalent `e2` to obtain an expression extensionally equivalent to `e`.
 
 **NOTE:** The notion of a "sub-expression" here is not very well defined - we will use our intuition here, similarly with what it means to be the "same expression". Gaining an intuition through examples will suffice.
 
@@ -95,27 +95,27 @@ fun [] @ L = L
 
 Now, suppose we want to show the following theorem:
 
-$$(x::xs) @ (rev A) \cong x::(xs @ (rev A))$$
+$$\texttt{(x::xs) @ (rev A)} \cong \texttt{x::(xs @ (rev A))}$$
 
 where `x : int`, `xs : int list`, and `A : int list` are all values. First, make sure this "feels right" -- the left side of our theorem matches the second clause of `@` with `rev A` bound to `L`.
 
 However, notice that `rev A` is not a value. Since SML is eager, we cannot step into the function `@` until we evaluate the expression `rev A`. In other words,
 
-$$(x::xs) @ (rev A) \not\Longrightarrow x::(xs @ (rev A))$$
+$$\texttt{(x::xs) @ (rev A)} \not\Longrightarrow \texttt{x::(xs @ (rev A))}$$
 
 So, we're stuck! D:
 
 ... or are we?
 
-Let's assume that `rev A` is valuable, i.e. it evaluates to a value, and let's give that value a name-- say, `v : int list`: \\[ `rev A` \Longrightarrow `v` \\] With this value in hand, we can do what we wanted to do!
+Let's assume that `rev A` is valuable, i.e. it evaluates to a value, and let's give that value a name-- say, `v : int list`: \[ `rev A` $\Longrightarrow$ `v` \] With this value in hand, we can do what we wanted to do!
 
-$$(x::xs) @ (rev A) \Longrightarrow (x::xs) @ v \Longrightarrow x::(xs @ v)$$
+$$\texttt{(x::xs) @ (rev A)} \Longrightarrow \texttt{(x::xs) @ v} \Longrightarrow \texttt{x::(xs @ v)}$$
 
 Notice that this complies with SML's eager evaluation, since we are fully evaluating the parameters of `@` before stepping into the function.
 
 And here's the kicker: we can also use `v` to evaluate the right hand side of our theorem!
 
-$$x::(xs @ (rev A)) \Longrightarrow x::(xs @ v)$$
+$$\texttt{x::(xs @ (rev A))} \Longrightarrow \texttt{x::(xs @ v)}$$
 
 Again, this complies with SML's eager evaluation-- in this case, we never even step into the definition of `@`. But, we've actually proven our theorem! We showed that the LHS and the RHS both evaluate to the same expression, so by rule 1 of the definition of $\cong$, the LHS and RHS must be extensionally equivalent. We are done!
 
