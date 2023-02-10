@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"
+                       xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+  <ShortName>SML Help</ShortName>
+  <Description>Search SML Help</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Url type="text/html" method="get" template="https://smlhelp.github.io/book/search?q={searchTerms}"/>
+  <Url type="application/opensearchdescription+xml" rel="self" template="https://smlhelp.github.io/book/opensearch.xml" />
+  <moz:SearchForm>https://smlhelp.github.io/book/</moz:SearchForm>
+</OpenSearchDescription>
