@@ -228,7 +228,7 @@ end
 
 #### Lambda Expressions
 
-Write lambda expressions using the `fn` keyword — often verbalized as **"lambda"**. A lambda expression is of the form: `fn`, pattern, `=>`, expression. The lambda expression itself is a value [—](/easteregg.jpg) a value of function type. The `=>` in lambda expressions correspond to the `->` in their types. The `->` arrows are right-associative infix type constructors denoting function types. Apply lambda expressions via prefix application — before the immediate operand.
+Write lambda expressions using the `fn` keyword — often verbalized as **"lambda"**. A lambda expression is of the form: `fn`, pattern, `=>`, expression. The lambda expression itself is a value [—](https://raw.githubusercontent.com/smlhelp/book/master/static/easteregg.jpg) a value of function type. The `=>` in lambda expressions correspond to the `->` in their types. The `->` arrows are right-associative infix type constructors denoting function types. Apply lambda expressions via prefix application — before the immediate operand.
 
 | Expression | Evaluates To | Type |
 | :-: | :-: | :-: |
