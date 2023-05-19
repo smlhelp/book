@@ -10,9 +10,69 @@ _By Kaz Zhou, May 2023_
 
 Here are some coding exercises, where we use lists to represent the digits of arbitrarily large numbers, in any base. I encourage thinking about each question before peeking at the solution: each solution is short but challenging.
 
-## Motivation
+## Flavortext
+
+Humans have 10 fingers, and thus represent numbers in base 10. 
+It's well known that parrots count using their wing feathers (maybe this is unrea*list*ic). 
+But the number of feathers on their wings varies! Polly has en*list*ed your help to write functions in an arbitrary base!
+But first, to make the next task more simp*list*ic, 
+Polly asks you to write an `enum` function.
+
+## Enum
+
+Let $x_i$ be the $i$th element (0-indexed!) of the original list. The `enum` function outputs a list where the $i$th element is $(i, x_i)$.
+
+Formally, implement the function `enum : 'a list -> (int * 'a) list`. It should have the behavior `enum` $[x_0, x_1, x_2, \cdots, x_n] \Longrightarrow [(0,x_0), (1,x_1), (2,x_2), \cdots, (n,x_n)]$.
+
+<Hidden>
+First we write a helper function which keeps track of the index `i`,
+and tags each element with its appropriate index.
+Then we call this helper function starting at index 0.
+
+```
+fun enumh i [] = []
+  | enumh i (y::ys) = (i,y) :: (enumh (i+1) ys)
+
+fun enum L = enumh 0 L
+```
+
+</Hidden>
+
+## List to `int`
+Polly represents numbers with lists as follows. Given a base $b \geq 1$, the list
+
+<p style="text-align: center;">
+$[x_0,x_1,x_2,\cdots,x_n]$
+</p>
+
+represents the number $x_0 b^0 + x_1 b^1 + x_2 b^2 + \cdots + x_n b^n$. Note that the least significant digit is at the head of the list.
+
+Formally, your task is to define a function `listToInt : int -> int list -> int`. The first `int` is the base $b$, 
+and each element $x_i$ of the list satisfies $0 \leq x_i < b$.
+Then `listToInt b` $[x_0,x_1,\cdots,x_n] \Longrightarrow^* x_0b^0 + x_1b^1 + x_2b^2 + \cdots + x_nb^n$.
+
+You may use the exponentiation function, which satisfies `exp (x,y)` $\Longrightarrow^* x^y$. The definition is
+
+```
+fun exp (x,0) = 1
+  | exp (x,n) = x * exp (x, n-1)
+```
 
 
 
 
 
+## Decrement
+
+
+
+## Addition
+
+
+
+## Schur Triples
+
+
+
+## Congrats!
+If you made it this far, congrats! Polly is pleased with your cool coloring and presents you with a gold medal. Now you're a gold medal*list*!
