@@ -1,0 +1,30 @@
+---
+sidebar_position: 2
+---
+
+import { Hidden } from "@site/src/components/Hidden";
+
+# Polymorphism
+
+_By Kaz, July 2023
+
+## Types
+
+What is the type of `f`?
+
+```sml
+fun f ([],[]) = f ([],[]) ^ "A"
+  | f (_,_) = f (_,_) ^ "A"
+```
+
+<Hidden>
+  Type: <code>('a list * 'b list) -> string</code> <br />
+
+  For a surprise, try putting the above function in the REPL!
+</Hidden>
+
+
+
+
+
+
