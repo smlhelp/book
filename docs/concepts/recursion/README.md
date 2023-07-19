@@ -24,9 +24,10 @@ recursive function, the natural (and often the only) choice is to make use of
 an inductive argument. Moreover, the form of the recursive function will suggest
 to us the structure of the inductive proof. In this article, we'll explore the
 idea of recursion. Then, the [simple mathematical induction](simple.md) and the
-connection to  recursion will be explored. Then,
-[other types of induction](induction.md) and how they relate to SML will be
-dicussed. Concluding with an example of inducting over [trees](tree.md).
+connection to  recursion will be explored. Then, we introduce
+[other types of induction](induction.md), including strong induction
+and structural induction on lists, and write some recursive list functions.
+We conclude with an example of inducting over [trees](tree.md).
 Finally, we mention a specific kind of recursion, [tail recursion](tail.md).
 
 ## Iterative versus Recursive Thinking
