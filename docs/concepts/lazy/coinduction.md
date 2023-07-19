@@ -69,7 +69,7 @@ We say that a `lazylist`, `L` is productive if `L` evaluates to either:
 - `Nil`.
 - `Cons (x, L')` where `L' ()` is productive (for some `x`).
 
-Essentially, we are guarenteeing that `L`, and any sub-`lazylist`s don't loop
+Essentially, we are guaranteeing that `L` and any sub-`lazylist`s don't loop
 forever (or raise exceptions) when we try to look at their elements. This is
 great, now we can start requiring that inputs to our functions give productive
 `lazylist`s and that our functions output productive `lazylist`s.
@@ -78,7 +78,7 @@ But how do we know that some `lazylist` is productive? We can see that
 `onefifty` is productive, since `Nil` is productive, meaning
 `Cons (0, fn () => Nil)` is productive, and so on. How do we know that `zeros`
 and `nats` are both productive? We can inspect them and maybe judge that they
-should be productive, but this prone to errors and isn't really rigorous.
+should be productive, but this is prone to errors and isn't really rigorous.
 Instead we should prove that they productive.
 
 Our first attempt at this might be to use induction. We set `Nil` as our base
@@ -163,7 +163,7 @@ hypothesis.
 
 ## Proving Productivity
 
-Now that we've at least established what coinduction is, lets use it to prove
+Now that we've at least established what coinduction is, let's use it to prove
 productivity! For this example, we'll consider the following function:
 
 ```sml
@@ -222,6 +222,6 @@ the proof is doing, we are showing that two sides simulate each other. One
 side is our `lazymap` function and the other side is our productivity
 definition. We are showing that if we start in equivalent states and step one
 side (e.g. the `lazymap` function) that we can simulate the other side (e.g. the
-productivity definition), and vice-versa. This idea is called *bisimulation* (
-which we won't explore further) and encodes the reasoning why we don't need to
+productivity definition), and vice-versa. This idea is called *bisimulation* 
+(which we won't explore further) and encodes the reasoning why we don't need to
 look at the entire stream.
