@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Currying and Staging
 
-_By Brandon Wu, June 2020_
+_By Brandon Wu, June 2020. Revised June 2023_
 
 Suppose that we are interested in writing a function that adds two numbers. This is fairly simple - this is not a new concept to us.
 
@@ -26,7 +26,7 @@ fun addCurry x = fn y => x + y
 
 What might be the type of this function? Well, we know that `addCurry` takes in a value `x`, which should be an `int`, since it is summed with `y`. It then returns a lambda expression that takes in that same `y`, and returns the sum, which is an `int`. It seems to us that the type should be `int -> (int -> int)`. This is an example of a _curried_ function, and one of the first examples we will see of a _higher-order function_.
 
-> **[Higher-Order Functions]** A _higher-order function_ is a function that takes in other functions as input, or returns a function as output.
+> **[Higher-Order Functions]** A _higher-order function_ is a function that takes in one or more function type values as arguments, or returns a higher-order function.
 
 > **[Currying]** Named after mathematician/logician Haskell Brooks Curry, _currying_ is the act of transforming a function that takes multiple arguments into a function that returns a function that takes the remaining arguments. Intuitively, it separates the arguments into a series of function applications, instead of all at once. We may refer to a general higher-order function that returns a function as a curried function.
 
