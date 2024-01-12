@@ -1,0 +1,224 @@
+---
+sidebar_position: 2
+---
+
+import { Hidden } from "@site/src/components/Hidden";
+
+# Lists
+
+_By Kaz Zhou, June 2023_
+
+Here are some coding exercises, where we use lists to represent the digits of arbitrarily large numbers, in any base. I encourage thinking about each question before peeking at the solution: each solution is short but challenging.
+
+## Flavortext
+
+Humans have 10 fingers, and thus represent numbers in base 10. 
+It's well known that parrots count using their wing feathers (maybe this is unrea*list*ic). 
+But the number of feathers on their wings varies! Polly has en*list*ed your help to write functions in an arbitrary base!
+But first, to make the next task more simp*list*ic, 
+Polly asks you to write an `enum` function.
+
+## Enum
+
+Let $x_i$ be the $i$th element (0-indexed!) of the original list. The `enum` function outputs a list where the $i$th element is $(i, x_i)$.
+
+Formally, implement the function `enum : 'a list -> (int * 'a) list`. It should have the behavior `enum` $[x_0, x_1, x_2, \cdots, x_n] \Longrightarrow [(0,x_0), (1,x_1), (2,x_2), \cdots, (n,x_n)]$.
+
+<Hidden>
+First we write a helper function which keeps track of the index `i`,
+and tags each element with its appropriate index.
+Then we call this helper function starting at index 0.
+
+```
+fun enumh i [] = []
+  | enumh i (y::ys) = (i,y) :: (enumh (i+1) ys)
+
+fun enum L = enumh 0 L
+```
+
+</Hidden>
+
+## List to `int`
+Polly represents numbers with lists as follows. Given a base $b \geq 1$, the list
+
+<p style="text-align: center;">
+$[x_0,x_1,x_2,\cdots,x_n]$
+</p>
+
+represents the number $x_0 b^0 + x_1 b^1 + x_2 b^2 + \cdots + x_n b^n$. Note that the least significant digit is at the head of the list.
+
+Formally, your task is to define a function `listToInt : (int * int list) -> int`. The first `int` is the base $b$, 
+and each element $x_i$ of the list satisfies $0 \leq x_i < b$.
+Then `listToInt` $(b, [x_0,x_1,\cdots,x_n]) \Longrightarrow^* x_0b^0 + x_1b^1 + x_2b^2 + \cdots + x_nb^n$.
+
+You may use the exponentiation function, which satisfies `exp (x,y)` $\Longrightarrow^* x^y$. The definition is
+
+```
+fun exp (x,0) = 1
+  | exp (x,n) = x * exp (x, n-1)
+```
+
+For example,
+```
+listToInt 10 [0,5,1,5,1] ==> 15150
+listToInt 2 [1,1,1,1] ==> 15
+listToInt 5 [0,0,1,1] ==> 150
+```
+
+<Hidden>
+We first use the `enum` function to tag each digit with an index.
+Then, we can calculate how much each digit contributes to the overall sum.
+
+```
+fun listToIntH (b, []) = 0
+  | listToIntH (b, (power,digit)::xs) =
+  exp (b, power) * digit + listToIntH (b, xs)
+
+fun listToInt (b, L) = listToIntH (b, enum L)
+```
+
+If you know higher order functions, we can also use this elegant implementation:
+
+```
+fun listToInt (b, L) = foldr (fn ((power,digit), acc) => (digit * exp (b,power)) + acc) 0 (enum L)
+```
+
+</Hidden>
+
+
+
+## Decrement
+Polly is a specia*list* of very large numbers that cannot be represented 
+using `int`'s. She wants a function that decrements a base $b$ number.
+
+Implement a function `dec : (int * int list) -> int list option`.
+
+We require $b \geq 0$, and each element $x_i$ of the list satisfies $0 \leq x_i < b$.
+
+If the input list represents 0, then the function outputs `NONE`.
+
+Otherwise, `dec (b,L)` $\Longrightarrow^*$ `SOME L1`, where `L1` represents the number 1 less than the number represented by `L`.
+
+As a constraint, do not convert the list to an integer. The purpose of the constraint is so that Polly can work with very large numbers. For example,
+
+`dec 15151 [0,0,0,42,42,42]` $\Longrightarrow^*$ `SOME [15150,15150,15150,41,42,42]`
+
+This would not work if we converted the list to an integer, due to overflow.
+
+Note that the input list may contain trailing zeroes, e.g. `[1,2,0,0,0]` in base 10 represents the number 21. Remember that the least significant digit is the head of the list.
+
+Here is a fun way to test your code. Use the helper function `decTest : int -> int list option -> int list option`, which has the following implementation:
+
+```
+fun decTest b NONE = NONE
+  | decTest b (SOME y) = dec b y
+```
+
+The below is an example REPL session of repeatedly decrementing a binary number.
+
+```
+- decTest 2 (SOME [0,1,0,1]);
+val it = SOME [1,0,0,1] : int list option
+- decTest 2 it;
+val it = SOME [0,0,0,1] : int list option
+- decTest 2 it;
+val it = SOME [1,1,1,0] : int list option
+- decTest 2 it;
+val it = SOME [0,1,1,0] : int list option
+- decTest 2 it;
+val it = SOME [1,0,1,0] : int list option
+```
+
+
+## Addition
+
+\begin{task}{add}
+Your next task is to implement a function which adds two base $b$ numbers together.
+\spec{add}
+{int -> int list -> int list -> int list}
+{$b \geq 0$, and each element $x_i$ of both lists satisfies $0 \leq x_i < b$.}
+{`add b L1 L2} $\Longrightarrow^*$ `L3}, where `L3} is a list representation of the sum of `L1} and `L2}.}
+
+  \begin{constraint}
+  Do not convert the list to an integer.
+  \end{constraint}
+
+You may want to implement a helper function which hauls around a ``carry flag'' as an extra argument. Also, here are some examples:
+\begin{align*}
+    &`add 10 [1,2,3] [1,2,3]} \Longrightarrow^* `[2,4,6]} \\
+    &`add 10 [6] [7]} \Longrightarrow^* `[3,1]} \\
+    &`add 6 [1,2,2] [1,5,0]} \Longrightarrow^* `[2,1,3]}
+\end{align*}
+\end{task}
+
+\subsection{A colorful application}
+\begin{task}{findTriple}
+\vspace{10pt}
+\begin{flavortext}
+Polly is grateful for your implementation of base $b$ numbers! She now wants to apply them to another problem on her check\textit{list}.
+
+Polly is not a minima\textit{list} with her colors. She has very colorful wings! Polly wants to color the numbers $1,2,3,\cdots,13$ using three colors. But she has peculiar sty\textit{list}ic preferences...
+\end{flavortext}
+Polly wants to color the numbers $1,2,\cdots,n$ using $k$ colors, such that there does not exist any triple $x,y,z$ such that $x,y,z$ are all the same color, and $x+y=z$. Note that $x,y$ may be the same. We call such a coloring ``cool'', because Polly wants to be cool.
+
+For example, the below coloring is not cool because $1,4,5$ are all red, and $1+4=5$.
+\[ \textcolor{red}{1}, \textcolor{orange}{2}, \textcolor{blue}{3}, \textcolor{red}{4}, \textcolor{red}{5} \]
+The coloring below is not cool because $1,2$ are red, and $1+1=2$.
+\[ \textcolor{red}{1}, \textcolor{red}{2}\]
+The coloring below is cool, though. Polly approves!
+\[ \textcolor{red}{1}, \textcolor{blue}{2}, \textcolor{blue}{3}, \textcolor{red}{4} \]
+
+First, Polly tasks you with determining whether a specific coloring is cool. We use numbers to represent colors. For example, we could associate 0 with red, 1 with orange, and 2 with blue. Then, the list `[0,1,2,0,0]} would represent \textcolor{red}{1}, \textcolor{orange}{2}, \textcolor{blue}{3}, \textcolor{red}{4}, \textcolor{red}{5}.
+
+\spec{findTriple}
+{int list -> (int * int * int) option}
+{Each element $x_i$ of the list satisfies $0 \leq x_i$.}
+{`findTriple L} $\Longrightarrow^*$ `SOME (a,b,c)} if there exists some triple $a,b,c$, all of the same color, such that $a+b=c$. Otherwise, `findTriple L} $\Longrightarrow^*$ `NONE}.}
+
+Polly has provided some helper functions:
+\begin{itemize}
+    \item `nth : 'a list -> int -> 'a option} finds the $n$th element of a list (if it exists).
+    \item `length : 'a list -> int} function finds the length of a list.
+    \item For testing purposes: `showColors : int list -> string} allows you to see a colorful version of a list. The function only supports up to x colors. Try out `showColors [0,1,2,3,4,5]} !
+\end{itemize}
+
+\textit{Hint:} You'll want to iterate over all triples $(a,b,c)$ such that $a+b=c$. Perhaps one of your base $b$ functions could help with that?
+\end{task}
+
+\begin{task}{cool}
+Let's help Polly find cool colorings!
+\spec{cool}
+{int -> int -> int list option}
+{$k \geq 1$ and $n \geq 0$}
+{`cool k n} $\Longrightarrow^*$ `SOME L}, where `findTriple L} $\Longrightarrow^*$ `NONE} if there exists some coloring of $1,2,\cdots,n$ with $k$ colors that is cool. Otherwise, `cool k n} $\Longrightarrow^*$ `NONE}.}
+
+For example,
+\begin{align*}
+    &`cool 2 4} \Longrightarrow^* `SOME [0,1,1,0]} \text{ (Or another cool coloring)} \\
+    &`cool 2 5} \Longrightarrow^* `NONE}
+\end{align*}
+
+\textit{Hint:} You'll need to check every possible coloring of $1,2,\cdots,n$ with $k$ colors. One of the base $b$ functions can help with that!
+\end{task}
+
+\begin{task}{findCool}
+Using your function, find a cool coloring of $1,2,\cdots,13$ with $3$ colors!
+\end{task}
+
+\begin{flavortext}
+Awesome! Polly is so pleased with the cool coloring that she presents you with a gold medal. Now you're a gold medal\textit{list}!
+\end{flavortext}
+
+\
+
+
+## Addition
+
+
+
+## Schur Triples
+
+
+
+## Congrats!
+If you made it this far, congrats! Polly is pleased with your cool coloring and presents you with a gold medal. Now you're a gold medal*list*!
