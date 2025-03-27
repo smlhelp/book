@@ -102,7 +102,7 @@ We could, of course, write the lambda expression `fn x => f1 (f2 (f3 (f4 (f5 x))
 
 ```sml
 infix o
-(* o : ('b -> 'c) -> ('a -> 'b) -> ('a -> 'c) *)
+(* o : ('b -> 'c) * ('a -> 'b) -> ('a -> 'c) *)
 fun f o g = fn x => f (g x)
 ```
 
